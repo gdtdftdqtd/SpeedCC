@@ -243,4 +243,4 @@ namespace SPEEDCC
     typedef std::basic_string<char,std::char_traits<char>,MySTLAllocator<char> > stl_string;
 }
 
-#endif // __FS__FSMemAllocator_H__
+#endif // __SC__MemAllocator_H__

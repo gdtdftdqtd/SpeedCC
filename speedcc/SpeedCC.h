@@ -12,5 +12,8 @@
 #include "base/SCMacroDef.h"
 #include "base/SCString.h"
 #include "base/SCBaseCommon.h"
+#include "base/SCDataBlock.h"
+#include "base/SCDateTime.h"
+#include "base/SCValue.h"
 
 #endif // __SC__SPEEDCC_H__

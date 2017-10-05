@@ -11,6 +11,9 @@
 		0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE31F813C8800FED9A5 /* SCBaseCommon.cpp */; };
 		0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */; };
 		0A67CAEF1F813CFF00FED9A5 /* SCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAEE1F813CFF00FED9A5 /* SCString.cpp */; };
+		0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB031F81DF7000FED9A5 /* SCValue.cpp */; };
+		0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB0F1F81E4CE00FED9A5 /* SCDateTime.cpp */; };
+		0A67CB171F81E8EA00FED9A5 /* SCDataBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB161F81E8E900FED9A5 /* SCDataBlock.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,19 @@
 		0A67CAE61F813C8900FED9A5 /* SCBaseDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBaseDef.h; sourceTree = "<group>"; };
 		0A67CAED1F813CFF00FED9A5 /* SCString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCString.h; sourceTree = "<group>"; };
 		0A67CAEE1F813CFF00FED9A5 /* SCString.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCString.cpp; sourceTree = "<group>"; };
+		0A67CB031F81DF7000FED9A5 /* SCValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCValue.cpp; sourceTree = "<group>"; };
+		0A67CB061F81DF7000FED9A5 /* SCObjRefT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCObjRefT.h; sourceTree = "<group>"; };
+		0A67CB071F81DF7100FED9A5 /* SCValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCValue.h; sourceTree = "<group>"; };
+		0A67CB081F81DF7100FED9A5 /* SCObjPtrT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCObjPtrT.h; sourceTree = "<group>"; };
+		0A67CB0C1F81E4CE00FED9A5 /* SCDateTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCDateTime.h; sourceTree = "<group>"; };
+		0A67CB0F1F81E4CE00FED9A5 /* SCDateTime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCDateTime.cpp; sourceTree = "<group>"; };
+		0A67CB131F81E74B00FED9A5 /* SCTemplateDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCTemplateDef.h; sourceTree = "<group>"; };
+		0A67CB141F81E74B00FED9A5 /* SCTemplateUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCTemplateUtils.h; sourceTree = "<group>"; };
+		0A67CB151F81E8E900FED9A5 /* SCDataBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCDataBlock.h; sourceTree = "<group>"; };
+		0A67CB161F81E8E900FED9A5 /* SCDataBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCDataBlock.cpp; sourceTree = "<group>"; };
+		0A67CB181F81E95300FED9A5 /* SCBufferRefT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBufferRefT.h; sourceTree = "<group>"; };
+		0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCOSSystem.cpp; sourceTree = "<group>"; };
+		0A67CB1F1F81EAB900FED9A5 /* SCOSSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCOSSystem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */,
+				0A67CB191F81EAB900FED9A5 /* platform */,
 				0A67CACA1F80E9E700FED9A5 /* base */,
 				0A67CA7F1F80E31700FED9A5 /* Products */,
 				0A67CA981F80E3AA00FED9A5 /* Frameworks */,
@@ -119,6 +136,17 @@
 		0A67CACA1F80E9E700FED9A5 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				0A67CB181F81E95300FED9A5 /* SCBufferRefT.h */,
+				0A67CB161F81E8E900FED9A5 /* SCDataBlock.cpp */,
+				0A67CB151F81E8E900FED9A5 /* SCDataBlock.h */,
+				0A67CB131F81E74B00FED9A5 /* SCTemplateDef.h */,
+				0A67CB141F81E74B00FED9A5 /* SCTemplateUtils.h */,
+				0A67CB0F1F81E4CE00FED9A5 /* SCDateTime.cpp */,
+				0A67CB0C1F81E4CE00FED9A5 /* SCDateTime.h */,
+				0A67CB081F81DF7100FED9A5 /* SCObjPtrT.h */,
+				0A67CB061F81DF7000FED9A5 /* SCObjRefT.h */,
+				0A67CB031F81DF7000FED9A5 /* SCValue.cpp */,
+				0A67CB071F81DF7100FED9A5 /* SCValue.h */,
 				0A67CAEE1F813CFF00FED9A5 /* SCString.cpp */,
 				0A67CAED1F813CFF00FED9A5 /* SCString.h */,
 				0A67CAE31F813C8800FED9A5 /* SCBaseCommon.cpp */,
@@ -130,6 +158,16 @@
 			);
 			name = base;
 			path = ../../base;
+			sourceTree = "<group>";
+		};
+		0A67CB191F81EAB900FED9A5 /* platform */ = {
+			isa = PBXGroup;
+			children = (
+				0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */,
+				0A67CB1F1F81EAB900FED9A5 /* SCOSSystem.h */,
+			);
+			name = platform;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,8 +259,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */,
+				0A67CB171F81E8EA00FED9A5 /* SCDataBlock.cpp in Sources */,
 				0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */,
+				0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */,
 				0A67CAEF1F813CFF00FED9A5 /* SCString.cpp in Sources */,
+				0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

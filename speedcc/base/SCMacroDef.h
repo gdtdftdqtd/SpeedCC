@@ -116,6 +116,8 @@
 #define SPEEDCC_VERSION_MINOR                       ((SPEEDCC_VERSION & 0x0000ff00)>>(4*2))
 #define SPEEDCC_VERSION_FIX                         ((SPEEDCC_VERSION & 0x000000ff))
 
-
+#ifndef INT64
+#define INT64       long long
+#endif
 
 #endif //__SC__MACRODEF_H__
