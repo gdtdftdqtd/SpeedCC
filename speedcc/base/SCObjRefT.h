@@ -32,13 +32,12 @@ namespace SPEEDCC
         inline SCookieDesc* getCookieDesc() const {return _pData==NULL ? NULL : (((SCookieDesc*)_pData)-1); }
         
     public:
-        SCObjRefT();
+        SCObjRefT(void);
         SCObjRefT(const SCObjRefT<StubT,CookieT>& buf);
         
         virtual ~SCObjRefT();
         
         inline int getRefCount() const {return _pData==NULL ? 0 : this->getCookieDesc()->nRefs;}
-        //    inline const void* getStubPtr() const {return this->_pData;}
         
         inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
         inline const CookieT* getCookie() const {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
@@ -49,7 +48,7 @@ namespace SPEEDCC
         void assign(const SCObjRefT<StubT,CookieT>& ref);
         const SCObjRefT<StubT,CookieT>& operator=(const SCObjRefT<StubT,CookieT>& data);
         
-        bool operator==(const SCObjRefT& data) const {return (_pData==data._pData);}
+        inline bool operator==(const SCObjRefT& data) const {return (_pData==data._pData);}
         
         inline bool isValid() const {return (_pData!=NULL);}
         void createInstance();
@@ -64,7 +63,6 @@ namespace SPEEDCC
         void createInstance(A1 arg1,A2 arg2,A3 arg3);
         
     protected:
-        
         void clone4Write();
         int increaseRef() const;
         int decreaseRef();
@@ -78,7 +76,7 @@ namespace SPEEDCC
     };
     
     template<typename StubT,typename CookieT>
-    SCObjRefT<StubT,CookieT>::SCObjRefT():
+    SCObjRefT<StubT,CookieT>::SCObjRefT(void):
     _pData(NULL)
     {
     }

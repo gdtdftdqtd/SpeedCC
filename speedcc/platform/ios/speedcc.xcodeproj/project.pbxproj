@@ -83,6 +83,8 @@
 		0A67CB181F81E95300FED9A5 /* SCBufferRefT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBufferRefT.h; sourceTree = "<group>"; };
 		0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCOSSystem.cpp; sourceTree = "<group>"; };
 		0A67CB1F1F81EAB900FED9A5 /* SCOSSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCOSSystem.h; sourceTree = "<group>"; };
+		0A67CB2E1F886FF700FED9A5 /* SCComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCComponent.cpp; sourceTree = "<group>"; };
+		0A67CB2F1F886FF700FED9A5 /* SCComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCComponent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */,
+				0A67CB2D1F886FF700FED9A5 /* component */,
 				0A67CB191F81EAB900FED9A5 /* platform */,
 				0A67CACA1F80E9E700FED9A5 /* base */,
 				0A67CA7F1F80E31700FED9A5 /* Products */,
@@ -168,6 +171,15 @@
 			);
 			name = platform;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		0A67CB2D1F886FF700FED9A5 /* component */ = {
+			isa = PBXGroup;
+			children = (
+				0A67CB2E1F886FF700FED9A5 /* SCComponent.cpp */,
+				0A67CB2F1F886FF700FED9A5 /* SCComponent.h */,
+			);
+			path = component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

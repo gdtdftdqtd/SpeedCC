@@ -186,15 +186,15 @@ namespace SPEEDCC
             pDesc->encoding = SCEncodingChar::kEncodingUTF8;
             //SCLog("SCString allocate: %d %p",nBufferSize,pDesc);
             
-            _pchStrData = (char*)pDesc->getStringPtr() ;
-            ::memset(_pchStrData,0,pDesc->getStrBufSize()) ;
+            _pchStrData = (char*)pDesc->getStringPtr();
+            ::memset(_pchStrData,0,pDesc->getStrBufSize());
             
-            pDesc->nRefs = 1 ; // reference 1 times
-            pDesc->nUsedSize = 0 ; // length is 0
+            pDesc->nRefs = 1; // reference 1 times
+            pDesc->nUsedSize = 0; // length is 0
         }
         else
         {
-            _pchStrData = (char*)(this->getEmptyBuffer())->getStringPtr() ;
+            _pchStrData = (char*)(this->getEmptyBuffer())->getStringPtr();
         }
     }
     
@@ -203,13 +203,13 @@ namespace SPEEDCC
         auto pDesc = this->getStringDesc();
         //SCLog("SCString deallocate: %d %p",pDesc->nMallocBufSize,pDesc);
         SCMemAllocator::deallocate(pDesc, pDesc->nMallocBufSize);
-        _pchStrData = NULL ;
+        _pchStrData = NULL;
         
     }
     
     int SCString::decreaseRef()
     {
-        SCASSERT(NULL!=_pchStrData) ;
+        SCASSERT(NULL!=_pchStrData);
         
         if(this->getStringDesc()!=this->getEmptyBuffer())
         {// if not empty string
@@ -218,47 +218,47 @@ namespace SPEEDCC
             
             if(nNewRef==0)
             {
-                this->freeBuf() ;
+                this->freeBuf();
             }
             
             return nNewRef;
         }
         
-        return 1 ; // empty buffer always 1 ref
+        return 1; // empty buffer always 1 ref
     }
     
     
     int SCString::increaseRef() const
     {
-        SCASSERT(NULL!=_pchStrData) ;
+        SCASSERT(NULL!=_pchStrData);
         
         if(this->getStringDesc()!=this->getEmptyBuffer())
         {// if not empty string
-            return (++this->getStringDesc()->nRefs) ;
+            return (++this->getStringDesc()->nRefs);
         }
         
-        return 1 ; // empty buffer always 1 ref
+        return 1; // empty buffer always 1 ref
     }
     
     void SCString::beforeWrite(const int nStringSize)
     {
-        bool bNew = true ;
+        bool bNew = true;
         
         if(_pchStrData!=NULL && this->getStringDesc()!=this->getEmptyBuffer())
         {
-            SStringDesc* pDesc = this->getStringDesc() ;
+            SStringDesc* pDesc = this->getStringDesc();
             if(1==pDesc->nRefs && (pDesc->getStrBufSize() > nStringSize+(int)sizeof(char)))
             {
-                memset(_pchStrData,0,pDesc->getStrBufSize()) ;
-                pDesc->nUsedSize = 0 ;
-                bNew = false ;
+                memset(_pchStrData,0,pDesc->getStrBufSize());
+                pDesc->nUsedSize = 0;
+                bNew = false;
             }
         }
         
         if(bNew)
         {
-            this->decreaseRef() ;
-            this->allocBuf(nStringSize) ;
+            this->decreaseRef();
+            this->allocBuf(nStringSize);
         }
     }
     
@@ -269,14 +269,14 @@ namespace SPEEDCC
             return;
         }
         
-        const int nOrgLen = this->getStringDesc()->nUsedSize ;
+        const int nOrgLen = this->getStringDesc()->nUsedSize;
         
-        SCString sb = *this ;
+        SCString sb = *this;
         
-        this->beforeWrite(nOrgLen) ;
+        this->beforeWrite(nOrgLen);
         
-        ::memcpy(_pchStrData,sb._pchStrData,nOrgLen) ;
-        this->getStringDesc()->nUsedSize = nOrgLen ;
+        ::memcpy(_pchStrData,sb._pchStrData,nOrgLen);
+        this->getStringDesc()->nUsedSize = nOrgLen;
     }
     
     //-------- SCString operation function
@@ -290,15 +290,15 @@ namespace SPEEDCC
     SCString::SCString(const SCString& strString):
     _pchStrData(NULL)
     {
-        strString.increaseRef() ;
-        _pchStrData = (char*)strString.getStringDesc()->getStringPtr() ;
+        strString.increaseRef();
+        _pchStrData = (char*)strString.getStringDesc()->getStringPtr();
     }
     
     SCString::SCString(const char ch):
     _pchStrData(NULL)
     {
         this->allocBuf(sizeof(char));
-        this->getStringDesc()->nUsedSize = sizeof(char) ;
+        this->getStringDesc()->nUsedSize = sizeof(char);
         
         ::memset(_pchStrData, ch, 1);
     }
@@ -316,7 +316,7 @@ namespace SPEEDCC
             
             this->allocBuf((int)nLen);
             ::memcpy(_pchStrData,str.c_str(),nLen);
-            this->getStringDesc()->nUsedSize = nLen ;
+            this->getStringDesc()->nUsedSize = nLen;
         }
     }
     
@@ -326,12 +326,12 @@ namespace SPEEDCC
         char szBuf[32+1] = {0};
         sprintf(szBuf, "%d",nNumber);
         
-        int nLenOfByte = (int)strlen(szBuf) ;
+        int nLenOfByte = (int)strlen(szBuf);
         
         this->allocBuf(nLenOfByte);
         strcpy(_pchStrData,szBuf);
         
-        this->getStringDesc()->nUsedSize = nLenOfByte ;
+        this->getStringDesc()->nUsedSize = nLenOfByte;
     }
     
     SCString::SCString(const unsigned int uNumber):
@@ -340,12 +340,12 @@ namespace SPEEDCC
         char szBuf[32+1] = {0};
         sprintf(szBuf, "%u",uNumber);
         
-        int nLenOfByte = (int)strlen(szBuf) ;
+        int nLenOfByte = (int)strlen(szBuf);
         
         this->allocBuf(nLenOfByte);
         strcpy(_pchStrData,szBuf);
         
-        this->getStringDesc()->nUsedSize = nLenOfByte ;
+        this->getStringDesc()->nUsedSize = nLenOfByte;
     }
     
     SCString::SCString(const unsigned short* pszStr):
@@ -365,7 +365,7 @@ namespace SPEEDCC
         {
             this->allocBuf(nLen*2);
             ::memcpy(_pchStrData,pszStr,nLen*2);
-            this->getStringDesc()->nUsedSize = nLen*2 ;
+            this->getStringDesc()->nUsedSize = nLen*2;
         }
         else
         {
@@ -384,7 +384,7 @@ namespace SPEEDCC
         {
             this->allocBuf((int)nLen);
             ::memcpy(_pchStrData,pszStr,nLen);
-            this->getStringDesc()->nUsedSize = nLen ;
+            this->getStringDesc()->nUsedSize = nLen;
         }
         else
         {
@@ -399,7 +399,7 @@ namespace SPEEDCC
             int nLen = encodingChar.getLength();
             this->allocBuf(nLen);
             ::memcpy(_pchStrData,encodingChar._charArray,nLen);
-            this->getStringDesc()->nUsedSize = nLen ;
+            this->getStringDesc()->nUsedSize = nLen;
         }
         else
         {
@@ -429,7 +429,7 @@ namespace SPEEDCC
     {
         if(_pchStrData!=NULL && this->getRefCount()>0)
         {
-            this->decreaseRef() ;
+            this->decreaseRef();
         }
         
         _pchStrData = (char*)(this->getEmptyBuffer())->getStringPtr();
@@ -445,7 +445,7 @@ namespace SPEEDCC
     
     void SCString::formatV(const char* pszFormat, va_list argList)
     {
-        SCASSERT(pszFormat!=NULL) ;
+        SCASSERT(pszFormat!=NULL);
         
         SC_RETURN_IF_V(pszFormat==NULL);
         
@@ -492,7 +492,7 @@ namespace SPEEDCC
             {
                 nWidth = atoi(psz);
                 for (; *psz!='\0' && isdigit(*psz); psz = (psz+1))
-                    ;
+                   ;
             }
             
             SCASSERT(nWidth>=0);
@@ -512,7 +512,7 @@ namespace SPEEDCC
                 {
                     nPrecision = atoi(psz);
                     for (; *psz!='\0' && isdigit(*psz); psz = psz+1)
-                        ;
+                       ;
                 }
                 SCASSERT(nPrecision >= 0);
             }
@@ -636,17 +636,17 @@ namespace SPEEDCC
         
         SCString strTem = *this;
         
-        this->beforeWrite(nMaxLen) ;
+        this->beforeWrite(nMaxLen);
         
-        int nLen = vsprintf((char*)_pchStrData, pszFormat, argListSave) ;
+        int nLen = vsprintf((char*)_pchStrData, pszFormat, argListSave);
         
         if(nLen>0)
         {
-            this->getStringDesc()->nUsedSize = nLen ;
+            this->getStringDesc()->nUsedSize = nLen;
         }
         else
         {
-            this->setEmpty() ;
+            this->setEmpty();
         }
         
         va_end(argListSave);
@@ -886,7 +886,7 @@ namespace SPEEDCC
         SCASSERT(nIndex >= 0);
         SCASSERT(nIndex < this->getLength());
         
-        this->cloneBeforeWrite() ;
+        this->cloneBeforeWrite();
         ((char*)_pchStrData)[nIndex] = ch;
     }
     
@@ -895,7 +895,7 @@ namespace SPEEDCC
         SCASSERT(nIndex >= 0);
         SCASSERT(nIndex < this->getLength());
         
-        return ((char*)_pchStrData)[nIndex] ;
+        return ((char*)_pchStrData)[nIndex];
     }
     
     char SCString::operator[]( int nIndex ) const
@@ -903,7 +903,7 @@ namespace SPEEDCC
         SCASSERT(nIndex >= 0);
         SCASSERT(nIndex < this->getLength());
         
-        return ((char*)_pchStrData)[nIndex] ;
+        return ((char*)_pchStrData)[nIndex];
     }
     
     char& SCString::operator[](int nIndex)
@@ -935,7 +935,7 @@ namespace SPEEDCC
     
     int SCString::find(const char* pszSub, int nStart) const
     {
-        SCASSERT(pszSub!=NULL) ;
+        SCASSERT(pszSub!=NULL);
         
         int nLength = this->getLength();
         SC_RETURN_IF(nStart > nLength, -1);
@@ -952,7 +952,7 @@ namespace SPEEDCC
     
     int SCString::find(char ch, int nStart) const
     {
-        int nLength = this->getLength() ;
+        int nLength = this->getLength();
         SC_RETURN_IF(nStart >= nLength, -1);
         
         const char* lpsz = ::strchr(_pchStrData + nStart, ch);
@@ -989,7 +989,7 @@ namespace SPEEDCC
     
     //int SCString::findOneOf(const char* lpszCharSet) const
     //{
-    //    SCASSERT(lpszCharSet!=NULL) ;
+    //    SCASSERT(lpszCharSet!=NULL);
     //
     //    const char* lpsz = ::strtok(_pchStrData , lpszCharSet);
     //
@@ -1012,7 +1012,7 @@ namespace SPEEDCC
         
         if (chOld != chNew)
         {
-            this->cloneBeforeWrite() ;
+            this->cloneBeforeWrite();
             
             char* psz = (char*)_pchStrData;
             char* pszEnd = psz + this->getLength();
@@ -1032,8 +1032,8 @@ namespace SPEEDCC
     
     int SCString::replace(const char* lpszOld, const char* lpszNew)
     {
-        SCASSERT(lpszOld!=NULL) ;
-        SCASSERT(lpszNew!=NULL) ;
+        SCASSERT(lpszOld!=NULL);
+        SCASSERT(lpszNew!=NULL);
         
         SC_RETURN_IF((*lpszOld==0 || *lpszNew==0), 0);
         
@@ -1058,120 +1058,55 @@ namespace SPEEDCC
         }
         
         return (int)(nOldLength*i);
-        
-        /*
-         SCASSERT(lpszOld!=NULL) ;
-         SCASSERT(lpszNew!=NULL) ;
-         
-         int nSourceLen = (int)::strlen(lpszOld);
-         if (nSourceLen == 0)
-         {
-         return 0;
-         }
-         
-         int nReplacementLen = (int)::strlen(lpszNew);
-         
-         int nCount = 0;
-         char* lpszStart = (char*)_pchStrData;
-         char* lpszEnd = (char*)_pchStrData + this->getLength();
-         char* lpszTarget = NULL ;
-         while(lpszStart < lpszEnd)
-         {
-         while((lpszTarget = ::strstr(lpszStart, lpszOld)) != NULL)
-         {
-         nCount++;
-         lpszStart = lpszTarget + nSourceLen;
-         }
-         lpszStart += ::strlen(lpszStart) + 1;
-         }
-         
-         if(nCount > 0)
-         {
-         SCString str(*this) ;
-         this->cloneBeforeWrite();
-         
-         int nOldLength = this->getLength();
-         int nNewLength = nOldLength + (nReplacementLen-nSourceLen)*nCount;
-         if(this->getStringDesc()->getStrBufSize() < nNewLength || this->getStringDesc()->nRefs > 1)
-         {
-         this->beforeWrite(nNewLength);
-         
-         ::memcpy(_pchStrData, str._pchStrData, nOldLength*sizeof(char));
-         this->getStringDesc()->nUsedSize = nOldLength*sizeof(char);
-         }
-         
-         lpszStart = (char*)_pchStrData;
-         lpszEnd = (char*)_pchStrData + this->getLength() ;
-         
-         while(lpszStart < lpszEnd)
-         {
-         while((lpszTarget = strstr(lpszStart, lpszOld)) != NULL)
-         {
-         int nBalance = (int)(nOldLength - (lpszTarget - (char*)_pchStrData + nSourceLen));
-         ::memmove(lpszTarget + nReplacementLen, lpszTarget + nSourceLen, nBalance * sizeof(char));
-         ::memcpy(lpszTarget, lpszNew, nReplacementLen*sizeof(char));
-         lpszStart = lpszTarget + nReplacementLen;
-         lpszStart[nBalance] = '\0';
-         nOldLength += (nReplacementLen - nSourceLen);
-         }
-         lpszStart += ::strlen(lpszStart) + 1;
-         }
-         
-         SCASSERT(((char*)_pchStrData)[nNewLength] == '\0');
-         this->getStringDesc()->nUsedSize = nNewLength;
-         }
-         
-         return nCount;
-         */
     }
     
     int SCString::remove(int nBegin,int nLength)
     {
-        SCASSERT(nBegin>=0) ;
+        SCASSERT(nBegin>=0);
         
         SC_RETURN_IF(nLength<=0, 0);
         
-        const int nStrLength = this->getLength() ;
+        const int nStrLength = this->getLength();
         
         if(nBegin+nLength>nStrLength)
         {
-            return 0 ;
+            return 0;
         }
         else if(nBegin==0 && nLength==nStrLength)
         {
-            this->setEmpty() ;
+            this->setEmpty();
             return nLength;
         }
         
-        this->cloneBeforeWrite() ;
+        this->cloneBeforeWrite();
         
         if(nBegin+nLength-1==nStrLength)
         {
-            ((char*)_pchStrData)[nBegin] = '\0' ;
+            ((char*)_pchStrData)[nBegin] = '\0';
         }
         else
         {
-            ::memmove((char*)_pchStrData+nBegin,(char*)_pchStrData+nBegin+nLength,nStrLength-nLength-nBegin+1) ;
+            ::memmove((char*)_pchStrData+nBegin,(char*)_pchStrData+nBegin+nLength,nStrLength-nLength-nBegin+1);
         }
         
-        this->getStringDesc()->nUsedSize -= nLength ;
+        this->getStringDesc()->nUsedSize -= nLength;
         
-        return nLength ;
+        return nLength;
     }
     
     int SCString::remove(char chRemove)
     {
         if(this->getLength()==1 && this->getAt(0)==chRemove)
         {
-            this->setEmpty() ;
-            return 1 ;
+            this->setEmpty();
+            return 1;
         }
         
-        this->cloneBeforeWrite() ;
+        this->cloneBeforeWrite();
         
         char* pstrSource = (char*)_pchStrData;
         char* pstrDest = (char*)_pchStrData;
-        char* pstrEnd = (char*)_pchStrData + this->getLength() ;
+        char* pstrEnd = (char*)_pchStrData + this->getLength();
         
         while (pstrSource < pstrEnd)
         {
@@ -1240,9 +1175,9 @@ namespace SPEEDCC
         
         if (this->getStringDesc()->getStrBufSize() < nNewLength)
         {
-            SCString str(*this) ;
+            SCString str(*this);
             const char* pstr = (char*)_pchStrData;
-            this->allocBuf(nNewLength) ;
+            this->allocBuf(nNewLength);
             ::memcpy(_pchStrData, pstr, (str.getLength()+1)*sizeof(char));
         }
         
@@ -1263,12 +1198,12 @@ namespace SPEEDCC
             nIndex = 0;
         }
         
-        int nInsertLength = (int)::strlen(pstr) ;
+        int nInsertLength = (int)::strlen(pstr);
         int nNewLength = this->getLength();
         
         if (nInsertLength > 0)
         {
-            this->cloneBeforeWrite() ;
+            this->cloneBeforeWrite();
             if (nIndex > nNewLength)
             {
                 nIndex = nNewLength;
@@ -1278,9 +1213,9 @@ namespace SPEEDCC
             
             if (this->getStringDesc()->getStrBufSize() < nNewLength)
             {
-                SCString str(*this) ;
+                SCString str(*this);
                 const char* pstr = (char*)_pchStrData;
-                this->allocBuf(nNewLength) ;
+                this->allocBuf(nNewLength);
                 memcpy(_pchStrData, pstr, str.getLength()*sizeof(char));
             }
             
@@ -1305,7 +1240,7 @@ namespace SPEEDCC
     
     int SCString::asInt(bool bThrow,int nDefault) const throw(int)
     {
-        char* It = (char*)_pchStrData ;
+        char* It = (char*)_pchStrData;
         
         while(*It!=0)
         {
@@ -1320,15 +1255,15 @@ namespace SPEEDCC
                     return nDefault;
                 }
             }
-            It++ ;
+            It++;
         }
         
-        return ::atoi((char*)_pchStrData) ;
+        return ::atoi((char*)_pchStrData);
     }
     
     unsigned SCString::asUnsignedInt(bool bThrow,unsigned uDefault) const throw(unsigned int)
     {
-        char* It = (char*)_pchStrData ;
+        char* It = (char*)_pchStrData;
         
         while(*It!=0)
         {
@@ -1344,7 +1279,7 @@ namespace SPEEDCC
                 }
             }
             
-            It++ ;
+            It++;
         }
         
         return (unsigned)strtoul(_pchStrData, NULL, 0);
@@ -1352,7 +1287,7 @@ namespace SPEEDCC
     
     float SCString::asFloat(bool bThrow,float fDefault) const throw(float)
     {
-        char* It = (char*)_pchStrData ;
+        char* It = (char*)_pchStrData;
         
         while(*It!=0)
         {
@@ -1368,9 +1303,9 @@ namespace SPEEDCC
                 }
             }
             
-            It++ ;
+            It++;
         }
-        return ::atof((char*)_pchStrData) ;
+        return ::atof((char*)_pchStrData);
     }
     
     int SCString::trimLeft(char c)
@@ -1385,49 +1320,49 @@ namespace SPEEDCC
             {
                 if(((char*)_pchStrData)[i]!=c)
                 {
-                    break ;
+                    break;
                 }
             }
             
-            this->remove(0,i) ;
+            this->remove(0,i);
             
-            return i ;
+            return i;
         }
         
-        return 0 ;
+        return 0;
     }
     
     int SCString::trimLeft(const char* szStr)
     {
         if(szStr!=NULL)
         {
-            const int nLength = (const int)::strlen(szStr) ;
-            const int nStrLen = this->getLength() ;
+            const int nLength = (const int)::strlen(szStr);
+            const int nStrLen = this->getLength();
             
             if(nLength<nStrLen)
             {
-                int nIndex = 0 ;
+                int nIndex = 0;
                 
                 while(nIndex+nLength<=nStrLen)
                 {
                     if(::memcmp((char*)_pchStrData+nIndex,szStr,nLength)!=0)
                     {
-                        break ;
+                        break;
                     }
                     
-                    nIndex += nLength ;
+                    nIndex += nLength;
                 }
                 
                 if(nIndex>0)
                 {
-                    this->remove(0,nIndex) ;
+                    this->remove(0,nIndex);
                     
-                    return nIndex ;
+                    return nIndex;
                 }
             }
         }
         
-        return 0 ;
+        return 0;
     }
     
     int SCString::trimLeft(const std::string& str)
@@ -1448,50 +1383,50 @@ namespace SPEEDCC
                 if(((char*)_pchStrData)[i]!=c)
                 {
                     ++i;
-                    break ;
+                    break;
                 }
             }
             
-            this->remove(i,nLength-i) ;
+            this->remove(i,nLength-i);
             
-            return nLength-i ;
+            return nLength-i;
         }
         
-        return 0 ;
+        return 0;
     }
     
     int SCString::trimRight(const char* szStr)
     {
         if(szStr!=NULL)
         {
-            const int nLength = (const int)::strlen(szStr) ;
-            const int nStrLen = this->getLength() ;
+            const int nLength = (const int)::strlen(szStr);
+            const int nStrLen = this->getLength();
             
             if(nLength<=nStrLen)
             {
-                int nIndex = nStrLen-nLength ;
+                int nIndex = nStrLen-nLength;
                 
                 while(nIndex>=0)
                 {
                     if(::memcmp((char*)_pchStrData+nIndex,szStr,nLength)!=0)
                     {
-                        nIndex += nLength ;
-                        break ;
+                        nIndex += nLength;
+                        break;
                     }
                     
-                    nIndex -= nLength ;
+                    nIndex -= nLength;
                 }
                 
                 if(nIndex<nStrLen-1)
                 {
-                    this->remove(nIndex,nStrLen-nIndex) ;
+                    this->remove(nIndex,nStrLen-nIndex);
                     
-                    return nStrLen-nIndex ;
+                    return nStrLen-nIndex;
                 }
             }
         }
         
-        return 0 ;
+        return 0;
     }
     
     int SCString::trimRight(const std::string& str)
@@ -1503,23 +1438,23 @@ namespace SPEEDCC
     {
         if(str._pchStrData!=this->_pchStrData)
         {
-            this->decreaseRef() ;
+            this->decreaseRef();
             
-            SStringDesc* pDesc = str.getStringDesc() ;
-            _pchStrData = (char*)pDesc->getStringPtr() ;
-            this->increaseRef() ;
+            SStringDesc* pDesc = str.getStringDesc();
+            _pchStrData = (char*)pDesc->getStringPtr();
+            this->increaseRef();
         }
         
-        return *this ;
+        return *this;
     }
     
     const SCString& SCString::operator=(char ch)
     {
-        this->beforeWrite(sizeof(ch)) ;
-        this->getStringDesc()->nUsedSize = sizeof(ch) ;
-        ((char*)_pchStrData)[0] = ch ;
+        this->beforeWrite(sizeof(ch));
+        this->getStringDesc()->nUsedSize = sizeof(ch);
+        ((char*)_pchStrData)[0] = ch;
         
-        return *this ;
+        return *this;
     }
     
     const SCString& SCString::operator=(const char* psz)
@@ -1528,16 +1463,16 @@ namespace SPEEDCC
         
         if(nLen>0)
         {
-            this->beforeWrite(nLen) ;
-            ::memcpy(_pchStrData,psz,nLen) ;
-            this->getStringDesc()->nUsedSize = nLen ;
+            this->beforeWrite(nLen);
+            ::memcpy(_pchStrData,psz,nLen);
+            this->getStringDesc()->nUsedSize = nLen;
         }
         else
         {
             this->setEmpty();
         }
         
-        return *this ;
+        return *this;
     }
     
     const SCString& SCString::operator=(const unsigned short* pszStr)
@@ -1552,7 +1487,7 @@ namespace SPEEDCC
             this->setEncoding(oldEncoding);
         }
         
-        return *this ;
+        return *this;
     }
     
     const SCString& SCString::operator=(const int nNumber)
@@ -1581,10 +1516,10 @@ namespace SPEEDCC
         {
             auto nLen = str.size();
             
-            this->beforeWrite((int)nLen) ;
-            this->getStringDesc()->nUsedSize = nLen ;
+            this->beforeWrite((int)nLen);
+            this->getStringDesc()->nUsedSize = nLen;
             
-            ::memcpy(_pchStrData,str.c_str(),nLen) ;
+            ::memcpy(_pchStrData,str.c_str(),nLen);
         }
         
         return *this;
@@ -1600,10 +1535,10 @@ namespace SPEEDCC
         {
             auto nLen = encodingChar.getLength();
             
-            this->beforeWrite(nLen) ;
-            this->getStringDesc()->nUsedSize = nLen ;
+            this->beforeWrite(nLen);
+            this->getStringDesc()->nUsedSize = nLen;
             
-            ::memcpy(_pchStrData,encodingChar._charArray,nLen) ;
+            ::memcpy(_pchStrData,encodingChar._charArray,nLen);
         }
         
         this->getStringDesc()->encoding = encodingChar.getEncoding();
@@ -1628,26 +1563,6 @@ namespace SPEEDCC
         }
         
         return *this;
-        /*
-         const int nOldLen = this->getLength() ;
-         const int nExtraLen = str.getLength() ;
-         const int nNewLen = nOldLen + nExtraLen ;
-         
-         SCString strTem(*this) ;
-         
-         this->beforeWrite(nNewLen) ;
-         
-         if(_pchStrData!=strTem._pchStrData)
-         {
-         memcpy(_pchStrData,strTem._pchStrData,nOldLen) ;
-         }
-         
-         memcpy(((char*)_pchStrData)+nOldLen,(char*)str._pchStrData,nExtraLen) ;
-         
-         this->getStringDesc()->nUsedSize = nNewLen ;
-         
-         return *this ;
-         */
     }
     
     
@@ -1658,179 +1573,142 @@ namespace SPEEDCC
         (*this) = stream.str();
         
         return *this;
-        /*
-         SCString str(*this) ;
-         this->beforeWrite(sizeof(ch)+this->getLength()) ;
-         
-         memcpy(_pchStrData,str._pchStrData,str.getLength()) ;
-         char* pcEnd = ((char*)_pchStrData)+str.getLength() ;
-         *((char*)(pcEnd)+1) = *((char*)(pcEnd)) ;
-         *((char*)(pcEnd)) = ch ;
-         
-         this->getStringDesc()->nUsedSize = str.getLength() + sizeof(ch) ;
-         
-         return *this ;
-         */
     }
     
     const SCString& SCString::operator+=(const char* psz)
     {
         if(psz!=NULL)
         {
-            SCString str(psz) ;
-            *this += str ;
+            SCString str(psz);
+            *this += str;
         }
         
-        return *this ;
+        return *this;
     }
     
     const SCString& SCString::operator+=(const std::string& str)
     {
         SCString strResult(str);
-        
         *this += strResult;
-        
         return *this;
     }
     
     const SCString& SCString::operator+=(const int nNumber)
     {
         SCString str(nNumber);
-        *this += str ;
-        
+        *this += str;
         return *this;
     }
-    
-    //const SCString& SCString::operator+=(const float fNumber)
-    //{
-    //    SCString str(fNumber);
-    //    *this += str ;
-    //
-    //    return *this;
-    //}
     
     const SCString& SCString::operator+=(const unsigned uNumber)
     {
         SCString str(uNumber);
-        *this += str ;
-        
+        *this += str;
         return *this;
     }
     
     const SCString& SCString::operator+=(const SCEncodingChar& encodingChar)
     {
         SCString str(encodingChar);
-        *this += str ;
-        
+        *this += str;
         return *this;
     }
     
     SCString operator+(const SCEncodingChar& encodingChar,const SCString& str2)
     {
-        SCString strResult(encodingChar) ;
-        strResult += str2 ;
-        
-        return strResult ;
+        SCString strResult(encodingChar);
+        strResult += str2;
+        return strResult;
     }
     
     SCString operator+(const SCString& str2,const SCEncodingChar& encodingChar)
     {
-        SCString strResult(str2) ;
-        strResult += SCString(encodingChar) ;
-        
-        return strResult ;
+        SCString strResult(str2);
+        strResult += SCString(encodingChar);
+        return strResult;
     }
     
     SCString operator+(const SCString& str1,const SCString& str2)
     {
-        SCString strResult(str1) ;
-        strResult += str2 ;
-        
-        return strResult ;
+        SCString strResult(str1);
+        strResult += str2;
+        return strResult;
     }
     
     
     SCString operator+(const SCString& str,const char ch)
     {
-        SCString strResult(str) ;
-        strResult += ch ;
-        
-        return strResult ;
+        SCString strResult(str);
+        strResult += ch;
+        return strResult;
     }
     
     
     SCString operator+(const char ch,const SCString& str)
     {
-        SCString strResult(ch) ;
-        strResult += str ;
-        
-        return strResult ;
+        SCString strResult(ch);
+        strResult += str;
+        return strResult;
     }
     
     SCString operator+(const SCString& str, const char* psz)
     {
-        SCString strResult(str) ;
-        strResult += psz ;
-        
-        return strResult ;
+        SCString strResult(str);
+        strResult += psz;
+        return strResult;
     }
     
     SCString operator+(const char* psz, const SCString& str)
     {
-        SCString strResult(psz) ;
-        strResult += str ;
-        
-        return strResult ;
+        SCString strResult(psz);
+        strResult += str;
+        return strResult;
     }
     
     SCString operator+(const std::string& str1,const SCString& str2)
     {
-        SCString strResult(str1) ;
-        
+        SCString strResult(str1);
         strResult += str2;
-        
         return strResult;
     }
     
     SCString operator+(const SCString& str2,const std::string& str1)
     {
-        SCString strResult(str1) ;
-        
+        SCString strResult(str1);
         strResult = str2 + strResult;
-        
         return strResult;
     }
     
     bool SCString::operator==(const char* psz) const
     {
-        SCASSERT(psz!=NULL) ;
-        return strcmp((char*)psz,(char*)_pchStrData) ? false : true ;
+        SCASSERT(psz!=NULL);
+        return strcmp((char*)psz,(char*)_pchStrData) ? false : true;
     }
     
     bool SCString::operator==(char ch) const
     {
-        return (this->getLength()==1 && *((char*)_pchStrData)==ch) ;
+        return (this->getLength()==1 && *((char*)_pchStrData)==ch);
     }
     
     bool SCString::operator==(const std::string& str) const
     {
-        return strcmp((char*)str.c_str(),(char*)_pchStrData) ? false : true ;
+        return strcmp((char*)str.c_str(),(char*)_pchStrData) ? false : true;
     }
     
     bool SCString::operator!=(const char* psz) const
     {
-        SCASSERT(psz!=NULL) ;
-        return !((*this)==psz) ;
+        SCASSERT(psz!=NULL);
+        return !((*this)==psz);
     }
     
     bool SCString::operator!=(char ch) const
     {
-        return !((*this)==ch) ;
+        return !((*this)==ch);
     }
     
     bool SCString::operator!=(const std::string& str) const
     {
-        return !((*this)==str) ;
+        return !((*this)==str);
     }
     
     bool SCString::operator<(const SCString& str) const
@@ -1855,15 +1733,15 @@ namespace SPEEDCC
     
     int SCString::compareNoCase(const char* psz) const
     {
-        SCASSERT(psz!=NULL) ;
+        SCASSERT(psz!=NULL);
         
-        SCString str1(*this) ;
-        SCString str2(psz) ;
+        SCString str1(*this);
+        SCString str2(psz);
         
-        str1.makeLower() ;
-        str2.makeLower() ;
+        str1.makeLower();
+        str2.makeLower();
         
-        return strcmp((char*)str1._pchStrData,(char*)str2._pchStrData) ;
+        return strcmp((char*)str1._pchStrData,(char*)str2._pchStrData);
     }
     
     int SCString::compareNoCase(const std::string& str) const
@@ -1883,7 +1761,7 @@ namespace SPEEDCC
             nCount = 0;
         }
         
-        const int nCharCount = this->getLength() ;
+        const int nCharCount = this->getLength();
         
         if (nFirst + nCount > nCharCount)
         {
@@ -1904,12 +1782,12 @@ namespace SPEEDCC
         
         if(nCount>0)
         {
-            strResult.beforeWrite(nCount+2) ;
-            ::memcpy(strResult._pchStrData,(char*)_pchStrData+nFirst,nCount) ;
-            strResult.getStringDesc()->nUsedSize = nCount ;
+            strResult.beforeWrite(nCount+2);
+            ::memcpy(strResult._pchStrData,(char*)_pchStrData+nFirst,nCount);
+            strResult.getStringDesc()->nUsedSize = nCount;
         }
         
-        return strResult ;
+        return strResult;
     }
     
     SCString SCString::left(int nCount) const
@@ -1926,7 +1804,7 @@ namespace SPEEDCC
     {
         SC_RETURN_IF_V(this->getLength()==0);
         
-        this->cloneBeforeWrite() ;
+        this->cloneBeforeWrite();
         
         char* p = _pchStrData;
         while ((*p = toupper(*p))) p++;
@@ -1937,7 +1815,7 @@ namespace SPEEDCC
     {
         SC_RETURN_IF_V(this->getLength()==0);
         
-        this->cloneBeforeWrite() ;
+        this->cloneBeforeWrite();
         
         char* p = _pchStrData;
         while ((*p = tolower(*p))) p++;
@@ -1949,8 +1827,8 @@ namespace SPEEDCC
         
         if(this->getLength()>0 && strSep.getLength()>0)
         {
-            int nStart = 0 ;
-            int nPos = 0 ;
+            int nStart = 0;
+            int nPos = 0;
             
             std::list<SCString> strList;
             while(1)

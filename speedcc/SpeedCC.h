@@ -15,5 +15,6 @@
 #include "base/SCDataBlock.h"
 #include "base/SCDateTime.h"
 #include "base/SCValue.h"
+#include "base/SCObjPtrT.h"
 
 #endif // __SC__SPEEDCC_H__
