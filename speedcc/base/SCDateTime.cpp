@@ -9,7 +9,7 @@
 
 //#include "../platform/SCOSSystem.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     enum
     {

@@ -2,7 +2,7 @@
 
 #include "SCComponent.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     
 }

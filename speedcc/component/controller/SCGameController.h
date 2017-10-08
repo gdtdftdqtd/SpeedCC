@@ -6,7 +6,7 @@
 #include "../SCComponent.h"
 #include "SCNavigationController.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCGameController : public SCComponent
     {

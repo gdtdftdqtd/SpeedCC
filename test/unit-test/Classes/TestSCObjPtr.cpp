@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "SpeedCC.h"
 
-using namespace SPEEDCC;
+using namespace SpeedCC;
 
 int s_ACounter = 0;
 bool s_AFoo = false;

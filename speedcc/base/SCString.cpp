@@ -10,7 +10,7 @@
 #define strinc(pc) ((pc)+1)
 #endif
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     
     ///-------- SCEncodingChar

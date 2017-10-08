@@ -7,7 +7,7 @@
 
 #include "SCString.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     ///------------ SCError
     

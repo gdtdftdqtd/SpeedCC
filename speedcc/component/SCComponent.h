@@ -6,18 +6,18 @@
 #include "../base/SCObjPtrT.h"
 #include "../base/SCString.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCComponent
     {
-    private:
+    protected:
+        SC_AVOID_CLASS_COPY(SCComponent);
         SCComponent():
         _bCastInherit(false)
         {}
         
     public:
-        typedef SCObjPtrT<SCComponent>            Ptr;
-        typedef SCObjPtrT<SCComponent,false>      WeakPtr;
+        SC_DEFINE_CLASS_PTR(SCComponent);
         
 #ifdef SPEEDCC_TEST_MODE
         static Ptr create(bool bInherit=false)

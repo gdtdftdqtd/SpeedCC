@@ -8,7 +8,7 @@
 #include "SCMacroDef.h"
 #include "SCMemAllocator.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     template<typename T,bool isClass=(std::is_class<T>::value || SCIsEmptyClassT<T>::value || SCIsNullClassT<T>::value) >
     struct SCDataTypeLifeCycle

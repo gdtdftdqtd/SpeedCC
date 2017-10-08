@@ -5,7 +5,7 @@
 #include <memory>
 #include <mutex>
 
-namespace SPEEDCC
+namespace SpeedCC
 {
 #ifdef SPEEDCC_FEATURE_MEMORY_POOL_THREAD_SAFE
     static std::mutex* s_pLock = NULL;

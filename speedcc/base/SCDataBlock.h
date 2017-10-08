@@ -6,7 +6,7 @@
 #include "SCString.h"
 #include "SCBufferRefT.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCDataBlock final : public SCBufferRefT<SCDataBlock>
     {

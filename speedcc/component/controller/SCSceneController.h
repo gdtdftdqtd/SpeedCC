@@ -5,7 +5,7 @@
 
 #include "../SCComponent.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCSceneController : public SCComponent
     {

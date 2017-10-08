@@ -7,7 +7,7 @@
 #include "SCObjRefT.h"
 #include "SCMacroDef.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCComponent;
     

@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "SpeedCC.h"
 
-using namespace SPEEDCC;
+using namespace SpeedCC;
 
 struct STimeInfo
 {

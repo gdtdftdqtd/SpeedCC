@@ -7,7 +7,7 @@
 #include <vector>
 #include <functional>
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCString;
     

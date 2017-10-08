@@ -6,7 +6,7 @@
 
 #include "SCObjRefT.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     template<typename TargetClassT>
     class SCBufferRefT : public SCObjRefT<SCClassEmpty,int>

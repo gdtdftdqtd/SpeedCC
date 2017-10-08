@@ -2,7 +2,7 @@
 
 #include "SCSceneController.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     
 }

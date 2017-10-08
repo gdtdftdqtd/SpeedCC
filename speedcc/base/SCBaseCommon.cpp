@@ -3,7 +3,7 @@
 #include "SCMacroDef.h"
 //#include "SCBufferRefT.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     ///------------ SCBufferRefT
     

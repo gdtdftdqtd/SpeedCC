@@ -14,7 +14,7 @@
 #include <stack>
 #include <stdlib.h>
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCPoolAllocator
     {

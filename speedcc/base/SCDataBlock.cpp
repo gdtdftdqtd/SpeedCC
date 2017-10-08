@@ -4,7 +4,7 @@
 #include "SCMemAllocator.h"
 #include "SCMacroDef.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     SCDataBlock::SCDataBlock()
     {

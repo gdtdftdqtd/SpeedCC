@@ -7,7 +7,7 @@
 #include <limits>
 #include "SCMacroDef.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCString;
     class SCDateTimeSpan;

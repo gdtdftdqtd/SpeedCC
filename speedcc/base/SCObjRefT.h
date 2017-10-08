@@ -7,7 +7,7 @@
 #include "SCTemplateUtils.h"
 #include "SCMemAllocator.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     template<typename StubT=SCClassEmpty,typename CookieT=SCClassEmpty>
     class SCObjRefT

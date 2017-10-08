@@ -109,9 +109,9 @@
     _class_(const _class_&)= delete; \
     _class_& operator=(const _class_&)= delete
 
-#define SC_DEFINE_OBJPTR(_class_) \
-    class _class_;\
-    typedef SCObjPtrT<_class_>      _class_##Ptr
+#define SC_DEFINE_CLASS_PTR(_class_) \
+    typedef SCObjPtrT<_class_>              Ptr; \
+    typedef SCObjPtrT<_class_,false>        WeakPtr
 
 #define SC_TRAIT_PTR_CLASS(_ptr_) \
     decltype(std::remove_reference<std::remove_const<_ptr_>::type>::type)::type

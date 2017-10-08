@@ -6,7 +6,7 @@
 
 #include <type_traits>
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     // atom special class
     struct SCClassNull;

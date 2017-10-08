@@ -2,7 +2,7 @@
 
 #include "SCGameController.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     
 }

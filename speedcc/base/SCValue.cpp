@@ -5,7 +5,7 @@
 #include "SCDateTime.h"
 #include "SCMacroDef.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     SCValue::SCValue()
     {

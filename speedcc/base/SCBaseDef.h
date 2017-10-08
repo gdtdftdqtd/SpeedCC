@@ -5,7 +5,7 @@
 
 #include "SCMacroDef.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     ///-------------------- enum definition
     enum EMessageType

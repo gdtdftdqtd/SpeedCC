@@ -5,7 +5,7 @@
 
 #include "SCObjRefT.h"
 
-namespace SPEEDCC
+namespace SpeedCC
 {
     class SCDateTime;
     class SCDataBlock;
