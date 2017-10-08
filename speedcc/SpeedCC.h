@@ -1,7 +1,7 @@
 
 
-#ifndef __SC__SPEEDCC_H__
-#define __SC__SPEEDCC_H__
+#ifndef __SPEEDCC__SPEEDCC_H__
+#define __SPEEDCC__SPEEDCC_H__
 
 ///////////////////////////////////////////////////////////////////////////////
 /// SPEEDCC version
@@ -17,4 +17,6 @@
 #include "base/SCValue.h"
 #include "base/SCObjPtrT.h"
 
-#endif // __SC__SPEEDCC_H__
+#include "component/SCComponent.h"
+
+#endif // __SPEEDCC__SPEEDCC_H__

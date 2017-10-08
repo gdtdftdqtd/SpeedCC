@@ -1,7 +1,7 @@
 
 
-#ifndef __SC__DATABLOCK_H__
-#define __SC__DATABLOCK_H__
+#ifndef __SPEEDCC__SCDATABLOCK_H__
+#define __SPEEDCC__SCDATABLOCK_H__
 
 #include "SCString.h"
 #include "SCBufferRefT.h"
@@ -19,4 +19,4 @@ namespace SPEEDCC
     };
 }
 
-#endif // __SC__DATABLOCK_H__
+#endif // __SPEEDCC__SCDATABLOCK_H__

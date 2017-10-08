@@ -29,6 +29,8 @@
 #define SCASSERT(_condition_)
 #endif
 
+// SPEEDCC_TEST_MODE
+
 /// assert at compile time
 #define SCASSERTCT(_condition_) \
     do { char SCASSERTArrayCT[(_condition_)?1:-1];SCASSERTArrayCT[0]=0;} while(0)
@@ -110,6 +112,9 @@
 #define SC_DEFINE_OBJPTR(_class_) \
     class _class_;\
     typedef SCObjPtrT<_class_>      _class_##Ptr
+
+#define SC_TRAIT_PTR_CLASS(_ptr_) \
+    decltype(std::remove_reference<std::remove_const<_ptr_>::type>::type)::type
 
 ///--------- SPEEDCCD version
 #define SPEEDCC_VERSION_MAJOR                       ((SPEEDCC_VERSION & 0x00ff0000)>>(4*4))

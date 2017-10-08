@@ -39,12 +39,6 @@ namespace SPEEDCC
         
         inline int getRefCount() const {return _pData==NULL ? 0 : this->getCookieDesc()->nRefs;}
         
-        inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
-        inline const CookieT* getCookie() const {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
-        
-        inline StubT* getStub() {return (StubT*)_pData;}
-        inline const StubT* getStub() const {return (StubT*)_pData;}
-        
         void assign(const SCObjRefT<StubT,CookieT>& ref);
         const SCObjRefT<StubT,CookieT>& operator=(const SCObjRefT<StubT,CookieT>& data);
         
@@ -52,17 +46,24 @@ namespace SPEEDCC
         
         inline bool isValid() const {return (_pData!=NULL);}
         void createInstance();
+        void createInstanceWithCon(const std::function<void(void*)>& func);
         
-        template<typename A1>
-        void createInstance(A1 arg1);
-        
-        template<typename A1,typename A2>
-        void createInstance(A1 arg1,A2 arg2);
-        
-        template<typename A1,typename A2,typename A3>
-        void createInstance(A1 arg1,A2 arg2,A3 arg3);
+//        template<typename A1>
+//        void createInstance(A1 arg1);
+//        
+//        template<typename A1,typename A2>
+//        void createInstance(A1 arg1,A2 arg2);
+//        
+//        template<typename A1,typename A2,typename A3>
+//        void createInstance(A1 arg1,A2 arg2,A3 arg3);
         
     protected:
+        inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
+        inline const CookieT* getCookie() const {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
+        
+        inline StubT* getStub() {return (StubT*)_pData;}
+        inline const StubT* getStub() const {return (StubT*)_pData;}
+        
         void clone4Write();
         int increaseRef() const;
         int decreaseRef();
@@ -131,6 +132,21 @@ namespace SPEEDCC
     }
     
     template<typename StubT,typename CookieT>
+    void SCObjRefT<StubT,CookieT>::createInstanceWithCon(const std::function<void(void*)>& func)
+    {
+        this->decreaseRef();
+        this->allocBuf();
+        
+        if(func!=NULL)
+        {
+            func(_pData);
+        }
+    }
+    
+    // void createInstanceWithCon(const std::function<void(void*)>& func)
+    
+    /*
+    template<typename StubT,typename CookieT>
     template<typename A1>
     void SCObjRefT<StubT,CookieT>::createInstance(A1 arg1)
     {
@@ -148,6 +164,7 @@ namespace SPEEDCC
         SCDataTypeLifeCycle<StubT>::construct(_pData,arg1,arg2);
     }
     
+    
     template<typename StubT,typename CookieT>
     template<typename A1,typename A2,typename A3>
     void SCObjRefT<StubT,CookieT>::createInstance(A1 arg1,A2 arg2,A3 arg3)
@@ -156,6 +173,7 @@ namespace SPEEDCC
         this->allocBuf();
         SCDataTypeLifeCycle<StubT>::construct(_pData,arg1,arg2,arg3);
     }
+     */
     
     template<typename StubT,typename CookieT>
     void SCObjRefT<StubT,CookieT>::allocBuf(int nSize)

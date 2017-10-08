@@ -9,11 +9,16 @@
 
 namespace SPEEDCC
 {
+    class SCComponent;
+    
     template<typename TargetT,bool IsStrong=true>
     class SCObjPtrT : public SCObjRefT<TargetT>
     {
         template<typename T,bool s> friend class SCObjPtrT;
+        friend class SCComponent;
     public:
+        typedef TargetT type;
+        
         SCObjPtrT(){}
         SCObjPtrT(std::nullptr_t){}
         
@@ -77,7 +82,7 @@ namespace SPEEDCC
         }
         
         template<typename T2>
-        SCObjPtrT<T2> cast()
+        SCObjPtrT<T2> cast() const
         {
             SC_RETURN_IF(this->_pData==NULL,NULL);
             
@@ -100,8 +105,9 @@ namespace SPEEDCC
     {
         template<typename T,bool s> friend class SCObjPtrT;
     public:
-        SCObjPtrT(void)
-        {}
+        typedef TargetT type;
+        
+        SCObjPtrT(void){}
         
         SCObjPtrT(void* p)
         {
@@ -189,9 +195,9 @@ namespace SPEEDCC
         }
         
         template<typename T2>
-        SCObjPtrT<T2,false> cast()
+        SCObjPtrT<T2,false> cast() const
         {
-//            SC_RETURN_IF(std::is_same<T2,TargetT>::value,*this);
+            SC_RETURN_IF((SCIsSameTypeT<T2,TargetT>::value),(*this));
             SC_RETURN_IF(_pData==NULL || (*(this->getStub()))==NULL,NULL);
             
             TargetT* p1 = (TargetT*)(*(this->getStub()));
@@ -213,16 +219,16 @@ namespace SPEEDCC
             return (this->_pData==NULL) ? NULL : ((TargetT*)(*(this->getStub())));
         }
         
-        void createInstance() = delete;
-        
-        template<typename A1>
-        void createInstance(A1 arg1) = delete;
-        
-        template<typename A1,typename A2>
-        void createInstance(A1 arg1,A2 arg2) = delete;
-
-        template<typename A1,typename A2,typename A3>
-        void createInstance(A1 arg1,A2 arg2,A3 arg3) = delete;
+//        void createInstance() = delete;
+//        
+//        template<typename A1>
+//        void createInstance(A1 arg1) = delete;
+//        
+//        template<typename A1,typename A2>
+//        void createInstance(A1 arg1,A2 arg2) = delete;
+//
+//        template<typename A1,typename A2,typename A3>
+//        void createInstance(A1 arg1,A2 arg2,A3 arg3) = delete;
         
     };
     
