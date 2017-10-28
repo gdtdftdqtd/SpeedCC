@@ -20,7 +20,15 @@ namespace SpeedCC
         typedef TargetT type;
         
         SCObjPtrT(){}
-        SCObjPtrT(std::nullptr_t){}
+        SCObjPtrT(std::nullptr_t p){}
+        explicit SCObjPtrT(void* p)
+        {
+            if(p!=NULL)
+            {
+                this->_pData = p;
+                this->increaseRef();
+            }
+        }
         
         SCObjPtrT(const SCObjPtrT& ptr)
         {
@@ -46,6 +54,16 @@ namespace SpeedCC
         }
         
         TargetT* operator->()
+        {
+            return this->getStub();
+        }
+        
+//        TargetT* operator=(SCObjPtrT<TargetT,true> data)
+//        {
+//            return (TargetT*)data.getStub();
+//        }
+        
+        TargetT* getRawPointer()
         {
             return this->getStub();
         }
@@ -218,18 +236,6 @@ namespace SpeedCC
         {
             return (this->_pData==NULL) ? NULL : ((TargetT*)(*(this->getStub())));
         }
-        
-//        void createInstance() = delete;
-//        
-//        template<typename A1>
-//        void createInstance(A1 arg1) = delete;
-//        
-//        template<typename A1,typename A2>
-//        void createInstance(A1 arg1,A2 arg2) = delete;
-//
-//        template<typename A1,typename A2,typename A3>
-//        void createInstance(A1 arg1,A2 arg2,A3 arg3) = delete;
-        
     };
     
     // strong

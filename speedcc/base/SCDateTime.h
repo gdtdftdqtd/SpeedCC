@@ -96,7 +96,7 @@ namespace SpeedCC
         SCDateTime();
         
         // specifier refer to: https://www.gnu.org/software/libc/manual/html_node/Low_002dLevel-Time-String-Parsing.html
-        SCDateTime(const SCString& strDateTime,const SCString& strFormat);
+        SCDateTime(const SCString& strDateTime,const SCString& strFormat="%Y-%m-%d %h:%M");
         SCDateTime(const SCDateTime& dt);
         SCDateTime(const SCDateTime::Date& d,const SCDateTime::Time& t=Time(0,0,0,0));
         SCDateTime(const time_t& time);

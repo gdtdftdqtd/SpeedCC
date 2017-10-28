@@ -142,6 +142,54 @@ namespace SpeedCC
             default: break;
         }
     }
+    
+    ///------------- SCParameters
+    SCValue& SCParameters::operator[](const SCString& strKey)
+    {
+        SCASSERT(!strKey.isEmpty());
+        return (*this->getStub())[strKey];
+    }
+    
+    SCValue SCParameters::operator[](SCString& strKey)
+    {
+        SCASSERT(!strKey.isEmpty());
+        return (*this->getStub())[strKey];
+    }
+    
+    void SCParameters::setValue(const SCString& strKey,const SCValue& value)
+    {
+        SCASSERT(!strKey.isEmpty());
+        (*this->getStub())[strKey] = value;
+    }
+    
+    SCValue SCParameters::getValue(const SCString& strKey)
+    {
+        SCASSERT(!strKey.isEmpty());
+        return (*this->getStub())[strKey];
+    }
+    
+    bool SCParameters::hasKey(const SCString& strKey) const
+    {
+        SCASSERT(!strKey.isEmpty());
+        const auto& it = this->getStub()->find(strKey);
+        return (this->getStub()->end()!=it);
+    }
+    
+    void SCParameters::removeKey(const SCString& strKey)
+    {
+        SCASSERT(!strKey.isEmpty());
+        this->getStub()->erase(strKey);
+    }
+    
+    void SCParameters::removeAllKey()
+    {
+        this->getStub()->clear();
+    }
+    
+    bool SCParameters::isEmpty()
+    {
+        return this->getStub()->empty();
+    }
 }
 
 

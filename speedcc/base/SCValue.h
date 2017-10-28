@@ -1,9 +1,10 @@
 
 
-#ifndef __SC__SCValue_H__
-#define __SC__SCValue_H__
+#ifndef __SPEEDCC__SCVALUE_H__
+#define __SPEEDCC__SCVALUE_H__
 
 #include "SCObjRefT.h"
+#include "../base/SCString.h"
 
 namespace SpeedCC
 {
@@ -15,14 +16,17 @@ namespace SpeedCC
     {
         union
         {
-            void*       pObject;
-            long long   llValue;
-            int         nValue;
-            float       fValue;
-            bool        bValue;
-            long        lValue;
-            double      dValue;
-            void*       pValue;
+            void*           pObject;
+            long long       llValue;
+            char            cValue;
+            unsigned char   byValue;
+            int             nValue;
+            unsigned int    uValue;
+            float           fValue;
+            bool            bValue;
+            long            lValue;
+            double          dValue;
+            void*           pValue;
         }data;
         int (*pfunDestroyFunctor_t)(void*);
         
@@ -48,7 +52,10 @@ namespace SpeedCC
         enum EType
         {
             UNKNOWN_TYPE = 0,
+            BTYE_TYPE,
+            CHAR_TYPE,
             INT_TYPE,
+            UINT_TYPE,
             LONG_TYPE,
             LONGLONG_TYPE,
             BOOL_TYPE,
@@ -59,26 +66,49 @@ namespace SpeedCC
             DATETIME_TYPE,
             DATABLOCK_TYPE,
             ARRAY_TYPE,
-            VALUE_TYPE,
             OBJECT_TYPE
         };
         
         SCValue();
-        SCValue(const int nValue);
-        SCValue(const bool bValue);
-        SCValue(const float fValue);
-        SCValue(const double dValue);
-        SCValue(void* const pValue);
+        explicit SCValue(const char cValue);
+        explicit SCValue(const unsigned char byValue);
+        explicit SCValue(const unsigned int nValue);
+        explicit SCValue(const int nValue);
+        explicit SCValue(const bool bValue);
+        explicit SCValue(const float fValue);
+        explicit SCValue(const double dValue);
+        explicit SCValue(const long lValue);
+        explicit SCValue(const long long llValue);
+        explicit SCValue(void* const pValue);
         SCValue(const SCString& strValue);
-        SCValue(const char* pszValue);
-        SCValue(SCDateTime& dateTime);
-        SCValue(const SCDataBlock& dataBlock);
-        SCValue(const std::vector<SCValue>& valueVtr);
+        explicit SCValue(const char* pszValue);
+        explicit SCValue(SCDateTime& dateTime);
+        explicit SCValue(const SCDataBlock& dataBlock);
+        explicit SCValue(const std::vector<SCValue>& valueVtr);
         
         virtual ~SCValue();
         
         inline EType getType() const {return (EType)*this->getCookie();}
         
+        char getChar(bool* pResult=NULL,const bool bExactMatch=false) const;
+        unsigned char getByte(bool* pResult=NULL,const bool bExactMatch=false) const;
+        unsigned int getUnsignedInt(bool* pResult=NULL,const bool bExactMatch=false) const;
+        int getInt(bool* pResult=NULL,const bool bExactMatch=false) const;
+        long getLong(bool* pResult=NULL,const bool bExactMatch=false) const;
+        bool getBool(bool* pResult=NULL,const bool bExactMatch=false) const;
+        float getFloat(bool* pResult=NULL,const bool bExactMatch=false) const;
+        double getDouble(bool* pResult=NULL,const bool bExactMatch=false) const;
+        void* getPointer(bool* pResult=NULL,const bool bExactMatch=false) const;
+        long long getLongLong(bool* pResult=NULL,const bool bExactMatch=false) const;
+        SCString getString(bool* pResult=NULL,const bool bExactMatch=false) const;
+        SCDataBlock getDataBlock(bool* pResult=NULL,const bool bExactMatch=false) const;
+        SCDateTime getDateTime(bool* pResult=NULL,const bool bExactMatch=false) const;
+        std::vector<SCValue> getArray(bool* pResult=NULL,const bool bExactMatch=false) const;
+        
+        /*
+        bool getChar(char& cValue) const;
+        bool getByte(unsigned char& byValue) const;
+        bool getUnsignedInt(unsigned int& uValue) const;
         bool getInt(int& nValue) const;
         bool getLong(long& lValue) const;
         bool getBool(bool& bValue) const;
@@ -90,21 +120,38 @@ namespace SpeedCC
         bool getDataBlock(SCDataBlock& db) const;
         bool getDateTime(SCDateTime& dateTime) const;
         bool getArray(std::vector<SCValue>& valueVtr) const;
-        bool getValue(SCValue& value);
+         */
         
-        void setInt(const int& nValue);
-        void setLong(const long& lValue);
-        void setBool(const bool& bValue);
-        void setFloat(const float& fValue);
-        void setDouble(const double& dValue);
+        void setChar(const char cValue);
+        void setByte(const unsigned char byValue);
+        void setUnsignedInt(const unsigned int uValue);
+        void setInt(const int nValue);
+        void setLong(const long lValue);
+        void setBool(const bool bValue);
+        void setFloat(const float fValue);
+        void setDouble(const double dValue);
         void setPointer(void* const pValue);
-        void setLongLong(long long& llValue);
+        void setLongLong(long long llValue);
         void setString(const SCString& strValue);
         void setString(const char* pszValue);
         void setDataBlock(const SCDataBlock& db);
         void setDateTime(const SCDateTime& dateTime);
-        void setArray(const std::vector<SCValue>& valueVtr);
-        void setValue(const SCValue& value);
+        void setArray(const std::vector<SCValue>& valueVcr);
+        
+        SCValue& operator=(const unsigned char byValue);
+        SCValue& operator=(const int nValue);
+        SCValue& operator=(const unsigned int uValue);
+        SCValue& operator=(const long lValue);
+        SCValue& operator=(const bool bValue);
+        SCValue& operator=(const float fValue);
+        SCValue& operator=(const double dValue);
+        SCValue& operator=(void* const pValue);
+        SCValue& operator=(const long long llValue);
+        SCValue& operator=(const SCString& strValue);
+        SCValue& operator=(const char* pszValue);
+        SCValue& operator=(const SCDataBlock& db);
+        SCValue& operator=(const SCDateTime& dateTime);
+        SCValue& operator=(const std::vector<SCValue>& valueVcr);
         
         template<typename ObjectT>
         bool isValidObject() const
@@ -119,22 +166,30 @@ namespace SpeedCC
         }
         
         template<typename ObjectT>
-        bool getObject(ObjectT& value) const
+        ObjectT getObject(bool* pResult=NULL) const
         {
+            if(pResult!=NULL)
+            {
+                *pResult = false;
+            }
+            
             if(this->getCookieDesc()->cookie!=OBJECT_TYPE)
             {
-                return false;
+                return ObjectT();
             }
             
             const SCValueStub& stub = *(this->getStub());
             
             if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycle<ObjectT>::destroy)
             {
-                return false;
+                return ObjectT();
             }
             
-            value = *((ObjectT*)(stub.data.pObject));
-            return true;
+            if(pResult!=NULL)
+            {
+                *pResult = true;
+            }
+            return *((ObjectT*)(stub.data.pObject));
         }
         
         template<typename ObjectT>
@@ -156,15 +211,64 @@ namespace SpeedCC
             return true;
         }
         
-        template<typename ObjectT>
+        static SCValue create(const SCValue& value)
+        {
+            return value;
+        }
+        
+        static SCValue create(const char value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(const unsigned char value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(const int value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(const unsigned int value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(const float value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(const double value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(const long value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(const long long value)
+        {
+            return SCValue(value);
+        }
+        
+        static SCValue create(void* const value)
+        {
+            return SCValue(value);
+        }
+        
+        template<typename ObjectT,bool IsClass=std::is_class<ObjectT>::value>
         static SCValue create(const ObjectT& value)
         {
             SCValue ret;
             auto type = (SCIsSameTypeT<ObjectT, SCString>::value ? STRING_TYPE :
                          (SCIsSameTypeT<ObjectT, SCDataBlock>::value ? DATABLOCK_TYPE :
                           (SCIsSameTypeT<ObjectT, SCDateTime>::value ? DATETIME_TYPE :
-                           (SCIsSameTypeT<ObjectT, std::vector<SCValue>>::value) ? ARRAY_TYPE :
-                           (SCIsSameTypeT<ObjectT, SCValue>::value) ? VALUE_TYPE : OBJECT_TYPE)));
+                           (SCIsSameTypeT<ObjectT, std::vector<SCValue>>::value) ? ARRAY_TYPE : OBJECT_TYPE)));
             
             ret.getCookieDesc()->cookie = type;
             SCValueStub& stub = *(ret.getStub());
@@ -180,8 +284,7 @@ namespace SpeedCC
         
     private:
         void check4Write();
-        
     };
 }
 
-#endif // __SC__SCValue_H__
+#endif // __SPEEDCC__SCVALUE_H__

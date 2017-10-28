@@ -65,6 +65,8 @@ TEST(TestSCObjPtr, StrongLifecycle)
     resetVar();
     {
         SCObjPtrT<ObjPtrA> APtr;
+//        ObjPtrA* p = APtr.getRawPointer();
+        std::shared_ptr<int> kk;
         EXPECT_EQ(s_ACounter,0);
         APtr.createInstance();
         EXPECT_EQ(s_ACounter,1);
@@ -172,7 +174,7 @@ TEST(TestSCObjPtr, Assigment)
     {
         ObjPtrA* p = new ObjPtrA();
         APtr1 = p;
-        EXPECT_EQ(APtr1==p,true);
+        EXPECT_EQ((APtr1==p),true);
         EXPECT_EQ(APtr1!=NULL,true);
         EXPECT_EQ(APtr1.getRefCount(),1);
     }

@@ -6,11 +6,11 @@
 #define __SC__BASECOMMON_H__
 
 #include "SCString.h"
+#include "SCValue.h"
 
 namespace SpeedCC
 {
     ///------------ SCError
-    
     struct SCError
     {
     public:
@@ -25,7 +25,6 @@ namespace SpeedCC
     };
     
     ///------------- SCVersionInfo
-    
     struct SCVersionInfo
     {
         int nMajor;
@@ -50,6 +49,21 @@ namespace SpeedCC
         void setString(const SCString& strVersion);
     };
     
+    ///------------- SCParameters
+    class SCParameters : public SCObjRefT<std::map<SCString,SCValue> >
+    {
+    public:
+        SCValue& operator[](const SCString& strKey);
+        SCValue operator[](SCString& strKey);
+        
+        void setValue(const SCString& strKey,const SCValue& value);
+        SCValue getValue(const SCString& strKey);
+        
+        bool hasKey(const SCString& strKey) const;
+        void removeKey(const SCString& strKey);
+        void removeAllKey();
+        bool isEmpty();
+    };
 }
 
 #endif // __SC__BASECOMMON_H__

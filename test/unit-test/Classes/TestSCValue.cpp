@@ -21,6 +21,7 @@ TEST(TestSCValue, Constructor)
     SCValue value7(dtTest);
     SCValue value8(dbTest);
     
+    bool bResult = false;
     int nTem = 0;
     bool bTem = false;
     long lTem = 0;
@@ -35,27 +36,33 @@ TEST(TestSCValue, Constructor)
     EXPECT_EQ(value1.getRefCount(), 1);
     
     EXPECT_EQ(value2.getType(), SCValue::INT_TYPE);
-    EXPECT_EQ(value2.getInt(nTem), true);
-    EXPECT_EQ(nTem, 123);
-    EXPECT_EQ(value2.getLong(lTem), false);
+    EXPECT_EQ(value2.getInt(&bResult), 123);
+    EXPECT_EQ(bResult, true);
+    value2.getLong(&bResult);
+    EXPECT_EQ(bResult, false);
     EXPECT_EQ(value2.getRefCount(), 1);
     
     EXPECT_EQ(value3.getType(), SCValue::BOOL_TYPE);
-    EXPECT_EQ(value3.getBool(bTem), true);
-    EXPECT_EQ(bTem, true);
-    EXPECT_EQ(value3.getLong(lTem), false);
+    EXPECT_EQ(value3.getBool(&bResult), true);
+    EXPECT_EQ(bResult, true);
+    value3.getLong(&bResult);
+    EXPECT_EQ(bResult, false);
     EXPECT_EQ(value3.getRefCount(), 1);
     
     EXPECT_EQ(value4.getType(), SCValue::FLOAT_TYPE);
-    EXPECT_EQ(value4.getFloat(fTem), true);
-    EXPECT_EQ(fTem, 1.23f);
-    EXPECT_EQ(value4.getLong(lTem), false);
+    EXPECT_EQ(value4.getFloat(&bResult), 1.23f);
+    EXPECT_EQ(bResult, 1.23f);
+//    EXPECT_EQ(value4.getLong(lTem), false);
+    value4.getLong(&bResult);
+    EXPECT_EQ(bResult, false);
     EXPECT_EQ(value4.getRefCount(), 1);
     
     EXPECT_EQ(value5.getType(), SCValue::STRING_TYPE);
-    EXPECT_EQ(value5.getString(strValue), true);
-    EXPECT_STREQ(strValue,"abc");
-    EXPECT_EQ(value5.getLong(lTem), false);
+    EXPECT_EQ(value5.getString(&bResult), "abc");
+    EXPECT_STREQ(bResult,true);
+//    EXPECT_EQ(value5.getLong(lTem), false);
+    value5.getLong(&bResult);
+    EXPECT_EQ(bResult, false);
     EXPECT_EQ(value5.getRefCount(), 1);
     
     EXPECT_EQ(value6.getType(), SCValue::DOUBLE_TYPE);
@@ -198,9 +205,9 @@ TEST(TestSCValue, Assignment)
     const SCValue valueTest(123);
     SCValue value2;
     nValue = 0;
-    value1.setValue(valueTest);
-    EXPECT_EQ(value1.getType(),SCValue::VALUE_TYPE);
-    EXPECT_EQ(value1.getValue(value2),true);
+//    value1.setValue(valueTest);
+//    EXPECT_EQ(value1.getType(),SCValue::VALUE_TYPE);
+//    EXPECT_EQ(value1.getValue(value2),true);
     EXPECT_EQ(value2.getType(),SCValue::INT_TYPE);
     EXPECT_EQ(value2.getInt(nValue),true);
     EXPECT_EQ(nValue,123);

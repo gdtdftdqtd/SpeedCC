@@ -17,7 +17,4 @@
 #include "base/SCValue.h"
 #include "base/SCObjPtrT.h"
 
-#include "component/SCComponent.h"
-#include "component/ui/SCGeometry.h"
-
 #endif // __SPEEDCC__SPEEDCC_H__

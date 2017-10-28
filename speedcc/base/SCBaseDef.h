@@ -31,6 +31,9 @@ namespace SpeedCC
     class SCMessageInfo;
     
     typedef void (SCMessageListener::*SCFUN_MessageListen_t)(SCMessageInfo& msg);
+    
+    ///-------------------- type definition
+//    typedef std::map<SCString,SCValue>      SCParameters;
 }
 
 

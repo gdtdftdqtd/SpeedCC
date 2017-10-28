@@ -113,8 +113,20 @@
     typedef SCObjPtrT<_class_>              Ptr; \
     typedef SCObjPtrT<_class_,false>        WeakPtr
 
-#define SC_TRAIT_PTR_CLASS(_ptr_) \
-    decltype(std::remove_reference<std::remove_const<_ptr_>::type>::type)::type
+#define SC_PTR_HAS_CLASS(_ptr_,_class_) \
+    ((_ptr_).cast<_class_>()!=NULL)
+
+#define SC_DECLEAR_COMPONENT_ID \
+    public: \
+    static const char* CMP_ID; \
+    virtual SCString getID() const {return CMP_ID;}
+
+#define SC_DEFINE_COMPONENT_ID(_class_) \
+    const char* _class_::CMP_ID = #_class_
+
+
+//#define SC_TRAIT_PTR_CLASS(_ptr_) \
+//    decltype(std::remove_reference<std::remove_const<_ptr_>::type>::type)::type
 
 ///--------- SPEEDCCD version
 #define SPEEDCC_VERSION_MAJOR                       ((SPEEDCC_VERSION & 0x00ff0000)>>(4*4))

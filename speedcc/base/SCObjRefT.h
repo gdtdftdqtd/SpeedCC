@@ -48,6 +48,8 @@ namespace SpeedCC
         void createInstance();
         void createInstanceWithCon(const std::function<void(void*)>& func);
         
+        template<class ..._Args>
+        void createInstance(_Args&& ...__args);
 //        template<typename A1>
 //        void createInstance(A1 arg1);
 //        
@@ -143,7 +145,14 @@ namespace SpeedCC
         }
     }
     
-    // void createInstanceWithCon(const std::function<void(void*)>& func)
+    template<typename StubT,typename CookieT>
+    template<class ..._Args>
+    void SCObjRefT<StubT,CookieT>::createInstance(_Args&& ...__args)
+    {
+        this->decreaseRef();
+        this->allocBuf();
+        SCDataTypeLifeCycle<StubT>::construct( _VSTD::forward<_Args>(__args)...);
+    }
     
     /*
     template<typename StubT,typename CookieT>

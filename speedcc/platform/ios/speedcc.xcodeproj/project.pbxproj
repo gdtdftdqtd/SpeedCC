@@ -14,6 +14,10 @@
 		0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB031F81DF7000FED9A5 /* SCValue.cpp */; };
 		0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB0F1F81E4CE00FED9A5 /* SCDateTime.cpp */; };
 		0A67CB171F81E8EA00FED9A5 /* SCDataBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB161F81E8E900FED9A5 /* SCDataBlock.cpp */; };
+		0A67CB831F97984F00FED9A5 /* SCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB7F1F9512CF00FED9A5 /* SCComponent.cpp */; };
+		0A67CB841F97984F00FED9A5 /* SCEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB7C1F9512CD00FED9A5 /* SCEntity.cpp */; };
+		0A67CB851F97984F00FED9A5 /* SCBehavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB791F94FAFB00FED9A5 /* SCBehavior.cpp */; };
+		0A67CB861F97984F00FED9A5 /* SCOSSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,21 +87,14 @@
 		0A67CB181F81E95300FED9A5 /* SCBufferRefT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBufferRefT.h; sourceTree = "<group>"; };
 		0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCOSSystem.cpp; sourceTree = "<group>"; };
 		0A67CB1F1F81EAB900FED9A5 /* SCOSSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCOSSystem.h; sourceTree = "<group>"; };
-		0A67CB501F891DDF00FED9A5 /* SCGameController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCGameController.cpp; sourceTree = "<group>"; };
-		0A67CB511F891DDF00FED9A5 /* SCGameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCGameController.h; sourceTree = "<group>"; };
-		0A67CB521F891DDF00FED9A5 /* SCNavigationController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCNavigationController.cpp; sourceTree = "<group>"; };
-		0A67CB531F891DDF00FED9A5 /* SCNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNavigationController.h; sourceTree = "<group>"; };
-		0A67CB541F891DDF00FED9A5 /* SCSceneController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCSceneController.cpp; sourceTree = "<group>"; };
-		0A67CB551F891DDF00FED9A5 /* SCSceneController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCSceneController.h; sourceTree = "<group>"; };
-		0A67CB561F891DDF00FED9A5 /* SCComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCComponent.cpp; sourceTree = "<group>"; };
-		0A67CB571F891DDF00FED9A5 /* SCComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCComponent.h; sourceTree = "<group>"; };
-		0A67CB641F8A055C00FED9A5 /* SCCCNodeRendererT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCCCNodeRendererT.h; sourceTree = "<group>"; };
 		0A67CB691F8A338500FED9A5 /* SpeedCC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpeedCC.h; path = ../../SpeedCC.h; sourceTree = "<group>"; };
 		0A67CB6A1F8A338500FED9A5 /* SCConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SCConfig.h; path = ../../SCConfig.h; sourceTree = "<group>"; };
-		0A67CB6B1F8A4CE100FED9A5 /* SCGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCGeometry.h; sourceTree = "<group>"; };
-		0A67CB6C1F8A4CE200FED9A5 /* SCGeometry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCGeometry.cpp; sourceTree = "<group>"; };
-		0A67CB6D1F8A713F00FED9A5 /* SCNodeAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeAction.cpp; sourceTree = "<group>"; };
-		0A67CB6E1F8A713F00FED9A5 /* SCNodeAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNodeAction.h; sourceTree = "<group>"; };
+		0A67CB781F94FAFA00FED9A5 /* SCBehavior.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBehavior.h; sourceTree = "<group>"; };
+		0A67CB791F94FAFB00FED9A5 /* SCBehavior.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCBehavior.cpp; sourceTree = "<group>"; };
+		0A67CB7C1F9512CD00FED9A5 /* SCEntity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCEntity.cpp; sourceTree = "<group>"; };
+		0A67CB7D1F9512CF00FED9A5 /* SCComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCComponent.h; sourceTree = "<group>"; };
+		0A67CB7E1F9512CF00FED9A5 /* SCEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEntity.h; sourceTree = "<group>"; };
+		0A67CB7F1F9512CF00FED9A5 /* SCComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCComponent.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,38 +188,15 @@
 		0A67CB4E1F891DDF00FED9A5 /* component */ = {
 			isa = PBXGroup;
 			children = (
-				0A67CB621F8A055C00FED9A5 /* ui */,
-				0A67CB4F1F891DDF00FED9A5 /* controller */,
-				0A67CB561F891DDF00FED9A5 /* SCComponent.cpp */,
-				0A67CB571F891DDF00FED9A5 /* SCComponent.h */,
+				0A67CB7F1F9512CF00FED9A5 /* SCComponent.cpp */,
+				0A67CB7D1F9512CF00FED9A5 /* SCComponent.h */,
+				0A67CB7C1F9512CD00FED9A5 /* SCEntity.cpp */,
+				0A67CB7E1F9512CF00FED9A5 /* SCEntity.h */,
+				0A67CB791F94FAFB00FED9A5 /* SCBehavior.cpp */,
+				0A67CB781F94FAFA00FED9A5 /* SCBehavior.h */,
 			);
 			name = component;
 			path = ../../component;
-			sourceTree = "<group>";
-		};
-		0A67CB4F1F891DDF00FED9A5 /* controller */ = {
-			isa = PBXGroup;
-			children = (
-				0A67CB501F891DDF00FED9A5 /* SCGameController.cpp */,
-				0A67CB511F891DDF00FED9A5 /* SCGameController.h */,
-				0A67CB521F891DDF00FED9A5 /* SCNavigationController.cpp */,
-				0A67CB531F891DDF00FED9A5 /* SCNavigationController.h */,
-				0A67CB541F891DDF00FED9A5 /* SCSceneController.cpp */,
-				0A67CB551F891DDF00FED9A5 /* SCSceneController.h */,
-			);
-			path = controller;
-			sourceTree = "<group>";
-		};
-		0A67CB621F8A055C00FED9A5 /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				0A67CB6D1F8A713F00FED9A5 /* SCNodeAction.cpp */,
-				0A67CB6E1F8A713F00FED9A5 /* SCNodeAction.h */,
-				0A67CB6C1F8A4CE200FED9A5 /* SCGeometry.cpp */,
-				0A67CB6B1F8A4CE100FED9A5 /* SCGeometry.h */,
-				0A67CB641F8A055C00FED9A5 /* SCCCNodeRendererT.h */,
-			);
-			path = ui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +287,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A67CB831F97984F00FED9A5 /* SCComponent.cpp in Sources */,
+				0A67CB841F97984F00FED9A5 /* SCEntity.cpp in Sources */,
+				0A67CB851F97984F00FED9A5 /* SCBehavior.cpp in Sources */,
+				0A67CB861F97984F00FED9A5 /* SCOSSystem.cpp in Sources */,
 				0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */,
 				0A67CB171F81E8EA00FED9A5 /* SCDataBlock.cpp in Sources */,
 				0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */,
