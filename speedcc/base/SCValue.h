@@ -52,7 +52,7 @@ namespace SpeedCC
         enum EType
         {
             UNKNOWN_TYPE = 0,
-            BTYE_TYPE,
+            BYTE_TYPE,
             CHAR_TYPE,
             INT_TYPE,
             UINT_TYPE,

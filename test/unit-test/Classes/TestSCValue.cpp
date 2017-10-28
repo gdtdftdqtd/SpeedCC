@@ -59,16 +59,17 @@ TEST(TestSCValue, Constructor)
     
     EXPECT_EQ(value5.getType(), SCValue::STRING_TYPE);
     EXPECT_EQ(value5.getString(&bResult), "abc");
-    EXPECT_STREQ(bResult,true);
+    EXPECT_EQ(bResult,true);
 //    EXPECT_EQ(value5.getLong(lTem), false);
     value5.getLong(&bResult);
     EXPECT_EQ(bResult, false);
     EXPECT_EQ(value5.getRefCount(), 1);
     
     EXPECT_EQ(value6.getType(), SCValue::DOUBLE_TYPE);
-    EXPECT_EQ(value6.getDouble(dTem), true);
-    EXPECT_EQ(dTem, 1.23);
-    EXPECT_EQ(value6.getFloat(fTem), false);
+    EXPECT_EQ(value6.getDouble(&bResult), 1.23);
+    EXPECT_EQ(bResult, true);
+    value6.getFloat(&bResult);
+    EXPECT_EQ(bResult, false);
     EXPECT_EQ(value6.getRefCount(), 1);
     
     {
@@ -86,24 +87,25 @@ TEST(TestSCValue, Constructor)
     {
         SCValue value101(value5);
         EXPECT_EQ(value5.getType(), SCValue::STRING_TYPE);
-        EXPECT_EQ(value5.getString(strValue), true);
-        EXPECT_STREQ(strValue,"abc");
+        EXPECT_STREQ(value5.getString(&bResult),"abc");
+        EXPECT_EQ(bResult, true);
         EXPECT_EQ(value5.getRefCount(), 2);
         
         EXPECT_EQ(value101.getType(), SCValue::STRING_TYPE);
-        EXPECT_EQ(value101.getString(strValue), true);
-        EXPECT_STREQ(strValue,"abc");
+        EXPECT_STREQ(value101.getString(&bResult),"abc");
+        EXPECT_EQ(bResult, true);
         EXPECT_EQ(value101.getRefCount(), 2);
     }
     
     EXPECT_EQ(value5.getType(), SCValue::STRING_TYPE);
-    EXPECT_EQ(value5.getString(strValue), true);
-    EXPECT_STREQ(strValue,"abc");
+    EXPECT_STREQ(value5.getString(&bResult),"abc");
+    EXPECT_EQ(bResult, true);
     EXPECT_EQ(value5.getRefCount(), 1);
     
     EXPECT_EQ(value7.getRefCount(), 1);
     EXPECT_EQ(value7.getType(), SCValue::DATETIME_TYPE);
-    EXPECT_EQ(value7.getDateTime(dt), true);
+    dt = value7.getDateTime(&bResult);
+    EXPECT_EQ(bResult, true);
     EXPECT_EQ(dt.getYear(), dtTest.getYear());
     EXPECT_EQ(dt.getMonth(), dtTest.getMonth());
     EXPECT_EQ(dt.getDayOfMonth(), dtTest.getDayOfMonth());
@@ -113,8 +115,8 @@ TEST(TestSCValue, Constructor)
     
     EXPECT_EQ(value8.getRefCount(), 1);
     EXPECT_EQ(value8.getType(), SCValue::DATABLOCK_TYPE);
-    EXPECT_EQ(value8.getDataBlock(db), true);
-    EXPECT_STREQ((char*)db.getDataPtr(),"12345");
+    EXPECT_STREQ((char*)value8.getDataBlock(&bResult).getDataPtr(),"12345");
+    EXPECT_EQ(bResult, true);
     
     vetArrayTest.push_back(value1);
     vetArrayTest.push_back(value2);
@@ -136,7 +138,8 @@ TEST(TestSCValue, Constructor)
     EXPECT_EQ(value8.getRefCount(), 3);
     EXPECT_EQ(value9.getRefCount(), 1);
     EXPECT_EQ(value9.getType(), SCValue::ARRAY_TYPE);
-    EXPECT_EQ(value9.getArray(vetArray), true);
+    vetArray = value9.getArray(&bResult);
+    EXPECT_EQ(bResult, true);
     EXPECT_EQ(vetArray[0]==value1, true);
     EXPECT_EQ(vetArray[1]==value2, true);
     EXPECT_EQ(vetArray[2]==value3, true);
@@ -152,54 +155,57 @@ TEST(TestSCValue, Assignment)
 {
     SCValue value1;
     
+    bool bResult = false;
     const int nTest = 234;
     int nValue = 0;
+    
     value1.setInt(nTest);
     EXPECT_EQ(value1.getType(),SCValue::INT_TYPE);
-    EXPECT_EQ(value1.getInt(nValue),true);
-    EXPECT_EQ(nValue,nTest);
+    EXPECT_EQ(value1.getInt(&bResult),nTest);
+    EXPECT_EQ(bResult,true);
     
     const bool bTest = true;
     bool bValue = false;
     value1.setBool(bTest);
     EXPECT_EQ(value1.getType(),SCValue::BOOL_TYPE);
-    EXPECT_EQ(value1.getBool(bValue),true);
-    EXPECT_EQ(bValue,bTest);
+    EXPECT_EQ(value1.getBool(&bResult),bTest);
+    EXPECT_EQ(bResult,true);
     
     const float fTest = 1.23f;
     float fValue = 0.0f;
     value1.setFloat(fTest);
     EXPECT_EQ(value1.getType(),SCValue::FLOAT_TYPE);
-    EXPECT_EQ(value1.getFloat(fValue),true);
-    EXPECT_EQ(fValue,fTest);
+    EXPECT_EQ(value1.getFloat(&bResult),fTest);
+    EXPECT_EQ(bResult,true);
     
     const double dTest = 1.23;
     double dValue = 0.0;
     value1.setDouble(dTest);
     EXPECT_EQ(value1.getType(),SCValue::DOUBLE_TYPE);
-    EXPECT_EQ(value1.getDouble(dValue),true);
-    EXPECT_EQ(dValue,dTest);
+    EXPECT_EQ(value1.getDouble(&bResult),dTest);
+    EXPECT_EQ(bResult,true);
     
     const SCString strTest = "abc123";
     SCString strValue = "";
     value1.setString(strTest);
     EXPECT_EQ(value1.getType(),SCValue::STRING_TYPE);
-    EXPECT_EQ(value1.getString(strValue),true);
-    EXPECT_STREQ(strValue, strTest);
+    EXPECT_STREQ(value1.getString(&bResult), strTest);
+    EXPECT_EQ(bResult,true);
     
     const SCDateTime dtTest("2017-10-01 12:34:56","%Y-%m-%d %H:%M:%S");
     SCDateTime dtValue;
     value1.setDateTime(dtTest);
     EXPECT_EQ(value1.getType(),SCValue::DATETIME_TYPE);
-    EXPECT_EQ(value1.getDateTime(dtValue),true);
-    EXPECT_EQ(dtTest.getStamp(), dtValue.getStamp());
+    EXPECT_EQ(dtTest.getStamp(), value1.getDateTime(&bResult).getStamp());
+    EXPECT_EQ(bResult,true);
     
     const SCDataBlock dbTest("12345");
     SCDataBlock dbValue;
     value1.setDataBlock(dbTest);
     EXPECT_EQ(value1.getType(),SCValue::DATABLOCK_TYPE);
-    EXPECT_EQ(value1.getDataBlock(dbValue),true);
+    dbValue = value1.getDataBlock(&bResult);
     EXPECT_EQ(dbTest.getSize(),dbValue.getSize());
+    EXPECT_EQ(bResult,true);
     EXPECT_EQ(memcmp(dbTest.getDataPtr(),dbValue.getDataPtr(),dbValue.getSize()),0);
     
     const SCValue valueTest(123);
@@ -209,8 +215,8 @@ TEST(TestSCValue, Assignment)
 //    EXPECT_EQ(value1.getType(),SCValue::VALUE_TYPE);
 //    EXPECT_EQ(value1.getValue(value2),true);
     EXPECT_EQ(value2.getType(),SCValue::INT_TYPE);
-    EXPECT_EQ(value2.getInt(nValue),true);
-    EXPECT_EQ(nValue,123);
+    EXPECT_EQ(value2.getInt(&bResult),123);
+    EXPECT_EQ(bResult,true);
     
     std::vector<SCValue> vetArrayTest;
     value1.setInt(nTest);
@@ -226,10 +232,9 @@ TEST(TestSCValue, Assignment)
     
     std::vector<SCValue> vetArrayValue;
     EXPECT_EQ(value1.getType(),SCValue::ARRAY_TYPE);
-    EXPECT_EQ(value1.getArray(vetArrayValue),true);
+    vetArrayValue = value1.getArray(&bResult);
+    EXPECT_EQ(bResult,true);
     EXPECT_EQ(vetArrayValue.size(),vetArrayTest.size());
-    
-//    vetArrayValue[0].getInt(<#int &nValue#>)
 }
 
 

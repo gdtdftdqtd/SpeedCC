@@ -132,7 +132,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: cRet = (char)data.nValue; break;
-                case BTYE_TYPE: cRet = (char)data.byValue; break;
+                case BYTE_TYPE: cRet = (char)data.byValue; break;
                 case CHAR_TYPE: cRet = data.cValue; break;
                 case UINT_TYPE: cRet = (char)data.uValue; break;
                 case LONG_TYPE: cRet = (char)data.lValue; break;
@@ -160,13 +160,13 @@ namespace SpeedCC
         
         bool bResult = false;
         unsigned char byRet = 0;
-        if(!(bExactMatch && type!=BTYE_TYPE))
+        if(!(bExactMatch && type!=BYTE_TYPE))
         {
             bResult = true;
             switch(type)
             {
                 case INT_TYPE: byRet = (unsigned char)data.nValue; break;
-                case BTYE_TYPE: byRet = data.byValue; break;
+                case BYTE_TYPE: byRet = data.byValue; break;
                 case CHAR_TYPE: byRet = (unsigned char)data.cValue; break;
                 case UINT_TYPE: byRet = (unsigned char)data.uValue; break;
                 case LONG_TYPE: byRet = (unsigned char)data.lValue; break;
@@ -200,7 +200,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: uRet = (unsigned int)data.nValue; break;
-                case BTYE_TYPE: uRet = (unsigned int)data.byValue; break;
+                case BYTE_TYPE: uRet = (unsigned int)data.byValue; break;
                 case CHAR_TYPE: uRet = (unsigned int)data.cValue; break;
                 case UINT_TYPE: uRet = data.uValue; break;
                 case LONG_TYPE: uRet = (unsigned int)data.lValue; break;
@@ -234,7 +234,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: nRet = data.nValue; break;
-                case BTYE_TYPE: nRet = (int)data.byValue; break;
+                case BYTE_TYPE: nRet = (int)data.byValue; break;
                 case CHAR_TYPE: nRet = (int)data.cValue; break;
                 case UINT_TYPE: nRet = (int)data.uValue; break;
                 case LONG_TYPE: nRet = (int)data.lValue; break;
@@ -268,7 +268,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: lRet = (long)data.nValue; break;
-                case BTYE_TYPE: lRet = (long)data.byValue; break;
+                case BYTE_TYPE: lRet = (long)data.byValue; break;
                 case CHAR_TYPE: lRet = (long)data.cValue; break;
                 case UINT_TYPE: lRet = (long)data.uValue; break;
                 case LONG_TYPE: lRet = data.lValue; break;
@@ -303,7 +303,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: bRet = (data.nValue!=0); break;
-                case BTYE_TYPE: bRet = (data.byValue!=0); break;
+                case BYTE_TYPE: bRet = (data.byValue!=0); break;
                 case CHAR_TYPE: bRet = (data.cValue!=0); break;
                 case UINT_TYPE: bRet = (data.uValue!=0); break;
                 case LONG_TYPE: bRet = (data.lValue!=0); break;
@@ -339,7 +339,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: fRet = (float)data.nValue; break;
-                case BTYE_TYPE: fRet = (float)data.byValue; break;
+                case BYTE_TYPE: fRet = (float)data.byValue; break;
                 case CHAR_TYPE: fRet = (float)data.cValue; break;
                 case UINT_TYPE: fRet = (float)data.uValue; break;
                 case LONG_TYPE: fRet = (float)data.lValue; break;
@@ -375,7 +375,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: dRet = (double)data.nValue; break;
-                case BTYE_TYPE: dRet = (double)data.byValue; break;
+                case BYTE_TYPE: dRet = (double)data.byValue; break;
                 case CHAR_TYPE: dRet = (double)data.cValue; break;
                 case UINT_TYPE: dRet = (double)data.uValue; break;
                 case LONG_TYPE: dRet = (double)data.lValue; break;
@@ -411,7 +411,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: pRet = (void*)(long)data.nValue; break;
-                case BTYE_TYPE: pRet = (void*)(long)data.byValue; break;
+                case BYTE_TYPE: pRet = (void*)(long)data.byValue; break;
                 case CHAR_TYPE: pRet = (void*)(long)data.cValue; break;
                 case UINT_TYPE: pRet = (void*)(long)data.uValue; break;
                 case LONG_TYPE: pRet = (void*)data.lValue; break;
@@ -447,7 +447,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: llRet = (long long)data.nValue; break;
-                case BTYE_TYPE: llRet = (long long)data.byValue; break;
+                case BYTE_TYPE: llRet = (long long)data.byValue; break;
                 case CHAR_TYPE: llRet = (long long)data.cValue; break;
                 case UINT_TYPE: llRet = (long long)data.uValue; break;
                 case LONG_TYPE: llRet = (long long)data.lValue; break;
@@ -483,7 +483,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: dbRet.append(&data.nValue, sizeof(data.nValue)); break;
-                case BTYE_TYPE: dbRet.append(&data.byValue, sizeof(data.byValue)); break;
+                case BYTE_TYPE: dbRet.append(&data.byValue, sizeof(data.byValue)); break;
                 case CHAR_TYPE: dbRet.append(&data.cValue, sizeof(data.cValue)); break;
                 case UINT_TYPE: dbRet.append(&data.uValue, sizeof(data.uValue)); break;
                 case LONG_TYPE: dbRet.append(&data.lValue, sizeof(data.lValue)); break;
@@ -520,7 +520,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: strRet.format("%d",data.nValue); break;
-                case BTYE_TYPE: strRet.format("%d",data.byValue); break;
+                case BYTE_TYPE: strRet.format("%d",data.byValue); break;
                 case CHAR_TYPE: strRet.format("%c",data.cValue); break;
                 case UINT_TYPE: strRet.format("%u",data.uValue); break;
                 case LONG_TYPE: strRet.format("%d",data.lValue); break;
@@ -556,9 +556,9 @@ namespace SpeedCC
             bResult = true;
             switch(type)
             {
-                case STRING_TYPE: dtRet = SCDateTime(*((SCString*)data.pObject)); break;
+                case STRING_TYPE: dtRet = SCDateTime(*((SCString*)data.pObject),"%Y-%m-%d %h:%M"); break;
                 case INT_TYPE: dtRet = SCDateTime(data.nValue); break;
-                case BTYE_TYPE: dtRet = SCDateTime(data.byValue); break;
+                case BYTE_TYPE: dtRet = SCDateTime(data.byValue); break;
                 case CHAR_TYPE: dtRet = SCDateTime(data.cValue); break;
                 case UINT_TYPE: dtRet = SCDateTime(data.uValue); break;
                 case LONG_TYPE: dtRet = SCDateTime(data.lValue); break;
@@ -591,7 +591,7 @@ namespace SpeedCC
             switch(type)
             {
                 case INT_TYPE: value = data.nValue; break;
-                case BTYE_TYPE: value = data.byValue; break;
+                case BYTE_TYPE: value = data.byValue; break;
                 case CHAR_TYPE: value = data.cValue; break;
                 case UINT_TYPE: value = data.uValue; break;
                 case LONG_TYPE: value = data.lValue; break;
@@ -616,85 +616,6 @@ namespace SpeedCC
         
         return retVtr;
     }
-    
-    /*
-    bool SCValue::getInt(int& nValue) const
-    {
-        SC_RETURN_IF(this->getType()!=INT_TYPE, false);
-        nValue = this->getStub()->data.nValue;
-        return true;
-    }
-    
-    bool SCValue::getLong(long& lValue) const
-    {
-        SC_RETURN_IF(this->getType()!=LONG_TYPE, false);
-        lValue = this->getStub()->data.lValue;
-        return true;
-    }
-    
-    bool SCValue::getBool(bool& bValue) const
-    {
-        SC_RETURN_IF(this->getType()!=BOOL_TYPE, false);
-        bValue = this->getStub()->data.bValue;
-        return true;
-    }
-    
-    bool SCValue::getFloat(float& fValue) const
-    {
-        SC_RETURN_IF(this->getType()!=FLOAT_TYPE, false);
-        fValue = this->getStub()->data.fValue;
-        return true;
-    }
-    
-    bool SCValue::getDouble(double& dValue) const
-    {
-        SC_RETURN_IF(this->getType()!=DOUBLE_TYPE, false);
-        dValue = this->getStub()->data.dValue;
-        return true;
-    }
-    
-    bool SCValue::getLongLong(long long& llValue) const
-    {
-        SC_RETURN_IF(this->getType()!=LONGLONG_TYPE, false);
-        llValue = this->getStub()->data.llValue;
-        return true;
-    }
-    
-    bool SCValue::getPointer(void*& pValue) const
-    {
-        SC_RETURN_IF(this->getType()!=POINTER_TYPE, false);
-        pValue = this->getStub()->data.pValue;
-        return true;
-    }
-    
-    bool SCValue::getString(SCString& strValue) const
-    {
-        SC_RETURN_IF(this->getType()!=STRING_TYPE || this->getStub()->data.pObject==NULL, false);
-        strValue = *((SCString*)this->getStub()->data.pObject);
-        return true;
-    }
-    
-    bool SCValue::getDataBlock(SCDataBlock& db) const
-    {
-        SC_RETURN_IF(this->getType()!=DATABLOCK_TYPE || this->getStub()->data.pObject==NULL, false);
-        db = *((SCDataBlock*)this->getStub()->data.pObject);
-        return true;
-    }
-    
-    bool SCValue::getDateTime(SCDateTime& dateTime) const
-    {
-        SC_RETURN_IF(this->getType()!=DATETIME_TYPE || this->getStub()->data.pObject==NULL, false);
-        dateTime = *((SCDateTime*)this->getStub()->data.pObject);
-        return true;
-    }
-    
-    bool SCValue::getArray(std::vector<SCValue>& valueVtr) const
-    {
-        SC_RETURN_IF(this->getType()!=ARRAY_TYPE || this->getStub()->data.pObject==NULL, false);
-        valueVtr = *((std::vector<SCValue>*)this->getStub()->data.pObject);
-        return true;
-    }
-    */
      
     void SCValue::setInt(const int nValue)
     {
@@ -705,6 +626,24 @@ namespace SpeedCC
         this->getCookieDesc()->cookie = INT_TYPE;
     }
     
+    void SCValue::setByte(const unsigned char byValue)
+    {
+        this->check4Write();
+        this->clone4Write();
+        this->getStub()->data.byValue = byValue;
+        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        this->getCookieDesc()->cookie = BYTE_TYPE;
+    }
+    
+    void SCValue::setChar(const char cValue)
+    {
+        this->check4Write();
+        this->clone4Write();
+        this->getStub()->data.cValue = cValue;
+        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        this->getCookieDesc()->cookie = CHAR_TYPE;
+    }
+    
     SCValue& SCValue::operator=(const unsigned int uValue)
     {
         this->check4Write();
@@ -712,6 +651,8 @@ namespace SpeedCC
         this->getStub()->data.uValue = uValue;
         (*(this->getStub())).pfunDestroyFunctor_t = NULL;
         this->getCookieDesc()->cookie = UINT_TYPE;
+        
+        return *this;
     }
     
     void SCValue::setLong(const long lValue)
