@@ -50,14 +50,6 @@ namespace SpeedCC
         
         template<class ..._Args>
         void createInstance(_Args&& ...__args);
-//        template<typename A1>
-//        void createInstance(A1 arg1);
-//        
-//        template<typename A1,typename A2>
-//        void createInstance(A1 arg1,A2 arg2);
-//        
-//        template<typename A1,typename A2,typename A3>
-//        void createInstance(A1 arg1,A2 arg2,A3 arg3);
         
     protected:
         inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}

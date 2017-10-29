@@ -22,11 +22,6 @@ TEST(TestSCValue, Constructor)
     SCValue value8(dbTest);
     
     bool bResult = false;
-    int nTem = 0;
-    bool bTem = false;
-    long lTem = 0;
-    float fTem = 0.0f;
-    double dTem = 0.0;
     SCString strValue;
     SCDateTime dt;
     SCDataBlock db;
@@ -38,37 +33,35 @@ TEST(TestSCValue, Constructor)
     EXPECT_EQ(value2.getType(), SCValue::INT_TYPE);
     EXPECT_EQ(value2.getInt(&bResult), 123);
     EXPECT_EQ(bResult, true);
-    value2.getLong(&bResult);
+    value2.getLong(&bResult,true);
     EXPECT_EQ(bResult, false);
     EXPECT_EQ(value2.getRefCount(), 1);
     
     EXPECT_EQ(value3.getType(), SCValue::BOOL_TYPE);
     EXPECT_EQ(value3.getBool(&bResult), true);
     EXPECT_EQ(bResult, true);
-    value3.getLong(&bResult);
+    value3.getLong(&bResult,true);
     EXPECT_EQ(bResult, false);
     EXPECT_EQ(value3.getRefCount(), 1);
     
     EXPECT_EQ(value4.getType(), SCValue::FLOAT_TYPE);
     EXPECT_EQ(value4.getFloat(&bResult), 1.23f);
-    EXPECT_EQ(bResult, 1.23f);
-//    EXPECT_EQ(value4.getLong(lTem), false);
-    value4.getLong(&bResult);
+    EXPECT_EQ(bResult, true);
+    value4.getLong(&bResult,true);
     EXPECT_EQ(bResult, false);
     EXPECT_EQ(value4.getRefCount(), 1);
     
     EXPECT_EQ(value5.getType(), SCValue::STRING_TYPE);
     EXPECT_EQ(value5.getString(&bResult), "abc");
     EXPECT_EQ(bResult,true);
-//    EXPECT_EQ(value5.getLong(lTem), false);
-    value5.getLong(&bResult);
+    value5.getLong(&bResult,true);
     EXPECT_EQ(bResult, false);
     EXPECT_EQ(value5.getRefCount(), 1);
     
     EXPECT_EQ(value6.getType(), SCValue::DOUBLE_TYPE);
     EXPECT_EQ(value6.getDouble(&bResult), 1.23);
     EXPECT_EQ(bResult, true);
-    value6.getFloat(&bResult);
+    value6.getFloat(&bResult,true);
     EXPECT_EQ(bResult, false);
     EXPECT_EQ(value6.getRefCount(), 1);
     
@@ -157,7 +150,6 @@ TEST(TestSCValue, Assignment)
     
     bool bResult = false;
     const int nTest = 234;
-    int nValue = 0;
     
     value1.setInt(nTest);
     EXPECT_EQ(value1.getType(),SCValue::INT_TYPE);
@@ -165,21 +157,18 @@ TEST(TestSCValue, Assignment)
     EXPECT_EQ(bResult,true);
     
     const bool bTest = true;
-    bool bValue = false;
     value1.setBool(bTest);
     EXPECT_EQ(value1.getType(),SCValue::BOOL_TYPE);
     EXPECT_EQ(value1.getBool(&bResult),bTest);
     EXPECT_EQ(bResult,true);
     
     const float fTest = 1.23f;
-    float fValue = 0.0f;
     value1.setFloat(fTest);
     EXPECT_EQ(value1.getType(),SCValue::FLOAT_TYPE);
     EXPECT_EQ(value1.getFloat(&bResult),fTest);
     EXPECT_EQ(bResult,true);
     
     const double dTest = 1.23;
-    double dValue = 0.0;
     value1.setDouble(dTest);
     EXPECT_EQ(value1.getType(),SCValue::DOUBLE_TYPE);
     EXPECT_EQ(value1.getDouble(&bResult),dTest);
@@ -209,18 +198,15 @@ TEST(TestSCValue, Assignment)
     EXPECT_EQ(memcmp(dbTest.getDataPtr(),dbValue.getDataPtr(),dbValue.getSize()),0);
     
     const SCValue valueTest(123);
-    SCValue value2;
-    nValue = 0;
-//    value1.setValue(valueTest);
-//    EXPECT_EQ(value1.getType(),SCValue::VALUE_TYPE);
-//    EXPECT_EQ(value1.getValue(value2),true);
+    SCValue value2 = valueTest;
+    
     EXPECT_EQ(value2.getType(),SCValue::INT_TYPE);
     EXPECT_EQ(value2.getInt(&bResult),123);
     EXPECT_EQ(bResult,true);
     
     std::vector<SCValue> vetArrayTest;
     value1.setInt(nTest);
-    nValue = 0;
+    
     vetArrayTest.push_back(value1);
     value1.setString(strTest);
     strValue = "";

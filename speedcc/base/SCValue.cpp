@@ -53,6 +53,22 @@ namespace SpeedCC
         this->getCookieDesc()->cookie = LONG_TYPE;
     }
     
+    SCValue::SCValue(const char cValue)
+    {
+        this->createInstance();
+        
+        this->getStub()->data.cValue = cValue;
+        this->getCookieDesc()->cookie = CHAR_TYPE;
+    }
+    
+    SCValue::SCValue(const unsigned char byValue)
+    {
+        this->createInstance();
+        
+        this->getStub()->data.byValue = byValue;
+        this->getCookieDesc()->cookie = BYTE_TYPE;
+    }
+    
     SCValue::SCValue(const long long llValue)
     {
         this->createInstance();
@@ -563,6 +579,7 @@ namespace SpeedCC
                 case UINT_TYPE: dtRet = SCDateTime(data.uValue); break;
                 case LONG_TYPE: dtRet = SCDateTime(data.lValue); break;
                 case LONGLONG_TYPE: dtRet = SCDateTime(data.llValue); break;
+                case DATETIME_TYPE: dtRet = *((SCDateTime*)data.pObject); break;
                     
                 default: bResult = false; break;
             }
@@ -584,7 +601,7 @@ namespace SpeedCC
         const auto& type = this->getType();
         const auto& data = this->getStub()->data;
         
-        if(!(bExactMatch && type!=DATETIME_TYPE))
+        if(!(bExactMatch && type!=ARRAY_TYPE))
         {
             bResult = true;
             SCValue value;
@@ -603,9 +620,14 @@ namespace SpeedCC
                 case STRING_TYPE: value = *((SCString*)data.pObject); break;
                 case DATETIME_TYPE: value = *((SCDateTime*)data.pObject); break;
                 case DATABLOCK_TYPE: value = *((SCDataBlock*)data.pObject); break;
-                case ARRAY_TYPE: value = *((std::vector<SCValue>*)data.pObject); break;
+                case ARRAY_TYPE: retVtr = *((std::vector<SCValue>*)data.pObject); break;
                     
                 default: bResult = false; break;
+            }
+            
+            if(bResult && !value.isUnknown())
+            {
+                retVtr.push_back(value);
             }
         }
         

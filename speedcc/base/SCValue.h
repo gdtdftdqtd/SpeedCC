@@ -70,25 +70,26 @@ namespace SpeedCC
         };
         
         SCValue();
-        explicit SCValue(const char cValue);
-        explicit SCValue(const unsigned char byValue);
-        explicit SCValue(const unsigned int nValue);
-        explicit SCValue(const int nValue);
-        explicit SCValue(const bool bValue);
-        explicit SCValue(const float fValue);
-        explicit SCValue(const double dValue);
-        explicit SCValue(const long lValue);
-        explicit SCValue(const long long llValue);
-        explicit SCValue(void* const pValue);
+        SCValue(const char cValue);
+        SCValue(const unsigned char byValue);
+        SCValue(const unsigned int nValue);
+        SCValue(const int nValue);
+        SCValue(const bool bValue);
+        SCValue(const float fValue);
+        SCValue(const double dValue);
+        SCValue(const long lValue);
+        SCValue(const long long llValue);
+        SCValue(void* const pValue);
         SCValue(const SCString& strValue);
-        explicit SCValue(const char* pszValue);
-        explicit SCValue(SCDateTime& dateTime);
-        explicit SCValue(const SCDataBlock& dataBlock);
-        explicit SCValue(const std::vector<SCValue>& valueVtr);
+        SCValue(const char* pszValue);
+        SCValue(SCDateTime& dateTime);
+        SCValue(const SCDataBlock& dataBlock);
+        SCValue(const std::vector<SCValue>& valueVtr);
         
         virtual ~SCValue();
         
         inline EType getType() const {return (EType)*this->getCookie();}
+        inline bool isUnknown() const {return (getType()==UNKNOWN_TYPE);}
         
         char getChar(bool* pResult=NULL,const bool bExactMatch=false) const;
         unsigned char getByte(bool* pResult=NULL,const bool bExactMatch=false) const;
@@ -104,23 +105,6 @@ namespace SpeedCC
         SCDataBlock getDataBlock(bool* pResult=NULL,const bool bExactMatch=false) const;
         SCDateTime getDateTime(bool* pResult=NULL,const bool bExactMatch=false) const;
         std::vector<SCValue> getArray(bool* pResult=NULL,const bool bExactMatch=false) const;
-        
-        /*
-        bool getChar(char& cValue) const;
-        bool getByte(unsigned char& byValue) const;
-        bool getUnsignedInt(unsigned int& uValue) const;
-        bool getInt(int& nValue) const;
-        bool getLong(long& lValue) const;
-        bool getBool(bool& bValue) const;
-        bool getFloat(float& fValue) const;
-        bool getDouble(double& dValue) const;
-        bool getPointer(void*& ppValue) const;
-        bool getLongLong(long long& llValue) const;
-        bool getString(SCString& strValue) const;
-        bool getDataBlock(SCDataBlock& db) const;
-        bool getDateTime(SCDateTime& dateTime) const;
-        bool getArray(std::vector<SCValue>& valueVtr) const;
-         */
         
         void setChar(const char cValue);
         void setByte(const unsigned char byValue);

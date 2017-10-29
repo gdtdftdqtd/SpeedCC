@@ -144,6 +144,11 @@ namespace SpeedCC
     }
     
     ///------------- SCParameters
+    SCParameters::SCParameters()
+    {
+        this->createInstance();
+    }
+    
     SCValue& SCParameters::operator[](const SCString& strKey)
     {
         SCASSERT(!strKey.isEmpty());
@@ -159,7 +164,8 @@ namespace SpeedCC
     void SCParameters::setValue(const SCString& strKey,const SCValue& value)
     {
         SCASSERT(!strKey.isEmpty());
-        (*this->getStub())[strKey] = value;
+        auto& map = (*this->getStub());
+        map[strKey] = value;
     }
     
     SCValue SCParameters::getValue(const SCString& strKey)
@@ -189,6 +195,24 @@ namespace SpeedCC
     bool SCParameters::isEmpty()
     {
         return this->getStub()->empty();
+    }
+    
+    void SCParameters::forEach(const std::function<bool(const SCString& strKey,const SCValue& value)>& func) const
+    {
+        const auto& map = *(this->getStub());
+        for(const auto& it : map)
+        {
+            SC_RETURN_IF_V(!func(it.first,it.second));
+        }
+    }
+    
+    void SCParameters::forEach(const std::function<bool(const SCString& strKey,SCValue& value)>& func)
+    {
+        auto& map = *(this->getStub());
+        for(auto& it : map)
+        {
+            SC_RETURN_IF_V(!func(it.first,it.second));
+        }
     }
 }
 

@@ -53,6 +53,7 @@ namespace SpeedCC
     class SCParameters : public SCObjRefT<std::map<SCString,SCValue> >
     {
     public:
+        SCParameters();
         SCValue& operator[](const SCString& strKey);
         SCValue operator[](SCString& strKey);
         
@@ -63,6 +64,8 @@ namespace SpeedCC
         void removeKey(const SCString& strKey);
         void removeAllKey();
         bool isEmpty();
+        void forEach(const std::function<bool(const SCString& strKey,const SCValue& value)>& func) const;
+        void forEach(const std::function<bool(const SCString& strKey,SCValue& value)>& func);
     };
 }
 
