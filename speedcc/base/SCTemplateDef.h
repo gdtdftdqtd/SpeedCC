@@ -5,6 +5,7 @@
 #define __SC__TEMPLATEDEF_H__
 
 #include <type_traits>
+#include "cocos2d.h"
 
 namespace SpeedCC
 {
@@ -66,6 +67,22 @@ namespace SpeedCC
     
     template<>
     struct SCNumber2ClassT<0> { typedef SCShadowClassT<SCClassNull> type; };
+    
+    ///------- trait function
+    template<typename T>
+    cocos2d::SEL_MenuHandler SCTraitFunctionPointerType(void (T::*)(cocos2d::Ref*));
+    
+    template<typename T>
+    cocos2d::SEL_SCHEDULE SCTraitFunctionPointerType(void (T::*)(float));
+    
+    template<typename T>
+    cocos2d::SEL_CallFunc SCTraitFunctionPointerType(void (T::*)());
+    
+    template<typename T>
+    cocos2d::SEL_CallFuncN SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*));
+    
+    template<typename T>
+    cocos2d::SEL_CallFuncND SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*,void*));
 }
 
 

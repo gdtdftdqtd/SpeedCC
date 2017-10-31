@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803551FA8ACDD00E0174C /* SCMessageDispatch.cpp */; };
 		0A67CAC91F80E7DE00FED9A5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAC41F80E7C600FED9A5 /* libcocos2d iOS.a */; };
 		0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE31F813C8800FED9A5 /* SCBaseCommon.cpp */; };
 		0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */; };
@@ -64,6 +65,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A2803441FA77FEC00E0174C /* SCSceneControllerT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCSceneControllerT.h; sourceTree = "<group>"; };
+		0A2803451FA77FEC00E0174C /* SCSceneLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCSceneLayer.cpp; sourceTree = "<group>"; };
+		0A2803461FA77FEC00E0174C /* SCSceneLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCSceneLayer.h; sourceTree = "<group>"; };
+		0A2803541FA8ACDD00E0174C /* SCMessageDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMessageDef.h; sourceTree = "<group>"; };
+		0A2803551FA8ACDD00E0174C /* SCMessageDispatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMessageDispatch.cpp; sourceTree = "<group>"; };
+		0A2803561FA8ACDD00E0174C /* SCMessageDispatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMessageDispatch.h; sourceTree = "<group>"; };
 		0A67CA7E1F80E31700FED9A5 /* libspeedcc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libspeedcc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2dx/v3/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMemAllocator.cpp; sourceTree = "<group>"; };
@@ -109,12 +116,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A2803421FA77FEC00E0174C /* scene */ = {
+			isa = PBXGroup;
+			children = (
+				0A2803441FA77FEC00E0174C /* SCSceneControllerT.h */,
+				0A2803451FA77FEC00E0174C /* SCSceneLayer.cpp */,
+				0A2803461FA77FEC00E0174C /* SCSceneLayer.h */,
+			);
+			name = scene;
+			path = ../../scene;
+			sourceTree = "<group>";
+		};
 		0A67CA751F80E31700FED9A5 = {
 			isa = PBXGroup;
 			children = (
 				0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */,
 				0A67CB6A1F8A338500FED9A5 /* SCConfig.h */,
 				0A67CB691F8A338500FED9A5 /* SpeedCC.h */,
+				0A2803421FA77FEC00E0174C /* scene */,
 				0A67CB4E1F891DDF00FED9A5 /* component */,
 				0A67CB191F81EAB900FED9A5 /* platform */,
 				0A67CACA1F80E9E700FED9A5 /* base */,
@@ -188,6 +207,9 @@
 		0A67CB4E1F891DDF00FED9A5 /* component */ = {
 			isa = PBXGroup;
 			children = (
+				0A2803541FA8ACDD00E0174C /* SCMessageDef.h */,
+				0A2803551FA8ACDD00E0174C /* SCMessageDispatch.cpp */,
+				0A2803561FA8ACDD00E0174C /* SCMessageDispatch.h */,
 				0A67CB7F1F9512CF00FED9A5 /* SCComponent.cpp */,
 				0A67CB7D1F9512CF00FED9A5 /* SCComponent.h */,
 				0A67CB7C1F9512CD00FED9A5 /* SCEntity.cpp */,
@@ -297,6 +319,7 @@
 				0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */,
 				0A67CAEF1F813CFF00FED9A5 /* SCString.cpp in Sources */,
 				0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */,
+				0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

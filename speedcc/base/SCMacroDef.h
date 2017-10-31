@@ -31,7 +31,7 @@
 
 // SPEEDCC_TEST_MODE
 
-/// assert at compile time
+///---------- assert at compile time
 #define SCASSERTCT(_condition_) \
     do { char SCASSERTArrayCT[(_condition_)?1:-1];SCASSERTArrayCT[0]=0;} while(0)
 
@@ -123,6 +123,38 @@
 
 #define SC_DEFINE_COMPONENT_ID(_class_) \
     const char* _class_::CMP_ID = #_class_
+
+
+///-------- cocos2d efficiency macro
+#define SCCCFileUtils() \
+    (cocos2d::FileUtils::getInstance())
+
+#define SCCCUserDefault() \
+    (cocos2d::UserDefault::getInstance())
+
+#define SCCCDirector() \
+    (cocos2d::Director::getInstance())
+
+#define SCCCTouchDispatch()\
+    (SCCCDirector()->getEventDispatcher())
+
+#define SCCCSoundEngine()\
+    (CocosDenshion::SimpleAudioEngine::getInstance())
+
+#define SCSchedule(_selector_,_target_,_interval_,_pause_)\
+    (SCCCDirector()->getScheduler()->schedule((_selector_),(_target_),(_interval_),(_pause_)))
+
+#define SCUnschedule(_selector_,_target_) \
+    (SCCCDirector()->getScheduler()->unschedule((_selector_),(_target_)))
+
+#define SCWinSize() \
+    (SCCCDirector()->getWinSize())
+
+#define SCCCScheduler()\
+    (SCCCDirector()->getScheduler())
+
+#define SC_SELECTOR(_fun_)\
+    (decltype(SCTraitFunctionPointerType(&_fun_))(&_fun_))
 
 
 //#define SC_TRAIT_PTR_CLASS(_ptr_) \
