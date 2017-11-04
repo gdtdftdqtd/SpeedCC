@@ -11,7 +11,7 @@ namespace SpeedCC
         _strName = strName;
     }
     
-    bool SCBehavior::start(SCParameters& par)
+    bool SCBehavior::start(SCDictionary& par)
     {
         _state = RUNNING;
         return true;
@@ -46,7 +46,7 @@ namespace SpeedCC
         return ptrRet;
     }
     
-    bool SCBehaviorCallFunc::start(SCParameters& par)
+    bool SCBehaviorCallFunc::start(SCDictionary& par)
     {
         SC_RETURN_IF(_startFunc==NULL,true);
         SCBehavior::start(par);
@@ -80,7 +80,7 @@ namespace SpeedCC
         }
     }
     
-    void SCBehaviorCallFunc::setOnStartFunc(const std::function<bool(SCParameters& par)>& func)
+    void SCBehaviorCallFunc::setOnStartFunc(const std::function<bool(SCDictionary& par)>& func)
     {
         _startFunc = func;
     }
@@ -101,7 +101,7 @@ namespace SpeedCC
     }
     
     ///----------- SCBehaviorGroup
-    bool SCBehaviorGroup::start(SCParameters& par)
+    bool SCBehaviorGroup::start(SCDictionary& par)
     {
         for(auto& it : _behaviorList)
         {

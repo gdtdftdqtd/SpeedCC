@@ -4,6 +4,7 @@
 #define __SPEEDCC__SCMESSAGEDEF_H__
 
 #include "../base/SCBaseCommon.h"
+#include "../base/SCDictionary.h"
 
 namespace SpeedCC
 {
@@ -42,7 +43,7 @@ namespace SpeedCC
     struct SSCMessageInfo
     {
         int                 nMsgID;
-        SCParameters        paramter;
+        SCDictionary        paramter;
         bool                bContinue;
         
     public:

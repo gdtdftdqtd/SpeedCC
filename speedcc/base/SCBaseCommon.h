@@ -24,49 +24,10 @@ namespace SpeedCC
         EErrorCode      ecCode;
     };
     
-    ///------------- SCVersionInfo
-    struct SCVersionInfo
-    {
-        int nMajor;
-        int nMinor;
-        int nFix;
-        
-        SCVersionInfo();
-        SCVersionInfo(const SCVersionInfo& info);
-        SCVersionInfo(const char* pszVersion);
-        SCVersionInfo(const SCString& str);
-        SCVersionInfo(unsigned uVersion);
-        SCString getString(int nBit=2) const;
-        unsigned getHexValue(int nBit=2) const;
-        int compare(const SCVersionInfo& info) const;
-        bool operator<(const SCVersionInfo& info) const;
-        bool operator<=(const SCVersionInfo& info) const;
-        bool operator>(const SCVersionInfo& info) const;
-        bool operator>=(const SCVersionInfo& info) const;
-        bool operator==(const SCVersionInfo& info) const;
-        
-    private:
-        void setString(const SCString& strVersion);
-    };
     
-    ///------------- SCParameters
-    class SCParameters : public SCObjRefT<std::map<SCString,SCValue> >
-    {
-    public:
-        SCParameters();
-        SCValue& operator[](const SCString& strKey);
-        SCValue operator[](SCString& strKey);
-        
-        void setValue(const SCString& strKey,const SCValue& value);
-        SCValue getValue(const SCString& strKey);
-        
-        bool hasKey(const SCString& strKey) const;
-        void removeKey(const SCString& strKey);
-        void removeAllKey();
-        bool isEmpty();
-        void forEach(const std::function<bool(const SCString& strKey,const SCValue& value)>& func) const;
-        void forEach(const std::function<bool(const SCString& strKey,SCValue& value)>& func);
-    };
+    
+    ///------------- SCDictionary
+    
 }
 
 #endif // __SC__BASECOMMON_H__

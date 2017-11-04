@@ -4,7 +4,7 @@
 #define __SPEEDCC__SCBEHAVIOR_H__
 
 #include "SCComponent.h"
-#include "../base/SCBaseCommon.h"
+#include "../base/SCDictionary.h"
 
 namespace SpeedCC
 {
@@ -28,7 +28,7 @@ namespace SpeedCC
         inline SCString getName() const { return _strName; }
         inline EState getState() const {return _state;}
         
-        virtual bool start(SCParameters& par);
+        virtual bool start(SCDictionary& par);
         virtual void pause(void);
         virtual void resume(void);
         virtual void stop(void);
@@ -53,18 +53,18 @@ namespace SpeedCC
         static Ptr create();
         static Ptr create(const SCString& strName);
         
-        virtual bool start(SCParameters& par);
+        virtual bool start(SCDictionary& par);
         virtual void pause(void);
         virtual void resume(void);
         virtual void stop(void);
         
-        void setOnStartFunc(const std::function<bool(SCParameters& par)>& func);
+        void setOnStartFunc(const std::function<bool(SCDictionary& par)>& func);
         void setOnPauseFunc(const std::function<void(void)>& func);
         void setOnResumeFunc(const std::function<void(void)>& func);
         void setOnStopFunc(const std::function<void(void)>& func);
         
     private:
-        std::function<bool(SCParameters& par)>  _startFunc;
+        std::function<bool(SCDictionary& par)>  _startFunc;
         std::function<void(void)>               _pauseFunc;
         std::function<void(void)>               _resumeFunc;
         std::function<void(void)>               _stopFunc;
@@ -82,7 +82,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorGroup);
         SC_DEFINE_CLASS_PTR(SCBehaviorGroup);
         
-        virtual bool start(SCParameters& par);
+        virtual bool start(SCDictionary& par);
         virtual void pause(void);
         virtual void resume(void);
         virtual void stop(void);
