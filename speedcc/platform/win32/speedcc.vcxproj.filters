@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\base">
+      <UniqueIdentifier>{228e58e2-61e4-449d-81b7-eabf3a049d2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene">
+      <UniqueIdentifier>{8a0f3d25-0b8b-49f4-9386-da47d2b86fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\component">
+      <UniqueIdentifier>{07441b62-29fd-41fc-ad23-ae07a43d778d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCBaseCommon.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCBaseDef.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCBufferRefT.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCDataBlock.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCDateTime.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCDictionary.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCMacroDef.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCMemAllocator.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCObjPtrT.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCObjRefT.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCString.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCTemplateDef.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCTemplateUtils.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCValue.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\base\SCVersion.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\scene\SCSceneControllerT.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\scene\SCSceneLayer.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\component\SCBehavior.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\component\SCComponent.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\component\SCEntity.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\component\SCMessageDef.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\component\SCMessageDispatch.h">
+      <Filter>Source Files\component</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="speedcc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCBaseCommon.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCDataBlock.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCDateTime.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCDictionary.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCMemAllocator.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCString.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCValue.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\SCVersion.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\scene\SCSceneLayer.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\component\SCBehavior.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\component\SCComponent.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\component\SCEntity.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\component\SCMessageDispatch.cpp">
+      <Filter>Source Files\component</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
