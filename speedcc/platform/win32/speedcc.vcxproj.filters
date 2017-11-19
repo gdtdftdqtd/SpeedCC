@@ -96,6 +96,9 @@
     <ClInclude Include="..\..\component\SCMessageDispatch.h">
       <Filter>Source Files\component</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\scene\SCSceneNavigator.h">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -145,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="..\..\component\SCMessageDispatch.cpp">
       <Filter>Source Files\component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\scene\SCSceneNavigator.cpp">
+      <Filter>Source Files\scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

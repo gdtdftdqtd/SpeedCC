@@ -5,7 +5,7 @@
 
 #include "cocos2d.h"
 #include "SCSceneLayer.h"
-#include "SCMessageListener.h"
+#include "../component/SCMessageDispatch.h"
 #include "../base/SCBaseCommon.h"
 
 namespace SpeedCC
@@ -46,12 +46,10 @@ namespace SpeedCC
         
         static SSceneControllerInfo createScene();
         static SCSceneControllerInterface* createLayer();
-        static SCDictionary getSceneParameter();
-        static void setSceneParameter(const SCDictionary& dic);
+        
         
     protected:
         virtual void onSCMessageProcess(SSCMessageInfo& mi);
-//        void delayExecute(float fDelay, const std::function<void()>& fun);
         
     protected:
         FUN_SCButtonFunctor_t traitFuncPointerType(bool (TargetCtlrT::*)());
@@ -63,10 +61,18 @@ namespace SpeedCC
         cocos2d::SEL_CallFuncND traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Node*, void*));
         
     protected:
-        SCSceneLayer*   _pSceneLayer;
-        static SCDictionary     s_SceneParameterDic;
+        SCSceneLayer*			_pSceneLayer;
+		//SCEntity				_performerEntity;
     };
     
+
+
+	////-------------- static method
+	template<typename TargetCtlrT>
+	void SCSceneControllerT<TargetCtlrT>::setSceneParameter(const SCDictionary& dic)
+	{
+		s_SceneParameterDic = dic;
+	}
     
     template<typename TargetCtlrT>
     SSceneControllerInfo SCSceneControllerT<TargetCtlrT>::createScene()
@@ -87,13 +93,13 @@ namespace SpeedCC
             cocos2d::Layer* rootLayer = cocos2d::Layer::create();
             sceneCtlrPtr->setSceneRootLayer(rootLayer);
             
-            auto& parameter = getSceneParameter();
-            
-            sceneCtlrPtr->onCreate(parameter);
+            sceneCtlrPtr->onCreate(s_SceneParameterDic);
             ret.pInterface = sceneCtlrPtr;
             
-            rootLayer->addChild((cocos2d::Node *)sceneCtlrPtr->getSceneLayer);
+            rootLayer->addChild((cocos2d::Node *)sceneCtlrPtr->getSceneLayer());
             scene->addChild(rootLayer);
+
+			s_SceneParameterDic.removeAllKeys();
             
         } while (0);
         
@@ -107,9 +113,9 @@ namespace SpeedCC
         
         SCASSERT(pRet!=NULL);
         
-        auto& parameter = getSceneParameter();
-        sceneCtlrPtr->onCreate(parameter);
-        
+        sceneCtlrPtr->onCreate(s_SceneParameterDic);
+		s_SceneParameterDic.removeAllKeys();
+
         return pRet ;
     }
 }

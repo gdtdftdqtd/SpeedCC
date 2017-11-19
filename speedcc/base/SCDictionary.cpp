@@ -51,7 +51,7 @@ namespace SpeedCC
         this->getStub()->erase(strKey);
     }
     
-    void SCDictionary::removeAllKey()
+    void SCDictionary::removeAllKeys()
     {
         this->clone4Write();
         this->getStub()->clear();
