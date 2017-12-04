@@ -7,8 +7,6 @@
 #include "SCDateTime.h"
 #include "SCString.h"
 
-//#include "../platform/SCOSSystem.h"
-
 namespace SpeedCC
 {
     enum

@@ -34,6 +34,15 @@ namespace SpeedCC
         // "layer" => cocos2d::Ref*; touch belong to layer
         SCMessage_Touch,
         
+        // "interface" => SCSceneControllerInterface
+        SCMessage_ModalSceneGotFocus,
+        
+        // "interface" => SCSceneControllerInterface
+        SCMessage_ModalSceneLostFocus,
+        
+        // "interface" => SCSceneControllerInterface
+        SCMessage_PushModalScene,
+        
         // user message define must begin from this value
         // "name" => SCString; required parameter
         SCMessage_User = 65535

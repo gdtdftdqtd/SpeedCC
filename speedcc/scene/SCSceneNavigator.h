@@ -9,7 +9,38 @@
 
 namespace SpeedCC
 {
-
+    /*
+    template<typename T>
+    struct SCTraitSceneCreateFunctor
+    {
+        static inline FUN_SCSceneCreateFunctor_t getCreateSceneFunctor()
+        {
+            return (FUN_SCSceneCreateFunctor_t)(&T::BaseType_t::createScene);
+        };
+        
+        static inline FUN_SCLayerCreateFunctor_t getCreateLayerFunctor()
+        {
+            return (FUN_SCLayerCreateFunctor_t)(&T::BaseType_t::createLayer);
+        };
+    };
+    
+    template<>
+    struct SCTraitSceneCreateFunctor<SCClassEmpty>
+    {
+        static inline FUN_SCSceneCreateFunctor_t getCreateSceneFunctor()
+        {
+            SCASSERT(false);
+            return NULL;
+        };
+        
+        static inline FUN_SCLayerCreateFunctor_t getCreateLayerFunctor()
+        {
+            SCASSERT(false);
+            return NULL;
+        };
+    };
+    */
+    
     class SCSceneNavigator final
     {
 	public:
@@ -48,36 +79,42 @@ namespace SpeedCC
 				pfunCurrentLayerCreator(pfunLayer)
 			{}
 		};
+        
+        struct SStackSceneInfo
+        {
+            SSceneSwitchInfo                sceneCreatorInfo;
+        };
 
 	private:
-		static void switchScene(const SSceneSwitchInfo& info);
+		static bool switchScene(const SSceneSwitchInfo& info);
 
+    public:
 		template<typename SceneT, typename TransT = SCClassNull>
-		static void switchScene(const ESceneSwitchType place = SWITCH_REPLACE, SCDictionary dic = SCDictionary())
+		static bool switchScene(const ESceneSwitchType place = SWITCH_REPLACE, SCDictionary dic = SCDictionary())
 		{
 			SCASSERTCT(!SCIsEmptyClassT<SceneT>::value);
 
 			s_SceneParameterDic = dic;
 
-			SSCSwitchSceneInfo switchInfo;
+			SSceneSwitchInfo switchInfo;
 
-			switchInfo.scenePlace = place;
-			switchInfo.pfunSelfTransCreator = &SCCCTransitionCreator<TransT>::create;
-			switchInfo.pfunOppositeTransCreator = &SCCCTransitionCreator<typename SCCCTransitionCreator<TransT>::OppositeType>::create;
-			switchInfo.pfunCurrentSceneCreator = SCTraitSceneCreateFunctor<SceneT>::getCreateSceneFunctor();
-			switchInfo.pfunCurrentLayerCreator = SCTraitSceneCreateFunctor<SceneT>::getCreateLayerFunctor();
+			switchInfo.switchType = place;
+			switchInfo.pfunSelfTransCreator = &SCTransitionCreator<TransT>::create;
+			switchInfo.pfunOppositeTransCreator = &SCTransitionCreator<typename SCTransitionCreator<TransT>::OppositeType>::create;
+			switchInfo.pfunCurrentSceneCreator = (FUN_SCSceneCreateFunctor_t)(&SceneT::BaseType_t::createScene);
+			switchInfo.pfunCurrentLayerCreator = (FUN_SCLayerCreateFunctor_t)(&SceneT::BaseType_t::createLayer);
 
-			SCSceneNavigator::switchScene(switchInfo);
+			return SCSceneNavigator::switchScene(switchInfo);
 		}
 
-	public:
 		static void back(const int nNumber = 1);
 		static void setSceneParameter(const SCDictionary& dic);
-		static SCDictionary getSceneParameter();
+//        static SCDictionary getSceneParameter();
 
 	private:
-		static SCDictionary     s_SceneParameterDic;
-
+        static SCSceneControllerInterface::Ptr  s_currentSceneInterfacePtr;
+		static SCDictionary                     s_SceneParameterDic;
+        static std::list<SStackSceneInfo>       s_sceneStack;
     };
 }
 

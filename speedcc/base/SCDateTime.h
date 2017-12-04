@@ -1,7 +1,7 @@
 
 
-#ifndef __SC__FSDATETIME_H__
-#define __SC__FSDATETIME_H__
+#ifndef __SPEEDCC__SCDATATIME_H__
+#define __SPEEDCC__SCDATATIME_H__
 
 #include <time.h>
 #include <limits>
@@ -208,4 +208,4 @@ namespace SpeedCC
 
 
 
-#endif // __SC__FSDATETIME_H__
+#endif // __SPEEDCC__SCDATATIME_H__

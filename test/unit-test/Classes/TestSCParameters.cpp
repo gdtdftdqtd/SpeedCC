@@ -6,9 +6,9 @@
 
 using namespace SpeedCC;
 
-TEST(TestSCParameters, Constructor)
+TEST(TestSCDictionary, Constructor)
 {
-    SCParameters testPar;
+    SCDictionary testPar;
     testPar.setValue("key1", 123);
     testPar.setValue("key2", "abc");
     testPar.setValue("key3", 'd');
@@ -21,7 +21,7 @@ TEST(TestSCParameters, Constructor)
 }
 
 
-TEST(TestSCParameters, Assignment)
+TEST(TestSCDictionary, Assignment)
 {
     
 }

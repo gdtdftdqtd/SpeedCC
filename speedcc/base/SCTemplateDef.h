@@ -83,6 +83,92 @@ namespace SpeedCC
     
     template<typename T>
     cocos2d::SEL_CallFuncND SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*,void*));
+    
+    
+    ///--------------------- cocos2d transition template
+    
+    template<typename T>
+    struct SCTransitionCreator
+    {
+        typedef T    OppositeType;
+        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
+        {
+            return T::create(duration, pScene);
+        }
+    };
+    
+    template<>
+    struct SCTransitionCreator<SCClassNull>
+    {
+        typedef SCClassNull    OppositeType;
+        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
+        {return pScene;}
+    };
+    
+    template<>
+    struct SCTransitionCreator<void>
+    {
+        typedef SCClassNull    OppositeType;
+        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
+        {return pScene;}
+    };
+    
+    
+    
+    // single transition
+#define SC_DEFINE_TRANSITION_SINGLE(_transition_)\
+template<>\
+struct SCTransitionCreator<_transition_>\
+{\
+typedef _transition_    OppositeType;\
+static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
+{return _transition_::create(duration,(cocos2d::Scene*)pScene);}\
+};
+    
+    // pair transition
+#define SC_DEFINE_TRANSITION_PAIR(_transition1_,_transition2_)\
+template<>\
+struct SCTransitionCreator<_transition1_>\
+{\
+typedef _transition2_    OppositeType;\
+static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
+{return _transition1_::create(duration,(cocos2d::Scene*)pScene);}\
+};\
+template<>\
+struct SCTransitionCreator<_transition2_>\
+{\
+typedef _transition1_    OppositeType;\
+static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
+{return _transition2_::create(duration,(cocos2d::Scene*)pScene);}\
+\
+};
+    
+    
+    
+    
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionRotoZoom)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionJumpZoom)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionShrinkGrow)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFlipX)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFlipY)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFlipAngular)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionZoomFlipX)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionZoomFlipY)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionZoomFlipAngular)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFade)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionTurnOffTiles)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionSplitCols)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionSplitRows)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFadeTR)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFadeBL)
+    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionProgressRadialCCW)
+    
+    //DEFINE_TRANSITION_SINGLE(cocos2d::TransitionPageTurn)
+    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionMoveInL,cocos2d::TransitionMoveInR)
+    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionMoveInT,cocos2d::TransitionMoveInB)
+    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionSlideInL,cocos2d::TransitionSlideInR)
+    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionSlideInT,cocos2d::TransitionSlideInB)
+    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionFadeUp,cocos2d::TransitionFadeDown)
 }
 
 

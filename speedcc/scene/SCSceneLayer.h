@@ -4,13 +4,16 @@
 #define __SPEEDCC__SCSCENELAYER_H__
 
 #include "cocos2d.h"
+#include "../base/SCObject.h"
 
 namespace SpeedCC
 {
-    class SCSceneController;
-    
     class SCSceneLayer : public cocos2d::Layer
     {
+    public:
+        CREATE_FUNC(SCSceneLayer);
+        void setControllerInterface(SCObject::Ptr interfacePtr);
+        
     protected:
         /*
         virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
@@ -36,8 +39,24 @@ namespace SpeedCC
         virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
         
     private:
-//        SCSceneController*      _pSceneController;
+//        SCSceneControllerInterface::Ptr      _sceneControllerPtr;
+        SCObject::Ptr         _sceneControllerPtr;
     };
+    
+    class SCScene : public cocos2d::Scene
+    {
+    public:
+        CREATE_FUNC(SCScene);
+        
+        virtual void onEnter();
+        virtual void onEnterTransitionDidFinish();
+        virtual void onExit();
+        virtual void onExitTransitionDidStart();
+        
+    private:
+        
+    };
+    
 }
 
 #endif // __SPEEDCC__SCSCENELAYER_H__

@@ -165,10 +165,8 @@
 #define SPEEDCC_VERSION_MINOR                       ((SPEEDCC_VERSION & 0x0000ff00)>>(4*2))
 #define SPEEDCC_VERSION_FIX                         ((SPEEDCC_VERSION & 0x000000ff))
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
 #ifndef INT64
 #define INT64       long long
 #endif
-#endif // CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
 
 #endif //__SC__MACRODEF_H__
