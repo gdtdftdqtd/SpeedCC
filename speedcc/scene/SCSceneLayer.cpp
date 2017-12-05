@@ -4,8 +4,6 @@
 
 namespace SpeedCC
 {
-//    SCDictionary     SCSceneControllerT::s_SceneParameterDic;
-
     ///------------- SCSceneLayer
     
     void SCSceneLayer::setController(SCObject::Ptr controllerPtr)

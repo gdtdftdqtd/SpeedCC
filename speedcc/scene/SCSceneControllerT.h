@@ -4,10 +4,11 @@
 #define __SPEEDCC__SCSCENECONTROLLERT_H__
 
 #include "cocos2d.h"
-//#include "SCSceneNavigator.h"
+
 #include "SCSceneLayer.h"
 
 #include "../component/SCMessageDispatch.h"
+
 #include "../base/SCBaseCommon.h"
 #include "../base/SCBaseDef.h"
 #include "../base/SCObjPtrT.h"
@@ -18,11 +19,13 @@ namespace SpeedCC
     class SCSceneController : public SCObject
     {
         friend class SCSceneNavigator;
+        template<typename T> friend class SCSceneControllerT;
+        
     public:
         SC_DEFINE_CLASS_PTR(SCSceneController);
         
 //        virtual bool isTouchFreezed() const = 0;
-//        virtual void setTouchFreezed(const bool bFreeze) = 0;
+        virtual void setTouchFreezed(const bool bFreeze) = 0;
 //        virtual void showBlackMask(const bool bShow) = 0;
 //        virtual bool isBlackMaskForModal() const = 0;
         virtual cocos2d::Layer* getSceneLayer() = 0;
@@ -32,11 +35,13 @@ namespace SpeedCC
 //        virtual void setSceneRootLayer(cocos2d::Layer* pLayer) = 0;
 //        virtual void setPreviousModalLayer(SCSceneController::Ptr pLayer) = 0;
 //        virtual void onSCModalGotFocus()=0;
-        virtual void pushModalController(SCSceneController::Ptr interfacePtr) = 0;
+        virtual void setScene(SCScene* pScene) = 0;
+        virtual void pushModalController(SCSceneController::Ptr controllerPtr) = 0;
         
         // return parent controller
         virtual SCSceneController::Ptr popModalFromParent() = 0;
-//        virtual void popModalLayer() = 0;
+        virtual void setModalParentController(SCSceneController::WeakPtr pControllerPtr) = 0;
+//        virtual SCSceneController::WeakPtr getModalParentController() = 0;
     };
     
     typedef SCSceneController::Ptr (*FUN_SCSceneCreateFunctor_t)(const SCDictionary& dic);
@@ -55,27 +60,29 @@ namespace SpeedCC
         friend class SCSceneNavigator;
         typedef SCSceneControllerT<TargetCtlrT>   ControllerBase_t;
         
-        virtual void onCreate(SCDictionary parameters);
+        virtual void onCreate(SCDictionary parameters){}
         
 //        virtual bool isTouchFreezed() const;
-//        virtual void setTouchFreezed(const bool bFreeze);
+        virtual void setTouchFreezed(const bool bFreeze) override;
 //        virtual void showBlackMask(const bool bShow);
 //        virtual bool isBlackMaskForModal() const;
-        virtual cocos2d::Layer* getSceneLayer() { return _pSceneLayer; }
-        virtual cocos2d::Scene* getScene() { return _pScene; }
+        virtual cocos2d::Layer* getSceneLayer() override { return _pSceneLayer; }
+        virtual cocos2d::Scene* getScene() override { return _pScene; }
 
-//        virtual void setPreviousModalLayer(SCSceneController* pLayer);
-        virtual void pushModalController(SCSceneController::Ptr interfacePtr);
-        virtual SCSceneController::Ptr popModalFromParent();
-//        virtual void popModalLayer();
+        virtual void pushModalController(SCSceneController::Ptr controllerPtr) override;
+        virtual SCSceneController::Ptr popModalFromParent() override;
         
         static SCSceneController::Ptr createScene(const SCDictionary& parameterDic);
         static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic);
         
     protected:
-        virtual void onSCMessageProcess(SSCMessageInfo& mi);
+        virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
+        
+    private:
         void setSceneRootLayer(SCSceneLayer* pLayer) { _pSceneLayer = pLayer;}
-        void setScene(SCScene* pScene) {_pScene = pScene;}
+        virtual void setScene(SCScene* pScene) override {_pScene = pScene;}
+        virtual void setModalParentController(SCSceneController::WeakPtr controllerPtr) override { _parentModalControllerPtr = controllerPtr;}
+//        virtual SCSceneController::WeakPtr getModalParentController() override { return _parentModalControllerPtr;}
         
     protected:
         FUN_SCButtonFunctor_t traitFuncPointerType(bool (TargetCtlrT::*)());
@@ -86,36 +93,71 @@ namespace SpeedCC
         cocos2d::SEL_CallFuncN traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Node*));
         cocos2d::SEL_CallFuncND traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Node*, void*));
         
-    protected:
-        SCSceneLayer*			_pSceneLayer;
-        SCScene*                _pScene;
+    private:
+        SCSceneLayer*			        _pSceneLayer;
+        SCScene*                        _pScene;
+        SCSceneController::WeakPtr      _parentModalControllerPtr;
     };
     
     ////-------------- member methods
     
     template<typename TargetCtlrT>
-    void SCSceneControllerT<TargetCtlrT>::pushModalController(SCSceneController::Ptr interfacePtr)
+    void SCSceneControllerT<TargetCtlrT>::pushModalController(SCSceneController::Ptr controllerPtr)
     {
+        SCSceneController::WeakPtr controllerPtr2 = this->makeObjPtr<SCSceneController>();
+        controllerPtr->setModalParentController(controllerPtr2);
+        controllerPtr->setScene(_pScene);
         
+        _pScene->addChild(controllerPtr->getSceneLayer());
+        this->setTouchFreezed(true);
+        
+        // generate modal mssage
+        SSCMessageInfo mi;
+        
+        mi.nMsgID = SCMessage_ModalSceneLostFocus;
+        mi.paramters.setValue(MSG_ARG_NAME_CONTROLLER,this);
+        SCMessageDispatch::getInstance()->postMessage(mi);
+        
+        mi.nMsgID = SCMessage_ModalSceneGotFocus;
+        mi.paramters.setValue(MSG_ARG_NAME_CONTROLLER,controllerPtr.getRawPointer());
+        SCMessageDispatch::getInstance()->postMessage(mi);
     }
     
     template<typename TargetCtlrT>
     SCSceneController::Ptr SCSceneControllerT<TargetCtlrT>::popModalFromParent()
     {
-        return NULL;
+        SCASSERT(_parentModalControllerPtr!=NULL);
+        auto ret = _parentModalControllerPtr->makeObjPtr<SCSceneController>();
+        
+        _parentModalControllerPtr->setTouchFreezed(false);
+        _parentModalControllerPtr = NULL;
+        _pSceneLayer->removeFromParent();
+        
+        // generate modal mssage
+        SSCMessageInfo mi;
+        mi.nMsgID = SCMessage_ModalSceneGotFocus;
+        mi.paramters.setValue(MSG_ARG_NAME_CONTROLLER,ret.getRawPointer());
+        SCMessageDispatch::getInstance()->postMessage(mi);
+        
+        return ret;
     }
     
     template<typename TargetCtlrT>
-    void SCSceneControllerT<TargetCtlrT>::onSCMessageProcess(SSCMessageInfo& mi)
+    void SCSceneControllerT<TargetCtlrT>::setTouchFreezed(const bool bFreeze)
     {
         
     }
-    
-    template<typename TargetCtlrT>
-    void SCSceneControllerT<TargetCtlrT>::onCreate(SCDictionary parameters)
-    {
-        
-    }
+//    template<typename TargetCtlrT>
+//    void SCSceneControllerT<TargetCtlrT>::onSCMessageProcess(SSCMessageInfo& mi)
+//    {
+//
+//    }
+//
+//    template<typename TargetCtlrT>
+//    void SCSceneControllerT<TargetCtlrT>::onCreate(SCDictionary parameters)
+//    {
+//
+//    }
     
 	////-------------- static methods
     

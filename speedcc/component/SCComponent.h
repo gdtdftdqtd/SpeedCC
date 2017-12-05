@@ -5,11 +5,12 @@
 
 #include "../base/SCObjPtrT.h"
 #include "../base/SCValue.h"
+#include "../base/SCObject.h"
 
 namespace SpeedCC
 {
     ///------------ SCComponent
-    class SCComponent
+    class SCComponent : public SCObject
     {   
     protected:
         SC_AVOID_CLASS_COPY(SCComponent);

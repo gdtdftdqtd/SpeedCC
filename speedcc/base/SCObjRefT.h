@@ -62,6 +62,7 @@ namespace SpeedCC
         int increaseRef() const;
         int decreaseRef();
         void allocBuf(int nSize=sizeof(StubT));
+        virtual void onInstanceCreated(void* pData) {}
         
     private:
         void freeBuf();
@@ -123,6 +124,7 @@ namespace SpeedCC
         this->decreaseRef();
         this->allocBuf();
         SCDataTypeLifeCycle<StubT>::construct(_pData);
+        this->onInstanceCreated(_pData);
     }
     
     template<typename StubT,typename CookieT>
@@ -135,6 +137,7 @@ namespace SpeedCC
         {
             func(_pData);
         }
+        this->onInstanceCreated(_pData);
     }
     
     template<typename StubT,typename CookieT>
@@ -143,7 +146,8 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct( _VSTD::forward<_Args>(__args)...);
+        SCDataTypeLifeCycle<StubT>::construct(_pData, _VSTD::forward<_Args>(__args)...);
+        this->onInstanceCreated(_pData);
     }
     
     /*

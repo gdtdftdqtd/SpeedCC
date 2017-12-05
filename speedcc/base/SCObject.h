@@ -9,24 +9,24 @@ namespace SpeedCC
 {
     class SCObject
     {
+        template<typename T1,bool T2> friend class SCObjPtrT;
+        
     public:
         SC_DEFINE_CLASS_PTR(SCObject);
         SCObject();
         virtual ~SCObject();
         
-//        template<typename T>
-//        typename T::Ptr cast()
-//        {
-//            if(_isRefObject && dynamic_cast<T*>(this))
-//            {
-//                SCObjPtrT<T> ret(this);
-//                ret.increaseRef();
-//                return ret;
-//            }
-//
-//            return NULL;
-//        }
+        template<typename T>
+        SCObjPtrT<T> makeObjPtr()
+        {
+            return SCObjPtrT<T>(_pObjPtrData);
+        }
         
+    private:
+        void setObjPtrData(void* pData);
+        
+    private:
+        void*       _pObjPtrData;
     };
 }
 

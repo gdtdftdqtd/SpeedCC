@@ -8,14 +8,16 @@
 #include "SCMacroDef.h"
 
 namespace SpeedCC
-{
-    class SCComponent;
-    
+{   
     template<typename TargetT,bool IsStrong=true>
     class SCObjPtrT : public SCObjRefT<TargetT>
     {
         template<typename T,bool s> friend class SCObjPtrT;
-        friend class SCComponent;
+    protected:
+        virtual void onInstanceCreated(void* pData)
+        {
+            this->getStub()->setObjPtrData(pData);
+        }
     public:
         typedef TargetT type;
         

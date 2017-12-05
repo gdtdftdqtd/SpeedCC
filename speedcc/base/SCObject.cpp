@@ -4,11 +4,17 @@
 
 namespace SpeedCC
 {
-    SCObject::SCObject()
+    SCObject::SCObject():
+    _pObjPtrData(NULL)
     {
     }
     
     SCObject::~SCObject()
     {
+    }
+    
+    void SCObject::setObjPtrData(void* pData)
+    {
+        _pObjPtrData = pData;
     }
 }

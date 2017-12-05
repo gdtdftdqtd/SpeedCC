@@ -6,10 +6,11 @@
 #include "SCComponent.h"
 #include "../base/SCObjPtrT.h"
 #include "../base/SCString.h"
+#include "../base/SCObject.h"
 
 namespace SpeedCC
 {
-    class SCEntity
+    class SCEntity : public SCObject
     {   
     protected:
         SC_AVOID_CLASS_COPY(SCEntity);

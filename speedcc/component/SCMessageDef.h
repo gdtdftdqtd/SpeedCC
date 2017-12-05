@@ -8,6 +8,10 @@
 
 namespace SpeedCC
 {
+#define MSG_ARG_NAME_CONTROLLER     "controller"
+#define MSG_ARG_NAME_NUMBER         "number"
+#define MSG_ARG_NAME_NAME           "name"
+    
     enum
     {
         // no parameter
@@ -34,14 +38,14 @@ namespace SpeedCC
         // "layer" => cocos2d::Ref*; touch belong to layer
         SCMessage_Touch,
         
-        // "interface" => SCSceneController
+        // MSG_ARG_NAME_CONTROLLER/"controller" => SCSceneController*
         SCMessage_ModalSceneGotFocus,
         
-        // "interface" => SCSceneController
+        // MSG_ARG_NAME_CONTROLLER/"controller" => SCSceneController*
         SCMessage_ModalSceneLostFocus,
         
-        // "interface" => SCSceneController
-        SCMessage_PushModalScene,
+//        // MSG_ARG_NAME_CONTROLLER/"controller" => SCSceneController*
+//        SCMessage_PushModalScene,
         
         // user message define must begin from this value
         // "name" => SCString; required parameter
@@ -52,7 +56,7 @@ namespace SpeedCC
     struct SSCMessageInfo
     {
         int                 nMsgID;
-        SCDictionary        paramter;
+        SCDictionary        paramters;
         bool                bContinue;
         
     public:
