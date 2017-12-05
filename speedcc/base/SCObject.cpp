@@ -4,13 +4,11 @@
 
 namespace SpeedCC
 {
-    SCObject::SCObject():
-    _isRefObject(false)
+    SCObject::SCObject()
     {
     }
     
-    SCObject::SCObject(const bool isRef):
-    _isRefObject(isRef)
+    SCObject::~SCObject()
     {
     }
 }

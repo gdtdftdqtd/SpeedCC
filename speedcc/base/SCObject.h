@@ -12,7 +12,7 @@ namespace SpeedCC
     public:
         SC_DEFINE_CLASS_PTR(SCObject);
         SCObject();
-        SCObject(const bool isRef);
+        virtual ~SCObject();
         
 //        template<typename T>
 //        typename T::Ptr cast()
@@ -27,8 +27,6 @@ namespace SpeedCC
 //            return NULL;
 //        }
         
-    private:
-        bool    _isRefObject;
     };
 }
 

@@ -12,7 +12,7 @@ namespace SpeedCC
     
     
     ///-------------------- function pointer type
-//    class SCSceneControllerInterface;
+//    class SCSceneController;
 //    class SCDictionary;
 
     typedef bool (cocos2d::Ref::*FUN_SCButtonFunctor_t)();

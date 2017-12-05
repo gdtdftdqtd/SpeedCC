@@ -10,6 +10,7 @@
 #define SPEEDCC_FEATURE_MEMORY_POOL_THREAD_SAFE
 #endif
 
-#define     SCDurationOfSceneTranistion        0.3
+#define     SC_DURATION_OF_SCENE_TRANSITION          0.3
+#define     SC_MAX_NUMBER_SCENE_IN_STACK             20
 
 #endif // __SC__CONFIG_H__

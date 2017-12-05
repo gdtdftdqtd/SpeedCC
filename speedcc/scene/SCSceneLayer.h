@@ -12,7 +12,8 @@ namespace SpeedCC
     {
     public:
         CREATE_FUNC(SCSceneLayer);
-        void setControllerInterface(SCObject::Ptr interfacePtr);
+        void setController(SCObject::Ptr controllerPtr);
+        inline SCObject::Ptr getController() {return _sceneControllerPtr;}
         
     protected:
         /*
@@ -36,16 +37,16 @@ namespace SpeedCC
         virtual void onExit();
         virtual void onExitTransitionDidStart();
         
-        virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
+//        virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
         
     private:
-//        SCSceneControllerInterface::Ptr      _sceneControllerPtr;
         SCObject::Ptr         _sceneControllerPtr;
     };
     
     class SCScene : public cocos2d::Scene
     {
     public:
+        SCScene();
         CREATE_FUNC(SCScene);
         
         virtual void onEnter();
@@ -53,8 +54,11 @@ namespace SpeedCC
         virtual void onExit();
         virtual void onExitTransitionDidStart();
         
-    private:
+        void setRootLayer(SCSceneLayer* pLayer);
+        SCSceneLayer* getRootLayer();
         
+    private:
+        SCSceneLayer*   _pRootLayer;
     };
     
 }

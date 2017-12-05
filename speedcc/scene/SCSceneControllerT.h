@@ -9,18 +9,17 @@
 
 #include "../component/SCMessageDispatch.h"
 #include "../base/SCBaseCommon.h"
+#include "../base/SCBaseDef.h"
 #include "../base/SCObjPtrT.h"
 #include "../base/SCObject.h"
 
 namespace SpeedCC
 {
-    class SCSceneLayer;
-    class SCScene;
-    
-    class SCSceneControllerInterface : SCObject
+    class SCSceneController : public SCObject
     {
+        friend class SCSceneNavigator;
     public:
-        SC_DEFINE_CLASS_PTR(SCSceneControllerInterface);
+        SC_DEFINE_CLASS_PTR(SCSceneController);
         
 //        virtual bool isTouchFreezed() const = 0;
 //        virtual void setTouchFreezed(const bool bFreeze) = 0;
@@ -31,14 +30,17 @@ namespace SpeedCC
         
     protected:
 //        virtual void setSceneRootLayer(cocos2d::Layer* pLayer) = 0;
-//        virtual void setPreviousModalLayer(SCSceneControllerInterface::Ptr pLayer) = 0;
+//        virtual void setPreviousModalLayer(SCSceneController::Ptr pLayer) = 0;
 //        virtual void onSCModalGotFocus()=0;
-        virtual void pushModalController(SCSceneControllerInterface::Ptr interfacePtr) = 0;
+        virtual void pushModalController(SCSceneController::Ptr interfacePtr) = 0;
+        
+        // return parent controller
+        virtual SCSceneController::Ptr popModalFromParent() = 0;
 //        virtual void popModalLayer() = 0;
     };
     
-    typedef SCSceneControllerInterface::Ptr (*FUN_SCSceneCreateFunctor_t)(const SCDictionary& dic);
-    typedef SCSceneControllerInterface::Ptr (*FUN_SCLayerCreateFunctor_t)(const SCDictionary& dic);
+    typedef SCSceneController::Ptr (*FUN_SCSceneCreateFunctor_t)(const SCDictionary& dic);
+    typedef SCSceneController::Ptr (*FUN_SCLayerCreateFunctor_t)(const SCDictionary& dic);
     
 #define FN(_fun_)\
     ((decltype(TargetCtlrT::traitFuncPointerType(&TargetCtlrT::_fun_)))(&TargetCtlrT::_fun_))
@@ -47,10 +49,11 @@ namespace SpeedCC
     class SCSceneControllerT :
     public cocos2d::Ref,
     public SCMessageListener,
-    public SCSceneControllerInterface
+    public SCSceneController
     {
     public:
-        typedef SCSceneControllerT<TargetCtlrT>   BaseType_t;
+        friend class SCSceneNavigator;
+        typedef SCSceneControllerT<TargetCtlrT>   ControllerBase_t;
         
         virtual void onCreate(SCDictionary parameters);
         
@@ -61,12 +64,13 @@ namespace SpeedCC
         virtual cocos2d::Layer* getSceneLayer() { return _pSceneLayer; }
         virtual cocos2d::Scene* getScene() { return _pScene; }
 
-//        virtual void setPreviousModalLayer(SCSceneControllerInterface* pLayer);
-        virtual void pushModalController(SCSceneControllerInterface::Ptr interfacePtr);
+//        virtual void setPreviousModalLayer(SCSceneController* pLayer);
+        virtual void pushModalController(SCSceneController::Ptr interfacePtr);
+        virtual SCSceneController::Ptr popModalFromParent();
 //        virtual void popModalLayer();
         
-        static SCSceneControllerInterface::Ptr createScene(const SCDictionary& parameterDic);
-        static SCSceneControllerInterface::Ptr createLayer(const SCDictionary& parameterDic);
+        static SCSceneController::Ptr createScene(const SCDictionary& parameterDic);
+        static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic);
         
     protected:
         virtual void onSCMessageProcess(SSCMessageInfo& mi);
@@ -90,7 +94,25 @@ namespace SpeedCC
     ////-------------- member methods
     
     template<typename TargetCtlrT>
-    void SCSceneControllerT<TargetCtlrT>::pushModalController(SCSceneControllerInterface::Ptr interfacePtr)
+    void SCSceneControllerT<TargetCtlrT>::pushModalController(SCSceneController::Ptr interfacePtr)
+    {
+        
+    }
+    
+    template<typename TargetCtlrT>
+    SCSceneController::Ptr SCSceneControllerT<TargetCtlrT>::popModalFromParent()
+    {
+        return NULL;
+    }
+    
+    template<typename TargetCtlrT>
+    void SCSceneControllerT<TargetCtlrT>::onSCMessageProcess(SSCMessageInfo& mi)
+    {
+        
+    }
+    
+    template<typename TargetCtlrT>
+    void SCSceneControllerT<TargetCtlrT>::onCreate(SCDictionary parameters)
     {
         
     }
@@ -98,7 +120,7 @@ namespace SpeedCC
 	////-------------- static methods
     
     template<typename TargetCtlrT>
-    SCSceneControllerInterface::Ptr SCSceneControllerT<TargetCtlrT>::createScene(const SCDictionary& parameterDic)
+    SCSceneController::Ptr SCSceneControllerT<TargetCtlrT>::createScene(const SCDictionary& parameterDic)
     {
         SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
         auto scene = SCScene::create();
@@ -112,10 +134,11 @@ namespace SpeedCC
             SC_BREAK_IF(sceneCtlrPtr.isNull());
             
             auto rootLayer = SCSceneLayer::create();
-            rootLayer->setControllerInterface(sceneCtlrPtr);
+            rootLayer->setController(sceneCtlrPtr);
             sceneCtlrPtr->setSceneRootLayer(rootLayer);
             
             scene->addChild(rootLayer);
+            scene->setRootLayer(rootLayer);
             sceneCtlrPtr->setScene(scene);
             sceneCtlrPtr->onCreate(parameterDic);
             
@@ -125,13 +148,13 @@ namespace SpeedCC
     }
     
     template<typename TargetCtlrT>
-    SCSceneControllerInterface::Ptr SCSceneControllerT<TargetCtlrT>::createLayer(const SCDictionary& parameterDic)
+    SCSceneController::Ptr SCSceneControllerT<TargetCtlrT>::createLayer(const SCDictionary& parameterDic)
     {
         SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
         sceneCtlrPtr.createInstance();
         
         auto rootLayer = SCSceneLayer::create();
-        rootLayer->setControllerInterface(sceneCtlrPtr);
+        rootLayer->setController(sceneCtlrPtr);
         sceneCtlrPtr->setSceneRootLayer(rootLayer);
         
         sceneCtlrPtr->setScene(NULL);

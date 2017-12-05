@@ -11,6 +11,7 @@
 		0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803551FA8ACDD00E0174C /* SCMessageDispatch.cpp */; };
 		0A28035A1FAB073B00E0174C /* SCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803581FAB073A00E0174C /* SCDictionary.cpp */; };
 		0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */; };
+		0A390A0F1FD6A536002DD5E2 /* SCSceneLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803451FA77FEC00E0174C /* SCSceneLayer.cpp */; };
 		0A67CAC91F80E7DE00FED9A5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAC41F80E7C600FED9A5 /* libcocos2d iOS.a */; };
 		0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE31F813C8800FED9A5 /* SCBaseCommon.cpp */; };
 		0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */; };
@@ -329,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A390A0F1FD6A536002DD5E2 /* SCSceneLayer.cpp in Sources */,
 				0A67CB831F97984F00FED9A5 /* SCComponent.cpp in Sources */,
 				0A67CB841F97984F00FED9A5 /* SCEntity.cpp in Sources */,
 				0A1556C71FD4F31600CF7420 /* SCObject.cpp in Sources */,

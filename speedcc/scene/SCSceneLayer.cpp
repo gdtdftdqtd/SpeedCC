@@ -4,27 +4,13 @@
 
 namespace SpeedCC
 {
-	SCDictionary     SCSceneControllerT::s_SceneParameterDic;
+//    SCDictionary     SCSceneControllerT::s_SceneParameterDic;
 
     ///------------- SCSceneLayer
-//    SCSceneLayer* SCSceneLayer::create()
-//    {
-//        SCSceneLayer *ret = new (std::nothrow) SCSceneLayer();
-//        if (ret && ret->init())
-//        {
-//            ret->autorelease();
-//            return ret;
-//        }
-//        else
-//        {
-//            CC_SAFE_DELETE(ret);
-//            return nullptr;
-//        }
-//    }
     
-    void SCSceneLayer::setControllerInterface(SCObject::Ptr interfacePtr)
+    void SCSceneLayer::setController(SCObject::Ptr controllerPtr)
     {
-        _sceneControllerPtr = interfacePtr;
+        _sceneControllerPtr = controllerPtr;
     }
     
     void SCSceneLayer::onEnter()
@@ -49,25 +35,42 @@ namespace SpeedCC
 
     ///-------------- SCScene
     
+    SCScene::SCScene():
+    _pRootLayer(NULL),
+    cocos2d::Scene()
+    {
+        
+    }
+    
 	void SCScene::onEnter()
 	{
-        cocos2d::SCScene::onEnterTransitionDidFinish();
+        cocos2d::Scene::onEnter();
 	}
 
 	void SCScene::onEnterTransitionDidFinish()
 	{
-        cocos2d::SCScene::onEnterTransitionDidFinish();
+        cocos2d::Scene::onEnterTransitionDidFinish();
 	}
 
 	void SCScene::onExit()
 	{
-        cocos2d::SCScene::onEnterTransitionDidFinish();
+        cocos2d::Scene::onExit();
 	}
 
 	void SCScene::onExitTransitionDidStart()
 	{
-        cocos2d::SCScene::onEnterTransitionDidFinish();
+        cocos2d::Scene::onExitTransitionDidStart();
 	}
+    
+    void SCScene::setRootLayer(SCSceneLayer* pLayer)
+    {
+        _pRootLayer = pLayer;
+    }
+    
+    SCSceneLayer* SCScene::getRootLayer()
+    {
+        return _pRootLayer;
+    }
 
 }
 
