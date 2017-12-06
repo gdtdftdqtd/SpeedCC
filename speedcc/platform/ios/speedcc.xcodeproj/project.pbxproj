@@ -12,6 +12,8 @@
 		0A28035A1FAB073B00E0174C /* SCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803581FAB073A00E0174C /* SCDictionary.cpp */; };
 		0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */; };
 		0A390A0F1FD6A536002DD5E2 /* SCSceneLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803451FA77FEC00E0174C /* SCSceneLayer.cpp */; };
+		0A390A151FD7F56C002DD5E2 /* SCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A390A131FD7F56C002DD5E2 /* SCNodeProperty.cpp */; };
+		0A390A181FD8311F002DD5E2 /* SCNodeUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A390A161FD8311F002DD5E2 /* SCNodeUtils.cpp */; };
 		0A67CAC91F80E7DE00FED9A5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAC41F80E7C600FED9A5 /* libcocos2d iOS.a */; };
 		0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE31F813C8800FED9A5 /* SCBaseCommon.cpp */; };
 		0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */; };
@@ -82,6 +84,11 @@
 		0A2803591FAB073A00E0174C /* SCDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCDictionary.h; sourceTree = "<group>"; };
 		0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCVersion.cpp; sourceTree = "<group>"; };
 		0A28035C1FAB0A6B00E0174C /* SCVersion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCVersion.h; sourceTree = "<group>"; };
+		0A390A121FD782D8002DD5E2 /* SCUIMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCUIMacro.h; sourceTree = "<group>"; };
+		0A390A131FD7F56C002DD5E2 /* SCNodeProperty.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeProperty.cpp; sourceTree = "<group>"; };
+		0A390A141FD7F56C002DD5E2 /* SCNodeProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNodeProperty.h; sourceTree = "<group>"; };
+		0A390A161FD8311F002DD5E2 /* SCNodeUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeUtils.cpp; sourceTree = "<group>"; };
+		0A390A171FD8311F002DD5E2 /* SCNodeUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNodeUtils.h; sourceTree = "<group>"; };
 		0A67CA7E1F80E31700FED9A5 /* libspeedcc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libspeedcc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2dx/v3/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMemAllocator.cpp; sourceTree = "<group>"; };
@@ -137,6 +144,11 @@
 				0A2803441FA77FEC00E0174C /* SCSceneControllerT.h */,
 				0A2803451FA77FEC00E0174C /* SCSceneLayer.cpp */,
 				0A2803461FA77FEC00E0174C /* SCSceneLayer.h */,
+				0A390A121FD782D8002DD5E2 /* SCUIMacro.h */,
+				0A390A131FD7F56C002DD5E2 /* SCNodeProperty.cpp */,
+				0A390A141FD7F56C002DD5E2 /* SCNodeProperty.h */,
+				0A390A161FD8311F002DD5E2 /* SCNodeUtils.cpp */,
+				0A390A171FD8311F002DD5E2 /* SCNodeUtils.h */,
 			);
 			name = scene;
 			path = ../../scene;
@@ -331,10 +343,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A390A0F1FD6A536002DD5E2 /* SCSceneLayer.cpp in Sources */,
+				0A390A181FD8311F002DD5E2 /* SCNodeUtils.cpp in Sources */,
 				0A67CB831F97984F00FED9A5 /* SCComponent.cpp in Sources */,
 				0A67CB841F97984F00FED9A5 /* SCEntity.cpp in Sources */,
 				0A1556C71FD4F31600CF7420 /* SCObject.cpp in Sources */,
 				0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */,
+				0A390A151FD7F56C002DD5E2 /* SCNodeProperty.cpp in Sources */,
 				0A67CB851F97984F00FED9A5 /* SCBehavior.cpp in Sources */,
 				0A67CB861F97984F00FED9A5 /* SCOSSystem.cpp in Sources */,
 				0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */,

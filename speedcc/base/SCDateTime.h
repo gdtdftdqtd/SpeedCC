@@ -163,7 +163,8 @@ namespace SpeedCC
         SCDateTimeSpan operator-(const SCDateTime& dt) const;
         
         // specifier refer to: https://www.gnu.org/software/libc/manual/html_node/Low_002dLevel-Time-String-Parsing.html
-        SCString getFormatString(const SCString& strFormat) const;
+        // if format string is empty, then set to default format "%Y-%m-%d %H:%M:%S"
+        SCString getFormatString(SCString strFormat) const;
         
         static inline bool isLeapYear(int y)
         {

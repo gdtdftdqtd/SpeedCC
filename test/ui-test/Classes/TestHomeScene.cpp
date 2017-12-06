@@ -7,7 +7,9 @@ using namespace SpeedCC;
 
 void TestHomeScene::onCreate(SCDictionary parameters)
 {
-    ControllerBase_t::onCreate(parameters);
+    SCSceneControllerT::onCreate(parameters);
+    
+//    this->getSceneLayer()
 }
 
 

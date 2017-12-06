@@ -4,7 +4,7 @@
 #define __SPEEDCC__SCVALUE_H__
 
 #include "SCObjRefT.h"
-#include "../base/SCString.h"
+#include "SCString.h"
 
 namespace SpeedCC
 {
@@ -17,7 +17,7 @@ namespace SpeedCC
         union
         {
             void*           pObject;
-            long long       llValue;
+            INT64       llValue;
             char            cValue;
             unsigned char   byValue;
             int             nValue;
@@ -57,7 +57,7 @@ namespace SpeedCC
             INT_TYPE,
             UINT_TYPE,
             LONG_TYPE,
-            LONGLONG_TYPE,
+            INT64_TYPE,
             BOOL_TYPE,
             FLOAT_TYPE,
             DOUBLE_TYPE,
@@ -78,7 +78,7 @@ namespace SpeedCC
         SCValue(const float fValue);
         SCValue(const double dValue);
         SCValue(const long lValue);
-        SCValue(const long long llValue);
+        SCValue(const INT64 llValue);
         SCValue(void* const pValue);
         SCValue(const SCString& strValue);
         SCValue(const char* pszValue);
@@ -100,7 +100,7 @@ namespace SpeedCC
         float getFloat(bool* pResult=NULL,const bool bExactMatch=false) const;
         double getDouble(bool* pResult=NULL,const bool bExactMatch=false) const;
         void* getPointer(bool* pResult=NULL,const bool bExactMatch=false) const;
-        long long getLongLong(bool* pResult=NULL,const bool bExactMatch=false) const;
+        INT64 getInt64(bool* pResult=NULL,const bool bExactMatch=false) const;
         SCString getString(bool* pResult=NULL,const bool bExactMatch=false) const;
         SCDataBlock getDataBlock(bool* pResult=NULL,const bool bExactMatch=false) const;
         SCDateTime getDateTime(bool* pResult=NULL,const bool bExactMatch=false) const;
@@ -115,7 +115,7 @@ namespace SpeedCC
         void setFloat(const float fValue);
         void setDouble(const double dValue);
         void setPointer(void* const pValue);
-        void setLongLong(long long llValue);
+        void setInt64(INT64 llValue);
         void setString(const SCString& strValue);
         void setString(const char* pszValue);
         void setDataBlock(const SCDataBlock& db);
@@ -130,7 +130,7 @@ namespace SpeedCC
         SCValue& operator=(const float fValue);
         SCValue& operator=(const double dValue);
         SCValue& operator=(void* const pValue);
-        SCValue& operator=(const long long llValue);
+        SCValue& operator=(const INT64 llValue);
         SCValue& operator=(const SCString& strValue);
         SCValue& operator=(const char* pszValue);
         SCValue& operator=(const SCDataBlock& db);
@@ -235,7 +235,7 @@ namespace SpeedCC
             return SCValue(value);
         }
         
-        static SCValue create(const long long value)
+        static SCValue create(const INT64 value)
         {
             return SCValue(value);
         }

@@ -569,8 +569,12 @@ namespace SpeedCC
         return NullTime;
     }
     
-    SCString SCDateTime::getFormatString(const SCString& strFormat) const
+    SCString SCDateTime::getFormatString(SCString strFormat) const
     {
+        if(strFormat.isEmpty())
+        {
+            strFormat = "%Y-%m-%d %H:%M:%S";
+        }
         struct tm tb;
         
         Date date = this->getDate();

@@ -56,7 +56,7 @@ namespace SpeedCC
         inline const CookieT* getCookie() const {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
         
         inline StubT* getStub() {return (StubT*)_pData;}
-        inline const StubT* getStub() const {return (StubT*)_pData;}
+        inline StubT* getStub() const {return (StubT*)_pData;}
         
         void clone4Write();
         int increaseRef() const;

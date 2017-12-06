@@ -69,12 +69,12 @@ namespace SpeedCC
         this->getCookieDesc()->cookie = BYTE_TYPE;
     }
     
-    SCValue::SCValue(const long long llValue)
+    SCValue::SCValue(const INT64 llValue)
     {
         this->createInstance();
         
         this->getStub()->data.llValue = llValue;
-        this->getCookieDesc()->cookie = LONGLONG_TYPE;
+        this->getCookieDesc()->cookie = INT64_TYPE;
     }
     
     SCValue::SCValue(void* const pValue)
@@ -152,7 +152,7 @@ namespace SpeedCC
                 case CHAR_TYPE: cRet = data.cValue; break;
                 case UINT_TYPE: cRet = (char)data.uValue; break;
                 case LONG_TYPE: cRet = (char)data.lValue; break;
-                case LONGLONG_TYPE: cRet = (char)data.llValue; break;
+                case INT64_TYPE: cRet = (char)data.llValue; break;
                 case FLOAT_TYPE: cRet = (char)data.fValue; break;
                 case DOUBLE_TYPE: cRet = (char)data.dValue; break;
                 case POINTER_TYPE: cRet = (char)(long)data.pValue; break;
@@ -186,7 +186,7 @@ namespace SpeedCC
                 case CHAR_TYPE: byRet = (unsigned char)data.cValue; break;
                 case UINT_TYPE: byRet = (unsigned char)data.uValue; break;
                 case LONG_TYPE: byRet = (unsigned char)data.lValue; break;
-                case LONGLONG_TYPE: byRet = (unsigned char)data.llValue; break;
+                case INT64_TYPE: byRet = (unsigned char)data.llValue; break;
                 case FLOAT_TYPE: byRet = (unsigned char)data.fValue; break;
                 case DOUBLE_TYPE: byRet = (unsigned char)data.dValue; break;
                 case POINTER_TYPE: byRet = (unsigned char)(long)data.pValue; break;
@@ -220,7 +220,7 @@ namespace SpeedCC
                 case CHAR_TYPE: uRet = (unsigned int)data.cValue; break;
                 case UINT_TYPE: uRet = data.uValue; break;
                 case LONG_TYPE: uRet = (unsigned int)data.lValue; break;
-                case LONGLONG_TYPE: uRet = (unsigned int)data.llValue; break;
+                case INT64_TYPE: uRet = (unsigned int)data.llValue; break;
                 case FLOAT_TYPE: uRet = (unsigned int)data.fValue; break;
                 case DOUBLE_TYPE: uRet = (unsigned int)data.dValue; break;
                 case POINTER_TYPE: uRet = (unsigned int)(long)data.pValue; break;
@@ -254,7 +254,7 @@ namespace SpeedCC
                 case CHAR_TYPE: nRet = (int)data.cValue; break;
                 case UINT_TYPE: nRet = (int)data.uValue; break;
                 case LONG_TYPE: nRet = (int)data.lValue; break;
-                case LONGLONG_TYPE: nRet = (int)data.llValue; break;
+                case INT64_TYPE: nRet = (int)data.llValue; break;
                 case FLOAT_TYPE: nRet = (int)data.fValue; break;
                 case DOUBLE_TYPE: nRet = (int)data.dValue; break;
                 case POINTER_TYPE: nRet = (int)(long)data.pValue; break;
@@ -288,7 +288,7 @@ namespace SpeedCC
                 case CHAR_TYPE: lRet = (long)data.cValue; break;
                 case UINT_TYPE: lRet = (long)data.uValue; break;
                 case LONG_TYPE: lRet = data.lValue; break;
-                case LONGLONG_TYPE: lRet = (long)data.llValue; break;
+                case INT64_TYPE: lRet = (long)data.llValue; break;
                 case FLOAT_TYPE: lRet = (long)data.fValue; break;
                 case DOUBLE_TYPE: lRet = (long)data.dValue; break;
                 case POINTER_TYPE: lRet = (long)data.pValue; break;
@@ -323,7 +323,7 @@ namespace SpeedCC
                 case CHAR_TYPE: bRet = (data.cValue!=0); break;
                 case UINT_TYPE: bRet = (data.uValue!=0); break;
                 case LONG_TYPE: bRet = (data.lValue!=0); break;
-                case LONGLONG_TYPE: bRet = (data.llValue!=0); break;
+                case INT64_TYPE: bRet = (data.llValue!=0); break;
                 case FLOAT_TYPE: bRet = (data.fValue!=0.0f); break;
                 case DOUBLE_TYPE: bRet = (data.dValue!=0.0); break;
                 case POINTER_TYPE: bRet = (data.pValue!=NULL); break;
@@ -359,7 +359,7 @@ namespace SpeedCC
                 case CHAR_TYPE: fRet = (float)data.cValue; break;
                 case UINT_TYPE: fRet = (float)data.uValue; break;
                 case LONG_TYPE: fRet = (float)data.lValue; break;
-                case LONGLONG_TYPE: fRet = (float)data.llValue; break;
+                case INT64_TYPE: fRet = (float)data.llValue; break;
                 case FLOAT_TYPE: fRet = data.fValue; break;
                 case DOUBLE_TYPE: fRet = (float)data.dValue; break;
                 case POINTER_TYPE: fRet = (float)(long)data.pValue; break;
@@ -395,7 +395,7 @@ namespace SpeedCC
                 case CHAR_TYPE: dRet = (double)data.cValue; break;
                 case UINT_TYPE: dRet = (double)data.uValue; break;
                 case LONG_TYPE: dRet = (double)data.lValue; break;
-                case LONGLONG_TYPE: dRet = (double)data.llValue; break;
+                case INT64_TYPE: dRet = (double)data.llValue; break;
                 case FLOAT_TYPE: dRet = (double)data.fValue; break;
                 case DOUBLE_TYPE: dRet = data.dValue; break;
                 case POINTER_TYPE: dRet = (double)(long)data.pValue; break;
@@ -431,7 +431,7 @@ namespace SpeedCC
                 case CHAR_TYPE: pRet = (void*)(long)data.cValue; break;
                 case UINT_TYPE: pRet = (void*)(long)data.uValue; break;
                 case LONG_TYPE: pRet = (void*)data.lValue; break;
-                case LONGLONG_TYPE: pRet = (void*)data.llValue; break;
+                case INT64_TYPE: pRet = (void*)data.llValue; break;
                 case FLOAT_TYPE: pRet = (void*)(long)data.fValue; break;
                 case DOUBLE_TYPE: pRet = (void*)(long)data.dValue; break;
                 case POINTER_TYPE: pRet = data.pValue; break;
@@ -449,28 +449,28 @@ namespace SpeedCC
         return pRet;
     }
     
-    long long SCValue::getLongLong(bool* pResult,const bool bExactMatch) const
+    INT64 SCValue::getInt64(bool* pResult,const bool bExactMatch) const
     {
-        long long llRet = 0;
+        INT64 llRet = 0;
         bool bResult = false;
         
         const auto& type = this->getType();
         const auto& data = this->getStub()->data;
         
-        if(!(bExactMatch && type!=LONGLONG_TYPE))
+        if(!(bExactMatch && type!=INT64_TYPE))
         {
             bResult = true;
             switch(type)
             {
-                case INT_TYPE: llRet = (long long)data.nValue; break;
-                case BYTE_TYPE: llRet = (long long)data.byValue; break;
-                case CHAR_TYPE: llRet = (long long)data.cValue; break;
-                case UINT_TYPE: llRet = (long long)data.uValue; break;
-                case LONG_TYPE: llRet = (long long)data.lValue; break;
-                case LONGLONG_TYPE: llRet = data.llValue; break;
-                case FLOAT_TYPE: llRet = (long long)data.fValue; break;
-                case DOUBLE_TYPE: llRet = (long long)data.dValue; break;
-                case POINTER_TYPE: llRet = (long long)data.pValue; break;
+                case INT_TYPE: llRet = (INT64)data.nValue; break;
+                case BYTE_TYPE: llRet = (INT64)data.byValue; break;
+                case CHAR_TYPE: llRet = (INT64)data.cValue; break;
+                case UINT_TYPE: llRet = (INT64)data.uValue; break;
+                case LONG_TYPE: llRet = (INT64)data.lValue; break;
+                case INT64_TYPE: llRet = data.llValue; break;
+                case FLOAT_TYPE: llRet = (INT64)data.fValue; break;
+                case DOUBLE_TYPE: llRet = (INT64)data.dValue; break;
+                case POINTER_TYPE: llRet = (INT64)data.pValue; break;
                 case BOOL_TYPE: llRet = data.bValue ? 1 : 0; break;
                     
                 default:bResult = false; break;
@@ -503,7 +503,7 @@ namespace SpeedCC
                 case CHAR_TYPE: dbRet.append(&data.cValue, sizeof(data.cValue)); break;
                 case UINT_TYPE: dbRet.append(&data.uValue, sizeof(data.uValue)); break;
                 case LONG_TYPE: dbRet.append(&data.lValue, sizeof(data.lValue)); break;
-                case LONGLONG_TYPE: dbRet.append(&data.llValue, sizeof(data.llValue)); break;
+                case INT64_TYPE: dbRet.append(&data.llValue, sizeof(data.llValue)); break;
                 case FLOAT_TYPE: dbRet.append(&data.fValue, sizeof(data.fValue)); break;
                 case DOUBLE_TYPE: dbRet.append(&data.dValue, sizeof(data.dValue)); break;
                 case POINTER_TYPE: dbRet.append(&data.pValue, sizeof(data.pValue)); break;
@@ -540,12 +540,13 @@ namespace SpeedCC
                 case CHAR_TYPE: strRet.format("%c",data.cValue); break;
                 case UINT_TYPE: strRet.format("%u",data.uValue); break;
                 case LONG_TYPE: strRet.format("%d",data.lValue); break;
-                case LONGLONG_TYPE: strRet.format("%lld",data.llValue); break;
+                case INT64_TYPE: strRet.format("%lld",data.llValue); break;
                 case FLOAT_TYPE: strRet.format("%f",data.fValue); break;
                 case DOUBLE_TYPE: strRet.format("%f",data.dValue); break;
                 case POINTER_TYPE: strRet.format("%p",data.pValue); break;
                 case BOOL_TYPE: strRet.format("%s",data.bValue ? "true" : "false"); break;
                 case STRING_TYPE: strRet = *((SCString*)data.pObject); break;
+                case DATETIME_TYPE: strRet = ((SCDateTime*)data.pObject)->getFormatString(""); break;
                     
                 default:bResult = false; break;
             }
@@ -578,7 +579,7 @@ namespace SpeedCC
                 case CHAR_TYPE: dtRet = SCDateTime(data.cValue); break;
                 case UINT_TYPE: dtRet = SCDateTime(data.uValue); break;
                 case LONG_TYPE: dtRet = SCDateTime(data.lValue); break;
-                case LONGLONG_TYPE: dtRet = SCDateTime(data.llValue); break;
+                case INT64_TYPE: dtRet = SCDateTime(data.llValue); break;
                 case DATETIME_TYPE: dtRet = *((SCDateTime*)data.pObject); break;
                     
                 default: bResult = false; break;
@@ -612,7 +613,7 @@ namespace SpeedCC
                 case CHAR_TYPE: value = data.cValue; break;
                 case UINT_TYPE: value = data.uValue; break;
                 case LONG_TYPE: value = data.lValue; break;
-                case LONGLONG_TYPE: value = data.llValue; break;
+                case INT64_TYPE: value = data.llValue; break;
                 case BOOL_TYPE: value = data.bValue; break;
                 case FLOAT_TYPE: value = data.fValue; break;
                 case DOUBLE_TYPE: value = data.dValue; break;
@@ -712,13 +713,13 @@ namespace SpeedCC
         this->getCookieDesc()->cookie = DOUBLE_TYPE;
     }
     
-    void SCValue::setLongLong(long long llValue)
+    void SCValue::setInt64(INT64 llValue)
     {
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.llValue = llValue;
         (*(this->getStub())).pfunDestroyFunctor_t = NULL;
-        this->getCookieDesc()->cookie = LONGLONG_TYPE;
+        this->getCookieDesc()->cookie = INT64_TYPE;
     }
     
     void SCValue::setPointer(void* const pValue)
@@ -802,9 +803,9 @@ namespace SpeedCC
         return *this;
     }
     
-    SCValue& SCValue::operator=(const long long llValue)
+    SCValue& SCValue::operator=(const INT64 llValue)
     {
-        this->setLongLong(llValue);
+        this->setInt64(llValue);
         return *this;
     }
     
