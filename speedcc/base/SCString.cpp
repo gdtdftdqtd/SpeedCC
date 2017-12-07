@@ -1308,6 +1308,27 @@ namespace SpeedCC
         return ::atof((char*)_pchStrData);
     }
     
+    bool SCString::asBool(bool bThrow,bool bDefault) const throw(bool)
+    {
+        if(this->compareNoCase("true"))
+        {
+            return true;
+        }
+        else if(this->compareNoCase("false"))
+        {
+            return false;
+        }
+        
+        if(bThrow)
+        {
+            throw false;
+        }
+        else
+        {
+            return bDefault;
+        }
+    }
+    
     int SCString::trimLeft(char c)
     {
         const int nLength = this->getLength();

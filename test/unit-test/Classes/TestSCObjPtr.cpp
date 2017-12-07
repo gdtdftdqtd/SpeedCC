@@ -11,7 +11,7 @@ bool s_AFoo = false;
 int s_BCounter = 0;
 bool s_BFoo = false;
 
-class ObjPtrA
+class ObjPtrA : public SCObject
 {
 public:
     ObjPtrA(){ s_ACounter++;std::cout << "A class constructor: " << this << std::endl; };

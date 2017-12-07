@@ -232,6 +232,7 @@ namespace SpeedCC
         int asInt(bool bThrow=true,int nDefault=0) const throw(int);
         unsigned asUnsignedInt(bool bThrow=true,unsigned uDefault=0) const throw(unsigned int);
         float asFloat(bool bThrow=true,float fDefault=0.0f) const throw(float);
+        bool asBool(bool bThrow=true,bool bDefault=false) const throw(bool);
         
     private:
         inline SStringDesc* getStringDesc() const {return (((SStringDesc*)_pchStrData)-1); }

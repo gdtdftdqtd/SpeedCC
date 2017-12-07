@@ -70,6 +70,11 @@ namespace SpeedCC
         return (this->getStub()->end()!=it);
     }
     
+    int SCDictionary::getCount() const
+    {
+        return (int)this->getStub()->size();
+    }
+    
     void SCDictionary::removeKey(const SCString& strKey)
     {
         SCASSERT(!strKey.isEmpty());
@@ -121,15 +126,13 @@ namespace SpeedCC
             return true;
         }
         
-        bool bRet = false;
-        
         rapidjson::Document jsonDoc;
         jsonDoc.Parse(strJson.c_str());
         
         if(jsonDoc.HasParseError())
         {
             SCLog("SCDictionary parse json error: %d",jsonDoc.GetParseError());
-            return bRet;
+            return false;
         }
         
         for(auto it = jsonDoc.MemberBegin(); it!=jsonDoc.MemberEnd(); ++it)
@@ -149,7 +152,7 @@ namespace SpeedCC
             }
         }
         
-        return bRet;
+        return true;
     }
     
     SCString SCDictionary::exportJsonString()

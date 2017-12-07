@@ -27,6 +27,7 @@ namespace SpeedCC
         bool hasKey(const SCString& strKey) const;
         void removeKey(const SCString& strKey);
         void removeAllKeys();
+        int getCount() const;
         bool isEmpty();
         void forEach(const std::function<bool(const SCString& strKey,const SCValue& value)>& func) const;
         void forEach(const std::function<bool(const SCString& strKey,SCValue& value)>& func);

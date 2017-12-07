@@ -19,7 +19,8 @@
 #include "base/SCDictionary.h"
 #include "base/SCVersion.h"
 
-#include "scene/SCSceneNavigator.h"
-#include "scene/SCSceneControllerT.h"
+#include "coco/SCSceneNavigator.h"
+#include "coco/SCSceneControllerT.h"
+#include "coco/SCNodeProperty.h"
 
 #endif // __SPEEDCC__SPEEDCC_H__
