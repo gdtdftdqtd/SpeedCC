@@ -91,7 +91,6 @@ namespace SpeedCC
         SCString(const std::string& str);
         SCString(const int nNumber);
         SCString(const unsigned int uNumber);
-        //    SCString(const float fNumber);
         SCString(const SCEncodingChar& encodingChar);
         SCString(const char* pszStr);
         SCString(const unsigned short* pszStr); // utf16 encoding

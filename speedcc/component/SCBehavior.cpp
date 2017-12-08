@@ -11,6 +11,12 @@ namespace SpeedCC
         _strName = strName;
     }
     
+    bool SCBehavior::start()
+    {
+        _state = RUNNING;
+        return true;
+    }
+    
     bool SCBehavior::start(SCDictionary& par)
     {
         _state = RUNNING;
@@ -33,17 +39,58 @@ namespace SpeedCC
     }
     
     ///----------- SCBehaviorCallFunc
+    SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create()
+    {
+        SCBehaviorCallFunc::Ptr retPtr;
+        retPtr.createInstanceWithCon([](void* pData)
+                                     {
+                                         new(pData)SCBehaviorCallFunc("");
+                                     });
+        return retPtr;
+    }
+    
     SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create(const SCString& strName)
     {
         SCASSERT(!strName.isEmpty());
         
-        SCBehaviorCallFunc::Ptr ptrRet;
-        ptrRet.createInstanceWithCon([strName](void* pData)
+        SCBehaviorCallFunc::Ptr retPtr;
+        retPtr.createInstanceWithCon([strName](void* pData)
                                      {
                                          new(pData)SCBehaviorCallFunc(strName);
                                      });
         
-        return ptrRet;
+        return retPtr;
+    }
+    
+    SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create(const std::function<bool()>& startFunc)
+    {
+        SCBehaviorCallFunc::Ptr retPtr;
+        retPtr.createInstanceWithCon([](void* pData)
+                                     {
+                                         new(pData)SCBehaviorCallFunc("");
+                                     });
+        retPtr->setOnStartFunc(startFunc);
+        
+        return retPtr;
+    }
+    
+    SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create(const std::function<bool(SCDictionary& par)>& startFunc)
+    {
+        SCBehaviorCallFunc::Ptr retPtr;
+        retPtr.createInstanceWithCon([](void* pData)
+                                     {
+                                         new(pData)SCBehaviorCallFunc("");
+                                     });
+        retPtr->setOnStartFunc(startFunc);
+        
+        return retPtr;
+    }
+    
+    bool SCBehaviorCallFunc::start()
+    {
+        SC_RETURN_IF(_start2Func==NULL,true);
+        SCBehavior::start();
+        return _start2Func();
     }
     
     bool SCBehaviorCallFunc::start(SCDictionary& par)
@@ -80,6 +127,11 @@ namespace SpeedCC
         }
     }
     
+    void SCBehaviorCallFunc::setOnStartFunc(const std::function<bool()>& func)
+    {
+        _start2Func = func;
+    }
+    
     void SCBehaviorCallFunc::setOnStartFunc(const std::function<bool(SCDictionary& par)>& func)
     {
         _startFunc = func;
@@ -101,8 +153,32 @@ namespace SpeedCC
     }
     
     ///----------- SCBehaviorGroup
+    
+    SCBehaviorGroup::Ptr SCBehaviorGroup::create()
+    {
+        SCBehaviorGroup::Ptr retPtr;
+        retPtr.createInstanceWithCon([](void* pData)
+                                     {
+                                         new(pData)SCBehaviorGroup("");
+                                     });
+        return retPtr;
+    }
+    
+    bool SCBehaviorGroup::start()
+    {
+        SCBehavior::start();
+        for(auto& it : _behaviorList)
+        {
+            it->start();
+        }
+        
+        return true;
+    }
+    
     bool SCBehaviorGroup::start(SCDictionary& par)
     {
+        SCBehavior::start(par);
+        
         for(auto& it : _behaviorList)
         {
             it->start(par);
@@ -117,10 +193,12 @@ namespace SpeedCC
         {
             it->pause();
         }
+        SCBehavior::pause();
     }
     
     void SCBehaviorGroup::resume(void)
     {
+        SCBehavior::resume();
         for(auto& it : _behaviorList)
         {
             it->resume();
@@ -133,20 +211,21 @@ namespace SpeedCC
         {
             it->stop();
         }
+        SCBehavior::stop();
     }
     
-    void SCBehaviorGroup::addBehavior(const SCBehavior::Ptr& ptrBhv)
+    void SCBehaviorGroup::addBehavior(const SCBehavior::Ptr& ptrBvr)
     {
-        SC_RETURN_IF_V(ptrBhv==NULL);
-        _behaviorList.push_back(ptrBhv);
+        SC_RETURN_IF_V(ptrBvr==NULL);
+        _behaviorList.push_back(ptrBvr);
     }
     
     void SCBehaviorGroup::removeBehavior(const SCString& strName)
     {
         SC_RETURN_IF_V(strName.isEmpty());
-        _behaviorList.remove_if([strName](const SCBehavior::Ptr& ptrBhv)
+        _behaviorList.remove_if([strName](const SCBehavior::Ptr& ptrBvr)
                                  {
-                                     return (ptrBhv->getName()==strName);
+                                     return (ptrBvr->getName()==strName);
                                  });
     }
 }

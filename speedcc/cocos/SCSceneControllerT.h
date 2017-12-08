@@ -14,6 +14,8 @@
 #include "../base/SCObjPtrT.h"
 #include "../base/SCObject.h"
 
+#include "../component/SCBehavior.h"
+
 namespace SpeedCC
 {
     class SCSceneController : public SCObject
@@ -48,7 +50,7 @@ namespace SpeedCC
     typedef SCSceneController::Ptr (*FUN_SCLayerCreateFunctor_t)(const SCDictionary& dic);
     
 #define FN(_fun_)\
-    ((decltype(TargetCtlrT::traitFuncPointerType(&TargetCtlrT::_fun_)))(&TargetCtlrT::_fun_))
+    ((decltype(TargetCtrlr_t::traitFuncPointerType(&TargetCtrlr_t::_fun_)))(&TargetCtrlr_t::_fun_))
     
     template<typename TargetCtlrT>
     class SCSceneControllerT :
@@ -59,6 +61,7 @@ namespace SpeedCC
     public:
         friend class SCSceneNavigator;
         typedef SCSceneControllerT<TargetCtlrT>   ControllerBase_t;
+        typedef TargetCtlrT                         TargetCtrlr_t;
         
         virtual void onCreate(SCDictionary parameters){}
         
@@ -75,8 +78,10 @@ namespace SpeedCC
         static SCSceneController::Ptr createScene(const SCDictionary& parameterDic);
         static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic);
         
+        void onSCMenuItemPressed(cocos2d::Ref* pSender);
+        
     protected:
-//        virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
+        virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
         
     private:
         void setSceneRootLayer(SCSceneLayer* pLayer) { _pRootLayer = pLayer;}
@@ -85,18 +90,19 @@ namespace SpeedCC
 //        virtual SCSceneController::WeakPtr getModalParentController() override { return _parentModalControllerPtr;}
         
     protected:
-        FUN_SCButtonFunctor_t traitFuncPointerType(bool (TargetCtlrT::*)());
-        FUN_SCButtonSenderFunctor_t traitFuncPointerType(bool (TargetCtlrT::*)(cocos2d::MenuItem*));
         cocos2d::SEL_MenuHandler traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Ref*));
         cocos2d::SEL_SCHEDULE traitFuncPointerType(void (TargetCtlrT::*)(float));
         cocos2d::SEL_CallFunc traitFuncPointerType(void (TargetCtlrT::*)());
         cocos2d::SEL_CallFuncN traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Node*));
         cocos2d::SEL_CallFuncND traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Node*, void*));
         
+    protected:
+        std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
+        
     private:
-        SCSceneLayer*			        _pRootLayer;
-        SCScene*                        _pScene;
-        SCSceneController::WeakPtr      _parentModalControllerPtr;
+        SCSceneLayer*			                            _pRootLayer;
+        SCScene*                                            _pScene;
+        SCSceneController::WeakPtr                          _parentModalControllerPtr;
     };
     
     ////-------------- member methods
@@ -152,6 +158,21 @@ namespace SpeedCC
     cocos2d::Layer* SCSceneControllerT<TargetCtlrT>::getRootLayer()
     {
         return ((_pRootLayer==NULL) ? _pScene->getRootLayer() : _pRootLayer);
+    }
+    
+    template<typename TargetCtlrT>
+    void SCSceneControllerT<TargetCtlrT>::onSCMenuItemPressed(cocos2d::Ref* pSender)
+    {
+        auto it = _buttonItem2InfoMap.find(pSender);
+        
+        SCASSERT(it!=_buttonItem2InfoMap.end());
+        if(it!=_buttonItem2InfoMap.end())
+        {
+            if((*it).second!=NULL)
+            {
+                (*it).second->start();
+            }
+        }
     }
     
 //    template<typename TargetCtlrT>

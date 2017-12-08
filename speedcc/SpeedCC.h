@@ -18,12 +18,12 @@
 #include "base/SCObjPtrT.h"
 #include "base/SCDictionary.h"
 #include "base/SCVersion.h"
+#include "base/SCFileUtils.h"
 
 #include "cocos/SCSceneNavigator.h"
 #include "cocos/SCSceneControllerT.h"
 #include "cocos/SCNodeProperty.h"
 #include "cocos/SCUIMacro.h"
-#include "cocos/SCNodeProperty.h"
 #include "cocos/SCNodeUtils.h"
 
 #endif // __SPEEDCC__SPEEDCC_H__

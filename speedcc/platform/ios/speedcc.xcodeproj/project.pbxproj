@@ -26,6 +26,7 @@
 		0A8868191FDA536F00866266 /* SCSceneNavigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */; };
 		0A88681A1FDA536F00866266 /* SCSceneLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCSceneLayer.cpp */; };
 		0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868151FDA536E00866266 /* SCNodeUtils.cpp */; };
+		0AADA6C21FDAB78000E43DC6 /* SCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AADA6C01FDAB78000E43DC6 /* SCFileUtils.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,8 @@
 		0A8868151FDA536E00866266 /* SCNodeUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeUtils.cpp; sourceTree = "<group>"; };
 		0A8868161FDA536E00866266 /* SCSceneNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneNavigator.h; sourceTree = "<group>"; };
 		0A8868171FDA536E00866266 /* SCUIMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUIMacro.h; sourceTree = "<group>"; };
+		0AADA6C01FDAB78000E43DC6 /* SCFileUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCFileUtils.cpp; sourceTree = "<group>"; };
+		0AADA6C11FDAB78000E43DC6 /* SCFileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCFileUtils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +207,8 @@
 				0A2803591FAB073A00E0174C /* SCDictionary.h */,
 				0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */,
 				0A28035C1FAB0A6B00E0174C /* SCVersion.h */,
+				0AADA6C01FDAB78000E43DC6 /* SCFileUtils.cpp */,
+				0AADA6C11FDAB78000E43DC6 /* SCFileUtils.h */,
 			);
 			name = base;
 			path = ../../base;
@@ -354,6 +359,7 @@
 				0A67CAE71F813C9500FED9A5 /* SCBaseCommon.cpp in Sources */,
 				0A8868181FDA536F00866266 /* SCNodeProperty.cpp in Sources */,
 				0A67CB171F81E8EA00FED9A5 /* SCDataBlock.cpp in Sources */,
+				0AADA6C21FDAB78000E43DC6 /* SCFileUtils.cpp in Sources */,
 				0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */,
 				0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */,
 				0A67CAEF1F813CFF00FED9A5 /* SCString.cpp in Sources */,
