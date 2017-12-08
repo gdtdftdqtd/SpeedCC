@@ -242,12 +242,12 @@
 				0A88680E1FDA536E00866266 /* SCNodeProperty.h */,
 				0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */,
 				0A8868101FDA536E00866266 /* SCSceneLayer.h */,
-				0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */,
-				0A8868121FDA536E00866266 /* SCNodeUtils.h */,
 				0A8868131FDA536E00866266 /* SCSceneLayer.cpp */,
 				0A8868141FDA536E00866266 /* SCSceneControllerT.h */,
+				0A8868121FDA536E00866266 /* SCNodeUtils.h */,
 				0A8868151FDA536E00866266 /* SCNodeUtils.cpp */,
 				0A8868161FDA536E00866266 /* SCSceneNavigator.h */,
+				0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */,
 				0A8868171FDA536E00866266 /* SCUIMacro.h */,
 			);
 			name = cocos;

@@ -22,5 +22,8 @@
 #include "cocos/SCSceneNavigator.h"
 #include "cocos/SCSceneControllerT.h"
 #include "cocos/SCNodeProperty.h"
+#include "cocos/SCUIMacro.h"
+#include "cocos/SCNodeProperty.h"
+#include "cocos/SCNodeUtils.h"
 
 #endif // __SPEEDCC__SPEEDCC_H__

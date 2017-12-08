@@ -77,6 +77,19 @@ namespace SpeedCC
         static void setProperty(cocos2d::MenuItem* pNode,const SCDictionary& dic);
         static void setProperty(cocos2d::Label* pNode,const SCDictionary& dic);
         
+        template<typename T>
+        static void setProperty(cocos2d::Node* pNode,const SCString& strProperty)
+        {
+            SCASSERT(pNode!=NULL);
+            SC_RETURN_IF_V(pNode==NULL);
+            
+            SCDictionary dic;
+            if(SCNodeProperty::convertString2Dic(strProperty,dic))
+            {
+                SCNodeProperty::setProperty(dynamic_cast<T*>(pNode),dic);
+            }
+        }
+        
         static SCDictionary getProperty(cocos2d::Node* pNode);
         
         static bool convertString2Dic(const SCString& strProerty,SCDictionary& dic);

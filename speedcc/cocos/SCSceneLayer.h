@@ -15,6 +15,7 @@ namespace SpeedCC
         void setController(SCObject::Ptr controllerPtr);
         inline SCObject::Ptr getController() {return _sceneControllerPtr;}
         
+        virtual bool init() override;
     protected:
         /*
         virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
@@ -32,15 +33,15 @@ namespace SpeedCC
         virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
         virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
         */
-        virtual void onEnter();
-        virtual void onEnterTransitionDidFinish();
-        virtual void onExit();
-        virtual void onExitTransitionDidStart();
+        virtual void onEnter() override;
+        virtual void onEnterTransitionDidFinish() override;
+        virtual void onExit() override;
+        virtual void onExitTransitionDidStart() override;
         
 //        virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
         
     private:
-        SCObject::Ptr         _sceneControllerPtr;
+        SCObject::Ptr           _sceneControllerPtr;
     };
     
     class SCScene : public cocos2d::Scene
@@ -49,16 +50,19 @@ namespace SpeedCC
         SCScene();
         CREATE_FUNC(SCScene);
         
-        virtual void onEnter();
-        virtual void onEnterTransitionDidFinish();
-        virtual void onExit();
-        virtual void onExitTransitionDidStart();
+        virtual bool init() override;
+
+        virtual void onEnter() override;
+        virtual void onEnterTransitionDidFinish() override;
+        virtual void onExit() override;
+        virtual void onExitTransitionDidStart() override;
         
         void setRootLayer(SCSceneLayer* pLayer);
         SCSceneLayer* getRootLayer();
         
+        
     private:
-        SCSceneLayer*   _pRootLayer;
+        SCSceneLayer*           _pRootLayer;
     };
     
 }

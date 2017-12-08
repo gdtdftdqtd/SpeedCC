@@ -1,10 +1,20 @@
 
 #include "SCSceneLayer.h"
 #include "SCSceneControllerT.h"
+#include "SCNodeUtils.h"
+
+using namespace cocos2d;
 
 namespace SpeedCC
 {
     ///------------- SCSceneLayer
+    
+    bool SCSceneLayer::init()
+    {
+        SC_RETURN_IF(!Layer::init(),false);
+        this->setContentSize(SCWinSize());
+        return true;
+    }
     
     void SCSceneLayer::setController(SCObject::Ptr controllerPtr)
     {
@@ -40,6 +50,17 @@ namespace SpeedCC
         
     }
     
+    bool SCScene::init()
+    {
+        SC_RETURN_IF(!Scene::init(),false);
+        
+        _pRootLayer = SCSceneLayer::create();
+        _pRootLayer->setContentSize(SCWinSize());
+        _pRootLayer->setPosition(SCNodeUtils::posR2A(Vec2(0,0),SCWinSize()));
+        this->addChild(_pRootLayer);
+        return true;
+    }
+    
 	void SCScene::onEnter()
 	{
         cocos2d::Scene::onEnter();
@@ -69,6 +90,7 @@ namespace SpeedCC
     {
         return _pRootLayer;
     }
+     
 
 }
 

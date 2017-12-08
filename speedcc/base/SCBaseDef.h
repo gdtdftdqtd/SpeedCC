@@ -12,8 +12,6 @@ namespace SpeedCC
     
     
     ///-------------------- function pointer type
-//    class SCSceneController;
-//    class SCDictionary;
 
     typedef bool (cocos2d::Ref::*FUN_SCButtonFunctor_t)();
     typedef bool (cocos2d::Ref::*FUN_SCButtonSenderFunctor_t)(cocos2d::MenuItem*);
@@ -21,7 +19,6 @@ namespace SpeedCC
 	typedef cocos2d::Scene* (*FUN_SCSceneTransitionCreateFunctor_t)(const float fDuration, cocos2d::Scene* pScene);
     
     ///-------------------- type definition
-//    typedef std::map<SCString,SCValue>      SCDictionary;
 }
 
 

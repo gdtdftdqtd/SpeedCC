@@ -28,8 +28,8 @@ namespace SpeedCC
         virtual void setTouchFreezed(const bool bFreeze) = 0;
 //        virtual void showBlackMask(const bool bShow) = 0;
 //        virtual bool isBlackMaskForModal() const = 0;
-        virtual cocos2d::Layer* getSceneLayer() = 0;
-        virtual cocos2d::Scene* getScene() = 0;
+        virtual cocos2d::Layer* getRootLayer() = 0;
+        virtual SCScene* getScene() = 0;
         
     protected:
 //        virtual void setSceneRootLayer(cocos2d::Layer* pLayer) = 0;
@@ -52,9 +52,9 @@ namespace SpeedCC
     
     template<typename TargetCtlrT>
     class SCSceneControllerT :
-    public cocos2d::Ref,
+    public SCSceneController,
     public SCMessageListener,
-    public SCSceneController
+    public cocos2d::Ref
     {
     public:
         friend class SCSceneNavigator;
@@ -66,8 +66,8 @@ namespace SpeedCC
         virtual void setTouchFreezed(const bool bFreeze) override;
 //        virtual void showBlackMask(const bool bShow);
 //        virtual bool isBlackMaskForModal() const;
-        virtual cocos2d::Layer* getSceneLayer() override { return _pSceneLayer; }
-        virtual cocos2d::Scene* getScene() override { return _pScene; }
+        virtual cocos2d::Layer* getRootLayer() override;
+        virtual SCScene* getScene() override {return _pScene;}
 
         virtual void pushModalController(SCSceneController::Ptr controllerPtr) override;
         virtual SCSceneController::Ptr popModalFromParent() override;
@@ -76,10 +76,10 @@ namespace SpeedCC
         static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic);
         
     protected:
-        virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
+//        virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
         
     private:
-        void setSceneRootLayer(SCSceneLayer* pLayer) { _pSceneLayer = pLayer;}
+        void setSceneRootLayer(SCSceneLayer* pLayer) { _pRootLayer = pLayer;}
         virtual void setScene(SCScene* pScene) override {_pScene = pScene;}
         virtual void setModalParentController(SCSceneController::WeakPtr controllerPtr) override { _parentModalControllerPtr = controllerPtr;}
 //        virtual SCSceneController::WeakPtr getModalParentController() override { return _parentModalControllerPtr;}
@@ -94,7 +94,7 @@ namespace SpeedCC
         cocos2d::SEL_CallFuncND traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Node*, void*));
         
     private:
-        SCSceneLayer*			        _pSceneLayer;
+        SCSceneLayer*			        _pRootLayer;
         SCScene*                        _pScene;
         SCSceneController::WeakPtr      _parentModalControllerPtr;
     };
@@ -108,7 +108,7 @@ namespace SpeedCC
         controllerPtr->setModalParentController(controllerPtr2);
         controllerPtr->setScene(_pScene);
         
-        _pScene->addChild(controllerPtr->getSceneLayer());
+        _pScene->addChild(controllerPtr->getRootLayer());
         this->setTouchFreezed(true);
         
         // generate modal mssage
@@ -131,7 +131,7 @@ namespace SpeedCC
         
         _parentModalControllerPtr->setTouchFreezed(false);
         _parentModalControllerPtr = NULL;
-        _pSceneLayer->removeFromParent();
+        _pRootLayer->removeFromParent();
         
         // generate modal mssage
         SSCMessageInfo mi;
@@ -147,6 +147,13 @@ namespace SpeedCC
     {
         
     }
+    
+    template<typename TargetCtlrT>
+    cocos2d::Layer* SCSceneControllerT<TargetCtlrT>::getRootLayer()
+    {
+        return ((_pRootLayer==NULL) ? _pScene->getRootLayer() : _pRootLayer);
+    }
+    
 //    template<typename TargetCtlrT>
 //    void SCSceneControllerT<TargetCtlrT>::onSCMessageProcess(SSCMessageInfo& mi)
 //    {
@@ -165,22 +172,17 @@ namespace SpeedCC
     SCSceneController::Ptr SCSceneControllerT<TargetCtlrT>::createScene(const SCDictionary& parameterDic)
     {
         SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
-        auto scene = SCScene::create();
         
         do
         {
-            SC_BREAK_IF(!scene);
+//            SC_BREAK_IF(!scene);
             
             sceneCtlrPtr.createInstance();
             
             SC_BREAK_IF(sceneCtlrPtr.isNull());
             
-            auto rootLayer = SCSceneLayer::create();
-            rootLayer->setController(sceneCtlrPtr);
-            sceneCtlrPtr->setSceneRootLayer(rootLayer);
-            
-            scene->addChild(rootLayer);
-            scene->setRootLayer(rootLayer);
+            auto scene = SCScene::create();
+            scene->getRootLayer()->setController(sceneCtlrPtr);
             sceneCtlrPtr->setScene(scene);
             sceneCtlrPtr->onCreate(parameterDic);
             

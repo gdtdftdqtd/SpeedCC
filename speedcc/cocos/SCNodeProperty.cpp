@@ -220,6 +220,7 @@ namespace SpeedCC
         SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
     }
     
+    ///-------------- convert string to dictionary
     bool SCNodeProperty::convertString2Dic(const SCString& strProerty,SCDictionary& dic)
     {
         dic.removeAllKeys();
