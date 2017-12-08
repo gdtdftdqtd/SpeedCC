@@ -177,26 +177,9 @@ namespace SpeedCC
         }
         
         template<typename ObjectT>
-        bool setObject(const ObjectT& value)
+        void setObject(const ObjectT& value)
         {
             *this = SCValue::create(value);
-            return true;
-            /*
-            if(this->getCookieDesc()->cookie!=OBJECT_TYPE)
-            {
-                return false;
-            }
-            
-            SCValueStub& stub = *(this->getStub());
-            
-            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycle<ObjectT>::destroy)
-            {
-                return false;
-            }
-            
-            *((ObjectT*)(stub.data.pObject)) = value;
-            return true;
-            */
         }
         
         static SCValue create(const SCValue& value)

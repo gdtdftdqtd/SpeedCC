@@ -158,5 +158,62 @@ TEST(TestSCNodeProperty, Color3BValue)
     EXPECT_EQ(dic.getValue("color").getObject<Color3B>(), Color3B(12,34,56));
 }
 
+TEST(TestSCNodeProperty, Color4BValue)
+{
+    SCDictionary dic;
+    SCString strTest;
+    
+    // Color3B
+    strTest = "color-text=#123456; ";
+    dic.removeAllKeys();
+    EXPECT_EQ(SCNodeProperty::convertString2Dic(strTest,dic),true);
+    EXPECT_EQ(dic.getCount(),1);
+    EXPECT_EQ(dic.getValue("color-text").getType(),SCValue::OBJECT_TYPE);
+    EXPECT_EQ(dic.getValue("color-text").getObject<Color4B>(), Color4B(0x12,0x34,0x56,0x00));
+    
+    strTest = "color-text=0x123456 ; ";
+    dic.removeAllKeys();
+    EXPECT_EQ(SCNodeProperty::convertString2Dic(strTest,dic),true);
+    EXPECT_EQ(dic.getCount(),1);
+    EXPECT_EQ(dic.getValue("color-text").getType(),SCValue::OBJECT_TYPE);
+    EXPECT_EQ(dic.getValue("color-text").getObject<Color4B>(), Color4B(0x12,0x34,0x56,0x00));
+    
+    strTest = "color-text=gray ; ";
+    dic.removeAllKeys();
+    EXPECT_EQ(SCNodeProperty::convertString2Dic(strTest,dic),true);
+    EXPECT_EQ(dic.getCount(),1);
+    EXPECT_EQ(dic.getValue("color-text").getType(),SCValue::OBJECT_TYPE);
+    EXPECT_EQ(dic.getValue("color-text").getObject<Color4B>(), Color4B(166,166,166,255));
+    
+    strTest = "color-text=(12,34,56) ; ";
+    dic.removeAllKeys();
+    EXPECT_EQ(SCNodeProperty::convertString2Dic(strTest,dic),true);
+    EXPECT_EQ(dic.getCount(),1);
+    EXPECT_EQ(dic.getValue("color-text").getType(),SCValue::OBJECT_TYPE);
+    EXPECT_EQ(dic.getValue("color-text").getObject<Color4B>(), Color4B(12,34,56,255));
+    
+    // Color4B
+    strTest = "color-text=#78123456; ";
+    dic.removeAllKeys();
+    EXPECT_EQ(SCNodeProperty::convertString2Dic(strTest,dic),true);
+    EXPECT_EQ(dic.getCount(),1);
+    EXPECT_EQ(dic.getValue("color-text").getType(),SCValue::OBJECT_TYPE);
+    EXPECT_EQ(dic.getValue("color-text").getObject<Color4B>(), Color4B(0x12,0x34,0x56,0x78));
+    
+    strTest = "color-text=0x78123456; ";
+    dic.removeAllKeys();
+    EXPECT_EQ(SCNodeProperty::convertString2Dic(strTest,dic),true);
+    EXPECT_EQ(dic.getCount(),1);
+    EXPECT_EQ(dic.getValue("color-text").getType(),SCValue::OBJECT_TYPE);
+    EXPECT_EQ(dic.getValue("color-text").getObject<Color4B>(), Color4B(0x12,0x34,0x56,0x78));
+    
+    strTest = "color-text=(12,34,56,78) ; ";
+    dic.removeAllKeys();
+    EXPECT_EQ(SCNodeProperty::convertString2Dic(strTest,dic),true);
+    EXPECT_EQ(dic.getCount(),1);
+    EXPECT_EQ(dic.getValue("color-text").getType(),SCValue::OBJECT_TYPE);
+    EXPECT_EQ(dic.getValue("color-text").getObject<Color4B>(), Color4B(12,34,56,78));
+}
+
 
 
