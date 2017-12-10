@@ -62,12 +62,12 @@ namespace SpeedCC
     };
 }
 
+// sc_container_type. 0:normal; 1:button list; 2:multiplex layer;
 
 ///-------------- root container
 
 #define SC_BEGIN_CONTAINER_ROOT(_node_,_x_,_y_,_property_,_size_) \
     SC_BEGIN_CONTAINER_ROOT_EX((_node_),(_x_),(_y_),(_property_),(_size_),getRootLayer())
-
 
 #define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_)\
 {\
@@ -96,8 +96,10 @@ SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNod
         sc_container_LayoutObjectList.clear();\
     }\
     sc_container_MenuItemArray.clear();\
+    sc_container_MultiplexLayerArray.clear();\
     sc_container_pButtonListMenu = NULL;\
     sc_container_pParentNode = NULL;\
+    sc_container_type = 0;\
 }
 
 
@@ -132,13 +134,54 @@ SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNod
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerMenuItem)
 
 
-// insert ttf button
-#define SC_INSERT_BUTTON_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+// insert ttf label button
+#define SC_INSERT_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 do{\
     SCString strSCTemText = (_string_);\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
-    }while(0);
+}while(0);
+
+// container ttf label button
+#define SC_BEGIN_CONTAINER_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+{\
+    SCString strSCTemText = (_string_);\
+    auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
+
+// insert system label button
+#define SC_INSERT_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+do{\
+    SCString strSCTemText = (_string_);\
+    auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),(_font_),(_size_));\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+}while(0);
+
+// container system label button
+#define SC_BEGIN_CONTAINER_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+{\
+    SCString strSCTemText = (_string_);\
+    auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),(_font_),(_size_));\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
+
+// insert bmfont label button
+#define SC_INSERT_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_fun_) \
+do{\
+    SCString strSCTemText = (_string_);\
+    auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+}while(0);
+
+// container bmfont label button
+#define SC_BEGIN_CONTAINER_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+{\
+    SCString strSCTemText = (_string_);\
+    auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
+
 
 ///-------------- user node related
 // insert customize Node that user created
@@ -156,21 +199,107 @@ do{\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR((_node_))
 
 ///-------------- label related
-// insert a label
-#define SC_INSERT_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_)\
+
+// insert a system font label
+#define SC_INSERT_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_)\
     do{\
-        ___SC_INSIDE_ADD_LABEL_TTF((_node_),(_x_),(_y_),(_property_),(_string_),(_font_),(_size_))\
+        ___SC_INSIDE_ADD_LABEL((_node_),(_x_),(_y_),(_property_),(_string_),(_font_),(_size_),1)\
     }while(0);
 
-// label container
+// label system font container
+#define SC_BEGIN_CONTAINER_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_)\
+{\
+    cocos2d::Label* pSCContainerLabel = NULL; \
+    ___SC_INSIDE_ADD_LABEL(pSCContainerLabel,(_x_),(_y_),(_property_),(_string_),(_font_),(_size_),1) \
+    assignNode(pSCContainerLabel,(_node_)); \
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerLabel)
+
+// insert a ttf label
+#define SC_INSERT_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_)\
+    do{\
+        ___SC_INSIDE_ADD_LABEL((_node_),(_x_),(_y_),(_property_),(_string_),(_font_),(_size_),2)\
+    }while(0);
+
+// ttf label container
 #define SC_BEGIN_CONTAINER_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_)\
 {\
     cocos2d::Label* pSCContainerLabel = NULL; \
-    ___SC_INSIDE_ADD_LABEL_TTF(pSCContainerLabel,(_x_),(_y_),(_property_),(_string_),(_font_),(_size_)) \
+    ___SC_INSIDE_ADD_LABEL(pSCContainerLabel,(_x_),(_y_),(_property_),(_string_),(_font_),(_size_),2) \
+    assignNode(pSCContainerLabel,(_node_)); \
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerLabel)
+
+// insert a bmfont label
+#define SC_INSERT_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_file_)\
+    do{\
+        ___SC_INSIDE_ADD_LABEL((_node_),(_x_),(_y_),(_property_),(_string_),(_file_),0,3)\
+    }while(0);
+
+// bmfont label container
+#define SC_BEGIN_CONTAINER_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_)\
+{\
+    cocos2d::Label* pSCContainerLabel = NULL; \
+    ___SC_INSIDE_ADD_LABEL(pSCContainerLabel,(_x_),(_y_),(_property_),(_string_),(_font_),0,3) \
     assignNode(pSCContainerLabel,(_node_)); \
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerLabel)
 
 ///--------------- layer related
+
+// insert a layer
+#define SC_INSERT_LAYER(_node_,_x_,_y_,_property_,_size_) \
+do{\
+    auto pSCTemLayer0 = cocos2d::Layer::create();\
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCTemLayer0,(_size_))\
+}while(0);
+
+// layer container
+#define SC_BEGIN_CONTAINER_LAYER(_node_,_x_,_y_,_property_,_size_) \
+{\
+    cocos2d::Layer* pSCContainerTemLayer = cocos2d::Layer::create(); \
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCContainerTemLayer,(_size_))\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerTemLayer)
+
+// insert a color layer
+#define SC_INSERT_LAYER_COLOR(_node_,_x_,_y_,_property_,_size_,_color_) \
+do{\
+    auto pSCTemLayer0 = cocos2d::LayerColor::create((_color_));\
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCTemLayer0,(_size_))\
+}while(0);
+
+// color layer container
+#define SC_BEGIN_CONTAINER_LAYER_COLOR(_node_,_x_,_y_,_property_,_size_,_color_) \
+{\
+    cocos2d::Layer* pSCContainerTemLayer = cocos2d::LayerColor::create((_color_)); \
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCContainerTemLayer,(_size_))\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerTemLayer)
+
+// insert a color layer
+#define SC_INSERT_LAYER_GRA(_node_,_x_,_y_,_property_,_size_,_start_color_,_end_color_,_dir_) \
+do{\
+    auto pSCTemLayer0 = cocos2d::LayerGradient::create((_start_color_),(_end_color_),(_dir_));\
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCTemLayer0,(_size_))\
+}while(0);
+
+// color layer container
+#define SC_BEGIN_CONTAINER_LAYER_GRA(_node_,_x_,_y_,_property_,_size_,_start_color_,_end_color_,_dir_) \
+{\
+    cocos2d::Layer* pSCContainerTemLayer = cocos2d::LayerGradient::create((_start_color_),(_end_color_),(_dir_)); \
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCContainerTemLayer,(_size_))\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerTemLayer)
+
+// insert a multiplex layer
+#define SC_INSERT_LAYER_MUL(_node_,_x_,_y_,_property_,_size_) \
+do{\
+    auto pSCTemLayer0 = cocos2d::LayerMultiplex::create();\
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCTemLayer0,(_size_))\
+}while(0);
+
+// multiplex layer container
+#define SC_BEGIN_CONTAINER_LAYER_MUL(_node_,_x_,_y_,_property_,_size_) \
+{\
+    cocos2d::Layer* pSCContainerTemLayer = cocos2d::LayerMultiplex::create(); \
+    ___SC_INSIDE_ADD_LAYER((_node_),(_x_),(_y_),(_property_),pSCContainerTemLayer,(_size_))\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerTemLayer)\
+    sc_container_type = 2;
 
 //////////////////------------------------- inside macros ---------------------------
 // below macros are used inside above macros, do not use in game
@@ -180,14 +309,16 @@ do{\
     SCContainerEndFunctor* sc_container_pEndFunctor = NULL; \
     cocos2d::Node* sc_container_pParentNode = (_parent_); \
     cocos2d::Vector<cocos2d::MenuItem*> sc_container_MenuItemArray;\
+    cocos2d::Vector<cocos2d::Layer*> sc_container_MultiplexLayerArray;\
     std::list<cocos2d::Ref*>    sc_container_LayoutObjectList;\
-    cocos2d::Menu* sc_container_pButtonListMenu = NULL;
+    cocos2d::Menu* sc_container_pButtonListMenu = NULL; \
+    int sc_container_type = 0;
 
 #define ___SC_INSIDE_ADD_LAYOUT_NODE(_parent_,_node_,_x_,_y_) \
     cocos2d::Node* pSCTemParent = (_parent_);\
     if(pSCTemParent){\
         const cocos2d::Size& tParentSizeTem = pSCTemParent->getContentSize();\
-        pSCTemParent->addChild(_node_);\
+        pSCTemParent->addChild((_node_));\
         (_node_)->setPosition(SCNodeUtils::posR2A(cocos2d::Vec2((_x_),(_y_)),tParentSizeTem)); \
     }
 
@@ -200,13 +331,22 @@ do{\
     SCNodeProperty::setProperty<cocos2d::Sprite>(pSCTemSprite,purifyProertyString((_property_)));
 
 // label
-#define ___SC_INSIDE_ADD_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_) \
+// _type_ (1:system; 2:ttf; 3:bmfont)
+#define ___SC_INSIDE_ADD_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_type_) \
     SCString strSCTemText = (_string_);\
-    auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
+    cocos2d::Label* pSCTemLabel;\
+    if((_type_)==1){\
+        pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),(_font_),(_size_));\
+    }else if((_type_)==2){\
+        pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
+    }else if((_type_)==3){\
+        pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
+    }\
     ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemLabel,(_x_),(_y_));\
     assignNode(pSCTemLabel,(_node_));\
     SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLabel)>::type>(pSCTemLabel,purifyProertyString((_property_)));\
-    sc_container_LayoutObjectList.push_back(pSCTemLabel);\
+    sc_container_LayoutObjectList.push_back(pSCTemLabel);
+
 
 // button
 #define ___SC_INSIDE_ADD_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_fun_) \
@@ -249,5 +389,16 @@ do{\
     SCNodeProperty::setProperty<cocos2d::MenuItemLabel>(pSCTemItemLabel,purifyProertyString((_property_)));\
     sc_container_LayoutObjectList.push_back(pSCTemItemLabel);
 
+// layer
+#define ___SC_INSIDE_ADD_LAYER(_node_,_x_,_y_,_property_,_layer_,_size_) \
+    auto pSCTemLayer = (_layer_); \
+    pSCTemLayer->setContentSize((_size_));\
+    pSCTemLayer->setAnchorPoint(cocos2d::Vec2(0.5,0.5));\
+    pSCTemLayer->setIgnoreAnchorPointForPosition(false);\
+    if(sc_container_type==2){sc_container_MultiplexLayerArray.pushBack(pSCTemLayer);}\
+    ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemLayer,(_x_),(_y_));\
+    assignNode(pSCTemLayer,(_node_));\
+    SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLayer)>::type>(pSCTemLayer,purifyProertyString((_property_))); \
+    sc_container_LayoutObjectList.push_back(pSCTemLayer);
 
 #endif // __SPEEDCC__SCUIMACRO_H__
