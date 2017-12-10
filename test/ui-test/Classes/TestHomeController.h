@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "SpeedCC.h"
 
-class HomeSceneController : public SpeedCC::SCSceneControllerT<HomeSceneController>
+class TestHomeController : public SpeedCC::SCSceneControllerT<TestHomeController>
 {
 public:
     

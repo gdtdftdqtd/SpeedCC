@@ -159,22 +159,18 @@ namespace SpeedCC
                     }
                 }
                 
-                auto sceneControllerPtr = (*navigateInfo2.sceneCreatorInfo.pfunCurrentSceneCreator)(s_SceneParameterDic);
+                auto controllerPtr = (*navigateInfo2.sceneCreatorInfo.pfunCurrentSceneCreator)(s_SceneParameterDic);
                 s_SceneParameterDic.removeAllKeys();
                 
-                auto call = [oppositeTrans]() -> void
+                cocos2d::Scene* pScene = controllerPtr->getScene();
+                if(oppositeTrans)
                 {
-                    cocos2d::Scene* pScene = SCScene::create();
-                    if(oppositeTrans)
-                    {
-                        pScene = (*oppositeTrans)(SC_DURATION_OF_SCENE_TRANSITION,pScene);
-                    }
-                    
-                    SCCCDirector()->replaceScene(pScene);
-                };
+                    pScene = (*oppositeTrans)(SC_DURATION_OF_SCENE_TRANSITION,pScene);
+                }
                 
-                call();
-                s_currentSceneControllerPtr = sceneControllerPtr;
+                SCCCDirector()->replaceScene(pScene);
+                
+                s_currentSceneControllerPtr = controllerPtr;
             }
                 break;
                 

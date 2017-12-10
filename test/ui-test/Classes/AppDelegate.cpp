@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
-#include "HomeSceneController.h"
+#include "TestHomeController.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -94,7 +94,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-    SpeedCC::SCSceneNavigator::switchScene<HomeSceneController>();
+    SpeedCC::SCSceneNavigator::switchScene<TestHomeController>();
     
 //    // create a scene. it's an autorelease object
 //    auto scene = HelloWorld::createScene();
