@@ -69,6 +69,13 @@ namespace SpeedCC
         };
         
     public:
+        struct SFilterConfig
+        {
+            std::vector<SCString> keyVtr;
+            bool bExclude;
+        };
+        
+    public:
         static void setProperty(cocos2d::Node* pNode,const SCDictionary& dic);
         static void setProperty(cocos2d::Layer* pNode,const SCDictionary& dic);
         static void setProperty(cocos2d::Sprite* pNode,const SCDictionary& dic);
@@ -78,7 +85,7 @@ namespace SpeedCC
         static void setProperty(cocos2d::Label* pNode,const SCDictionary& dic);
         
         template<typename T>
-        static void setProperty(cocos2d::Node* pNode,const SCString& strProperty)
+        static void setProperty(cocos2d::Node* pNode,const SCString& strProperty,SFilterConfig* pFilterConfig=NULL)
         {
             SCASSERT(pNode!=NULL);
             SC_RETURN_IF_V(pNode==NULL);
@@ -86,12 +93,33 @@ namespace SpeedCC
             SCDictionary dic;
             if(SCNodeProperty::convertString2Dic(strProperty,dic))
             {
+                if(pFilterConfig!=NULL && !pFilterConfig->keyVtr.empty())
+                {
+                    if(pFilterConfig->bExclude)
+                    {
+                        for(const auto& it : pFilterConfig->keyVtr)
+                        {
+                            dic.removeKey(it);
+                        }
+                    }
+                    else
+                    {
+                        SCDictionary dic2;
+                        for(const auto& it : pFilterConfig->keyVtr)
+                        {
+                            if(dic.hasKey(it))
+                            {
+                                dic2.setValue(it,dic[it]);
+                            }
+                        }
+                        dic = dic2;
+                    }
+                }
                 SCNodeProperty::setProperty(dynamic_cast<T*>(pNode),dic);
             }
         }
         
         static SCDictionary getProperty(cocos2d::Node* pNode);
-        
         static bool convertString2Dic(const SCString& strProerty,SCDictionary& dic);
         
     private:

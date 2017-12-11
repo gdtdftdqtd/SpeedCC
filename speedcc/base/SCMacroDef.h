@@ -22,7 +22,7 @@
 	assert((_condition_))
 
 // assert at debug
-#ifdef SPEEDCC_DEBUG
+#ifdef COCOS2D_DEBUG
 #define SCASSERT(_condition_) \
     assert((_condition_))
 #else
@@ -60,7 +60,7 @@
 #define SCLogR(_format_, ...)\
     SCSystem::log((_format_), ##__VA_ARGS__)
 
-#ifdef SPEEDCCD_DEBUG
+#ifdef COCOS2D_DEBUG
 #define SCLog  SCLogR
 #else
 #define SCLog(_format_, ...)

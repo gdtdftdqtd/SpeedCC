@@ -24,7 +24,7 @@
 		0A67CB861F97984F00FED9A5 /* SCOSSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */; };
 		0A8868181FDA536F00866266 /* SCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */; };
 		0A8868191FDA536F00866266 /* SCSceneNavigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */; };
-		0A88681A1FDA536F00866266 /* SCSceneLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCSceneLayer.cpp */; };
+		0A88681A1FDA536F00866266 /* SCLayerRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCLayerRoot.cpp */; };
 		0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868151FDA536E00866266 /* SCNodeUtils.cpp */; };
 		0AADA6C21FDAB78000E43DC6 /* SCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AADA6C01FDAB78000E43DC6 /* SCFileUtils.cpp */; };
 /* End PBXBuildFile section */
@@ -115,10 +115,10 @@
 		0A67CB7F1F9512CF00FED9A5 /* SCComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCComponent.cpp; sourceTree = "<group>"; };
 		0A88680E1FDA536E00866266 /* SCNodeProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeProperty.h; sourceTree = "<group>"; };
 		0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeProperty.cpp; sourceTree = "<group>"; };
-		0A8868101FDA536E00866266 /* SCSceneLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneLayer.h; sourceTree = "<group>"; };
+		0A8868101FDA536E00866266 /* SCLayerRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLayerRoot.h; sourceTree = "<group>"; };
 		0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCSceneNavigator.cpp; sourceTree = "<group>"; };
 		0A8868121FDA536E00866266 /* SCNodeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeUtils.h; sourceTree = "<group>"; };
-		0A8868131FDA536E00866266 /* SCSceneLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCSceneLayer.cpp; sourceTree = "<group>"; };
+		0A8868131FDA536E00866266 /* SCLayerRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCLayerRoot.cpp; sourceTree = "<group>"; };
 		0A8868141FDA536E00866266 /* SCSceneControllerT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneControllerT.h; sourceTree = "<group>"; };
 		0A8868151FDA536E00866266 /* SCNodeUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeUtils.cpp; sourceTree = "<group>"; };
 		0A8868161FDA536E00866266 /* SCSceneNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneNavigator.h; sourceTree = "<group>"; };
@@ -246,8 +246,8 @@
 			children = (
 				0A88680E1FDA536E00866266 /* SCNodeProperty.h */,
 				0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */,
-				0A8868101FDA536E00866266 /* SCSceneLayer.h */,
-				0A8868131FDA536E00866266 /* SCSceneLayer.cpp */,
+				0A8868101FDA536E00866266 /* SCLayerRoot.h */,
+				0A8868131FDA536E00866266 /* SCLayerRoot.cpp */,
 				0A8868141FDA536E00866266 /* SCSceneControllerT.h */,
 				0A8868121FDA536E00866266 /* SCNodeUtils.h */,
 				0A8868151FDA536E00866266 /* SCNodeUtils.cpp */,
@@ -349,7 +349,7 @@
 			files = (
 				0A67CB831F97984F00FED9A5 /* SCComponent.cpp in Sources */,
 				0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */,
-				0A88681A1FDA536F00866266 /* SCSceneLayer.cpp in Sources */,
+				0A88681A1FDA536F00866266 /* SCLayerRoot.cpp in Sources */,
 				0A67CB841F97984F00FED9A5 /* SCEntity.cpp in Sources */,
 				0A1556C71FD4F31600CF7420 /* SCObject.cpp in Sources */,
 				0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */,

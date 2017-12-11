@@ -71,8 +71,8 @@ namespace SpeedCC
 
 #define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_)\
 {\
+    int sc_root_nSCContainerStackCounter = 0;\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(_parent_) \
-    int sc_root_nSCContainerStackCounter = 1;\
     sc_container_pParentNode->setContentSize(_size_);\
     sc_container_pParentNode->setAnchorPoint(cocos2d::Vec2(0.5,0.5));\
     sc_container_pParentNode->setIgnoreAnchorPointForPosition(false);\
@@ -312,6 +312,7 @@ do{\
     cocos2d::Vector<cocos2d::Layer*> sc_container_MultiplexLayerArray;\
     std::list<cocos2d::Ref*>    sc_container_LayoutObjectList;\
     cocos2d::Menu* sc_container_pButtonListMenu = NULL; \
+    ++sc_root_nSCContainerStackCounter;\
     int sc_container_type = 0;
 
 #define ___SC_INSIDE_ADD_LAYOUT_NODE(_parent_,_node_,_x_,_y_) \
@@ -328,12 +329,12 @@ do{\
     assignNode(pSCTemSprite,(_node_));\
     sc_container_LayoutObjectList.push_back(pSCTemSprite);\
     ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemSprite,_x_,_y_)\
-    SCNodeProperty::setProperty<cocos2d::Sprite>(pSCTemSprite,purifyString((_property_)));
+    SpeedCC::SCNodeProperty::setProperty<cocos2d::Sprite>(pSCTemSprite,purifyString((_property_)));
 
 // label
 // _type_ (1:system; 2:ttf; 3:bmfont)
 #define ___SC_INSIDE_ADD_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_type_) \
-    SCString strSCTemText = (_string_);\
+    SpeedCC::SCString strSCTemText = (_string_);\
     cocos2d::Label* pSCTemLabel;\
     if((_type_)==1){\
         pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),purifyString((_font_)).c_str(),(_size_));\
@@ -344,7 +345,7 @@ do{\
     }\
     ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemLabel,(_x_),(_y_));\
     assignNode(pSCTemLabel,(_node_));\
-    SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLabel)>::type>(pSCTemLabel,purifyString((_property_)));\
+    SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLabel)>::type>(pSCTemLabel,purifyString((_property_)));\
     sc_container_LayoutObjectList.push_back(pSCTemLabel);
 
 
@@ -364,11 +365,14 @@ do{\
         cocos2d::Menu* pMenu = cocos2d::Menu::create(pSCItemImage,NULL);\
         pMenu->setContentSize(pSCTemSprite[0]->getContentSize());\
         ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pMenu,(_x_),(_y_));\
-        SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,purifyString((_property_)));\
+        SpeedCC::SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,purifyString((_property_)));\
     }\
     _buttonItem2InfoMap[pSCItemImage] = purifyBehavior(this,(_fun_),pSCItemImage);\
     assignNode(pSCItemImage,(_node_));\
-    SCNodeProperty::setProperty<cocos2d::MenuItemSprite>(pSCItemImage,purifyString((_property_)));\
+    SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;\
+    scTemFilterConfig.bExclude = false;\
+    scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_IMAGE);\
+    SpeedCC::SCNodeProperty::setProperty<cocos2d::MenuItemSprite>(pSCItemImage,purifyString((_property_)),&scTemFilterConfig);\
     sc_container_LayoutObjectList.push_back(pSCItemImage);
 
 // button label
@@ -386,7 +390,14 @@ do{\
     }\
     _buttonItem2InfoMap[pSCTemItemLabel] = purifyBehavior(this,(_fun_),pSCTemItemLabel);\
     assignNode(pSCTemItemLabel,(_node_));\
-    SCNodeProperty::setProperty<cocos2d::MenuItemLabel>(pSCTemItemLabel,purifyString((_property_)));\
+    SpeedCC::SCNodeProperty::setProperty<cocos2d::MenuItemLabel>(pSCTemItemLabel,purifyString((_property_)));\
+    SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;\
+    scTemFilterConfig.bExclude = false;\
+    scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_LABEL);\
+    scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_COLOR_TEXT);\
+    scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_FONT_NAME);\
+    scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_FONT_SIZE);\
+    SpeedCC::SCNodeProperty::setProperty<cocos2d::Label>((_label_),SpeedCC::purifyString((_property_)),&scTemFilterConfig);\
     sc_container_LayoutObjectList.push_back(pSCTemItemLabel);
 
 // layer
@@ -398,7 +409,7 @@ do{\
     if(sc_container_type==2){sc_container_MultiplexLayerArray.pushBack(pSCTemLayer);}\
     ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemLayer,(_x_),(_y_));\
     assignNode(pSCTemLayer,(_node_));\
-    SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLayer)>::type>(pSCTemLayer,purifyString((_property_))); \
+    SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLayer)>::type>(pSCTemLayer,purifyString((_property_))); \
     sc_container_LayoutObjectList.push_back(pSCTemLayer);
 
 #endif // __SPEEDCC__SCUIMACRO_H__

@@ -8,10 +8,11 @@
 
 namespace SpeedCC
 {
-    class SCSceneLayer : public cocos2d::Layer
+    ///----------- SCSceneLayer
+    class SCLayerRoot : public cocos2d::Layer
     {
     public:
-        CREATE_FUNC(SCSceneLayer);
+        CREATE_FUNC(SCLayerRoot);
         void setController(SCObject::Ptr controllerPtr);
         inline SCObject::Ptr getController() {return _sceneControllerPtr;}
         
@@ -44,6 +45,7 @@ namespace SpeedCC
         SCObject::Ptr           _sceneControllerPtr;
     };
     
+    ///----------- SCScene
     class SCScene : public cocos2d::Scene
     {
     public:
@@ -57,12 +59,23 @@ namespace SpeedCC
         virtual void onExit() override;
         virtual void onExitTransitionDidStart() override;
         
-        void setRootLayer(SCSceneLayer* pLayer);
-        SCSceneLayer* getRootLayer();
+        void setRootLayer(SCLayerRoot* pLayer);
+        SCLayerRoot* getRootLayer();
         
         
     private:
-        SCSceneLayer*           _pRootLayer;
+        SCLayerRoot*           _pRootLayer;
+    };
+    
+    ///------------ SCLayerNoTouch
+    class SCLayerNoTouch : public cocos2d::Layer
+    {
+    public:
+        CREATE_FUNC(SCLayerNoTouch);
+        
+        virtual void onEnter() override;
+        virtual void onExit() override;
+        bool onSCTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);
     };
     
 }

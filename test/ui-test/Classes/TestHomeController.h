@@ -11,6 +11,7 @@ public:
     virtual void onCreate(SpeedCC::SCDictionary parameters);
     
     void onButtonClicked();
+    void onButtonClicked2();
 };
 
 #endif // __TESTHOME_SCENE_H__

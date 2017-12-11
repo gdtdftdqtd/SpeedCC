@@ -32,11 +32,12 @@ namespace SpeedCC
             {
                 SC_RETURN_IF(s_currentSceneControllerPtr==NULL, false);
                 
-                auto interfacePtr = (info.pfunCurrentLayerCreator)(s_SceneParameterDic);
+                auto controllerPtr = (info.pfunCurrentLayerCreator)(s_SceneParameterDic);
                 s_SceneParameterDic.removeAllKeys();
                 
-                s_currentSceneControllerPtr->pushModalController(interfacePtr);
+                s_currentSceneControllerPtr->pushModalController(controllerPtr);
                 s_sceneStack.push_front(navigateInfo);
+                s_currentSceneControllerPtr = controllerPtr;
             }
                 break;
                 
@@ -80,7 +81,6 @@ namespace SpeedCC
                 }
                 
                 s_sceneStack.push_front(navigateInfo);
-                
                 s_currentSceneControllerPtr = controllerPtr;
             }
                 break;
@@ -148,15 +148,9 @@ namespace SpeedCC
                 size_t nStackSize = s_sceneStack.size();
                 while(nStackSize>2)
                 {
-                    if(s_sceneStack.front().sceneCreatorInfo.switchType==SWITCH_MODAL)
-                    {
-                        s_sceneStack.pop_front();
-                        --nStackSize;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    SC_BREAK_IF(s_sceneStack.front().sceneCreatorInfo.switchType!=SWITCH_MODAL)
+                    s_sceneStack.pop_front();
+                    --nStackSize;
                 }
                 
                 auto controllerPtr = (*navigateInfo2.sceneCreatorInfo.pfunCurrentSceneCreator)(s_SceneParameterDic);
