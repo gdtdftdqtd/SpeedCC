@@ -2,6 +2,7 @@
 
 #include "SCNodeProperty.h"
 #include "SCNodeUtils.h"
+#include "SCSystem.h"
 
 using namespace cocos2d;
 
@@ -235,6 +236,8 @@ namespace SpeedCC
         SCString strValue;
         SCValue data;
         
+        int n = 1;
+        
         while(pCurrent != pEnd)
         {
             do
@@ -279,9 +282,11 @@ namespace SpeedCC
                 }
                 
                 dic.setValue(strKey, data);
-                SCNodeProperty::skipSpaces(pCurrent,pEnd);
             }
             while(0);
+            
+            SCNodeProperty::skipSpaces(pCurrent,pEnd);
+            ++n;
         }
         
         return bRet;

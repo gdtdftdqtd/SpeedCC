@@ -19,6 +19,7 @@
 #include "base/SCDictionary.h"
 #include "base/SCVersion.h"
 #include "base/SCFileUtils.h"
+#include "base/SCSystem.h"
 
 #include "cocos/SCSceneNavigator.h"
 #include "cocos/SCSceneControllerT.h"

@@ -16,6 +16,12 @@ namespace SpeedCC
     ///------------- SCVersion
     struct SCVersion
     {
+    public:
+        int nMajor;
+        int nMinor;
+        int nFix;
+        
+    public:
         SCVersion();
         SCVersion(const SCVersion& info);
         SCVersion(const char* pszVersion);
@@ -24,10 +30,6 @@ namespace SpeedCC
         
         SCString getString(int nBit=2) const;
         unsigned getHexValue(int nBit=2) const;
-        
-        inline int getMajor() const {return _nMajor;}
-        inline int getMinor() const {return _nMinor;}
-        inline int getFix() const {return _nFix;}
         
         int compare(const SCVersion& info) const;
         bool operator<(const SCVersion& info) const;
@@ -39,10 +41,6 @@ namespace SpeedCC
     private:
         void setString(const SCString& strVersion);
         
-    private:
-        int _nMajor;
-        int _nMinor;
-        int _nFix;
     };
 }
 

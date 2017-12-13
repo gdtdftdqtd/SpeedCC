@@ -22,9 +22,8 @@
 	assert((_condition_))
 
 // assert at debug
-#ifdef COCOS2D_DEBUG
-#define SCASSERT(_condition_) \
-    assert((_condition_))
+#ifdef SPEEDCC_DEBUG
+#define SCASSERT(_condition_)  assert((_condition_))
 #else
 #define SCASSERT(_condition_)
 #endif
@@ -60,7 +59,7 @@
 #define SCLogR(_format_, ...)\
     SCSystem::log((_format_), ##__VA_ARGS__)
 
-#ifdef COCOS2D_DEBUG
+#ifdef SPEEDCC_DEBUG
 #define SCLog  SCLogR
 #else
 #define SCLog(_format_, ...)
@@ -89,7 +88,7 @@
     if((_condition_)) break;
 
 #define SC_FUNCTOR(_fun_)\
-    (decltype(SCTraitFunctor(&_fun_))(&_fun_))
+    (decltype(SCTraitFunctionPointerType(&_fun_))(&_fun_))
 
 ///----- bit test
 #define SC_BIT_HAS_OR(_set_,_bit_)\

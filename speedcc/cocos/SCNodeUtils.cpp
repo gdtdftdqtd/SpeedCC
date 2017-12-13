@@ -11,8 +11,8 @@ namespace SpeedCC
         return Vec2(ptAbs.x/(frameSize.width/2.0) - 1.0, ptAbs.y/(frameSize.height/2.0)-1.0);
     }
     
-    Vec2 SCNodeUtils::posR2A(const Vec2& ptPTG,const Size& frameSize)
+    Vec2 SCNodeUtils::posR2A(const Vec2& ptRel,const Size& frameSize)
     {
-        return Vec2((ptPTG.x + 1.0)*(frameSize.width/2.0),(ptPTG.y + 1.0)*(frameSize.height/2.0));
+        return Vec2((ptRel.x + 1.0)*(frameSize.width/2.0),(ptRel.y + 1.0)*(frameSize.height/2.0));
     }
 }

@@ -51,7 +51,7 @@ namespace SpeedCC
             
                 if(navigateInfo.sceneCreatorInfo.pfunSelfTransCreator)
                 {
-                    pScene = (*navigateInfo.sceneCreatorInfo.pfunSelfTransCreator)(SC_DURATION_OF_SCENE_TRANSITION,pScene);
+                    pScene = (*navigateInfo.sceneCreatorInfo.pfunSelfTransCreator)(kSCDurationOfSceneTransition,pScene);
                 }
                 
                 if(SCCCDirector()->getRunningScene())
@@ -159,7 +159,7 @@ namespace SpeedCC
                 cocos2d::Scene* pScene = controllerPtr->getScene();
                 if(oppositeTrans)
                 {
-                    pScene = (*oppositeTrans)(SC_DURATION_OF_SCENE_TRANSITION,pScene);
+                    pScene = (*oppositeTrans)(kSCDurationOfSceneTransition,pScene);
                 }
                 
                 SCCCDirector()->replaceScene(pScene);

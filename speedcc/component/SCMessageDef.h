@@ -8,9 +8,9 @@
 
 namespace SpeedCC
 {
-#define MSG_ARG_NAME_CONTROLLER     "controller"
-#define MSG_ARG_NAME_NUMBER         "number"
-#define MSG_ARG_NAME_NAME           "name"
+#define MSG_ARG_KEY_CONTROLLER     "controller"
+#define MSG_ARG_KEY_NUMBER         "number"
+#define MSG_ARG_KEY_NAME           "name"
     
     enum
     {
@@ -38,13 +38,13 @@ namespace SpeedCC
         // "layer" => cocos2d::Ref*; touch belong to layer
         SCMessage_Touch,
         
-        // MSG_ARG_NAME_CONTROLLER/"controller" => SCSceneController*
+        // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
         SCMessage_ModalSceneGotFocus,
         
-        // MSG_ARG_NAME_CONTROLLER/"controller" => SCSceneController*
+        // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
         SCMessage_ModalSceneLostFocus,
         
-//        // MSG_ARG_NAME_CONTROLLER/"controller" => SCSceneController*
+//        // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
 //        SCMessage_PushModalScene,
         
         // user message define must begin from this value

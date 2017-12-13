@@ -40,7 +40,6 @@ namespace SpeedCC
         virtual void setScene(SCScene* pScene) = 0;
         virtual void pushModalController(SCSceneController::Ptr controllerPtr) = 0;
         
-        // return parent controller
         virtual SCSceneController::Ptr popModalFromParent() = 0;
         virtual void setModalParentController(SCSceneController::WeakPtr pControllerPtr) = 0;
 //        virtual SCSceneController::WeakPtr getModalParentController() = 0;
@@ -48,6 +47,8 @@ namespace SpeedCC
     
     typedef SCSceneController::Ptr (*FUN_SCSceneCreateFunctor_t)(const SCDictionary& dic);
     typedef SCSceneController::Ptr (*FUN_SCLayerCreateFunctor_t)(const SCDictionary& dic);
+    typedef cocos2d::Scene* (*FUN_SCSceneTransitionCreateFunctor_t)(const float fDuration, cocos2d::Scene* pScene);
+    typedef void (cocos2d::Ref::*FUN_SCDelayExecuteFunction_t)(void* pData);
     
 #define FN(_fun_)\
     ((decltype(TargetCtrlr_t::traitFuncPointerType(&TargetCtrlr_t::_fun_)))(&TargetCtrlr_t::_fun_))
@@ -137,11 +138,11 @@ namespace SpeedCC
         SSCMessageInfo mi;
         
         mi.nMsgID = SCMessage_ModalSceneLostFocus;
-        mi.paramters.setValue(MSG_ARG_NAME_CONTROLLER,this);
+        mi.paramters.setValue(MSG_ARG_KEY_CONTROLLER,this);
         SCMessageDispatch::getInstance()->postMessage(mi);
         
         mi.nMsgID = SCMessage_ModalSceneGotFocus;
-        mi.paramters.setValue(MSG_ARG_NAME_CONTROLLER,controllerPtr.getRawPointer());
+        mi.paramters.setValue(MSG_ARG_KEY_CONTROLLER,controllerPtr.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(mi);
     }
     
@@ -163,7 +164,7 @@ namespace SpeedCC
         // generate modal mssage
         SSCMessageInfo mi;
         mi.nMsgID = SCMessage_ModalSceneGotFocus;
-        mi.paramters.setValue(MSG_ARG_NAME_CONTROLLER,ret.getRawPointer());
+        mi.paramters.setValue(MSG_ARG_KEY_CONTROLLER,ret.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(mi);
         
         return ret;

@@ -1,6 +1,8 @@
 
 
 #include "SCDictionary.h"
+#include "SCSystem.h"
+
 #include "json/document.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"

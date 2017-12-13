@@ -27,6 +27,8 @@
 		0A88681A1FDA536F00866266 /* SCLayerRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCLayerRoot.cpp */; };
 		0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868151FDA536E00866266 /* SCNodeUtils.cpp */; };
 		0AADA6C21FDAB78000E43DC6 /* SCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AADA6C01FDAB78000E43DC6 /* SCFileUtils.cpp */; };
+		0AADA6D11FDEAB4600E43DC6 /* SCSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AADA6CF1FDEAB4600E43DC6 /* SCSystem.cpp */; };
+		0AADA6D51FDFC9F800E43DC6 /* SCiOSSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0AADA6D31FDFC9F800E43DC6 /* SCiOSSystem.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,10 @@
 		0A8868171FDA536E00866266 /* SCUIMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUIMacro.h; sourceTree = "<group>"; };
 		0AADA6C01FDAB78000E43DC6 /* SCFileUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCFileUtils.cpp; sourceTree = "<group>"; };
 		0AADA6C11FDAB78000E43DC6 /* SCFileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCFileUtils.h; sourceTree = "<group>"; };
+		0AADA6CF1FDEAB4600E43DC6 /* SCSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCSystem.cpp; sourceTree = "<group>"; };
+		0AADA6D01FDEAB4600E43DC6 /* SCSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCSystem.h; sourceTree = "<group>"; };
+		0AADA6D31FDFC9F800E43DC6 /* SCiOSSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SCiOSSystem.mm; sourceTree = SOURCE_ROOT; };
+		0AADA6D41FDFC9F800E43DC6 /* SCiOSSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCiOSSystem.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +215,8 @@
 				0A28035C1FAB0A6B00E0174C /* SCVersion.h */,
 				0AADA6C01FDAB78000E43DC6 /* SCFileUtils.cpp */,
 				0AADA6C11FDAB78000E43DC6 /* SCFileUtils.h */,
+				0AADA6CF1FDEAB4600E43DC6 /* SCSystem.cpp */,
+				0AADA6D01FDEAB4600E43DC6 /* SCSystem.h */,
 			);
 			name = base;
 			path = ../../base;
@@ -217,6 +225,7 @@
 		0A67CB191F81EAB900FED9A5 /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				0AADA6D21FDFC9DF00E43DC6 /* ObjC */,
 				0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */,
 				0A67CB1F1F81EAB900FED9A5 /* SCOSSystem.h */,
 			);
@@ -257,6 +266,15 @@
 			);
 			name = cocos;
 			path = ../../cocos;
+			sourceTree = "<group>";
+		};
+		0AADA6D21FDFC9DF00E43DC6 /* ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				0AADA6D41FDFC9F800E43DC6 /* SCiOSSystem.h */,
+				0AADA6D31FDFC9F800E43DC6 /* SCiOSSystem.mm */,
+			);
+			path = ObjC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,8 +381,10 @@
 				0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */,
 				0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */,
 				0A67CAEF1F813CFF00FED9A5 /* SCString.cpp in Sources */,
+				0AADA6D11FDEAB4600E43DC6 /* SCSystem.cpp in Sources */,
 				0A28035A1FAB073B00E0174C /* SCDictionary.cpp in Sources */,
 				0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */,
+				0AADA6D51FDFC9F800E43DC6 /* SCiOSSystem.mm in Sources */,
 				0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,7 +449,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = ../;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -479,7 +499,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = ../;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -491,6 +511,11 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SPEEDCC_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../cocos2dx/v3",
 					"$(SRCROOT)/../../../cocos2dx/v3/cocos/audio/include",

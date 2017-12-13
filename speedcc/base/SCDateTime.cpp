@@ -6,6 +6,9 @@
 
 #include "SCDateTime.h"
 #include "SCString.h"
+#include "SCSystem.h"
+
+#include "../platform/SCOSSystem.h"
 
 namespace SpeedCC
 {
@@ -485,7 +488,7 @@ namespace SpeedCC
         char buf[128] = {0};
         const int m = (nMonth==0 ? this->getMonth() : nMonth);
         
-//        ::fsosGetMonthName(buf,SC_ARRAY_LENGTH(buf),m,bShort);
+        ::scGetMonthName(buf,SC_ARRAY_LENGTH(buf),m,bShort);
         
         return buf;
     }
@@ -500,7 +503,7 @@ namespace SpeedCC
         char buf[128] = {0};
         const int w = nWeek==0 ? this->getDayOfWeek() : nWeek;
         
-//        ::fsosGetWeekName(buf,SC_ARRAY_LENGTH(buf),w,bShort);
+        ::scGetWeekName(buf,SC_ARRAY_LENGTH(buf),w,bShort);
         
         return buf;
     }
@@ -661,33 +664,5 @@ namespace SpeedCC
         return date.nDay + floordiv(153 * m + 2, 5) + 365 * y + floordiv(y, 4) - floordiv(y, 100) + floordiv(y, 400) - 32045;
     }
     
-    //static void msecsToTime(INT64 msecs)
-    //{
-    //    INT64 jd = JULIAN_DAY_FOR_EPOCH;
-    //    INT64 ds = 0;
-    //    
-    //    if (std::abs(msecs) >= MSECS_PER_DAY)
-    //    {
-    //        jd += (msecs / MSECS_PER_DAY);
-    //        msecs %= MSECS_PER_DAY;
-    //    }
-    //    
-    //    if (msecs < 0)
-    //    {
-    //        ds = MSECS_PER_DAY - msecs - 1;
-    //        jd -= ds / MSECS_PER_DAY;
-    //        ds = ds % MSECS_PER_DAY;
-    //        ds = MSECS_PER_DAY - ds - 1;
-    //    }
-    //    else
-    //    {
-    //        ds = msecs;
-    //    }
-    //    
-    ////    if (date)
-    ////        *date = QDate::fromJulianDay(jd);
-    ////    if (time)
-    ////        *time = QTime::fromMSecsSinceStartOfDay(ds);
-    //}
 }
 

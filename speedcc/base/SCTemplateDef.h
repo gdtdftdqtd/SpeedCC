@@ -117,33 +117,30 @@ namespace SpeedCC
     
     // single transition
 #define SC_DEFINE_TRANSITION_SINGLE(_transition_)\
-template<>\
-struct SCTransitionCreator<_transition_>\
-{\
-typedef _transition_    OppositeType;\
-static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
-{return _transition_::create(duration,(cocos2d::Scene*)pScene);}\
-};
+    template<>\
+    struct SCTransitionCreator<_transition_>\
+    {\
+        typedef _transition_    OppositeType;\
+        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
+            {return _transition_::create(duration,(cocos2d::Scene*)pScene);}\
+    };
     
     // pair transition
 #define SC_DEFINE_TRANSITION_PAIR(_transition1_,_transition2_)\
-template<>\
-struct SCTransitionCreator<_transition1_>\
-{\
-typedef _transition2_    OppositeType;\
-static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
-{return _transition1_::create(duration,(cocos2d::Scene*)pScene);}\
-};\
-template<>\
-struct SCTransitionCreator<_transition2_>\
-{\
-typedef _transition1_    OppositeType;\
-static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
-{return _transition2_::create(duration,(cocos2d::Scene*)pScene);}\
-\
-};
-    
-    
+    template<>\
+    struct SCTransitionCreator<_transition1_>\
+    {\
+        typedef _transition2_    OppositeType;\
+        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
+            {return _transition1_::create(duration,(cocos2d::Scene*)pScene);}\
+    };\
+    template<>\
+    struct SCTransitionCreator<_transition2_>\
+    {\
+        typedef _transition1_    OppositeType;\
+        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
+            {return _transition2_::create(duration,(cocos2d::Scene*)pScene);}\
+    };
     
     
     SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionRotoZoom)

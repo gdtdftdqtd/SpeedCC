@@ -1,16 +1,12 @@
 
 
 #include "SCOSSystem.h"
-#include "../base/SCValue.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif  // __cplusplus
     
-    void fsxSetupCallbackFunc()
-    {
-        
-    }
     
 #ifdef __cplusplus
 }

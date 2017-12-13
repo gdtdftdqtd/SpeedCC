@@ -802,7 +802,7 @@ namespace SpeedCC
     void SCString::setEncodingAt(int nEncodingCharIndex, const SCEncodingChar& ch)
     {
         SCASSERT(nEncodingCharIndex >= 0);
-//        int nEncodingCharCount = this->getEncodingCharCount();
+        int nEncodingCharCount = this->getEncodingCharCount();
         SCASSERT(nEncodingCharIndex < nEncodingCharCount);
         
         bool bDone = false;
@@ -854,7 +854,7 @@ namespace SpeedCC
     SCEncodingChar SCString::getEncodingAt(const int nEncodingCharIndex) const
     {
         SCASSERT(nEncodingCharIndex >= 0);
-//        int nEncodingCharCount = this->getEncodingCharCount();
+        int nEncodingCharCount = this->getEncodingCharCount();
         SCASSERT(nEncodingCharIndex < nEncodingCharCount);
         
         SCEncodingChar retChar;
