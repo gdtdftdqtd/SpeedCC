@@ -6,15 +6,15 @@
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCSYSTEMUTILS_H__
-#define __SPEEDCC__SCSYSTEMUTILS_H__
+#ifndef __SPEEDCC__SCSYSTEM_H__
+#define __SPEEDCC__SCSYSTEM_H__
 
 #include "cocos2d.h"
 #include "SCVersion.h"
 
 namespace SpeedCC
 {
-    class SCSystem
+    class SCSystem final
     {
     public:
         enum EScreenSizeType
@@ -92,4 +92,4 @@ namespace SpeedCC
     };
 }
 
-#endif // __SPEEDCC__SCSYSTEMUTILS_H__
+#endif // __SPEEDCC__SCSYSTEM_H__

@@ -32,7 +32,7 @@
 
 ///---------- assert at compile time
 #define SCASSERTCT(_condition_) \
-    do { char SCASSERTArrayCT[(_condition_)?1:-1];SCASSERTArrayCT[0]=0;} while(0)
+    do { char SCAssertArrayCT[(_condition_)?1:-1];SCAssertArrayCT[0]=0;} while(0)
 
 
 #define SC_IN_RANGE(_v_,_min_,_max_)\

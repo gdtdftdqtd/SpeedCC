@@ -84,6 +84,7 @@
 		0A2803591FAB073A00E0174C /* SCDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCDictionary.h; sourceTree = "<group>"; };
 		0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCVersion.cpp; sourceTree = "<group>"; };
 		0A28035C1FAB0A6B00E0174C /* SCVersion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCVersion.h; sourceTree = "<group>"; };
+		0A41B3291FE113F1003945EB /* SCNumberT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNumberT.h; sourceTree = "<group>"; };
 		0A67CA7E1F80E31700FED9A5 /* libspeedcc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libspeedcc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2dx/v3/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMemAllocator.cpp; sourceTree = "<group>"; };
@@ -217,6 +218,7 @@
 				0AADA6C11FDAB78000E43DC6 /* SCFileUtils.h */,
 				0AADA6CF1FDEAB4600E43DC6 /* SCSystem.cpp */,
 				0AADA6D01FDEAB4600E43DC6 /* SCSystem.h */,
+				0A41B3291FE113F1003945EB /* SCNumberT.h */,
 			);
 			name = base;
 			path = ../../base;
