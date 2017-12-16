@@ -64,6 +64,7 @@ TEST(TestSCNumber, Plus)
     EXPECT_EQ(++numInt1 == 3,true);
 }
 
+
 TEST(TestSCNumber, Boolean)
 {
     SCBool numBool;

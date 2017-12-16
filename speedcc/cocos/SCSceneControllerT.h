@@ -96,7 +96,6 @@ namespace SpeedCC
         void setSceneRootLayer(SCLayerRoot* pLayer) { _pRootLayer = pLayer;}
         virtual void setScene(SCScene* pScene) override {_pScene = pScene;}
         virtual void setModalParentController(SCSceneController::WeakPtr controllerPtr) override { _parentModalControllerPtr = controllerPtr;}
-//        virtual SCSceneController::WeakPtr getModalParentController() override { return _parentModalControllerPtr;}
         
     protected:
         cocos2d::SEL_MenuHandler traitFuncPointerType(void (TargetCtlrT::*)(cocos2d::Ref*));
