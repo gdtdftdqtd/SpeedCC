@@ -303,6 +303,85 @@ namespace SpeedCC
         ::memset(_pchStrData, ch, 1);
     }
     
+    SCString::SCString(const unsigned char byte)
+    {
+        char szBuf[32+1] = {0};
+        sprintf(szBuf, "%d",byte);
+        
+        int nLenOfByte = (int)strlen(szBuf);
+        
+        this->allocBuf(nLenOfByte);
+        strcpy(_pchStrData,szBuf);
+        
+        this->getStringDesc()->nUsedSize = nLenOfByte;
+        
+    }
+    
+    SCString::SCString(const long lNumber)
+    {
+        char szBuf[64+1] = {0};
+        sprintf(szBuf, "%ld",lNumber);
+        
+        int nLenOfByte = (int)strlen(szBuf);
+        
+        this->allocBuf(nLenOfByte);
+        strcpy(_pchStrData,szBuf);
+        
+        this->getStringDesc()->nUsedSize = nLenOfByte;
+    }
+    
+    SCString::SCString(const unsigned long ulNumber)
+    {
+        char szBuf[64+1] = {0};
+        sprintf(szBuf, "%lu",ulNumber);
+        
+        int nLenOfByte = (int)strlen(szBuf);
+        
+        this->allocBuf(nLenOfByte);
+        strcpy(_pchStrData,szBuf);
+        
+        this->getStringDesc()->nUsedSize = nLenOfByte;
+    }
+    
+    SCString::SCString(const INT64 llNumber)
+    {
+        char szBuf[64+1] = {0};
+        sprintf(szBuf, "%lld",llNumber);
+        
+        int nLenOfByte = (int)strlen(szBuf);
+        
+        this->allocBuf(nLenOfByte);
+        strcpy(_pchStrData,szBuf);
+        
+        this->getStringDesc()->nUsedSize = nLenOfByte;
+    }
+    
+    SCString::SCString(const float fNumber)
+    {
+        char szBuf[64+1] = {0};
+        sprintf(szBuf, "%.2f",fNumber);
+        
+        int nLenOfByte = (int)strlen(szBuf);
+        
+        this->allocBuf(nLenOfByte);
+        strcpy(_pchStrData,szBuf);
+        
+        this->getStringDesc()->nUsedSize = nLenOfByte;
+    }
+    
+    SCString::SCString(const double dNumber)
+    {
+        char szBuf[64+1] = {0};
+        sprintf(szBuf, "%.2f",dNumber);
+        
+        int nLenOfByte = (int)strlen(szBuf);
+        
+        this->allocBuf(nLenOfByte);
+        strcpy(_pchStrData,szBuf);
+        
+        this->getStringDesc()->nUsedSize = nLenOfByte;
+    }
+    
     SCString::SCString(const std::string& str):
     _pchStrData(NULL)
     {

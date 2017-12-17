@@ -88,6 +88,7 @@ namespace SpeedCC
         static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic);
         
         void onSCMenuItemPressed(cocos2d::Ref* pSender);
+        void ownLifecycle(SCObject::Ptr ptr) { _ownLifecycleList.push_back(ptr);}
         
     protected:
         virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
@@ -114,6 +115,7 @@ namespace SpeedCC
         SCLayerNoTouch*                         _pNoTouchLayer;
         cocos2d::Layer*                         _pBlackMaskLayer;
         bool                                    _bBlackMaskForModal;
+        std::list<SCObject::Ptr>                _ownLifecycleList;
     };
     
     ////-------------- member methods

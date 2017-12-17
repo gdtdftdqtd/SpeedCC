@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include "SCMacroDef.h"
 
 namespace SpeedCC
 {
@@ -87,8 +88,14 @@ namespace SpeedCC
         SCString();
         SCString(const SCString& strSring);
         
-        SCString(const char ch);
         SCString(const std::string& str);
+        SCString(const char ch);
+        SCString(const unsigned char byte);
+        SCString(const long lNumber);
+        SCString(const unsigned long ulNumber);
+        SCString(const INT64 llNumber);
+        SCString(const float fNumber);
+        SCString(const double dNumber);
         SCString(const int nNumber);
         SCString(const unsigned int uNumber);
         SCString(const SCEncodingChar& encodingChar);

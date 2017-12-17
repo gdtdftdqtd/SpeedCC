@@ -18,6 +18,25 @@ namespace SpeedCC
         static inline SCString purifyString(int) {return "";}
         static inline SCString purifyString(const SCString& str) {return str;}
         
+        static inline SCString purifyLabelString(...) {return "";}
+        static inline SCString purifyLabelString(SCObject::Ptr binderPtr) {return "";}
+        static inline SCString purifyLabelString(void*) {return "";}
+        static inline SCString purifyLabelString(const SCString& str) {return str;}
+        static inline SCString purifyLabelString(long n) {return SCString(n);}
+        static inline SCString purifyLabelString(int n) {return SCString(n);}
+        static inline SCString purifyLabelString(float n) {return SCString(n);}
+        static inline SCString purifyLabelString(double n) {return SCString(n);}
+        
+        static inline void bindLabel(...) {}
+        static inline void bindLabel(cocos2d::Label* pLabel,...) {}
+        static inline void bindLabel(cocos2d::Label* pLabel,SCBinderLabel::Ptr binderPtr)
+        {
+            if(binderPtr!=NULL && pLabel!=NULL)
+            {
+                binderPtr->setLabel(pLabel);
+            }
+        }
+        
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_CallFunc fun,cocos2d::Ref* pSender)
         {
             auto bvr = SCBehaviorCallFunc::create([pCall,fun]() -> bool
@@ -142,48 +161,54 @@ SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNod
 // insert ttf label button
 #define SC_INSERT_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 do{\
-    SCString strSCTemText = (_string_);\
+    SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
+    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
 }while(0);
 
 // container ttf label button
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 {\
-    SCString strSCTemText = (_string_);\
+    SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
+    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
 // insert system label button
 #define SC_INSERT_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 do{\
-    SCString strSCTemText = (_string_);\
+    SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),SCUISetup::purifyString((_font_)).c_str(),(_size_));\
+    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
 }while(0);
 
 // container system label button
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 {\
-    SCString strSCTemText = (_string_);\
+    SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),(_font_),(_size_));\
+    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
 // insert bmfont label button
 #define SC_INSERT_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_fun_) \
 do{\
-    SCString strSCTemText = (_string_);\
+    SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
+    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
 }while(0);
 
 // container bmfont label button
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 {\
-    SCString strSCTemText = (_string_);\
+    SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
+    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
@@ -339,7 +364,7 @@ do{\
 // label
 // _type_ (1:system; 2:ttf; 3:bmfont)
 #define ___SC_INSIDE_ADD_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_type_) \
-    SpeedCC::SCString strSCTemText = (_string_);\
+    SpeedCC::SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     cocos2d::Label* pSCTemLabel;\
     if((_type_)==1){\
         pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),SCUISetup::purifyString((_font_)).c_str(),(_size_));\
@@ -348,6 +373,7 @@ do{\
     }else if((_type_)==3){\
         pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
     }\
+    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
     ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemLabel,(_x_),(_y_));\
     SCUISetup::assignNode(pSCTemLabel,(_node_));\
     SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLabel)>::type>(pSCTemLabel,SCUISetup::purifyString((_property_)));\

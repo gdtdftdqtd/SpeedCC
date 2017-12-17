@@ -22,7 +22,8 @@ namespace SpeedCC
 #define SC_DEFINE_NUMBER_CONSTRUCTOR(_type_) \
     SCNumberT(const _type_ num):\
     _number(0),\
-    _nIDCounter(0) {\
+    _nIDCounter(0),\
+    _funGetString(NULL){\
         this->_number = (T)(num);\
     }
     
@@ -110,14 +111,17 @@ namespace SpeedCC
     class SCNumberT
     {
     public:
+        typedef T  NumberType;
         SCNumberT():
         _number(0),
-        _nIDCounter(0)
+        _nIDCounter(0),
+        _funGetString(NULL)
         {}
         
         SCNumberT(const SCNumberT& num):
         _number(num._number),
-        _nIDCounter(0)
+        _nIDCounter(0),
+        _funGetString(NULL)
         {
         }
         
@@ -179,10 +183,7 @@ namespace SpeedCC
             
             if(bDiff)
             {
-                if(!this->firePreUpdateFun(num,oldNum))
-                {
-                    return *this;
-                }
+                this->firePreUpdateFun(num,oldNum);
             }
             
             _number = (T)num._number;
@@ -205,10 +206,7 @@ namespace SpeedCC
             
             if(bDiff)
             {
-                if(!this->firePreUpdateFun(num,oldNum))
-                {
-                    return *this;
-                }
+                this->firePreUpdateFun(num,oldNum);
             }
             
             _number = num;
@@ -222,8 +220,13 @@ namespace SpeedCC
         }
         
         // prefix ++ (++a)
-        SCNumberT& operator++(){
+        SCNumberT& operator++()
+        {
+            const T oldNum = _number;
+            const T num = _number + 1;
+            this->firePreUpdateFun(num,oldNum);
             _number += 1;
+            this->firePostUpdateFun(num,oldNum);
             return *this;
         }
         
@@ -235,8 +238,13 @@ namespace SpeedCC
         }
         
         // prefix -- (--a)
-        SCNumberT& operator--(){
+        SCNumberT& operator--()
+        {
+            const T oldNum = _number;
+            const T num = _number - 1;
+            this->firePreUpdateFun(num,oldNum);
             _number -= 1;
+            this->firePostUpdateFun(num,oldNum);
             return *this;
         }
         
@@ -247,14 +255,14 @@ namespace SpeedCC
             return result;
         }
         
-        int addPreUpdateFun(const std::function<bool(T newNumber,T oldNumber)>& fun)
+        int addPreUpdateFun(const std::function<void(SCNumberT* pNum,T newNumber,T oldNumber)>& fun)
         {
             ++_nIDCounter;
             _preUpdateFunMap[_nIDCounter] = fun;
             return _nIDCounter;
         }
         
-        int addPosUpdateFun(const std::function<void(T newNumber,T oldNumber)>& fun)
+        int addPosUpdateFun(const std::function<void(SCNumberT* pNum,T newNumber,T oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
@@ -273,26 +281,35 @@ namespace SpeedCC
             }
         }
         
-        bool firePreUpdateFun(const T newNumber,const T oldNumber)
+        void firePreUpdateFun(const T newNumber,const T oldNumber)
         {
-            bool bRet = true;
             for(const auto& it : _preUpdateFunMap)
             {
-                if(!it.second(newNumber,oldNumber))
-                {
-                    bRet = false;
-                }
+                it.second(this,newNumber,oldNumber);
             }
-            
-            return bRet;
         }
         
         void firePostUpdateFun(const T newNumber,const T oldNumber)
         {
             for(const auto& it : _postUpdateFunMap)
             {
-                it.second(newNumber,oldNumber);
+                it.second(this,newNumber,oldNumber);
             }
+        }
+        
+        void setGetStringFun(const std::function<SCString(const T num)>& fun)
+        {
+            _funGetString = fun;
+        }
+        
+        SCString getString()
+        {
+            if(_funGetString)
+            {
+                return _funGetString(_number);
+            }
+            
+            return SCString(_number);
         }
 
         inline T getNumber() const {return _number;}
@@ -300,13 +317,14 @@ namespace SpeedCC
     private:
         T                   _number;
         int                 _nIDCounter;
-        std::map<int,std::function<bool(const T newNumber,const T oldNumber)> >    _preUpdateFunMap;
-        std::map<int,std::function<void(const T newNumber,const T oldNumber)> >    _postUpdateFunMap;
+        std::map<int,std::function<void(SCNumberT* pNum,const T newNumber,const T oldNumber)> >    _preUpdateFunMap;
+        std::map<int,std::function<void(SCNumberT* pNum,const T newNumber,const T oldNumber)> >    _postUpdateFunMap;
+        std::function<SCString(const T num)>      _funGetString;
     };
     
     
     template<>
-    class SCNumberT<bool> 
+    class SCNumberT<bool>
     {
     public:
         SCNumberT():
@@ -340,10 +358,7 @@ namespace SpeedCC
             
             if(bDiff)
             {
-                if(!this->firePreUpdateFun(num,oldNum))
-                {
-                    return *this;
-                }
+                this->firePreUpdateFun(num,oldNum);
             }
             
             _number = num;
@@ -357,7 +372,7 @@ namespace SpeedCC
         }
         
         
-        int addPreUpdateFun(const std::function<bool(bool newNumber,bool oldNumber)>& fun)
+        int addPreUpdateFun(const std::function<void(bool newNumber,bool oldNumber)>& fun)
         {
             ++_nIDCounter;
             _preUpdateFunMap[_nIDCounter] = fun;
@@ -383,18 +398,12 @@ namespace SpeedCC
             }
         }
         
-        bool firePreUpdateFun(const bool newNumber,const bool oldNumber)
+        void firePreUpdateFun(const bool newNumber,const bool oldNumber)
         {
-            bool bRet = true;
             for(const auto& it : _preUpdateFunMap)
             {
-                if(!it.second(newNumber,oldNumber))
-                {
-                    bRet = false;
-                }
+                it.second(newNumber,oldNumber);
             }
-            
-            return bRet;
         }
         
         void firePostUpdateFun(const bool newNumber,const bool oldNumber)
@@ -411,7 +420,7 @@ namespace SpeedCC
     private:
         bool                   _number;
         int                 _nIDCounter;
-        std::map<int,std::function<bool(const bool newNumber,const bool oldNumber)> >    _preUpdateFunMap;
+        std::map<int,std::function<void(const bool newNumber,const bool oldNumber)> >    _preUpdateFunMap;
         std::map<int,std::function<void(const bool newNumber,const bool oldNumber)> >    _postUpdateFunMap;
     };
     
