@@ -10,6 +10,14 @@
 
 namespace SpeedCC
 {
+    
+///------------- SCBinder
+    void SCBinder::setActive(const bool bActive)
+    {
+        _bActive = bActive;
+        this->onActiveChanged(_bActive);
+    }
+    
 ///------------- SCBinderLabel
     SCBinderLabel::Ptr SCBinderLabel::create()
     {
@@ -38,6 +46,17 @@ namespace SpeedCC
     void SCBinderLabel::setLabel(cocos2d::Label* pLabel)
     {
         _pLabel = pLabel;
-        _pLabel->setString(_strLast.c_str());
+        if(_bActive)
+        {
+            _pLabel->setString(_strLast.c_str());
+        }
+    }
+    
+    void SCBinderLabel::onActiveChanged(const bool bNewActive)
+    {
+        if(bNewActive && _pLabel!=NULL)
+        {
+            _pLabel->setString(_strLast.c_str());
+        }
     }
 }

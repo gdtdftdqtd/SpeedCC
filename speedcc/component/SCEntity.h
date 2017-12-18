@@ -13,7 +13,7 @@ namespace SpeedCC
     class SCEntity : public SCObject
     {   
     protected:
-        SC_AVOID_CLASS_COPY(SCEntity);
+        SC_AVOID_CLASS_COPY(SCEntity)
         
         SCEntity():
         _bEnable(true)
@@ -25,7 +25,7 @@ namespace SpeedCC
         {}
         
     public:
-        SC_DEFINE_CLASS_PTR(SCEntity);
+        SC_DEFINE_CLASS_PTR(SCEntity)
         
         template<typename T>
         bool addComponent(T ptrCmp)

@@ -10,6 +10,7 @@
 #define SPEEDCC_VERSION 0x00000100
 
 #include "base/SCMacroDef.h"
+#include "base/SCObject.h"
 #include "base/SCString.h"
 #include "base/SCBaseCommon.h"
 #include "base/SCDataBlock.h"
@@ -20,8 +21,10 @@
 #include "base/SCVersion.h"
 #include "base/SCFileUtils.h"
 #include "base/SCSystem.h"
-#include "base/SCNumberT.h"
+#include "base/SCWatchNumberT.h"
 
+
+#include "cocos/SCRefHolder.h"
 #include "cocos/SCSceneNavigator.h"
 #include "cocos/SCSceneControllerT.h"
 #include "cocos/SCNodeProperty.h"

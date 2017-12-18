@@ -1,13 +1,13 @@
 //
-//  SCNumberT.hpp
+//  SCWatchNumberT.hpp
 //  libspeedcc
 //
 //  Created by Kevin on 13/12/2017.
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCNUMBERT_H__
-#define __SPEEDCC__SCNUMBERT_H__
+#ifndef __SPEEDCC__SCWatchNumberT_H__
+#define __SPEEDCC__SCWatchNumberT_H__
 
 #include "SCMacroDef.h"
 
@@ -20,7 +20,7 @@ namespace SpeedCC
     }
     
 #define SC_DEFINE_NUMBER_CONSTRUCTOR(_type_) \
-    SCNumberT(const _type_ num):\
+    SCWatchNumberT(const _type_ num):\
     _number(0),\
     _nIDCounter(0),\
     _funGetString(NULL){\
@@ -30,61 +30,61 @@ namespace SpeedCC
     
 #define SC_DEFINE_NUMBER_GLOBAL1(_opr_,_ret_type_) \
     template<typename T> \
-    _ret_type_ operator _opr_ (const SCNumberT<T>& num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const SCWatchNumberT<T>& num1,const SCWatchNumberT<T>& num2) {\
         return num1.getNumber() _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const int num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const int num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const unsigned int num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const unsigned int num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const char num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const char num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const unsigned char num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const unsigned char num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const short num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const short num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const unsigned short num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const unsigned short num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const long num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const long num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const unsigned long num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const unsigned long num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const float num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const float num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const double num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const double num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber()();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const INT64 num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const INT64 num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }\
     template<typename T> \
-    _ret_type_ operator _opr_ (const bool num1,const SCNumberT<T>& num2) {\
+    _ret_type_ operator _opr_ (const bool num1,const SCWatchNumberT<T>& num2) {\
         return num1 _opr_ num2.getNumber();\
     }
  
 #define SC_DEFINE_NUMBER_GLOBAL2(_opr1_,_opr2_) \
     template<typename T2>\
-    T2 operator _opr1_ (T2& num1,const SCNumberT<T2>& num) {\
+    T2 operator _opr1_ (T2& num1,const SCWatchNumberT<T2>& num) {\
         T2 ret = num1 _opr2_ num.getNumber();\
         num1 = ret;\
         return ret;\
@@ -92,14 +92,11 @@ namespace SpeedCC
     
 #define SC_DEFINE_NUMBER_OPERATOR2(_opr1_,_opr2_) \
     template<typename T2>\
-    SCNumberT& operator _opr1_ (const T2 num) {\
+    SCWatchNumberT& operator _opr1_ (const T2 num) {\
         const T oldNum = _number;\
         const T2 ret = _number _opr2_ num;\
         const bool bSame = (_number == ret);\
         if(bSame){\
-            return *this;\
-        }\
-        if(!this->firePreUpdateFun(num,oldNum)){\
             return *this;\
         }\
         *this = ret;\
@@ -108,21 +105,38 @@ namespace SpeedCC
     }
     
     template<typename T,typename = typename std::enable_if<std::is_arithmetic<T>::value,T>::type>
-    class SCNumberT
+    class SCWatchNumberT : public SCObject
     {
     public:
         typedef T  NumberType;
-        SCNumberT():
-        _number(0),
-        _nIDCounter(0),
-        _funGetString(NULL)
-        {}
         
-        SCNumberT(const SCNumberT& num):
+        SC_DEFINE_CLASS_PTR(SCWatchNumberT<T>)
+        
+        SCWatchNumberT(const SCWatchNumberT& num):
         _number(num._number),
         _nIDCounter(0),
         _funGetString(NULL)
         {
+        }
+        
+        static Ptr create()
+        {
+            Ptr ret;
+            ret.createInstanceWithCon([](void* pData)
+                                      {
+                                          new(pData)SCWatchNumberT();
+                                      });
+            return ret;
+        }
+        
+        static Ptr create(const T num)
+        {
+            Ptr ret;
+            ret.createInstanceWithCon([num](void* pData)
+                                      {
+                                          new(pData)SCWatchNumberT(num);
+                                      });
+            return ret;
         }
         
         SC_DEFINE_NUMBER_CONSTRUCTOR(int)
@@ -174,126 +188,79 @@ namespace SpeedCC
         SC_DEFINE_NUMBER_OPERATOR2(>>=,>>)
         
         template<typename T2>
-        SCNumberT& operator=(const SCNumberT<T2>& num)
+        SCWatchNumberT& operator=(const SCWatchNumberT<T2>& num)
         {
             const T oldNum = _number;
             bool bDiff = (oldNum!=(T)num._number);
             
             if(!bDiff) {return *this;}
             
-            if(bDiff)
-            {
-                this->firePreUpdateFun(num,oldNum);
-            }
-            
             _number = (T)num._number;
-            
-            if(bDiff)
-            {
-                this->firePostUpdateFun(num,oldNum);
-            }
+            this->firePostUpdateFun(num,oldNum);
             
             return *this;
         }
         
         template<typename T2>
-        SCNumberT& operator=(const T2 num)
+        SCWatchNumberT& operator=(const T2 num)
         {
             const T oldNum = _number;
             bool bDiff = (oldNum!=num);
             
             if(!bDiff) {return *this;}
             
-            if(bDiff)
-            {
-                this->firePreUpdateFun(num,oldNum);
-            }
-            
             _number = num;
-            
-            if(bDiff)
-            {
-                this->firePostUpdateFun(num,oldNum);
-            }
+            this->firePostUpdateFun(num,oldNum);
             
             return *this;
         }
         
         // prefix ++ (++a)
-        SCNumberT& operator++()
+        SCWatchNumberT& operator++()
         {
             const T oldNum = _number;
             const T num = _number + 1;
-            this->firePreUpdateFun(num,oldNum);
             _number += 1;
             this->firePostUpdateFun(num,oldNum);
             return *this;
         }
         
-        SCNumberT operator++(T)  // postfix ++ (a++)
+        SCWatchNumberT operator++(T)  // postfix ++ (a++)
         {
-            SCNumberT result(*this);
+            SCWatchNumberT result(*this);
             ++(*this);
             return result;
         }
         
         // prefix -- (--a)
-        SCNumberT& operator--()
+        SCWatchNumberT& operator--()
         {
             const T oldNum = _number;
             const T num = _number - 1;
-            this->firePreUpdateFun(num,oldNum);
             _number -= 1;
             this->firePostUpdateFun(num,oldNum);
             return *this;
         }
         
-        SCNumberT operator--(T)  // postfix -- (a--)
+        SCWatchNumberT operator--(T)  // postfix -- (a--)
         {
-            SCNumberT result(*this);
+            SCWatchNumberT result(*this);
             --(*this);
             return result;
         }
         
-        int addPreUpdateFun(const std::function<void(SCNumberT* pNum,T newNumber,T oldNumber)>& fun)
-        {
-            ++_nIDCounter;
-            _preUpdateFunMap[_nIDCounter] = fun;
-            return _nIDCounter;
-        }
-        
-        int addPosUpdateFun(const std::function<void(SCNumberT* pNum,T newNumber,T oldNumber)>& fun)
+        int addPosUpdateFun(const std::function<void(SCWatchNumberT* pNum,T newNumber,T oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
             return _nIDCounter;
         }
         
-        void removeUpdateFun(const int nID,bool bPost)
+        void removeUpdateFun(const int nID)
         {
-            if(bPost)
+            if(_postUpdateFunMap.find(nID)!=_postUpdateFunMap.end())
             {
                 _postUpdateFunMap.erase(nID);
-            }
-            else
-            {
-                _preUpdateFunMap.erase(nID);
-            }
-        }
-        
-        void firePreUpdateFun(const T newNumber,const T oldNumber)
-        {
-            for(const auto& it : _preUpdateFunMap)
-            {
-                it.second(this,newNumber,oldNumber);
-            }
-        }
-        
-        void firePostUpdateFun(const T newNumber,const T oldNumber)
-        {
-            for(const auto& it : _postUpdateFunMap)
-            {
-                it.second(this,newNumber,oldNumber);
             }
         }
         
@@ -314,123 +281,134 @@ namespace SpeedCC
 
         inline T getNumber() const {return _number;}
         
+    protected:
+        SCWatchNumberT():
+        _number(0),
+        _nIDCounter(0),
+        _funGetString(NULL)
+        {}
+        
+        void firePostUpdateFun(const T newNumber,const T oldNumber)
+        {
+            for(const auto& it : _postUpdateFunMap)
+            {
+                it.second(this->makeObjPtr<SCWatchNumberT>(),newNumber,oldNumber);
+            }
+        }
+        
     private:
         T                   _number;
         int                 _nIDCounter;
-        std::map<int,std::function<void(SCNumberT* pNum,const T newNumber,const T oldNumber)> >    _preUpdateFunMap;
-        std::map<int,std::function<void(SCNumberT* pNum,const T newNumber,const T oldNumber)> >    _postUpdateFunMap;
+        std::map<int,std::function<void(Ptr numPtr,
+                                        const T newNumber,
+                                        const T oldNumber)> >    _postUpdateFunMap;
         std::function<SCString(const T num)>      _funGetString;
     };
     
     
     template<>
-    class SCNumberT<bool>
+    class SCWatchNumberT<bool> : public SCObject
     {
     public:
-        SCNumberT():
-        _number(false),
-        _nIDCounter(0)
-        {
-        }
+        SC_DEFINE_CLASS_PTR(SCWatchNumberT<bool>)
         
-        SCNumberT(const bool num):
-        _number(num),
-        _nIDCounter(0)
-        {
-        }
-        
-        SCNumberT(const SCNumberT& num):
+        SCWatchNumberT(const SCWatchNumberT& num):
         _number(num._number),
         _nIDCounter(0)
         {
+        }
+        
+        static Ptr create()
+        {
+            Ptr ret;
+            ret.createInstanceWithCon([](void* pData)
+                                      {
+                                          new(pData)SCWatchNumberT();
+                                      });
+            return ret;
+        }
+        
+        static Ptr create(const bool num)
+        {
+            Ptr ret;
+            ret.createInstanceWithCon([num](void* pData)
+                                      {
+                                          new(pData)SCWatchNumberT(num);
+                                      });
+            return ret;
         }
         
         inline operator bool() const {return _number;}
         inline bool operator==(const bool num) { return _number==num; }
         inline bool operator!=(const bool num) { return _number!=num; }
         
-        SCNumberT& operator=(const bool num)
+        SCWatchNumberT& operator=(const bool num)
         {
             const bool oldNum = _number;
             bool bDiff = (oldNum!=num);
             
             if(!bDiff) {return *this;}
             
-            if(bDiff)
-            {
-                this->firePreUpdateFun(num,oldNum);
-            }
-            
             _number = num;
-
-            if(bDiff)
-            {
-                this->firePostUpdateFun(num,oldNum);
-            }
+            this->firePostUpdateFun(num,oldNum);
             
             return *this;
         }
         
-        
-        int addPreUpdateFun(const std::function<void(bool newNumber,bool oldNumber)>& fun)
-        {
-            ++_nIDCounter;
-            _preUpdateFunMap[_nIDCounter] = fun;
-            return _nIDCounter;
-        }
-        
-        int addPosUpdateFun(const std::function<void(bool newNumber,bool oldNumber)>& fun)
+        int addPosUpdateFun(const std::function<void(Ptr numPtr,bool newNumber,bool oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
             return _nIDCounter;
         }
         
-        void removeUpdateFun(const int nID,bool bPost)
+        void removeUpdateFun(const int nID)
         {
-            if(bPost)
+            if(_postUpdateFunMap.find(nID)!=_postUpdateFunMap.end())
             {
                 _postUpdateFunMap.erase(nID);
-            }
-            else
-            {
-                _preUpdateFunMap.erase(nID);
-            }
-        }
-        
-        void firePreUpdateFun(const bool newNumber,const bool oldNumber)
-        {
-            for(const auto& it : _preUpdateFunMap)
-            {
-                it.second(newNumber,oldNumber);
-            }
-        }
-        
-        void firePostUpdateFun(const bool newNumber,const bool oldNumber)
-        {
-            for(const auto& it : _postUpdateFunMap)
-            {
-                it.second(newNumber,oldNumber);
             }
         }
 
         
         inline bool getNumber() const {return _number;}
         
+    protected:
+        SCWatchNumberT():
+        _number(false),
+        _nIDCounter(0)
+        {
+        }
+        
+        SCWatchNumberT(const bool num):
+        _number(num),
+        _nIDCounter(0)
+        {
+        }
+        
+        void firePostUpdateFun(const bool newNumber,const bool oldNumber)
+        {
+            for(const auto& it : _postUpdateFunMap)
+            {
+                it.second(this->makeObjPtr<SCWatchNumberT<bool> >(), newNumber,oldNumber);
+            }
+        }
+        
     private:
         bool                   _number;
         int                 _nIDCounter;
-        std::map<int,std::function<void(const bool newNumber,const bool oldNumber)> >    _preUpdateFunMap;
-        std::map<int,std::function<void(const bool newNumber,const bool oldNumber)> >    _postUpdateFunMap;
+        std::map<int,std::function<void(Ptr numPtr,
+                                        const bool newNumber,
+                                        const bool oldNumber)> >    _postUpdateFunMap;
     };
     
-    SC_DEFINE_NUMBER_GLOBAL1(+,SCNumberT<T>)
-    SC_DEFINE_NUMBER_GLOBAL1(-,SCNumberT<T>)
-    SC_DEFINE_NUMBER_GLOBAL1(*,SCNumberT<T>)
-    SC_DEFINE_NUMBER_GLOBAL1(/,SCNumberT<T>)
-    SC_DEFINE_NUMBER_GLOBAL1(%,SCNumberT<T>)
-    SC_DEFINE_NUMBER_GLOBAL1(^,SCNumberT<T>)
-    SC_DEFINE_NUMBER_GLOBAL1(&,SCNumberT<T>)
+    SC_DEFINE_NUMBER_GLOBAL1(+,SCWatchNumberT<T>)
+    SC_DEFINE_NUMBER_GLOBAL1(-,SCWatchNumberT<T>)
+    SC_DEFINE_NUMBER_GLOBAL1(*,SCWatchNumberT<T>)
+    SC_DEFINE_NUMBER_GLOBAL1(/,SCWatchNumberT<T>)
+    SC_DEFINE_NUMBER_GLOBAL1(%,SCWatchNumberT<T>)
+    SC_DEFINE_NUMBER_GLOBAL1(^,SCWatchNumberT<T>)
+    SC_DEFINE_NUMBER_GLOBAL1(&,SCWatchNumberT<T>)
     
     SC_DEFINE_NUMBER_GLOBAL1(>,bool)
     SC_DEFINE_NUMBER_GLOBAL1(>=,bool)
@@ -451,18 +429,18 @@ namespace SpeedCC
     SC_DEFINE_NUMBER_GLOBAL2(>>=,>>)
     
 
-    typedef SCNumberT<short>                        SCShort;
-    typedef SCNumberT<unsigned short>               SCUnsignedShort;
-    typedef SCNumberT<char>                         SCChar;
-    typedef SCNumberT<unsigned char>                SCByte;
-    typedef SCNumberT<int>                          SCInt;
-    typedef SCNumberT<unsigned int>                 SCUnsignedInt;
-    typedef SCNumberT<long>                         SCLong;
-    typedef SCNumberT<unsigned long>                SCUnsignedLong;
-    typedef SCNumberT<INT64>                        SCInt64;
-    typedef SCNumberT<float>                        SCFloat;
-    typedef SCNumberT<double>                       SCDouble;
-    typedef SCNumberT<bool>                         SCBool;
+    typedef SCWatchNumberT<short>                        SCWatchShort;
+    typedef SCWatchNumberT<unsigned short>               SCWatchUnsignedShort;
+    typedef SCWatchNumberT<char>                         SCWatchChar;
+    typedef SCWatchNumberT<unsigned char>                SCWatchByte;
+    typedef SCWatchNumberT<int>                          SCWatchInt;
+    typedef SCWatchNumberT<unsigned int>                 SCWatchUnsignedInt;
+    typedef SCWatchNumberT<long>                         SCWatchLong;
+    typedef SCWatchNumberT<unsigned long>                SCWatchUnsignedLong;
+    typedef SCWatchNumberT<INT64>                        SCWatchInt64;
+    typedef SCWatchNumberT<float>                        SCWatchFloat;
+    typedef SCWatchNumberT<double>                       SCWatchDouble;
+    typedef SCWatchNumberT<bool>                         SCWatchBool;
 }
 
-#endif // __SPEEDCC__SCNUMBERT_H__
+#endif // __SPEEDCC__SCWatchNumberT_H__

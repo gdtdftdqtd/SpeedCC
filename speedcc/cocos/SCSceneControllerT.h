@@ -6,15 +6,16 @@
 #include "cocos2d.h"
 
 #include "SCLayerRoot.h"
-
-#include "../component/SCMessageDispatch.h"
+#include "SCRefHolder.h"
 
 #include "../base/SCBaseCommon.h"
 #include "../base/SCBaseDef.h"
 #include "../base/SCObjPtrT.h"
 #include "../base/SCObject.h"
 
+#include "../component/SCMessageDispatch.h"
 #include "../component/SCBehavior.h"
+
 
 namespace SpeedCC
 {
@@ -24,7 +25,7 @@ namespace SpeedCC
         template<typename T> friend class SCSceneControllerT;
         
     public:
-        SC_DEFINE_CLASS_PTR(SCSceneController);
+        SC_DEFINE_CLASS_PTR(SCSceneController)
         
         virtual bool isNoTouch() const = 0;
         virtual void setNoTouch(const bool bNoTouch) = 0;
@@ -34,15 +35,11 @@ namespace SpeedCC
         virtual SCScene* getScene() = 0;
         
     protected:
-//        virtual void setSceneRootLayer(cocos2d::Layer* pLayer) = 0;
-//        virtual void setPreviousModalLayer(SCSceneController::Ptr pLayer) = 0;
-//        virtual void onSCModalGotFocus()=0;
         virtual void setScene(SCScene* pScene) = 0;
         virtual void pushModalController(SCSceneController::Ptr controllerPtr) = 0;
         
         virtual SCSceneController::Ptr popModalFromParent() = 0;
         virtual void setModalParentController(SCSceneController::WeakPtr pControllerPtr) = 0;
-//        virtual SCSceneController::WeakPtr getModalParentController() = 0;
     };
     
     typedef SCSceneController::Ptr (*FUN_SCSceneCreateFunctor_t)(const SCDictionary& dic);
@@ -89,6 +86,7 @@ namespace SpeedCC
         
         void onSCMenuItemPressed(cocos2d::Ref* pSender);
         void ownLifecycle(SCObject::Ptr ptr) { _ownLifecycleList.push_back(ptr);}
+        void ownLifecycle(cocos2d::Ref* pObject);
         
     protected:
         virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
@@ -119,6 +117,14 @@ namespace SpeedCC
     };
     
     ////-------------- member methods
+    template<typename TargetCtlrT>
+    void SCSceneControllerT<TargetCtlrT>::ownLifecycle(cocos2d::Ref* pObject)
+    {
+        SC_RETURN_IF_V(pObject==NULL);
+        
+        auto ptr = SCRefHolder::create(pObject);
+        this->ownLifecycle(ptr);
+    }
     
     template<typename TargetCtlrT>
     void SCSceneControllerT<TargetCtlrT>::pushModalController(SCSceneController::Ptr controllerPtr)

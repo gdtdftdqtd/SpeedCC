@@ -12,7 +12,7 @@ namespace SpeedCC
         template<typename T1,bool T2> friend class SCObjPtrT;
         
     public:
-        SC_DEFINE_CLASS_PTR(SCObject);
+        SC_DEFINE_CLASS_PTR(SCObject)
         SCObject();
         virtual ~SCObject();
         

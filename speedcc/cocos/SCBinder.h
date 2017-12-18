@@ -17,13 +17,14 @@
 
 namespace SpeedCC
 {
+    ///------------- SCBinder
     class SCBinder : public SCObject
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBinder);
-        SC_DEFINE_CLASS_PTR(SCBinder);
+        SC_AVOID_CLASS_COPY(SCBinder)
+        SC_DEFINE_CLASS_PTR(SCBinder)
         
-        void setActive(const bool bActive) { _bActive = bActive; }
+        void setActive(const bool bActive);
         inline bool isActive() const {return _bActive;}
         
     protected:
@@ -31,15 +32,19 @@ namespace SpeedCC
         _bActive(true)
         {}
         
-    private:
+        virtual void onActiveChanged(const bool bNewActive) {}
+        
+    protected:
         bool    _bActive;
     };
     
+    
+    ///-------------- SCBinderLabel
     class SCBinderLabel : public SCBinder
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBinderLabel);
-        SC_DEFINE_CLASS_PTR(SCBinderLabel);
+        SC_AVOID_CLASS_COPY(SCBinderLabel)
+        SC_DEFINE_CLASS_PTR(SCBinderLabel)
         
         static Ptr create();
         static Ptr create(cocos2d::Label* pLabel);
@@ -48,18 +53,18 @@ namespace SpeedCC
         void setLabel(cocos2d::Label* pLabel);
         
         template<typename T>
-        void setStringSource(T& num)
+        void setStringSource(T num)
         {
-            num.addPosUpdateFun([this](T* pNum,typename T::NumberType newNum,typename T::NumberType oldNum)
+            num->addPosUpdateFun([this](T* pNum,typename T::NumberType newNum,typename T::NumberType oldNum)
                                 {
-                                    if(_pLabel!=NULL)
+                                    if(_pLabel!=NULL && _bActive)
                                     {
                                         _pLabel->setString(pNum->getString().c_str());
-                                        _strLast = pNum->getString();
                                     }
+                                    _strLast = pNum->getString();
                                 });
             
-            if(_pLabel!=NULL)
+            if(_pLabel!=NULL && _bActive)
             {
                 _pLabel->setString(num.getString().c_str());
             }
@@ -78,9 +83,31 @@ namespace SpeedCC
         _pLabel(pLabel)
         {}
         
+        virtual void onActiveChanged(const bool bNewActive);
+        
     private:
         cocos2d::Label*     _pLabel;
         SCString            _strLast;
+    };
+    
+    
+    ///-------------- SCBinderSetting
+    class SCBinderSetting : public SCBinder
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBinderSetting)
+        SC_DEFINE_CLASS_PTR(SCBinderSetting)
+        
+        static Ptr create(const SCString& strSettingKey);
+    protected:
+        SCBinderSetting()
+        {}
+        
+        SCBinderSetting(const SCString& strSettingKey)
+        {}
+        
+    private:
+        SCString        _strSettingKey;
     };
 }
 

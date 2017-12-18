@@ -19,8 +19,8 @@ namespace SpeedCC
         {}
         
     public:
-        SC_AVOID_CLASS_COPY(SCBehavior);
-        SC_DEFINE_CLASS_PTR(SCBehavior);
+        SC_AVOID_CLASS_COPY(SCBehavior)
+        SC_DEFINE_CLASS_PTR(SCBehavior)
         
         enum EState {RUNNING,PAUSED,STOPPED};
         
@@ -48,8 +48,8 @@ namespace SpeedCC
         {}
         
     public:
-        SC_AVOID_CLASS_COPY(SCBehaviorCallFunc);
-        SC_DEFINE_CLASS_PTR(SCBehaviorCallFunc);
+        SC_AVOID_CLASS_COPY(SCBehaviorCallFunc)
+        SC_DEFINE_CLASS_PTR(SCBehaviorCallFunc)
         
         static Ptr create();
         static Ptr create(const std::function<bool(SCDictionary& par)>& startFunc);
@@ -85,8 +85,8 @@ namespace SpeedCC
         {}
         
     public:
-        SC_AVOID_CLASS_COPY(SCBehaviorGroup);
-        SC_DEFINE_CLASS_PTR(SCBehaviorGroup);
+        SC_AVOID_CLASS_COPY(SCBehaviorGroup)
+        SC_DEFINE_CLASS_PTR(SCBehaviorGroup)
         
         static Ptr create();
         

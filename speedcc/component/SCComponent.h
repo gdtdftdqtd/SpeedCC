@@ -13,7 +13,7 @@ namespace SpeedCC
     class SCComponent : public SCObject
     {   
     protected:
-        SC_AVOID_CLASS_COPY(SCComponent);
+        SC_AVOID_CLASS_COPY(SCComponent)
         
         SCComponent()
         {}
@@ -23,7 +23,7 @@ namespace SpeedCC
         {}
         
     public:
-        SC_DEFINE_CLASS_PTR(SCComponent);
+        SC_DEFINE_CLASS_PTR(SCComponent)
         
         inline SCString getName() const { return _strName; }
         void setName(const SCString& strName);
@@ -36,7 +36,7 @@ namespace SpeedCC
     class SCComponentValue : public SCComponent
     {
     protected:
-        SC_AVOID_CLASS_COPY(SCComponentValue);
+        SC_AVOID_CLASS_COPY(SCComponentValue)
         
         SCComponentValue()
         {}
@@ -51,7 +51,7 @@ namespace SpeedCC
         {}
         
     public:
-        SC_DEFINE_CLASS_PTR(SCComponentValue);
+        SC_DEFINE_CLASS_PTR(SCComponentValue)
         
         static Ptr create();
         static Ptr create(const SCString& strName,const SCValue& value);
