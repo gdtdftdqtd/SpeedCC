@@ -61,7 +61,7 @@ namespace SpeedCC
     SCString operator+(const SCEncodingChar& encodingChar,const SCString& str2);
     SCString operator+(const SCString& str2,const SCEncodingChar& encodingChar);
     
-    class SCString final
+    class SCString 
     {
     private:
         struct SStringDesc
@@ -103,15 +103,15 @@ namespace SpeedCC
         SCString(const unsigned short* pszStr); // utf16 encoding
         SCString(int,const char* pszFormat, ...);
         
-        ~SCString();
+        virtual ~SCString();
         
         inline int getLength() const { return (this->getStringDesc()->nUsedSize);}
-        inline bool isEmpty() const {return (this->getStringDesc()->nUsedSize==0) ;}
+        inline bool isEmpty() const {return (this->getStringDesc()->nUsedSize==0);}
         inline int getRefCount() const {return this->getStringDesc()->nRefs;}
         inline const char* c_str() const { return (const char*)_pchStrData;}
         inline operator const char*() const {return (const char*)_pchStrData;}
         
-        void setEmpty() ;
+        void setEmpty();
         void format(const char* pszFormat, ...);
         void formatV(const char* pszFormat, va_list argList);
         

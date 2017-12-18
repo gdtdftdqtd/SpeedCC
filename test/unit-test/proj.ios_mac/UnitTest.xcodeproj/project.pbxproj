@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0A390A2D1FD96E02002DD5E2 /* TestSCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A390A2C1FD96E02002DD5E2 /* TestSCNodeProperty.cpp */; };
-		0A41B32E1FE16FAB003945EB /* TestSCNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B32D1FE16FAA003945EB /* TestSCNumber.cpp */; };
+		0A41B32E1FE16FAB003945EB /* TestSCWatchNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B32D1FE16FAA003945EB /* TestSCWatchNumber.cpp */; };
+		0A41B3491FE7EADD003945EB /* TestSCWatchString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3481FE7EADD003945EB /* TestSCWatchString.cpp */; };
 		0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc.a */; };
 		0A67CAFD1F814CA000FED9A5 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */; };
 		0A67CAFE1F814CA000FED9A5 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */; };
@@ -108,7 +109,8 @@
 
 /* Begin PBXFileReference section */
 		0A390A2C1FD96E02002DD5E2 /* TestSCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCNodeProperty.cpp; sourceTree = "<group>"; };
-		0A41B32D1FE16FAA003945EB /* TestSCNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCNumber.cpp; sourceTree = "<group>"; };
+		0A41B32D1FE16FAA003945EB /* TestSCWatchNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCWatchNumber.cpp; sourceTree = "<group>"; };
+		0A41B3481FE7EADD003945EB /* TestSCWatchString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCWatchString.cpp; sourceTree = "<group>"; };
 		0A67CAB11F80E75100FED9A5 /* speedcc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = speedcc.xcodeproj; path = ../../../speedcc/platform/ios/speedcc.xcodeproj; sourceTree = "<group>"; };
 		0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-all.cc"; path = "../../gtest/src/gtest-all.cc"; sourceTree = "<group>"; };
 		0A67CB341F88B87200FED9A5 /* TestSCObjPtr.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCObjPtr.cpp; sourceTree = "<group>"; };
@@ -312,7 +314,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0A41B32D1FE16FAA003945EB /* TestSCNumber.cpp */,
+				0A41B3481FE7EADD003945EB /* TestSCWatchString.cpp */,
+				0A41B32D1FE16FAA003945EB /* TestSCWatchNumber.cpp */,
 				0A390A2C1FD96E02002DD5E2 /* TestSCNodeProperty.cpp */,
 				0A67CB871FA5889300FED9A5 /* TestSCDictionary.cpp */,
 				0A67CB5F1F89CE5B00FED9A5 /* TestSCComponent.cpp */,
@@ -521,7 +524,8 @@
 				0A67CB401F8914A200FED9A5 /* TestSCValue.cpp in Sources */,
 				0A67CB421F8914A200FED9A5 /* TestSCString.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
-				0A41B32E1FE16FAB003945EB /* TestSCNumber.cpp in Sources */,
+				0A41B3491FE7EADD003945EB /* TestSCWatchString.cpp in Sources */,
+				0A41B32E1FE16FAB003945EB /* TestSCWatchNumber.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.mm in Sources */,
 				0A67CB3C1F8914A200FED9A5 /* TestSCDataBlock.cpp in Sources */,
 				0A67CB3E1F8914A200FED9A5 /* TestSCDateTime.cpp in Sources */,

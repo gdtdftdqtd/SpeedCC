@@ -22,6 +22,7 @@
 #include "base/SCFileUtils.h"
 #include "base/SCSystem.h"
 #include "base/SCWatchNumberT.h"
+#include "base/SCWatchString.h"
 
 
 #include "cocos/SCRefHolder.h"

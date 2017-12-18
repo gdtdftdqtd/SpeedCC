@@ -6,8 +6,8 @@
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCWatchNumberT_H__
-#define __SPEEDCC__SCWatchNumberT_H__
+#ifndef __SPEEDCC__SCWATCHNUMBERT_H__
+#define __SPEEDCC__SCWATCHNUMBERT_H__
 
 #include "SCMacroDef.h"
 
@@ -249,7 +249,7 @@ namespace SpeedCC
             return result;
         }
         
-        int addPosUpdateFun(const std::function<void(SCWatchNumberT* pNum,T newNumber,T oldNumber)>& fun)
+        int addUpdateFun(const std::function<void(Ptr pNum,T newNumber,T oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
@@ -355,7 +355,7 @@ namespace SpeedCC
             return *this;
         }
         
-        int addPosUpdateFun(const std::function<void(Ptr numPtr,bool newNumber,bool oldNumber)>& fun)
+        int addUpdateFun(const std::function<void(Ptr numPtr,bool newNumber,bool oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
@@ -443,4 +443,4 @@ namespace SpeedCC
     typedef SCWatchNumberT<bool>                         SCWatchBool;
 }
 
-#endif // __SPEEDCC__SCWatchNumberT_H__
+#endif // __SPEEDCC__SCWATCHNUMBERT_H__

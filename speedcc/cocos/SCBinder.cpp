@@ -59,4 +59,25 @@ namespace SpeedCC
             _pLabel->setString(_strLast.c_str());
         }
     }
+    
+    void SCBinderLabel::setStringSource(SCWatchString::Ptr watchStr)
+    {
+        watchStr->addUpdateFun([this](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
+                             {
+                                 if(_pLabel!=NULL && _bActive)
+                                 {
+                                     _pLabel->setString(strNew.c_str());
+                                 }
+                                 _strLast = strNew;
+                             });
+        
+        if(_pLabel!=NULL && _bActive)
+        {
+            _pLabel->setString(watchStr->getString().c_str());
+        }
+        else
+        {
+            _strLast = watchStr->getString();
+        }
+    }
 }

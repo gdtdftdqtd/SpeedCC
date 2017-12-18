@@ -7,7 +7,7 @@
 using namespace SpeedCC;
 using namespace cocos2d;
 
-TEST(TestSCNumber, Plus)
+TEST(TestSCWatchNumber, Plus)
 {
     SCWatchInt::Ptr numInt1 = SCWatchInt::create();
     
@@ -66,7 +66,7 @@ TEST(TestSCNumber, Plus)
 }
 
 
-TEST(TestSCNumber, Boolean)
+TEST(TestSCWatchNumber, Boolean)
 {
     
     SCWatchBool::Ptr numBool = SCWatchBool::create();

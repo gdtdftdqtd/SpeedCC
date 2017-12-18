@@ -14,6 +14,7 @@
 #include "../base/SCObject.h"
 #include "../base/SCString.h"
 #include "../base/SCMacroDef.h"
+#include "../base/SCWatchString.h"
 
 namespace SpeedCC
 {
@@ -55,24 +56,26 @@ namespace SpeedCC
         template<typename T>
         void setStringSource(T num)
         {
-            num->addPosUpdateFun([this](T* pNum,typename T::NumberType newNum,typename T::NumberType oldNum)
+            num->addUpdateFun([this](T numPtr,typename T::type newNum,typename T::type oldNum)
                                 {
                                     if(_pLabel!=NULL && _bActive)
                                     {
-                                        _pLabel->setString(pNum->getString().c_str());
+                                        _pLabel->setString(numPtr->getString().c_str());
                                     }
-                                    _strLast = pNum->getString();
+                                    _strLast = numPtr->getString();
                                 });
             
             if(_pLabel!=NULL && _bActive)
             {
-                _pLabel->setString(num.getString().c_str());
+                _pLabel->setString(num->getString().c_str());
             }
             else
             {
-                _strLast = num.getString();
+                _strLast = num->getString();
             }
         }
+        
+        void setStringSource(SCWatchString::Ptr watchStr);
         
     protected:
         SCBinderLabel():
