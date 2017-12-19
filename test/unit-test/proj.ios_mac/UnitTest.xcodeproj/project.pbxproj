@@ -7,26 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A390A2D1FD96E02002DD5E2 /* TestSCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A390A2C1FD96E02002DD5E2 /* TestSCNodeProperty.cpp */; };
-		0A41B32E1FE16FAB003945EB /* TestSCWatchNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B32D1FE16FAA003945EB /* TestSCWatchNumber.cpp */; };
-		0A41B3491FE7EADD003945EB /* TestSCWatchString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3481FE7EADD003945EB /* TestSCWatchString.cpp */; };
+		0A41B36F1FE948CE003945EB /* TestSCDataBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3661FE948CB003945EB /* TestSCDataBlock.cpp */; };
+		0A41B3701FE948CE003945EB /* TestSCObjPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3671FE948CC003945EB /* TestSCObjPtr.cpp */; };
+		0A41B3711FE948CE003945EB /* TestSCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3681FE948CC003945EB /* TestSCValue.cpp */; };
+		0A41B3721FE948CE003945EB /* TestSCWatchString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3691FE948CC003945EB /* TestSCWatchString.cpp */; };
+		0A41B3731FE948CE003945EB /* TestSCDateTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36A1FE948CC003945EB /* TestSCDateTime.cpp */; };
+		0A41B3741FE948CE003945EB /* TestSCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36B1FE948CD003945EB /* TestSCDictionary.cpp */; };
+		0A41B3751FE948CE003945EB /* TestSCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36C1FE948CD003945EB /* TestSCNodeProperty.cpp */; };
+		0A41B3761FE948CE003945EB /* TestSCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36D1FE948CD003945EB /* TestSCComponent.cpp */; };
+		0A41B3771FE948CE003945EB /* TestSCWatchNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36E1FE948CD003945EB /* TestSCWatchNumber.cpp */; };
 		0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc.a */; };
 		0A67CAFD1F814CA000FED9A5 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */; };
 		0A67CAFE1F814CA000FED9A5 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */; };
-		0A67CB351F88B87200FED9A5 /* TestSCObjPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB341F88B87200FED9A5 /* TestSCObjPtr.cpp */; };
-		0A67CB361F88B87200FED9A5 /* TestSCObjPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB341F88B87200FED9A5 /* TestSCObjPtr.cpp */; };
-		0A67CB3B1F8914A200FED9A5 /* TestSCDataBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB371F8914A200FED9A5 /* TestSCDataBlock.cpp */; };
-		0A67CB3C1F8914A200FED9A5 /* TestSCDataBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB371F8914A200FED9A5 /* TestSCDataBlock.cpp */; };
-		0A67CB3D1F8914A200FED9A5 /* TestSCDateTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB381F8914A200FED9A5 /* TestSCDateTime.cpp */; };
-		0A67CB3E1F8914A200FED9A5 /* TestSCDateTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB381F8914A200FED9A5 /* TestSCDateTime.cpp */; };
-		0A67CB3F1F8914A200FED9A5 /* TestSCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB391F8914A200FED9A5 /* TestSCValue.cpp */; };
-		0A67CB401F8914A200FED9A5 /* TestSCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB391F8914A200FED9A5 /* TestSCValue.cpp */; };
 		0A67CB411F8914A200FED9A5 /* TestSCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB3A1F8914A200FED9A5 /* TestSCString.cpp */; };
 		0A67CB421F8914A200FED9A5 /* TestSCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB3A1F8914A200FED9A5 /* TestSCString.cpp */; };
-		0A67CB601F89CE5B00FED9A5 /* TestSCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB5F1F89CE5B00FED9A5 /* TestSCComponent.cpp */; };
-		0A67CB611F89CE5B00FED9A5 /* TestSCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB5F1F89CE5B00FED9A5 /* TestSCComponent.cpp */; };
-		0A67CB881FA5889500FED9A5 /* TestSCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB871FA5889300FED9A5 /* TestSCDictionary.cpp */; };
-		0A67CB891FA5889500FED9A5 /* TestSCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB871FA5889300FED9A5 /* TestSCDictionary.cpp */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -108,18 +102,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A390A2C1FD96E02002DD5E2 /* TestSCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCNodeProperty.cpp; sourceTree = "<group>"; };
-		0A41B32D1FE16FAA003945EB /* TestSCWatchNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCWatchNumber.cpp; sourceTree = "<group>"; };
-		0A41B3481FE7EADD003945EB /* TestSCWatchString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCWatchString.cpp; sourceTree = "<group>"; };
+		0A41B3661FE948CB003945EB /* TestSCDataBlock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCDataBlock.cpp; sourceTree = "<group>"; };
+		0A41B3671FE948CC003945EB /* TestSCObjPtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCObjPtr.cpp; sourceTree = "<group>"; };
+		0A41B3681FE948CC003945EB /* TestSCValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCValue.cpp; sourceTree = "<group>"; };
+		0A41B3691FE948CC003945EB /* TestSCWatchString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCWatchString.cpp; sourceTree = "<group>"; };
+		0A41B36A1FE948CC003945EB /* TestSCDateTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCDateTime.cpp; sourceTree = "<group>"; };
+		0A41B36B1FE948CD003945EB /* TestSCDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCDictionary.cpp; sourceTree = "<group>"; };
+		0A41B36C1FE948CD003945EB /* TestSCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCNodeProperty.cpp; sourceTree = "<group>"; };
+		0A41B36D1FE948CD003945EB /* TestSCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCComponent.cpp; sourceTree = "<group>"; };
+		0A41B36E1FE948CD003945EB /* TestSCWatchNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCWatchNumber.cpp; sourceTree = "<group>"; };
 		0A67CAB11F80E75100FED9A5 /* speedcc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = speedcc.xcodeproj; path = ../../../speedcc/platform/ios/speedcc.xcodeproj; sourceTree = "<group>"; };
 		0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-all.cc"; path = "../../gtest/src/gtest-all.cc"; sourceTree = "<group>"; };
-		0A67CB341F88B87200FED9A5 /* TestSCObjPtr.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCObjPtr.cpp; sourceTree = "<group>"; };
-		0A67CB371F8914A200FED9A5 /* TestSCDataBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCDataBlock.cpp; sourceTree = "<group>"; };
-		0A67CB381F8914A200FED9A5 /* TestSCDateTime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCDateTime.cpp; sourceTree = "<group>"; };
-		0A67CB391F8914A200FED9A5 /* TestSCValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCValue.cpp; sourceTree = "<group>"; };
 		0A67CB3A1F8914A200FED9A5 /* TestSCString.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCString.cpp; sourceTree = "<group>"; };
-		0A67CB5F1F89CE5B00FED9A5 /* TestSCComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCComponent.cpp; sourceTree = "<group>"; };
-		0A67CB871FA5889300FED9A5 /* TestSCDictionary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCDictionary.cpp; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* UnitTest-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UnitTest-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -314,16 +308,16 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0A41B3481FE7EADD003945EB /* TestSCWatchString.cpp */,
-				0A41B32D1FE16FAA003945EB /* TestSCWatchNumber.cpp */,
-				0A390A2C1FD96E02002DD5E2 /* TestSCNodeProperty.cpp */,
-				0A67CB871FA5889300FED9A5 /* TestSCDictionary.cpp */,
-				0A67CB5F1F89CE5B00FED9A5 /* TestSCComponent.cpp */,
-				0A67CB371F8914A200FED9A5 /* TestSCDataBlock.cpp */,
-				0A67CB381F8914A200FED9A5 /* TestSCDateTime.cpp */,
+				0A41B36D1FE948CD003945EB /* TestSCComponent.cpp */,
+				0A41B3661FE948CB003945EB /* TestSCDataBlock.cpp */,
+				0A41B36A1FE948CC003945EB /* TestSCDateTime.cpp */,
+				0A41B36B1FE948CD003945EB /* TestSCDictionary.cpp */,
+				0A41B36C1FE948CD003945EB /* TestSCNodeProperty.cpp */,
+				0A41B3671FE948CC003945EB /* TestSCObjPtr.cpp */,
+				0A41B3681FE948CC003945EB /* TestSCValue.cpp */,
+				0A41B36E1FE948CD003945EB /* TestSCWatchNumber.cpp */,
+				0A41B3691FE948CC003945EB /* TestSCWatchString.cpp */,
 				0A67CB3A1F8914A200FED9A5 /* TestSCString.cpp */,
-				0A67CB391F8914A200FED9A5 /* TestSCValue.cpp */,
-				0A67CB341F88B87200FED9A5 /* TestSCObjPtr.cpp */,
 				0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
@@ -514,22 +508,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A390A2D1FD96E02002DD5E2 /* TestSCNodeProperty.cpp in Sources */,
+				0A41B3751FE948CE003945EB /* TestSCNodeProperty.cpp in Sources */,
 				0A67CAFD1F814CA000FED9A5 /* gtest-all.cc in Sources */,
+				0A41B3701FE948CE003945EB /* TestSCObjPtr.cpp in Sources */,
+				0A41B3731FE948CE003945EB /* TestSCDateTime.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				0A67CB361F88B87200FED9A5 /* TestSCObjPtr.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
-				0A67CB601F89CE5B00FED9A5 /* TestSCComponent.cpp in Sources */,
-				0A67CB401F8914A200FED9A5 /* TestSCValue.cpp in Sources */,
+				0A41B3741FE948CE003945EB /* TestSCDictionary.cpp in Sources */,
+				0A41B3711FE948CE003945EB /* TestSCValue.cpp in Sources */,
 				0A67CB421F8914A200FED9A5 /* TestSCString.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
-				0A41B3491FE7EADD003945EB /* TestSCWatchString.cpp in Sources */,
-				0A41B32E1FE16FAB003945EB /* TestSCWatchNumber.cpp in Sources */,
+				0A41B3761FE948CE003945EB /* TestSCComponent.cpp in Sources */,
+				0A41B3771FE948CE003945EB /* TestSCWatchNumber.cpp in Sources */,
+				0A41B3721FE948CE003945EB /* TestSCWatchString.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.mm in Sources */,
-				0A67CB3C1F8914A200FED9A5 /* TestSCDataBlock.cpp in Sources */,
-				0A67CB3E1F8914A200FED9A5 /* TestSCDateTime.cpp in Sources */,
-				0A67CB881FA5889500FED9A5 /* TestSCDictionary.cpp in Sources */,
+				0A41B36F1FE948CE003945EB /* TestSCDataBlock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,16 +532,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A67CAFE1F814CA000FED9A5 /* gtest-all.cc in Sources */,
-				0A67CB611F89CE5B00FED9A5 /* TestSCComponent.cpp in Sources */,
-				0A67CB351F88B87200FED9A5 /* TestSCObjPtr.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				0A67CB891FA5889500FED9A5 /* TestSCDictionary.cpp in Sources */,
-				0A67CB3F1F8914A200FED9A5 /* TestSCValue.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				0A67CB411F8914A200FED9A5 /* TestSCString.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
-				0A67CB3D1F8914A200FED9A5 /* TestSCDateTime.cpp in Sources */,
-				0A67CB3B1F8914A200FED9A5 /* TestSCDataBlock.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

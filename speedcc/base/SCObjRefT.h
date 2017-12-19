@@ -12,7 +12,7 @@ namespace SpeedCC
     template<typename StubT=SCClassEmpty,typename CookieT=SCClassEmpty>
     class SCObjRefT
     {
-    private:
+    protected:
         struct SCookieDesc
         {
             unsigned short              nRefs;	// reference counter
@@ -48,8 +48,8 @@ namespace SpeedCC
         void createInstance();
         void createInstanceWithCon(const std::function<void(void*)>& func);
         
-        template<class ..._Args>
-        void createInstance(_Args&& ...__args);
+//        template<class ..._Args>
+//        void createInstance(_Args&& ...__args);
         
     protected:
         inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pObjData==NULL ? NULL : &this->getCookieDesc()->cookie);}
@@ -140,15 +140,15 @@ namespace SpeedCC
         this->onInstanceCreated(_pObjData);
     }
     
-    template<typename StubT,typename CookieT>
-    template<class ..._Args>
-    void SCObjRefT<StubT,CookieT>::createInstance(_Args&& ...__args)
-    {
-        this->decreaseRef();
-        this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pObjData, _VSTD::forward<_Args>(__args)...);
-        this->onInstanceCreated(_pObjData);
-    }
+//    template<typename StubT,typename CookieT>
+//    template<class ..._Args>
+//    void SCObjRefT<StubT,CookieT>::createInstance(_Args&& ...__args)
+//    {
+//        this->decreaseRef();
+//        this->allocBuf();
+//        SCDataTypeLifeCycle<StubT>::construct(_pObjData, _VSTD::forward<_Args>(__args)...);
+//        this->onInstanceCreated(_pObjData);
+//    }
     
     /*
     template<typename StubT,typename CookieT>

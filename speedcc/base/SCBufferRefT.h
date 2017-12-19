@@ -11,6 +11,10 @@ namespace SpeedCC
     struct SCBufferRefCookie
     {
         int     nUsedSize;
+        
+        SCBufferRefCookie():
+        nUsedSize(0)
+        {}
     };
     
     template<typename CookieT=SCBufferRefCookie>
@@ -35,8 +39,10 @@ namespace SpeedCC
         
         const SCBufferRefT& operator+=(const SCBufferRefT& data);
         
+        void createInstance() = delete;
+        void createInstanceWithCon(const std::function<void(void*)>& func) = delete;
     protected:
-        void reset4Write(const int nSize);
+        void adjustBuf4Write(const int nSize);
     };
     
     template<typename CookieT>
@@ -166,7 +172,7 @@ namespace SpeedCC
     }
     
     template<typename CookieT>
-    void SCBufferRefT<CookieT>::reset4Write(const int nSize)
+    void SCBufferRefT<CookieT>::adjustBuf4Write(const int nSize)
     {
         bool bNew = true;
         
