@@ -12,17 +12,17 @@ namespace SpeedCC
     }
     
     SCDataBlock::SCDataBlock(const SCString& str):
-    SCBufferRefT<SCDataBlock>((void*)str.c_str(),str.getLength()+1)
+    SCBufferRefT<SCBufferRefCookie>((void*)str.c_str(),str.getLength()+1)
     {
     }
     
     SCDataBlock::SCDataBlock(void* pData,const int nDataSize):
-    SCBufferRefT<SCDataBlock>(pData,nDataSize)
+    SCBufferRefT<SCBufferRefCookie>(pData,nDataSize)
     {
     }
     
     SCDataBlock::SCDataBlock(const SCDataBlock& data):
-    SCBufferRefT<SCDataBlock>((SCBufferRefT<SCDataBlock>)data)
+    SCBufferRefT<SCBufferRefCookie>((SCBufferRefT)data)
     {
     }
 }

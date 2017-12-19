@@ -27,7 +27,7 @@ namespace SpeedCC
         {
             if(p!=NULL)
             {
-                this->_pData = p;
+                this->_pObjData = p;
                 this->increaseRef();
             }
         }
@@ -45,13 +45,13 @@ namespace SpeedCC
         
         TargetT& operator*()
         {
-            SCASSERT(this->_pData!=NULL);
+            SCASSERT(this->_pObjData!=NULL);
             return (*this->getStub());
         }
         
         const TargetT& operator*() const
         {
-            SCASSERT(this->_pData!=NULL);
+            SCASSERT(this->_pObjData!=NULL);
             return (*this->getStub());
         }
         
@@ -75,26 +75,26 @@ namespace SpeedCC
             return this->getStub();
         }
         
-        inline bool isNull() const {return (this->_pData==NULL);}
+        inline bool isNull() const {return (this->_pObjData==NULL);}
         
         inline bool operator==(const SCObjPtrT<TargetT,true>& data) const
         {
-            return (this->isNull() && data.isNull()) ? true : ((this->_pData)==(data._pData));
+            return (this->isNull() && data.isNull()) ? true : ((this->_pObjData)==(data._pObjData));
         }
         
         inline bool operator==(const SCObjPtrT<TargetT,false>& data) const
         {
-            return (this->isNull() && data.isNull()) ? true : (data.isNull() ? false : ((TargetT*)(this->_pData)==((TargetT*)&(*data))));
+            return (this->isNull() && data.isNull()) ? true : (data.isNull() ? false : ((TargetT*)(this->_pObjData)==((TargetT*)&(*data))));
         }
         
         template<typename T2>
         typename std::enable_if<std::is_convertible<T2*,TargetT*>::value,SCObjPtrT&>::type
         operator=(const SCObjPtrT<T2,true>& ptr)
         {
-            if(ptr.getStub()!=this->_pData)
+            if(ptr.getStub()!=this->_pObjData)
             {
                 this->decreaseRef();
-                this->_pData = (void*)ptr.getStub();
+                this->_pObjData = (void*)ptr.getStub();
                 this->increaseRef();
             }
             
@@ -104,14 +104,14 @@ namespace SpeedCC
         template<typename T2>
         SCObjPtrT<T2> cast() const
         {
-            SC_RETURN_IF(this->_pData==NULL,NULL);
+            SC_RETURN_IF(this->_pObjData==NULL,NULL);
             
-            TargetT* p1 = (TargetT*)this->_pData;
+            TargetT* p1 = (TargetT*)this->_pObjData;
             SCObjPtrT<T2> retPtr;
             if(dynamic_cast<T2*>(p1))
             {
                 this->increaseRef();
-                retPtr._pData = this->_pData;
+                retPtr._pObjData = this->_pObjData;
             }
             
             return retPtr;
@@ -152,13 +152,13 @@ namespace SpeedCC
         
         TargetT& operator*()
         {
-            SCASSERT(this->_pData!=NULL);
+            SCASSERT(this->_pObjData!=NULL);
             return *((TargetT*)this->getTargetPointer());
         }
         
         const TargetT& operator*() const
         {
-            SCASSERT(this->_pData!=NULL);
+            SCASSERT(this->_pObjData!=NULL);
             return *((TargetT*)this->getTargetPointer());
         }
         
@@ -188,9 +188,9 @@ namespace SpeedCC
         typename std::enable_if<std::is_convertible<T2*,TargetT*>::value,SCObjPtrT&>::type
         operator=(const SCObjPtrT<T2,true>& ptr)
         {
-            if(ptr.getStub()!=this->_pData)
+            if(ptr.getStub()!=this->_pObjData)
             {
-                if(this->_pData==NULL)
+                if(this->_pObjData==NULL)
                 {
                     this->SCObjRefT<void*>::createInstance();
                 }
@@ -204,10 +204,10 @@ namespace SpeedCC
         typename std::enable_if<std::is_convertible<T2*,TargetT*>::value,SCObjPtrT&>::type
         operator=(const SCObjPtrT<T2,false>& ptr)
         {
-            if(ptr._pData!=this->_pData)
+            if(ptr._pObjData!=this->_pObjData)
             {
                 this->decreaseRef();
-                this->_pData = (void*)ptr.getStub();
+                this->_pObjData = (void*)ptr.getStub();
                 this->increaseRef();
             }
             
@@ -218,14 +218,14 @@ namespace SpeedCC
         SCObjPtrT<T2,false> cast() const
         {
             SC_RETURN_IF((SCIsSameTypeT<T2,TargetT>::value),(*this));
-            SC_RETURN_IF(_pData==NULL || (*(this->getStub()))==NULL,NULL);
+            SC_RETURN_IF(_pObjData==NULL || (*(this->getStub()))==NULL,NULL);
             
             TargetT* p1 = (TargetT*)(*(this->getStub()));
             SCObjPtrT<T2,false> retPtr;
             if(dynamic_cast<T2*>(p1))
             {
                 this->increaseRef();
-                retPtr._pData = this->_pData;
+                retPtr._pObjData = this->_pObjData;
             }
             
             return retPtr;
@@ -236,7 +236,7 @@ namespace SpeedCC
     private:
         TargetT* getTargetPointer() const
         {
-            return (this->_pData==NULL) ? NULL : ((TargetT*)(*(this->getStub())));
+            return (this->_pObjData==NULL) ? NULL : ((TargetT*)(*(this->getStub())));
         }
     };
     

@@ -1,15 +1,20 @@
 
 
 
-#ifndef __SC__BUFFERREFT_H__
-#define __SC__BUFFERREFT_H__
+#ifndef __SPEEDCC__SCBUFFERREFT_H__
+#define __SPEEDCC__SCBUFFERREFT_H__
 
 #include "SCObjRefT.h"
 
 namespace SpeedCC
 {
-    template<typename TargetClassT>
-    class SCBufferRefT : public SCObjRefT<SCClassEmpty,int>
+    struct SCBufferRefCookie
+    {
+        int     nUsedSize;
+    };
+    
+    template<typename CookieT=SCBufferRefCookie>
+    class SCBufferRefT : public SCObjRefT<SCClassEmpty,CookieT>
     {
     public:
         SCBufferRefT();
@@ -17,54 +22,54 @@ namespace SpeedCC
         
         virtual ~SCBufferRefT();
         
-        inline int getSize() const { return ( _pData==NULL ? 0 : *this->getCookie());}
-        inline bool isEmpty() const {return ( _pData==NULL || *this->getCookie()==0);}
-        inline const void* getDataPtr() const {return _pData==NULL ? "" : this->_pData;}
+        inline int getSize() const { return ( this->_pObjData==NULL ? 0 : this->getCookie()->nUsedSize);}
+        inline bool isEmpty() const {return ( this->_pObjData==NULL || this->getCookie()->nUsedSize==0);}
+        inline const void* getDataPtr() const {return this->_pObjData==NULL ? "" : this->_pObjData;}
         
         void clear();
         
         int assign(const void* pData,const int nDataSize);
-        int assign(const SCBufferRefT<TargetClassT>& data);
-        int append(const SCBufferRefT<TargetClassT>& data);
+        int assign(const SCBufferRefT& data);
+        int append(const SCBufferRefT& data);
         int append(const void* pData,const int nDataSize);
         
-        const SCBufferRefT<TargetClassT>& operator+=(const SCBufferRefT<TargetClassT>& data);
+        const SCBufferRefT& operator+=(const SCBufferRefT& data);
         
     protected:
         void reset4Write(const int nSize);
     };
     
-    template<typename TargetClassT>
-    SCBufferRefT<TargetClassT>::SCBufferRefT()
+    template<typename CookieT>
+    SCBufferRefT<CookieT>::SCBufferRefT()
     {
     }
     
-    template<typename TargetClassT>
-    SCBufferRefT<TargetClassT>::SCBufferRefT(const void* pData,const int nDataSize)
+    template<typename CookieT>
+    SCBufferRefT<CookieT>::SCBufferRefT(const void* pData,const int nDataSize)
     {
         if(pData!=NULL && nDataSize>0)
         {
             this->allocBuf(nDataSize);
-            ::memcpy(_pData,pData,nDataSize);
-            this->getCookieDesc()->cookie = nDataSize;
+            ::memcpy(this->_pObjData,pData,nDataSize);
+            this->getCookie()->nUsedSize = nDataSize;
         }
     }
     
-    template<typename TargetClassT>
-    SCBufferRefT<TargetClassT>::~SCBufferRefT()
+    template<typename CookieT>
+    SCBufferRefT<CookieT>::~SCBufferRefT()
     {
     }
     
-    template<typename TargetClassT>
-    int SCBufferRefT<TargetClassT>::assign(const SCBufferRefT<TargetClassT>& data)
+    template<typename CookieT>
+    int SCBufferRefT<CookieT>::assign(const SCBufferRefT<CookieT>& data)
     {
-        this->SCObjRefT::assign(data);
+        this->SCObjRefT<SCClassEmpty,CookieT>::assign(data);
         
         return this->getSize();
     }
     
-    template<typename TargetClassT>
-    int SCBufferRefT<TargetClassT>::assign(const void* pData,const int nDataSize)
+    template<typename CookieT>
+    int SCBufferRefT<CookieT>::assign(const void* pData,const int nDataSize)
     {
         if((pData==NULL && nDataSize>0) || nDataSize<0)
         {
@@ -82,14 +87,14 @@ namespace SpeedCC
         
         this->decreaseRef();
         this->allocBuf(nDataSize);
-        ::memcpy(_pData,pData,nDataSize);
-        this->getCookieDesc()->cookie = nDataSize;
+        ::memcpy(this->_pObjData,pData,nDataSize);
+        this->getCookie()->nUsedSize = nDataSize;
         
         return nDataSize;
     }
     
-    template<typename TargetClassT>
-    int SCBufferRefT<TargetClassT>::append(const SCBufferRefT<TargetClassT>& data)
+    template<typename CookieT>
+    int SCBufferRefT<CookieT>::append(const SCBufferRefT<CookieT>& data)
     {
         const int nSize1 = data.getSize();
         const int nSize0 = this->getSize();
@@ -110,23 +115,23 @@ namespace SpeedCC
             if(nTotalSize<512)
             {
                 char buf[512];
-                if(_pData!=NULL && nSize0>0)
+                if(this->_pObjData!=NULL && nSize0>0)
                 {
-                    ::memcpy(buf,_pData,nSize0);
+                    ::memcpy(buf,this->_pObjData,nSize0);
                 }
                 ::memcpy(buf+nSize0,data.getDataPtr(),nSize1);
-                SCBufferRefT<TargetClassT> data2(buf,nTotalSize);
+                SCBufferRefT<CookieT> data2(buf,nTotalSize);
                 *this = data2;
             }
             else
             {
                 char* buf = (char*)::malloc(nTotalSize);
-                if(_pData!=NULL && nSize0>0)
+                if(this->_pObjData!=NULL && nSize0>0)
                 {
-                    ::memcpy(buf,_pData,nSize0);
+                    ::memcpy(buf,this->_pObjData,nSize0);
                 }
                 ::memcpy(buf+nSize0,data.getDataPtr(),nSize1);
-                SCBufferRefT<TargetClassT> data2(buf,nTotalSize);
+                SCBufferRefT<CookieT> data2(buf,nTotalSize);
                 *this = data2;
                 ::free(buf);
             }
@@ -135,43 +140,43 @@ namespace SpeedCC
         return this->getSize();
     }
     
-    template<typename TargetClassT>
-    int SCBufferRefT<TargetClassT>::append(const void* pData,const int nDataSize)
+    template<typename CookieT>
+    int SCBufferRefT<CookieT>::append(const void* pData,const int nDataSize)
     {
         SC_RETURN_IF(nDataSize==0, this->getSize());
         
-        SCBufferRefT<TargetClassT> data(pData,nDataSize);
+        SCBufferRefT<CookieT> data(pData,nDataSize);
         
         return this->append(data);
     }
     
     
-    template<typename TargetClassT>
-    const SCBufferRefT<TargetClassT>& SCBufferRefT<TargetClassT>::operator+=(const SCBufferRefT<TargetClassT>& data)
+    template<typename CookieT>
+    const SCBufferRefT<CookieT>& SCBufferRefT<CookieT>::operator+=(const SCBufferRefT<CookieT>& data)
     {
         this->append(data);
         return *this;
     }
     
-    template<typename TargetClassT>
-    void SCBufferRefT<TargetClassT>::clear()
+    template<typename CookieT>
+    void SCBufferRefT<CookieT>::clear()
     {
         this->decreaseRef();
-        _pData = NULL;
+        this->_pObjData = NULL;
     }
     
-    template<typename TargetClassT>
-    void SCBufferRefT<TargetClassT>::reset4Write(const int nSize)
+    template<typename CookieT>
+    void SCBufferRefT<CookieT>::reset4Write(const int nSize)
     {
         bool bNew = true;
         
-        if(_pData!=NULL)
+        if(this->_pObjData!=NULL)
         {
             auto pDesc = this->getCookieDesc();
             if(1==pDesc->nRefs && (pDesc->getBufferSize() > nSize+(int)sizeof(char)))
             {
-                ::memset(_pData,0,pDesc->getBufferSize());
-                pDesc->cookie = 0;
+                ::memset(this->_pObjData,0,pDesc->getBufferSize());
+                pDesc->cookie.nUsedSize = 0;
                 bNew = false;
             }
         }
@@ -185,4 +190,4 @@ namespace SpeedCC
 }
 
 
-#endif //__SC__BUFFERREFT_H__
+#endif //__SPEEDCC__SCBUFFERREFT_H__

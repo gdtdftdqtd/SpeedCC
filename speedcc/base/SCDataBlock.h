@@ -3,19 +3,18 @@
 #ifndef __SPEEDCC__SCDATABLOCK_H__
 #define __SPEEDCC__SCDATABLOCK_H__
 
-#include "SCString.h"
 #include "SCBufferRefT.h"
+#include "SCString.h"
 
 namespace SpeedCC
 {
-    class SCDataBlock final : public SCBufferRefT<SCDataBlock>
+    class SCDataBlock : public SCBufferRefT<SCBufferRefCookie>
     {
     public:
         SCDataBlock();
         SCDataBlock(const SCString& str);
         SCDataBlock(const SCDataBlock& data);
         SCDataBlock(void* pData,const int nDataSize);
-        
     };
 }
 

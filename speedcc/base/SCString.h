@@ -1,12 +1,13 @@
 //
 
-#ifndef __SC__SCString_H__
-#define __SC__SCString_H__
+#ifndef __SPEEDCC__SCSTRING_H__
+#define __SPEEDCC__SCSTRING_H__
 
 #include <string>
 #include <vector>
 #include <functional>
 #include "SCMacroDef.h"
+#include "SCBufferRefT.h"
 
 namespace SpeedCC
 {
@@ -41,9 +42,9 @@ namespace SpeedCC
         char            _charArray[6];
     };
     
-    SCString operator+(const SCString& str1,const SCString& str2) ;
-    SCString operator+(const SCString& str,const char ch) ;
-    SCString operator+(const char ch,const SCString& str) ;
+    SCString operator+(const SCString& str1,const SCString& str2);
+    SCString operator+(const SCString& str,const char ch);
+    SCString operator+(const char ch,const SCString& str);
     SCString operator+(const SCString& str, const char* psz);
     SCString operator+(const char* psz, const SCString& str);
     
@@ -61,7 +62,7 @@ namespace SpeedCC
     SCString operator+(const SCEncodingChar& encodingChar,const SCString& str2);
     SCString operator+(const SCString& str2,const SCEncodingChar& encodingChar);
     
-    class SCString 
+    class SCString //: public SCBufferRefT<SCString>
     {
     private:
         struct SStringDesc
@@ -133,9 +134,9 @@ namespace SpeedCC
         const SCString& operator=(const unsigned uNumber);
         
         // connect
-        friend SCString operator+(const SCString& str1,const SCString& str2) ;
-        friend SCString operator+(const SCString& str,const char ch) ;
-        friend SCString operator+(const char ch,const SCString& str) ;
+        friend SCString operator+(const SCString& str1,const SCString& str2);
+        friend SCString operator+(const SCString& str,const char ch);
+        friend SCString operator+(const char ch,const SCString& str);
         friend SCString operator+(const SCString& str, const char* psz);
         friend SCString operator+(const char* psz, const SCString& str);
         
@@ -261,4 +262,4 @@ namespace SpeedCC
     };
 }
 
-#endif // __SC__SCString_H__
+#endif // __SPEEDCC__SCSTRING_H__

@@ -13,6 +13,7 @@
 #include "base/SCObject.h"
 #include "base/SCString.h"
 #include "base/SCBaseCommon.h"
+#include "base/SCBufferRefT.h"
 #include "base/SCDataBlock.h"
 #include "base/SCDateTime.h"
 #include "base/SCValue.h"

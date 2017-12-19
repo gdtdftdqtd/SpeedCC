@@ -29,7 +29,7 @@ namespace SpeedCC
         };
         
     protected:
-        inline SCookieDesc* getCookieDesc() const {return _pData==NULL ? NULL : (((SCookieDesc*)_pData)-1); }
+        inline SCookieDesc* getCookieDesc() const {return _pObjData==NULL ? NULL : (((SCookieDesc*)_pObjData)-1); }
         
     public:
         SCObjRefT(void);
@@ -37,14 +37,14 @@ namespace SpeedCC
         
         virtual ~SCObjRefT();
         
-        inline int getRefCount() const {return _pData==NULL ? 0 : this->getCookieDesc()->nRefs;}
+        inline int getRefCount() const {return _pObjData==NULL ? 0 : this->getCookieDesc()->nRefs;}
         
         void assign(const SCObjRefT<StubT,CookieT>& ref);
         const SCObjRefT<StubT,CookieT>& operator=(const SCObjRefT<StubT,CookieT>& data);
         
-        inline bool operator==(const SCObjRefT& data) const {return (_pData==data._pData);}
+        inline bool operator==(const SCObjRefT& data) const {return (_pObjData==data._pObjData);}
         
-        inline bool isValid() const {return (_pData!=NULL);}
+        inline bool isValid() const {return (_pObjData!=NULL);}
         void createInstance();
         void createInstanceWithCon(const std::function<void(void*)>& func);
         
@@ -52,11 +52,11 @@ namespace SpeedCC
         void createInstance(_Args&& ...__args);
         
     protected:
-        inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
-        inline const CookieT* getCookie() const {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pData==NULL ? NULL : &this->getCookieDesc()->cookie);}
+        inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pObjData==NULL ? NULL : &this->getCookieDesc()->cookie);}
+        inline const CookieT* getCookie() const {return SCIsEmptyClassT<CookieT>::value ? NULL : (_pObjData==NULL ? NULL : &this->getCookieDesc()->cookie);}
         
-        inline StubT* getStub() {return (StubT*)_pData;}
-        inline StubT* getStub() const {return (StubT*)_pData;}
+        inline StubT* getStub() {return (StubT*)_pObjData;}
+        inline StubT* getStub() const {return (StubT*)_pObjData;}
         
         void clone4Write();
         int increaseRef() const;
@@ -68,23 +68,23 @@ namespace SpeedCC
         void freeBuf();
         
     protected:
-        void*                   _pData;
+        void*                   _pObjData;
     };
     
     template<typename StubT,typename CookieT>
     SCObjRefT<StubT,CookieT>::SCObjRefT(void):
-    _pData(NULL)
+    _pObjData(NULL)
     {
     }
     
     template<typename StubT,typename CookieT>
     SCObjRefT<StubT,CookieT>::SCObjRefT(const SCObjRefT<StubT,CookieT>& buf):
-    _pData(NULL)
+    _pObjData(NULL)
     {
-        if(buf._pData!=this->_pData)
+        if(buf._pObjData!=this->_pObjData)
         {
             buf.increaseRef();
-            _pData = buf.getCookieDesc()->getBufferPtr();
+            _pObjData = buf.getCookieDesc()->getBufferPtr();
         }
     }
     
@@ -97,13 +97,13 @@ namespace SpeedCC
     template<typename StubT,typename CookieT>
     int SCObjRefT<StubT,CookieT>::increaseRef() const
     {
-        return (_pData==NULL) ? 0 : (++this->getCookieDesc()->nRefs);
+        return (_pObjData==NULL) ? 0 : (++this->getCookieDesc()->nRefs);
     }
     
     template<typename StubT,typename CookieT>
     int SCObjRefT<StubT,CookieT>::decreaseRef()
     {
-        if(_pData==NULL)
+        if(_pObjData==NULL)
         {
             return 0;
         }
@@ -123,8 +123,8 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pData);
-        this->onInstanceCreated(_pData);
+        SCDataTypeLifeCycle<StubT>::construct(_pObjData);
+        this->onInstanceCreated(_pObjData);
     }
     
     template<typename StubT,typename CookieT>
@@ -135,9 +135,9 @@ namespace SpeedCC
         
         if(func!=NULL)
         {
-            func(_pData);
+            func(_pObjData);
         }
-        this->onInstanceCreated(_pData);
+        this->onInstanceCreated(_pObjData);
     }
     
     template<typename StubT,typename CookieT>
@@ -146,8 +146,8 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pData, _VSTD::forward<_Args>(__args)...);
-        this->onInstanceCreated(_pData);
+        SCDataTypeLifeCycle<StubT>::construct(_pObjData, _VSTD::forward<_Args>(__args)...);
+        this->onInstanceCreated(_pObjData);
     }
     
     /*
@@ -157,7 +157,7 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pData,arg1);
+        SCDataTypeLifeCycle<StubT>::construct(_pObjData,arg1);
     }
     
     template<typename StubT,typename CookieT>
@@ -166,7 +166,7 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pData,arg1,arg2);
+        SCDataTypeLifeCycle<StubT>::construct(_pObjData,arg1,arg2);
     }
     
     
@@ -176,7 +176,7 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pData,arg1,arg2,arg3);
+        SCDataTypeLifeCycle<StubT>::construct(_pObjData,arg1,arg2,arg3);
     }
      */
     
@@ -195,8 +195,8 @@ namespace SpeedCC
         SCDataTypeLifeCycle<SCookieDesc>::construct(pDesc);
         pDesc->nMallocBufSize = nBufferSize;
         
-        _pData = (char*)pDesc->getBufferPtr();
-        ::memset(_pData,0,pDesc->getBufferSize());
+        _pObjData = (char*)pDesc->getBufferPtr();
+        ::memset(_pObjData,0,pDesc->getBufferSize());
         
         pDesc->nRefs = 1;
     }
@@ -205,14 +205,14 @@ namespace SpeedCC
     template<typename StubT,typename CookieT>
     void SCObjRefT<StubT,CookieT>::freeBuf()
     {
-        if(_pData!=NULL)
+        if(_pObjData!=NULL)
         {
-            SCDataTypeLifeCycle<StubT>::destroy(_pData);
+            SCDataTypeLifeCycle<StubT>::destroy(_pObjData);
             // free buffer directly, does not check buffer whether illegal
             auto pDesc = this->getCookieDesc();
             SCDataTypeLifeCycle<SCookieDesc>::destroy(pDesc);
             SCMemAllocator::deallocate(pDesc, pDesc->nMallocBufSize);
-            _pData = NULL ;
+            _pObjData = NULL ;
         }
     }
     
@@ -228,15 +228,15 @@ namespace SpeedCC
         
         this->decreaseRef();
         
-        if(!SCIsEmptyClassT<StubT>::value)
+        if(SCIsEmptyClassT<StubT>::value)
         {
-            this->allocBuf();
-            SCDataTypeLifeCycle<StubT>::construct(_pData);
-            *(StubT*)_pData = *(StubT*)sb._pData;
+            this->allocBuf(0);
         }
         else
         {
-            this->allocBuf(0);
+            this->allocBuf();
+            SCDataTypeLifeCycle<StubT>::construct(_pObjData);
+            *(StubT*)_pObjData = *(StubT*)sb._pObjData;
         }
     }
     
@@ -244,10 +244,10 @@ namespace SpeedCC
     const SCObjRefT<StubT,CookieT>&
     SCObjRefT<StubT,CookieT>::operator=(const SCObjRefT<StubT,CookieT>& data)
     {
-        if(data._pData!=this->_pData)
+        if(data._pObjData!=this->_pObjData)
         {
             this->decreaseRef();
-            this->_pData = data._pData;
+            this->_pObjData = data._pObjData;
             this->increaseRef();
         }
         return *this;
