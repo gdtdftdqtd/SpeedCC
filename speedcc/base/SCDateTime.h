@@ -6,21 +6,30 @@
 #include <time.h>
 #include <limits>
 #include "SCMacroDef.h"
+#include "SCObjRefT.h"
 
 namespace SpeedCC
 {
     class SCString;
     class SCDateTimeSpan;
     
-    class SCDateTime
+    struct SCDateTimeStub
+    {
+        int             nMillSecOfDay; // in milliseconds
+        INT64           jd;
+        int             nOffsetSecUTC;
+        int             dstStatus;
+    };
+    
+    class SCDateTime : public SCObjRefT<SCDateTimeStub>
     {
     public:
         enum {NullTime = -1};
         enum DSTStatus
         {
-            DST_YES,
-            DST_NO,
-            DST_UNKNOWN,
+            DST_UNKNOWN     = 0,
+            DST_YES         = 1,
+            DST_NO          = 2,
         };
         
         struct Date
@@ -124,10 +133,10 @@ namespace SpeedCC
         int getYear() const;
         int getMonth() const;
         
-        inline int getHour() const { return Time(_nMillSecOfDay).nHour; }
-        inline int getMinute() const { return Time(_nMillSecOfDay).nMinute; }
-        inline int getSeconds() const { return Time(_nMillSecOfDay).nSeconds; }
-        inline int getMilleSeconds() const { return _nMillSecOfDay%1000; }
+        int getHour() const;
+        int getMinute() const;
+        int getSeconds() const;
+        int getMilleSeconds() const;
         
         Date getDate() const;
         Time getTime() const;
@@ -138,7 +147,7 @@ namespace SpeedCC
         SCString getWeekName(int nWeek=0,const bool bShort = true) const;
         
         // base 1, sunday is the first day of week
-        inline int getDayOfWeek() const { return (((_jd >= 0) ? ((_jd % 7) + 1) : (((_jd + 1) % 7) + 7)) % 7 + 1); }
+        int getDayOfWeek() const;
         
         // base 1
         int getDayOfMonth() const;
@@ -157,7 +166,7 @@ namespace SpeedCC
         SCDateTime toUTC();
         SCDateTime toLocal();
         
-        inline DSTStatus getDSTStatus() const {return _dstStatus;}
+        inline DSTStatus getDSTStatus() const {return (DSTStatus)this->getStub()->dstStatus;}
         
         void now();
         SCDateTimeSpan operator-(const SCDateTime& dt) const;
@@ -184,11 +193,6 @@ namespace SpeedCC
         static inline int floordiv(int a, int b) { return (a - (a < 0 ? b - 1 : 0)) / b;}
         
         void fixedTime();
-    private:
-        int             _nMillSecOfDay; // in milliseconds
-        INT64           _jd;
-        int             _nOffsetSecUTC;
-        DSTStatus       _dstStatus;
     };
     
     class SCDateTimeSpan

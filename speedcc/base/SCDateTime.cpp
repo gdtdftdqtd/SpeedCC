@@ -34,11 +34,13 @@ namespace SpeedCC
     
     SCDateTime::SCDateTime()
     {
+        this->createInstance();
         this->now();
     }
     
     SCDateTime::SCDateTime(const SCString& strDateTime,const SCString& strFormat)
     {
+        this->createInstance();
         struct tm tb;
         
         struct timeval tv;
@@ -50,21 +52,22 @@ namespace SpeedCC
             Date d = {tb.tm_year+1900,tb.tm_mon+1,tb.tm_mday};
             Time t1 = {tb.tm_hour,tb.tm_min,tb.tm_sec,(int)(tv.tv_usec/1000)};
             
-            _jd = SCDateTime::convertDate2JD(d);
-            _nMillSecOfDay = t1.getMillSecOfDay();
-            _nOffsetSecUTC = (int)tb.tm_gmtoff;
+            auto pStub = this->getStub();
+            pStub->jd = SCDateTime::convertDate2JD(d);
+            pStub->nMillSecOfDay = t1.getMillSecOfDay();
+            pStub->nOffsetSecUTC = (int)tb.tm_gmtoff;
             
             if(tb.tm_isdst>0)
             {
-                _dstStatus = DST_YES;
+                pStub->dstStatus = DST_YES;
             }
             else if(tb.tm_isdst==0)
             {
-                _dstStatus = DST_NO;
+                pStub->dstStatus = DST_NO;
             }
             else
             {
-                _dstStatus = DST_UNKNOWN;
+                pStub->dstStatus = DST_UNKNOWN;
             }
         }
         else
@@ -76,26 +79,33 @@ namespace SpeedCC
     
     SCDateTime::SCDateTime(const SCDateTime::Date& d,const SCDateTime::Time& t)
     {
+        this->createInstance();
         this->now();
         
         if(d.isValid())
         {
-            _jd = SCDateTime::convertDate2JD(d);
-            _nMillSecOfDay = t.getMillSecOfDay();
+            auto pStub = this->getStub();
+            pStub->jd = SCDateTime::convertDate2JD(d);
+            pStub->nMillSecOfDay = t.getMillSecOfDay();
             this->fixedTime();
         }
     }
     
-    SCDateTime::SCDateTime(const SCDateTime& dt):
-    _jd(dt._jd),
-    _nMillSecOfDay(dt._nMillSecOfDay),
-    _nOffsetSecUTC(dt._nOffsetSecUTC),
-    _dstStatus(dt._dstStatus)
+    SCDateTime::SCDateTime(const SCDateTime& dt)
+//    _jd(dt._jd),
+//    _nMillSecOfDay(dt._nMillSecOfDay),
+//    _nOffsetSecUTC(dt._nOffsetSecUTC),
+//    _dstStatus(dt._dstStatus)
     {
+        this->createInstance();
+        auto pStub = this->getStub();
+        
+        *pStub = *(dt.getStub());
     }
     
     SCDateTime::SCDateTime(const time_t& t)
     {
+        this->createInstance();
         this->setDatetime(t);
     }
     
@@ -106,6 +116,7 @@ namespace SpeedCC
     
     void SCDateTime::now()
     {
+        this->clone4Write();
         time_t t = ::time(NULL);
         
         this->setDatetime(t);
@@ -113,16 +124,18 @@ namespace SpeedCC
     
     SCDateTime& SCDateTime::operator=(const SCDateTime& dt)
     {
-        _jd = dt._jd;
-        _nMillSecOfDay = dt._nMillSecOfDay;
-        _nOffsetSecUTC = dt._nOffsetSecUTC;
-        _dstStatus = dt._dstStatus;
+        this->clone4Write();
+        auto pStub = this->getStub();
+        
+        *pStub = *(dt.getStub());
         
         return *this;
     }
     
     bool SCDateTime::setDatetime(const time_t& t)
     {
+        this->clone4Write();
+        
         struct timeval tv;
         ::gettimeofday(&tv, NULL);
         struct tm* tb = ::localtime(&t);
@@ -130,21 +143,22 @@ namespace SpeedCC
         Date d = {tb->tm_year+1900,tb->tm_mon+1,tb->tm_mday};
         Time t1 = {tb->tm_hour,tb->tm_min,tb->tm_sec,(int)(tv.tv_usec/1000)};
         
-        _jd = SCDateTime::convertDate2JD(d);
-        _nMillSecOfDay = t1.getMillSecOfDay();
-        _nOffsetSecUTC = (int)tb->tm_gmtoff;
+        auto pStub = this->getStub();
+        pStub->jd = SCDateTime::convertDate2JD(d);
+        pStub->nMillSecOfDay = t1.getMillSecOfDay();
+        pStub->nOffsetSecUTC = (int)tb->tm_gmtoff;
         
         if(tb->tm_isdst>0)
         {
-            _dstStatus = DST_YES;
+            pStub->dstStatus = DST_YES;
         }
         else if(tb->tm_isdst==0)
         {
-            _dstStatus = DST_NO;
+            pStub->dstStatus = DST_NO;
         }
         else
         {
-            _dstStatus = DST_UNKNOWN;
+            pStub->dstStatus = DST_UNKNOWN;
         }
         
         return true;
@@ -158,10 +172,12 @@ namespace SpeedCC
         
         if(nMillSec>=0 && nMillSec<1000)
         {
-            Time t(_nMillSecOfDay);
+            this->clone4Write();
+            auto pStub = this->getStub();
+            Time t(pStub->nMillSecOfDay);
             t.nMillSeconds = nMillSec;
             
-            _nMillSecOfDay = t.getMillSecOfDay();
+            pStub->nMillSecOfDay = t.getMillSecOfDay();
             
             bRet = true;
         }
@@ -178,10 +194,12 @@ namespace SpeedCC
         
         if(nSeconds>=0 && nSeconds<60)
         {
-            Time t(_nMillSecOfDay);
+            this->clone4Write();
+            auto pStub = this->getStub();
+            Time t(pStub->nMillSecOfDay);
             t.nSeconds = nSeconds;
             
-            _nMillSecOfDay = t.getMillSecOfDay();
+            pStub->nMillSecOfDay = t.getMillSecOfDay();
             
             bRet = true;
         }
@@ -197,10 +215,12 @@ namespace SpeedCC
         
         if(nMinute>=0 && nMinute<60)
         {
-            Time t(_nMillSecOfDay);
+            this->clone4Write();
+            auto pStub = this->getStub();
+            Time t(pStub->nMillSecOfDay);
             t.nMinute = nMinute;
             
-            _nMillSecOfDay = t.getMillSecOfDay();
+            pStub->nMillSecOfDay = t.getMillSecOfDay();
             
             bRet = true;
         }
@@ -216,10 +236,12 @@ namespace SpeedCC
         
         if(nHour>=0 && nHour<24)
         {
-            Time t(_nMillSecOfDay);
+            this->clone4Write();
+            auto pStub = this->getStub();
+            Time t(pStub->nMillSecOfDay);
             t.nHour = nHour;
             
-            _nMillSecOfDay = t.getMillSecOfDay();
+            pStub->nMillSecOfDay = t.getMillSecOfDay();
             
             bRet = true;
         }
@@ -235,13 +257,15 @@ namespace SpeedCC
         
         if(nDay>0 && nDay<32)
         {
-            Date d(_jd);
+            this->clone4Write();
+            auto pStub = this->getStub();
+            Date d(pStub->jd);
             
             d.nDay = nDay;
             
             if(d.isValid())
             {
-                _jd = SCDateTime::convertDate2JD(d);
+                pStub->jd = SCDateTime::convertDate2JD(d);
                 bRet = true;
             }
         }
@@ -257,13 +281,15 @@ namespace SpeedCC
         
         if(nMonth>0 && nMonth<13)
         {
-            Date d(_jd);
+            this->clone4Write();
+            auto pStub = this->getStub();
+            Date d(pStub->jd);
             
             d.nMonth = nMonth;
             
             if(d.isValid())
             {
-                _jd = SCDateTime::convertDate2JD(d);
+                pStub->jd = SCDateTime::convertDate2JD(d);
                 bRet = true;
             }
         }
@@ -275,36 +301,42 @@ namespace SpeedCC
     {
         bool bRet = false;
         
-        Date d(_jd);
+        this->clone4Write();
+        auto pStub = this->getStub();
+        
+        Date d(pStub->jd);
         
         d.nYear = nYear;
         
         if(d.isValid())
         {
-            _jd = SCDateTime::convertDate2JD(d);
+            pStub->jd = SCDateTime::convertDate2JD(d);
             bRet = true;
         }
         
         return bRet;
     }
     
+    // fixedTime() already cloned before it is called
     void SCDateTime::fixedTime()
     {
-        if(_nMillSecOfDay<0)
+        auto pStub = this->getStub();
+        
+        if(pStub->nMillSecOfDay<0)
         {
-            int nRemainMSec = MSECS_PER_DAY + (_nMillSecOfDay % MSECS_PER_DAY);
-            int nDays = ::abs(_nMillSecOfDay / MSECS_PER_DAY);
+            int nRemainMSec = MSECS_PER_DAY + (pStub->nMillSecOfDay % MSECS_PER_DAY);
+            int nDays = ::abs(pStub->nMillSecOfDay / MSECS_PER_DAY);
             
-            _nMillSecOfDay = nRemainMSec;
-            _jd -= nDays + 1;
+            pStub->nMillSecOfDay = nRemainMSec;
+            pStub->jd -= nDays + 1;
         }
-        else if(_nMillSecOfDay>MSECS_PER_DAY)
+        else if(pStub->nMillSecOfDay>MSECS_PER_DAY)
         {
-            int nRemainMSec = _nMillSecOfDay % MSECS_PER_DAY;
-            int nDays = _nMillSecOfDay / MSECS_PER_DAY;
+            int nRemainMSec = pStub->nMillSecOfDay % MSECS_PER_DAY;
+            int nDays = pStub->nMillSecOfDay / MSECS_PER_DAY;
             
-            _nMillSecOfDay = nRemainMSec;
-            _jd += nDays;
+            pStub->nMillSecOfDay = nRemainMSec;
+            pStub->jd += nDays;
         }
     }
     
@@ -312,7 +344,10 @@ namespace SpeedCC
     {
         if(nMillSecond)
         {
-            _nMillSecOfDay += nMillSecond;
+            this->clone4Write();
+            auto pStub = this->getStub();
+            
+            pStub->nMillSecOfDay += nMillSecond;
             this->fixedTime();
         }
         
@@ -341,9 +376,12 @@ namespace SpeedCC
     
     SCDateTime SCDateTime::addMonth(int nMonth)
     {
-        if(nMonth)
+        if(nMonth>0)
         {
-            Date dt(_jd);
+            this->clone4Write();
+            auto pStub = this->getStub();
+            
+            Date dt(pStub->jd);
             int y = dt.nYear;
             int m = dt.nMonth;
             int d = dt.nDay;
@@ -397,7 +435,7 @@ namespace SpeedCC
                 y += increasing ? +1 : -1;
             }
             
-            _jd = SCDateTime::convertDate2JD(SCDateTime::fixedDate(y,m,d));
+            pStub->jd = SCDateTime::convertDate2JD(SCDateTime::fixedDate(y,m,d));
         }
         
         return *this;
@@ -405,7 +443,10 @@ namespace SpeedCC
     
     SCDateTime SCDateTime::addYear(const int nYear)
     {
-        Date pd = SCDateTime::convertJD2Date(_jd);
+        this->clone4Write();
+        auto pStub = this->getStub();
+        
+        Date pd = SCDateTime::convertJD2Date(pStub->jd);
         
         int old_y = pd.nYear;
         pd.nYear += nYear;
@@ -419,19 +460,46 @@ namespace SpeedCC
         }
         
         auto d = SCDateTime::fixedDate(pd.nYear, pd.nMonth, pd.nDay);
-        _jd = SCDateTime::convertDate2JD(d);
+        pStub->jd = SCDateTime::convertDate2JD(d);
         
         return *this;
     }
     
     int SCDateTime::getYear() const
     {
-        return SCDateTime::convertJD2Date(_jd).nYear;
+        auto pStub = this->getStub();
+        return SCDateTime::convertJD2Date(pStub->jd).nYear;
     }
     
     int SCDateTime::getMonth() const
     {
-        return SCDateTime::convertJD2Date(_jd).nMonth;
+        auto pStub = this->getStub();
+        return SCDateTime::convertJD2Date(pStub->jd).nMonth;
+    }
+    
+    int SCDateTime::getHour() const
+    {
+        auto pStub = this->getStub();
+        return Time(pStub->nMillSecOfDay).nHour;
+        
+    }
+    
+    int SCDateTime::getMinute() const
+    {
+        auto pStub = this->getStub();
+        return Time(pStub->nMillSecOfDay).nMinute;
+    }
+    
+    int SCDateTime::getSeconds() const
+    {
+        auto pStub = this->getStub();
+        return Time(pStub->nMillSecOfDay).nSeconds;
+    }
+    
+    int SCDateTime::getMilleSeconds() const
+    {
+        auto pStub = this->getStub();
+        return pStub->nMillSecOfDay%1000;
     }
     
     // Returns the week number (1 to 53)
@@ -467,7 +535,8 @@ namespace SpeedCC
     // Returns the number of days in the month (28 to 31)
     int SCDateTime::getDayCountOfMonth() const
     {
-        const Date pd = SCDateTime::convertJD2Date(_jd);
+        auto pStub = this->getStub();
+        const Date pd = SCDateTime::convertJD2Date(pStub->jd);
         
         return (pd.nMonth == 2 && SCDateTime::isLeapYear(pd.nYear)) ?  29 : s_MonthDays[pd.nMonth];
     }
@@ -475,7 +544,14 @@ namespace SpeedCC
     // Returns the number of days in the year (365 or 366)
     int SCDateTime::getDayCountOfYear() const
     {
-        return SCDateTime::isLeapYear(convertJD2Date(_jd).nYear) ? 366 : 365;
+        auto pStub = this->getStub();
+        return SCDateTime::isLeapYear(convertJD2Date(pStub->jd).nYear) ? 366 : 365;
+    }
+    
+    int SCDateTime::getDayOfWeek() const
+    {
+        auto pStub = this->getStub();
+        return (((pStub->jd >= 0) ? ((pStub->jd % 7) + 1) : (((pStub->jd + 1) % 7) + 7)) % 7 + 1);
     }
     
     SCString SCDateTime::getMonthName(int nMonth,const bool bShort) const
@@ -510,20 +586,25 @@ namespace SpeedCC
     
     int SCDateTime::getDayOfMonth() const
     {
-        return SCDateTime::convertJD2Date(_jd).nDay;
+        auto pStub = this->getStub();
+        return SCDateTime::convertJD2Date(pStub->jd).nDay;
     }
     
     int SCDateTime::getDayOfYear() const
     {
-        return (int)(_jd - SCDateTime::convertDate2JD(Date(this->getYear(), 1, 1)) + 1);
+        auto pStub = this->getStub();
+        return (int)(pStub->jd - SCDateTime::convertDate2JD(Date(this->getYear(), 1, 1)) + 1);
     }
     
     SCDateTime SCDateTime::toUTC()
     {
-        if(_nOffsetSecUTC)
+        auto pStub = this->getStub();
+        if(pStub->nOffsetSecUTC)
         {
-            this->addSeconds(_nOffsetSecUTC);
-            _nOffsetSecUTC = 0;
+            // because addSeconds() will clone, so no clone here
+            this->addSeconds(pStub->nOffsetSecUTC);
+            pStub = this->getStub();
+            pStub->nOffsetSecUTC = 0;
         }
         
         return *this;
@@ -534,10 +615,12 @@ namespace SpeedCC
         time_t t  = ::time(NULL);
         struct tm* tb = ::localtime(&t);
         
-        if(tb->tm_gmtoff!=_nOffsetSecUTC)
+        auto pStub = this->getStub();
+        if(tb->tm_gmtoff!=pStub->nOffsetSecUTC)
         {
-            this->addSeconds((int)(tb->tm_gmtoff-_nOffsetSecUTC));
-            _nOffsetSecUTC = (int)tb->tm_gmtoff;
+            this->addSeconds((int)(tb->tm_gmtoff-pStub->nOffsetSecUTC));
+            pStub = this->getStub();
+            pStub->nOffsetSecUTC = (int)tb->tm_gmtoff;
         }
         
         return *this;
@@ -545,28 +628,32 @@ namespace SpeedCC
     
     SCDateTimeSpan SCDateTime::operator-(const SCDateTime& dt) const
     {
-        const int nDiffDay = (int)(_jd - dt._jd);
-        int nDiffSec = (_nMillSecOfDay - dt._nMillSecOfDay)/1000;
-        nDiffSec += _nOffsetSecUTC - dt._nOffsetSecUTC;
+        auto pStub = this->getStub();
+        const int nDiffDay = (int)(pStub->jd - dt.getStub()->jd);
+        int nDiffSec = (pStub->nMillSecOfDay - dt.getStub()->nMillSecOfDay)/1000;
+        nDiffSec += pStub->nOffsetSecUTC - dt.getStub()->nOffsetSecUTC;
         
         return (nDiffDay*24*60*60 + nDiffSec);
     }
     
     SCDateTime::Date SCDateTime::getDate() const
     {
-        return SCDateTime::convertJD2Date(_jd);
+        auto pStub = this->getStub();
+        return SCDateTime::convertJD2Date(pStub->jd);
     }
     
     SCDateTime::Time SCDateTime::getTime() const
     {
-        return SCDateTime::Time(_nMillSecOfDay);
+        auto pStub = this->getStub();
+        return SCDateTime::Time(pStub->nMillSecOfDay);
     }
     
     INT64 SCDateTime::getStamp() const
     {
         if(this->getDate().isValid() && this->getTime().isValid())
         {
-            return (((INT64)_jd)*24*60*60 + this->getHour()*60*60 + this->getMinute()*60 + this->getSeconds());
+            auto pStub = this->getStub();
+            return (((INT64)pStub->jd)*24*60*60 + this->getHour()*60*60 + this->getMinute()*60 + this->getSeconds());
         }
         
         return NullTime;
@@ -591,7 +678,8 @@ namespace SpeedCC
         tb.tm_min = time.nMinute;
         tb.tm_sec = time.nSeconds;
         
-        tb.tm_gmtoff = _nOffsetSecUTC;
+        auto pStub = this->getStub();
+        tb.tm_gmtoff = pStub->nOffsetSecUTC;
         
         char szBuf[256+1] = {0};
         
