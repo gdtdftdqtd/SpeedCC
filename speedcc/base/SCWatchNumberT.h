@@ -216,16 +216,20 @@ namespace SpeedCC
         }
         
         // prefix ++ (++a)
-        SCWatchNumberT& operator++()
+        template<typename Q = T>
+        typename std::enable_if< std::is_integral<Q>::value,SCWatchNumberT& >::type operator++()
         {
-            const T oldNum = _number;
-            const T num = _number + 1;
+            const Q oldNum = _number;
+            const Q num = _number + 1;
             _number += 1;
             this->firePostUpdateFun(num,oldNum);
             return *this;
         }
         
-        SCWatchNumberT operator++(T)  // postfix ++ (a++)
+        // postfix ++ (a++)
+        template<typename Q = T>
+        typename std::enable_if< std::is_integral<Q>::value,SCWatchNumberT >::type
+        operator++(Q)
         {
             SCWatchNumberT result(*this);
             ++(*this);
@@ -233,16 +237,21 @@ namespace SpeedCC
         }
         
         // prefix -- (--a)
-        SCWatchNumberT& operator--()
+        template<typename Q = T>
+        typename std::enable_if< std::is_integral<Q>::value,SCWatchNumberT& >::type
+        operator--()
         {
-            const T oldNum = _number;
-            const T num = _number - 1;
+            const Q oldNum = _number;
+            const Q num = _number - 1;
             _number -= 1;
             this->firePostUpdateFun(num,oldNum);
             return *this;
         }
         
-        SCWatchNumberT operator--(T)  // postfix -- (a--)
+        // postfix -- (a--)
+        template<typename Q = T>
+        typename std::enable_if< std::is_integral<Q>::value,SCWatchNumberT >::type
+        operator--(Q)
         {
             SCWatchNumberT result(*this);
             --(*this);

@@ -15,6 +15,7 @@
 #include "../base/SCString.h"
 #include "../base/SCMacroDef.h"
 #include "../base/SCWatchString.h"
+#include "../base/SCWatchNumberT.h"
 
 namespace SpeedCC
 {
@@ -54,7 +55,7 @@ namespace SpeedCC
         void setLabel(cocos2d::Label* pLabel);
         
         template<typename T>
-        void setStringSource(T num)
+        void setWatchSource(T num)
         {
             num->addUpdateFun([this](T numPtr,typename T::type newNum,typename T::type oldNum)
                                 {
@@ -75,7 +76,7 @@ namespace SpeedCC
             }
         }
         
-        void setStringSource(SCWatchString::Ptr watchStr);
+        void setWatchSource(SCWatchString::Ptr watchStr);
         
     protected:
         SCBinderLabel():
@@ -102,6 +103,13 @@ namespace SpeedCC
         SC_DEFINE_CLASS_PTR(SCBinderSetting)
         
         static Ptr create(const SCString& strSettingKey);
+        
+        void setWatchSource(SCWatchFloat::Ptr watchFloat,const float fDefault=0.0f);
+        void setWatchSource(SCWatchDouble::Ptr watchDoube,const double dDefault=0.0);
+        void setWatchSource(SCWatchBool::Ptr watchBool,const bool bDefault=false);
+        void setWatchSource(SCWatchInt::Ptr watchInt,const int nDefault=0);
+        void setWatchSource(SCWatchString::Ptr watchStr);
+        
     protected:
         SCBinderSetting()
         {}

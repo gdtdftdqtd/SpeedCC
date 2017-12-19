@@ -15,11 +15,11 @@ void TestLabelBinderController::onCreate(SCDictionary parameters)
     
     SCBinderLabel::Ptr binderNumPtr = SCBinderLabel::create();
     this->ownLifecycle(binderNumPtr);
-    binderNumPtr->setStringSource(_watchIntPtr);
+    binderNumPtr->setWatchSource(_watchIntPtr);
     
     SCBinderLabel::Ptr binderStrPtr = SCBinderLabel::create();
     this->ownLifecycle(binderStrPtr);
-    binderStrPtr->setStringSource(_watchStrPtr);
+    binderStrPtr->setWatchSource(_watchStrPtr);
 
     SC_BEGIN_CONTAINER_ROOT(NULL,0,0,NULL,SCWinSize())
 
