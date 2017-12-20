@@ -6,7 +6,7 @@
 
 using namespace SpeedCC;
 
-class TestLabelBinderController : public SpeedCC::SCSceneControllerT<TestLabelBinderController>
+class TestLabelBinderController : public SpeedCC::SCSceneController
 {
 public:
     
@@ -15,6 +15,7 @@ public:
     void onButtonAdd();
     void onButtonSub();
     void onButtonRandomText();
+    void onButtonBack();
     
 private:
     SCWatchInt::Ptr         _watchIntPtr;

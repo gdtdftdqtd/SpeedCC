@@ -96,7 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 */
     SpeedCC::SCSystem::initSpeedCC();
-    SpeedCC::SCSceneNavigator::switchScene<TestHomeController>();
+    SCSceneNav()->switchScene<TestHomeController>();
     
 //    // create a scene. it's an autorelease object
 //    auto scene = HelloWorld::createScene();

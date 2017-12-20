@@ -12,7 +12,7 @@ using namespace SpeedCC;
 
 void TestPage1Controller::onCreate(SCDictionary parameters)
 {
-    SCSceneControllerT::onCreate(parameters);
+    SCSceneController::onCreate(parameters);
     
     SC_BEGIN_CONTAINER_ROOT(NULL,0,0,NULL,SCWinSize())
         SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0,0,NULL,cocos2d::Size(SCWinSize().width/2,SCWinSize().height/2),Color4B::BLUE)
@@ -24,5 +24,5 @@ void TestPage1Controller::onCreate(SCDictionary parameters)
 
 void TestPage1Controller::onButtonClicked()
 {
-    SCSceneNavigator::back();
+    SCSceneNav()->back();
 }

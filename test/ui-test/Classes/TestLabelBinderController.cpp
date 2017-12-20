@@ -7,7 +7,7 @@ using namespace SpeedCC;
 
 void TestLabelBinderController::onCreate(SCDictionary parameters)
 {
-    SCSceneControllerT::onCreate(parameters);
+    SCSceneController::onCreate(parameters);
     
     _watchIntPtr = SCWatchInt::create();
     _watchStrPtr = SCWatchString::create();
@@ -35,7 +35,10 @@ void TestLabelBinderController::onCreate(SCDictionary parameters)
         SC_INSERT_LABEL(NULL,-0.2,0,"color-text=yellow;",binderStrPtr,"",30)
         SC_INSERT_BUTTON_LABEL(NULL,0.3,0,"color-text=red;","click","",25,FN(onButtonRandomText))
     
+        // back
+        SC_INSERT_BUTTON_LABEL(NULL,-0.90,0.90,"color-text=red;","back","",25,FN(onButtonBack))
     SC_END_CONTAINER
+    
 }
 
 void TestLabelBinderController::onButtonAdd()
@@ -50,7 +53,11 @@ void TestLabelBinderController::onButtonSub()
 
 void TestLabelBinderController::onButtonRandomText()
 {
-//    int ppp = 0;
     (*_watchStrPtr).format("%d",rand());
+}
+
+void TestLabelBinderController::onButtonBack()
+{
+    SCSceneNav()->back();
 }
 

@@ -12,7 +12,7 @@
 #include "cocos2d.h"
 #include "SpeedCC.h"
 
-class TestPage1Controller : public SpeedCC::SCSceneControllerT<TestPage1Controller>
+class TestPage1Controller : public SpeedCC::SCSceneController
 {
 public:
     

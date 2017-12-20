@@ -155,6 +155,8 @@
 #define SC_SELECTOR(_fun_)\
     (decltype(SCTraitFunctionPointerType(&_fun_))(&_fun_))
 
+#define SCSceneNav() \
+    (SpeedCC::SCSceneNavigator::getInstance())
 
 //#define SC_TRAIT_PTR_CLASS(_ptr_) \
 //    decltype(std::remove_reference<std::remove_const<_ptr_>::type>::type)::type

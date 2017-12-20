@@ -6,10 +6,18 @@ using namespace cocos2d;
 
 namespace SpeedCC
 {
-	SCDictionary                                            SCSceneNavigator::s_SceneParameterDic;
-    SCSceneController::Ptr                                  SCSceneNavigator::s_currentSceneControllerPtr;
-    std::list<SCSceneNavigator::SStackSceneInfo>            SCSceneNavigator::s_sceneStack;
-
+    SCSceneNavigator*           SCSceneNavigator::s_pInstance = NULL;
+    
+    SCSceneNavigator* SCSceneNavigator::getInstance()
+    {
+        if(s_pInstance==NULL)
+        {
+            s_pInstance = new SCSceneNavigator();
+        }
+        
+        return s_pInstance;
+    }
+    
 	void SCSceneNavigator::setSceneParameter(const SCDictionary& dic)
 	{
 		s_SceneParameterDic = dic;

@@ -5,7 +5,7 @@
 
 #include "cocos2d.h"
 #include "../base/SCBaseDef.h"
-#include "SCSceneControllerT.h"
+#include "SCSceneController.h"
 
 namespace SpeedCC
 {
@@ -20,6 +20,10 @@ namespace SpeedCC
 		};
 
     private:
+        typedef SCSceneController::Ptr (*FUN_SCSceneCreateFunctor_t)(const SCDictionary& dic);
+        typedef SCSceneController::Ptr (*FUN_SCLayerCreateFunctor_t)(const SCDictionary& dic);
+        typedef cocos2d::Scene* (*FUN_SCSceneTransitionCreateFunctor_t)(const float fDuration, cocos2d::Scene* pScene);
+        
 		struct SSceneSwitchInfo
 		{
 			ESceneSwitchType						switchType;
@@ -55,8 +59,10 @@ namespace SpeedCC
         };
 
     public:
+        static SCSceneNavigator* getInstance();
+        
 		template<typename SceneT, typename TransT = SCClassNull>
-		static bool switchScene(const ESceneSwitchType place = SWITCH_REPLACE, SCDictionary dic = SCDictionary())
+        bool switchScene(const ESceneSwitchType place = SWITCH_REPLACE, SCDictionary dic = SCDictionary())
 		{
 			SCASSERTCT(!SCIsEmptyClassT<SceneT>::value);
 
@@ -67,25 +73,65 @@ namespace SpeedCC
 			switchInfo.switchType = place;
 			switchInfo.pfunSelfTransCreator = &SCTransitionCreator<TransT>::create;
 			switchInfo.pfunOppositeTransCreator = &SCTransitionCreator<typename SCTransitionCreator<TransT>::OppositeType>::create;
-			switchInfo.pfunCurrentSceneCreator = (FUN_SCSceneCreateFunctor_t)(&SceneT::ControllerBase_t::createScene);
-			switchInfo.pfunCurrentLayerCreator = (FUN_SCLayerCreateFunctor_t)(&SceneT::ControllerBase_t::createLayer);
+            switchInfo.pfunCurrentSceneCreator = (FUN_SCSceneCreateFunctor_t)(&SCSceneNavigator::createScene<SceneT>);
+            switchInfo.pfunCurrentLayerCreator = (FUN_SCLayerCreateFunctor_t)(&SCSceneNavigator::createLayer<SceneT>);
 
-			return SCSceneNavigator::switchScene(switchInfo);
+			return SCSceneNavigator::getInstance()->switchScene(switchInfo);
 		}
 
-        static SCSceneController::Ptr getCurrentSceneController() {return s_currentSceneControllerPtr;}
-		static void back(int nNumber = 1);
-        static void reset();
-		static void setSceneParameter(const SCDictionary& dic);
+        SCSceneController::Ptr getCurrentSceneController() {return s_currentSceneControllerPtr;}
+        void back(int nNumber = 1);
+        void reset();
+        void setSceneParameter(const SCDictionary& dic);
 //        static SCDictionary getSceneParameter();
         
     private:
-        static bool switchScene(const SSceneSwitchInfo& info);
+        bool switchScene(const SSceneSwitchInfo& info);
+        
+        template<typename TargetCtlrT>
+        static SCSceneController::Ptr createScene(const SCDictionary& parameterDic)
+        {
+            SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
+            
+            do
+            {
+                sceneCtlrPtr.createInstance();
+                
+                SC_BREAK_IF(sceneCtlrPtr.isNull());
+                
+                auto scene = SCScene::create();
+                auto pRootLayer = scene->getRootLayer();
+                pRootLayer->setController(sceneCtlrPtr);
+                sceneCtlrPtr->setScene(scene);
+                sceneCtlrPtr->setSceneRootLayer(pRootLayer);
+                sceneCtlrPtr->onCreate(parameterDic);
+                
+            } while (0);
+            
+            return sceneCtlrPtr;
+        }
+        
+        template<typename TargetCtlrT>
+        static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic)
+        {
+            SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
+            sceneCtlrPtr.createInstance();
+            
+            auto rootLayer = SCLayerRoot::create();
+            rootLayer->setController(sceneCtlrPtr);
+            sceneCtlrPtr->setSceneRootLayer(rootLayer);
+            
+            sceneCtlrPtr->setScene(NULL);
+            sceneCtlrPtr->onCreate(parameterDic);
+            
+            return sceneCtlrPtr;
+        }
 
 	private:
-        static SCSceneController::Ptr           s_currentSceneControllerPtr;
-		static SCDictionary                     s_SceneParameterDic;
-        static std::list<SStackSceneInfo>       s_sceneStack;
+        SCSceneController::Ptr           s_currentSceneControllerPtr;
+        SCDictionary                     s_SceneParameterDic;
+        std::list<SStackSceneInfo>       s_sceneStack;
+        static SCSceneNavigator*         s_pInstance;
     };
 }
 

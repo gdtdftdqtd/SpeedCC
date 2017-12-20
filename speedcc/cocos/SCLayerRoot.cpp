@@ -1,6 +1,6 @@
 
 #include "SCLayerRoot.h"
-#include "SCSceneControllerT.h"
+#include "SCSceneController.h"
 #include "SCNodeUtils.h"
 
 using namespace cocos2d;
