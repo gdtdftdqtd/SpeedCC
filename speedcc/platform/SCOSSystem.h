@@ -40,6 +40,14 @@ extern "C" {
     bool scGetAppVersion(int* pMajor,int* pMinor,int* pFix);
     int scGetBundleID(char* pszBuffer, int nBufferSize);
     
+    ///-------- store
+    // callback: scbPurchaseItemResult() 
+    bool scPurchaseItem(const char* pszIAP,const bool bConsumable);
+    // callback: scbPurchaseItemInfoResult()
+    void scRequestPurchasedItemInfo(const char* pszIAP);
+    // callback: scbPurchaseRestoreResult()
+    bool scRestorePurchased();
+    
     // network
 //    bool scIsInternetAvailable(bool bAlert);
 //    void scCheckInternetAvailable();

@@ -109,8 +109,8 @@
     _class_& operator=(const _class_&)= delete;
 
 #define SC_DEFINE_CLASS_PTR(_class_) \
-    typedef SCObjPtrT<_class_>              Ptr; \
-    typedef SCObjPtrT<_class_,false>        WeakPtr;
+    typedef SpeedCC::SCObjPtrT<_class_>              Ptr; \
+    typedef SpeedCC::SCObjPtrT<_class_,false>        WeakPtr;
 
 #define SC_PTR_HAS_CLASS(_ptr_,_class_) \
     ((_ptr_).cast<_class_>()!=NULL)
@@ -152,8 +152,11 @@
 #define SCCCScheduler()\
     (SCCCDirector()->getScheduler())
 
-#define SC_SELECTOR(_fun_)\
+#define SC_FUNC(_fun_)\
     (decltype(SCTraitFunctionPointerType(&_fun_))(&_fun_))
+
+#define SCF(_fun_)\
+    ((decltype(SCTraitFunctionPointerType(&std::remove_pointer<decltype(this)>::type::_fun_)))(&std::remove_pointer<decltype(this)>::type::_fun_))
 
 #define SCSceneNav() \
     (SpeedCC::SCSceneNavigator::getInstance())

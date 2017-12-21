@@ -3,7 +3,6 @@
 #ifndef __SPEEDCC__SCMESSAGEDEF_H__
 #define __SPEEDCC__SCMESSAGEDEF_H__
 
-#include "../base/SCBaseCommon.h"
 #include "../base/SCDictionary.h"
 
 namespace SpeedCC

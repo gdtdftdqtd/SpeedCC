@@ -9,7 +9,7 @@
 #ifndef __SPEEDCC__SCFILEUTILS_H__
 #define __SPEEDCC__SCFILEUTILS_H__
 
-#include "SCString.h"
+#include "../base/SCString.h"
 
 namespace SpeedCC
 {

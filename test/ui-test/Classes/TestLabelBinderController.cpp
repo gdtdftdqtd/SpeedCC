@@ -28,15 +28,15 @@ void TestLabelBinderController::onCreate(SCDictionary parameters)
     
         // binding number
         SC_INSERT_LABEL(NULL,-0.2,0.5,"",binderNumPtr,"",30)
-        SC_INSERT_BUTTON_LABEL(NULL,0.2,0.5,"color-text=red;","+","",33,FN(onButtonAdd))
-        SC_INSERT_BUTTON_LABEL(NULL,0.4,0.5,"color-text=red;","-","",33,FN(onButtonSub))
+        SC_INSERT_BUTTON_LABEL(NULL,0.2,0.5,"color-text=red;","+","",33,SCF(onButtonAdd))
+        SC_INSERT_BUTTON_LABEL(NULL,0.4,0.5,"color-text=red;","-","",33,SCF(onButtonSub))
     
         // binding string
         SC_INSERT_LABEL(NULL,-0.2,0,"color-text=yellow;",binderStrPtr,"",30)
-        SC_INSERT_BUTTON_LABEL(NULL,0.3,0,"color-text=red;","click","",25,FN(onButtonRandomText))
+        SC_INSERT_BUTTON_LABEL(NULL,0.3,0,"color-text=red;","click","",25,SCF(onButtonRandomText))
     
         // back
-        SC_INSERT_BUTTON_LABEL(NULL,-0.90,0.90,"color-text=red;","back","",25,FN(onButtonBack))
+        SC_INSERT_BUTTON_LABEL(NULL,-0.90,0.90,"color-text=red;","back","",25,SCF(onButtonBack))
     SC_END_CONTAINER
     
 }

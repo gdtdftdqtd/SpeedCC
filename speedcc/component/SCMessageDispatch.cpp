@@ -16,7 +16,7 @@ namespace SpeedCC
         if(_pInstance==NULL)
         {
             _pInstance = new SCMessageDispatch();
-            SCSchedule(SC_SELECTOR(SCMessageDispatch::onTimerMessagePump),_pInstance,0,false);
+            SCSchedule(SC_FUNC(SCMessageDispatch::onTimerMessagePump),_pInstance,0,false);
         }
         
         return _pInstance ;

@@ -12,7 +12,6 @@
 #include "base/SCMacroDef.h"
 #include "base/SCObject.h"
 #include "base/SCString.h"
-#include "base/SCBaseCommon.h"
 #include "base/SCBufferRefT.h"
 #include "base/SCDataBlock.h"
 #include "base/SCDateTime.h"
@@ -20,11 +19,11 @@
 #include "base/SCObjPtrT.h"
 #include "base/SCDictionary.h"
 #include "base/SCVersion.h"
-#include "base/SCFileUtils.h"
-#include "base/SCSystem.h"
 #include "base/SCWatchNumberT.h"
 #include "base/SCWatchString.h"
 
+#include "system/SCSystem.h"
+#include "system/SCFileUtils.h"
 
 #include "cocos/SCRefHolder.h"
 #include "cocos/SCSceneNavigator.h"

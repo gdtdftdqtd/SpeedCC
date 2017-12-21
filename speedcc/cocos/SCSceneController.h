@@ -18,10 +18,7 @@
 
 namespace SpeedCC
 {
-#define FN(_fun_)\
-    ((decltype(SCTraitFunctionPointerType(&sc_this_class_t::_fun_)))(&sc_this_class_t::_fun_))
-    
-    
+
     class SCSceneController :
     public SCObject,
     public SCMessageListener,

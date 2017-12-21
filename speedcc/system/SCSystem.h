@@ -10,7 +10,7 @@
 #define __SPEEDCC__SCSYSTEM_H__
 
 #include "cocos2d.h"
-#include "SCVersion.h"
+#include "../base/SCVersion.h"
 
 namespace SpeedCC
 {

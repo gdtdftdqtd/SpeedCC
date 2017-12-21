@@ -96,7 +96,6 @@ namespace SpeedCC
 #define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_)\
 {\
     int sc_root_nSCContainerStackCounter = 0;\
-    typedef std::remove_pointer<decltype(this)>::type    sc_this_class_t;\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(_parent_) \
     sc_container_pParentNode->setContentSize(_size_);\
     sc_container_pParentNode->setAnchorPoint(cocos2d::Vec2(0.5,0.5));\
