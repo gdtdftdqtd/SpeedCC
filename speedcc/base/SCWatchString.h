@@ -81,7 +81,7 @@ namespace SpeedCC
                                                      const SCString& strOld)>& fun);
         
         void removeUpdateFun(const int nID);
-        inline SCString getString() const {return *this;}
+        inline SCString getValue() const {return *this;}
         
     protected:
         SCWatchString();

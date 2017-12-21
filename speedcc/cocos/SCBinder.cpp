@@ -75,14 +75,15 @@ namespace SpeedCC
         
         if(_pLabel!=NULL && _bActive)
         {
-            _pLabel->setString(watchStr->getString().c_str());
+            _pLabel->setString(watchStr->getValue().c_str());
         }
         else
         {
-            _strLast = watchStr->getString();
+            _strLast = watchStr->getValue();
         }
     }
     
+    /*
     ///-------------- SCBinderSetting
     void SCBinderSetting::setWatchSource(SCWatchString::Ptr watchStr)
     {
@@ -153,4 +154,5 @@ namespace SpeedCC
         
         *watchBool = cocos2d::UserDefault::getInstance()->getBoolForKey(_strSettingKey,bDefault);
     }
+     */
 }

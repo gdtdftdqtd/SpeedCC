@@ -10,6 +10,8 @@
 #define __SPEEDCC__SCWATCHNUMBERT_H__
 
 #include "SCMacroDef.h"
+#include "SCObject.h"
+#include "SCString.h"
 
 namespace SpeedCC
 {
@@ -31,61 +33,61 @@ namespace SpeedCC
 #define SC_DEFINE_NUMBER_GLOBAL1(_opr_,_ret_type_) \
     template<typename T> \
     _ret_type_ operator _opr_ (const SCWatchNumberT<T>& num1,const SCWatchNumberT<T>& num2) {\
-        return num1.getNumber() _opr_ num2.getNumber();\
+        return num1.getValue() _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const int num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const unsigned int num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const char num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const unsigned char num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const short num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const unsigned short num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const long num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const unsigned long num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const float num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const double num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber()();\
+        return num1 _opr_ num2.getValue()();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const INT64 num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }\
     template<typename T> \
     _ret_type_ operator _opr_ (const bool num1,const SCWatchNumberT<T>& num2) {\
-        return num1 _opr_ num2.getNumber();\
+        return num1 _opr_ num2.getValue();\
     }
  
 #define SC_DEFINE_NUMBER_GLOBAL2(_opr1_,_opr2_) \
     template<typename T2>\
     T2 operator _opr1_ (T2& num1,const SCWatchNumberT<T2>& num) {\
-        T2 ret = num1 _opr2_ num.getNumber();\
+        T2 ret = num1 _opr2_ num.getValue();\
         num1 = ret;\
         return ret;\
     }
@@ -288,7 +290,7 @@ namespace SpeedCC
             return SCString(_number);
         }
 
-        inline T getNumber() const {return _number;}
+        inline T getValue() const {return _number;}
         
     protected:
         SCWatchNumberT():
@@ -380,7 +382,7 @@ namespace SpeedCC
         }
 
         
-        inline bool getNumber() const {return _number;}
+        inline bool getValue() const {return _number;}
         
     protected:
         SCWatchNumberT():

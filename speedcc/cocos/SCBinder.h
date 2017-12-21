@@ -94,10 +94,12 @@ namespace SpeedCC
         SCString            _strLast;
     };
     
-    
+    /*
     ///-------------- SCBinderSetting
+    class SCSetting;
     class SCBinderSetting : public SCBinder
     {
+        friend class SCSetting;
     public:
         SC_AVOID_CLASS_COPY(SCBinderSetting)
         SC_DEFINE_CLASS_PTR(SCBinderSetting)
@@ -120,6 +122,7 @@ namespace SpeedCC
     private:
         SCString        _strSettingKey;
     };
+     */
 }
 
 #endif //__SPEEDCC__SCBINDER_H__

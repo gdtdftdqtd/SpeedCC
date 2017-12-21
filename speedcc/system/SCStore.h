@@ -30,6 +30,8 @@ namespace SpeedCC
         };
         
     public:
+        SC_AVOID_CLASS_COPY(SCStore)
+        
         static SCStore* getInstance();
         
         // there are 3 combinations

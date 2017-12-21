@@ -29,6 +29,7 @@ namespace SpeedCC
     
     bool SCStore::setUpFeatureID(const int nFeatureID,const SCString& strIAP,const int nPointID,const int nPointInc)
     {
+        SCASSERT(nFeatureID>0);
         SFeaturePointInfo info;
         info.nFeatureID = nFeatureID;
         info.strIAP = strIAP;
@@ -55,6 +56,7 @@ namespace SpeedCC
     
     bool SCStore::setPointIncByFeature(const int nFeatureID,const int nPointInc)
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,false);
         auto it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
@@ -65,6 +67,7 @@ namespace SpeedCC
     
     bool SCStore::purchaseFeature(const int nFeatureID)
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,false);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
@@ -77,6 +80,7 @@ namespace SpeedCC
     
     bool SCStore::isFeatureEnable(const int nFeatureID) const
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,false);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
@@ -86,6 +90,7 @@ namespace SpeedCC
     
     bool SCStore::setFeatureEnable(const int nFeatureID,const bool bEnable)
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,false);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
@@ -96,6 +101,7 @@ namespace SpeedCC
     
     bool SCStore::getIAPPriceInfo(const SCString& strIAP,SPriceInfo& info,const bool bRquest)
     {
+        SCASSERT(!strIAP.isEmpty());
         SC_RETURN_IF(strIAP.isEmpty(), false);
         SC_RETURN_IF(!this->isIAPExist(strIAP), false);
         
@@ -124,6 +130,7 @@ namespace SpeedCC
     
     bool SCStore::requestPriceInfo(const SCString& strIAP)
     {
+        SCASSERT(!strIAP.isEmpty());
         SC_RETURN_IF(strIAP.isEmpty(), false);
         SC_RETURN_IF(!this->isIAPExist(strIAP), false);
         
@@ -133,6 +140,7 @@ namespace SpeedCC
     
     bool SCStore::bindPoint2Setting(const int nPointID,const SCString& strSettingKey)
     {
+        SCASSERT(nPointID>0);
         SC_RETURN_IF(nPointID<=0, false);
         SC_RETURN_IF(strSettingKey.isEmpty(), false);
         
@@ -145,6 +153,7 @@ namespace SpeedCC
     
     SCString SCStore::getIAPByFeature(const int nFeatureID)
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,0);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(_feature2InfoMap.end()==it, 0);
@@ -153,6 +162,7 @@ namespace SpeedCC
     
     int SCStore::getPointIDByFeature(const int nFeatureID)
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,0);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(_feature2InfoMap.end()==it, 0);
@@ -161,6 +171,7 @@ namespace SpeedCC
     
     bool SCStore::addPoint(const int nPointID,const int nPointInc)
     {
+        SCASSERT(nPointID>0);
         auto it = _pointID2WatchIntMap.find(nPointID);
         SC_RETURN_IF(it==_pointID2WatchIntMap.end(), false);
         (*(*it).second) += nPointInc;
@@ -170,6 +181,7 @@ namespace SpeedCC
     
     bool SCStore::isFeatureExist(const int nFeatureID) const
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(_feature2InfoMap.empty() || nFeatureID<=0, false);
      
         return (_feature2InfoMap.find(nFeatureID)!=_feature2InfoMap.end());
@@ -177,6 +189,7 @@ namespace SpeedCC
     
     bool SCStore::isPointExist(const int nPointID) const
     {
+        SCASSERT(nPointID>0);
         SC_RETURN_IF(_pointID2WatchIntMap.empty() || nPointID<=0, false);
         
         return (_pointID2WatchIntMap.find(nPointID)!=_pointID2WatchIntMap.end());
@@ -184,6 +197,7 @@ namespace SpeedCC
     
     bool SCStore::isIAPExist(const SCString& strIAP) const
     {
+        SCASSERT(!strIAP.isEmpty());
         SC_RETURN_IF(_feature2InfoMap.empty() || strIAP.isEmpty(), false);
         
         for(const auto& it : _feature2InfoMap)
@@ -196,6 +210,7 @@ namespace SpeedCC
     
     SCStore::EBuyType SCStore::getBuyTypeByFeature(const int nFeatureID)
     {
+        SCASSERT(nFeatureID>0);
         SC_RETURN_IF(_feature2InfoMap.empty() || nFeatureID<=0, kBUY_UNKNOWN);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(),kBUY_UNKNOWN);

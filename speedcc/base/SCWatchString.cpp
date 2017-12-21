@@ -11,7 +11,7 @@
 namespace SpeedCC
 {
     SCWatchString::SCWatchString(const SCWatchString& watch):
-    SCString(watch.getString()),
+    SCString(watch.getValue()),
     _nIDCounter(0)
     {
     }

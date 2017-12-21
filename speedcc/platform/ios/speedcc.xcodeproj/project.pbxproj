@@ -21,6 +21,7 @@
 		0A41B39F1FEB8C60003945EB /* SCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3991FEB8C60003945EB /* SCFileUtils.cpp */; };
 		0A41B3A01FEB8C60003945EB /* SCStore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B39A1FEB8C60003945EB /* SCStore.cpp */; };
 		0A41B3A21FEBC478003945EB /* SCiOSStore.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3A11FEBC478003945EB /* SCiOSStore.mm */; };
+		0A41B3A51FEBEE93003945EB /* SCSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3A31FEBEE93003945EB /* SCSetting.cpp */; };
 		0A67CAC91F80E7DE00FED9A5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAC41F80E7C600FED9A5 /* libcocos2d iOS.a */; };
 		0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */; };
 		0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB031F81DF7000FED9A5 /* SCValue.cpp */; };
@@ -109,6 +110,8 @@
 		0A41B39C1FEB8C60003945EB /* SCSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSystem.h; sourceTree = "<group>"; };
 		0A41B39D1FEB8C60003945EB /* SCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFileUtils.h; sourceTree = "<group>"; };
 		0A41B3A11FEBC478003945EB /* SCiOSStore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SCiOSStore.mm; sourceTree = SOURCE_ROOT; };
+		0A41B3A31FEBEE93003945EB /* SCSetting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCSetting.cpp; sourceTree = "<group>"; };
+		0A41B3A41FEBEE93003945EB /* SCSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCSetting.h; sourceTree = "<group>"; };
 		0A67CA7E1F80E31700FED9A5 /* libspeedcc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libspeedcc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2dx/v3/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMemAllocator.cpp; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 				0A41B3991FEB8C60003945EB /* SCFileUtils.cpp */,
 				0A41B39B1FEB8C60003945EB /* SCStore.h */,
 				0A41B39A1FEB8C60003945EB /* SCStore.cpp */,
+				0A41B3A31FEBEE93003945EB /* SCSetting.cpp */,
+				0A41B3A41FEBEE93003945EB /* SCSetting.h */,
 			);
 			name = system;
 			path = ../../system;
@@ -405,6 +410,7 @@
 				0A67CB841F97984F00FED9A5 /* SCEntity.cpp in Sources */,
 				0A1556C71FD4F31600CF7420 /* SCObject.cpp in Sources */,
 				0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */,
+				0A41B3A51FEBEE93003945EB /* SCSetting.cpp in Sources */,
 				0A41B3A21FEBC478003945EB /* SCiOSStore.mm in Sources */,
 				0A8868191FDA536F00866266 /* SCSceneNavigator.cpp in Sources */,
 				0A67CB851F97984F00FED9A5 /* SCBehavior.cpp in Sources */,
