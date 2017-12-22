@@ -110,7 +110,7 @@ namespace SpeedCC
     class SCWatchNumberT : public SCObject
     {
     public:
-        typedef T  NumberType;
+        typedef T  type;
         
         SC_DEFINE_CLASS_PTR(SCWatchNumberT<T>)
         
@@ -322,6 +322,7 @@ namespace SpeedCC
     {
     public:
         SC_DEFINE_CLASS_PTR(SCWatchNumberT<bool>)
+        typedef bool  type;
         
         SCWatchNumberT(const SCWatchNumberT& num):
         _number(num._number),
@@ -452,6 +453,41 @@ namespace SpeedCC
     typedef SCWatchNumberT<float>                        SCWatchFloat;
     typedef SCWatchNumberT<double>                       SCWatchDouble;
     typedef SCWatchNumberT<bool>                         SCWatchBool;
+    
+    class SCWatchString;
+    
+    typedef SCLASSLIST_12(SCWatchShort,
+                         SCWatchUnsignedShort,
+                         SCWatchChar,
+                         SCWatchByte,
+                         SCWatchInt,
+                         SCWatchUnsignedInt,
+                         SCWatchLong,
+                         SCWatchUnsignedLong,
+                         SCWatchInt64,
+                         SCWatchFloat,
+                         SCWatchDouble,
+                         SCWatchBool)       SCWatchNumberList_t;
+    
+    typedef SCLASSLIST_13(SCWatchShort,
+                          SCWatchUnsignedShort,
+                          SCWatchChar,
+                          SCWatchByte,
+                          SCWatchInt,
+                          SCWatchUnsignedInt,
+                          SCWatchLong,
+                          SCWatchUnsignedLong,
+                          SCWatchInt64,
+                          SCWatchFloat,
+                          SCWatchDouble,
+                          SCWatchBool,
+                          SCWatchString)     SCWatchClassList_t;
+    
+    template<typename T>
+    struct SCIsWatchNumber {enum {value=(SCGetIndexByClassT<SCWatchNumberList_t,T>::value==-1) ? 0 : 1};};
+    
+    template<typename T>
+    struct SCIsWatchClass {enum {value=(SCGetIndexByClassT<SCWatchClassList_t,T>::value==-1) ? 0 : 1};};
 }
 
 #endif // __SPEEDCC__SCWATCHNUMBERT_H__

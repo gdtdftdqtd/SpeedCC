@@ -81,6 +81,15 @@ namespace SpeedCC
         {
             _strLast = watchStr->getValue();
         }
+        
+        _watchSourcePtr = watchStr;
+    }
+    
+    void SCBinderLabel::reset()
+    {
+        _bActive = true;
+        _pLabel = NULL;
+        _watchSourcePtr = NULL;
     }
     
     /*

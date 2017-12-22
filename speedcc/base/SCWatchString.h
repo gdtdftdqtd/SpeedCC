@@ -21,6 +21,8 @@ namespace SpeedCC
     public:
         SC_DEFINE_CLASS_PTR(SCWatchString)
         
+        typedef SCString  type;
+        
         SCWatchString(const SCWatchString& watch);
         
         static Ptr create();

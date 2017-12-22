@@ -37,6 +37,33 @@ namespace SpeedCC
             }
         }
         
+        template<typename T,
+        typename = typename std::enable_if<SCIsWatchClass<typename T::type>::value==1,T>::type >
+        static inline SCBinderLabel::Ptr createLabelBinder(SCSceneController* pControllerPtr, T watchPtr)
+        {
+            if(watchPtr!=NULL)
+            {
+                auto labelBinderPtr = SCBinderLabel::create();
+
+                labelBinderPtr->setWatchSource(watchPtr);
+                pControllerPtr->ownLifecycle(labelBinderPtr);
+                return labelBinderPtr;
+            }
+            
+            return NULL;
+        }
+        
+        static inline SCBinderLabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,SCBinderLabel::Ptr binderPtr)
+        {
+            if(binderPtr!=NULL)
+            {
+                pControllerPtr->ownLifecycle(binderPtr);
+            }
+            return binderPtr;
+        }
+        
+        static inline SCBinderLabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,...) { return NULL; }
+        
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_CallFunc fun,cocos2d::Ref* pSender)
         {
             auto bvr = SCBehaviorCallFunc::create([pCall,fun]() -> bool
@@ -162,8 +189,9 @@ SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNod
 #define SC_INSERT_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 do{\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
+    auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
-    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
+    SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
 }while(0);
 
@@ -171,8 +199,9 @@ do{\
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 {\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
+    auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
-    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
+    SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
@@ -180,8 +209,9 @@ do{\
 #define SC_INSERT_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 do{\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
+    auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),SCUISetup::purifyString((_font_)).c_str(),(_size_));\
-    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
+    SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
 }while(0);
 
@@ -189,8 +219,9 @@ do{\
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 {\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
+    auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),(_font_),(_size_));\
-    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
+    SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
@@ -198,8 +229,9 @@ do{\
 #define SC_INSERT_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_fun_) \
 do{\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
+    auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
-    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
+    SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
 }while(0);
 
@@ -207,8 +239,9 @@ do{\
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
 {\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
+    auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
-    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
+    SCUISetup::bindLabel(pSCTemLabel,(scTemLabelBinderPtr));\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
@@ -365,6 +398,7 @@ do{\
 // _type_ (1:system; 2:ttf; 3:bmfont)
 #define ___SC_INSIDE_ADD_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_type_) \
     SpeedCC::SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
+    auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     cocos2d::Label* pSCTemLabel;\
     if((_type_)==1){\
         pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),SCUISetup::purifyString((_font_)).c_str(),(_size_));\
@@ -373,7 +407,7 @@ do{\
     }else if((_type_)==3){\
         pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
     }\
-    SCUISetup::bindLabel(pSCTemLabel,(_string_));\
+    SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
     ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemLabel,(_x_),(_y_));\
     SCUISetup::assignNode(pSCTemLabel,(_node_));\
     SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLabel)>::type>(pSCTemLabel,SCUISetup::purifyString((_property_)));\

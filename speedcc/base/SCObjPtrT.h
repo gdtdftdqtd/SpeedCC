@@ -37,7 +37,7 @@ namespace SpeedCC
             *this = ptr;
         }
         
-        template<typename T2>
+        template<typename T2,typename = typename std::enable_if<std::is_convertible<T2*,TargetT*>::value,T2>::type>
         SCObjPtrT(const SCObjPtrT<T2,true>& ptr)
         {
             *this = ptr;

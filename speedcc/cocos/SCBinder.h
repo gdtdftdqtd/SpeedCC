@@ -29,6 +29,7 @@ namespace SpeedCC
         void setActive(const bool bActive);
         inline bool isActive() const {return _bActive;}
         
+        virtual void reset(){}
     protected:
         SCBinder():
         _bActive(true)
@@ -74,9 +75,12 @@ namespace SpeedCC
             {
                 _strLast = num->getString();
             }
+            
+            _watchSourcePtr = num;
         }
         
         void setWatchSource(SCWatchString::Ptr watchStr);
+        virtual void reset() override;
         
     protected:
         SCBinderLabel():
@@ -87,10 +91,11 @@ namespace SpeedCC
         _pLabel(pLabel)
         {}
         
-        virtual void onActiveChanged(const bool bNewActive);
+        virtual void onActiveChanged(const bool bNewActive) override;
         
     private:
         cocos2d::Label*     _pLabel;
+        SCObject::Ptr       _watchSourcePtr;
         SCString            _strLast;
     };
     
