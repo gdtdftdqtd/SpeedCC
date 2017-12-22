@@ -1,8 +1,8 @@
 
 
 
-#ifndef __SC__OBJREFT_H__
-#define __SC__OBJREFT_H__
+#ifndef __SPEEDCC__SCOBJREFT_H__
+#define __SPEEDCC__SCOBJREFT_H__
 
 #include "SCTemplateUtils.h"
 #include "SCMemAllocator.h"
@@ -261,4 +261,4 @@ namespace SpeedCC
 }
 
 
-#endif //__SC__OBJREFT_H__
+#endif //__SPEEDCC__SCOBJREFT_H__

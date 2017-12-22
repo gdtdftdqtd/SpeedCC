@@ -1,8 +1,8 @@
 //
 
 
-#ifndef __SC__TEMPLATEUTILS_H__
-#define __SC__TEMPLATEUTILS_H__
+#ifndef __SPEEDCC__SCTEMPLATEUTILS_H__
+#define __SPEEDCC__SCTEMPLATEUTILS_H__
 
 #include "SCTemplateDef.h"
 #include "SCMacroDef.h"
@@ -38,4 +38,4 @@ namespace SpeedCC
 
 
 
-#endif // __SC__TEMPLATEUTILS_H__
+#endif // __SPEEDCC__SCTEMPLATEUTILS_H__

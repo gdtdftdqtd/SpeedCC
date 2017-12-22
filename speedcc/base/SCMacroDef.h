@@ -1,8 +1,8 @@
 
 
 
-#ifndef __SC__MACRODEF_H__
-#define __SC__MACRODEF_H__
+#ifndef __SPEEDCC__SCMACRODEF_H__
+#define __SPEEDCC__SCMACRODEF_H__
 
 #include <assert.h>
 
@@ -173,4 +173,4 @@
 #define INT64       long long
 #endif
 
-#endif //__SC__MACRODEF_H__
+#endif //__SPEEDCC__SCMACRODEF_H__

@@ -1,10 +1,9 @@
 //
 
-#ifndef __SC__MemAllocator_H__
-#define __SC__MemAllocator_H__
+#ifndef __SPEEDCC__SCMEMALLOCATOR_H__
+#define __SPEEDCC__SCMEMALLOCATOR_H__
 
 #include "stdio.h"
-//#include "SCConfig.h"
 #include <vector>
 #include <list>
 #include <map>
@@ -243,4 +242,4 @@ namespace SpeedCC
     typedef std::basic_string<char,std::char_traits<char>,MySTLAllocator<char> > stl_string;
 }
 
-#endif // __SC__MemAllocator_H__
+#endif // __SPEEDCC__SCMEMALLOCATOR_H__

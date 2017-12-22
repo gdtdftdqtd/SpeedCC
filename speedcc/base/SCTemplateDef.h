@@ -1,8 +1,8 @@
 //
 
 
-#ifndef __SC__TEMPLATEDEF_H__
-#define __SC__TEMPLATEDEF_H__
+#ifndef __SPEEDCC__SCTEMPLATEDEF_H__
+#define __SPEEDCC__SCTEMPLATEDEF_H__
 
 #include <type_traits>
 #include "cocos2d.h"
@@ -309,4 +309,4 @@ namespace SpeedCC
 }
 
 
-#endif // __SC__TEMPLATEDEF_H__
+#endif // __SPEEDCC__SCTEMPLATEDEF_H__
