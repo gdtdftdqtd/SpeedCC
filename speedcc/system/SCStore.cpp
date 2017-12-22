@@ -7,6 +7,7 @@
 //
 
 #include "SCStore.h"
+#include "SCSetting.h"
 #include "../platform/SCOSSystem.h"
 
 namespace SpeedCC
@@ -85,7 +86,8 @@ namespace SpeedCC
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
         
-        return !(*it).second.bFeatureLocked;
+        auto ptr = (*it).second.bFeatureLockedPtr;
+        return !(*ptr);
     }
     
     bool SCStore::setFeatureEnable(const int nFeatureID,const bool bEnable)
@@ -95,7 +97,7 @@ namespace SpeedCC
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
         
-        (*it).second.bFeatureLocked = !bEnable;
+        *((*it).second.bFeatureLockedPtr) = !bEnable;
         return true;
     }
     
@@ -135,19 +137,6 @@ namespace SpeedCC
         SC_RETURN_IF(!this->isIAPExist(strIAP), false);
         
         ::scRequestPurchasedItemInfo(strIAP);
-        return false;
-    }
-    
-    bool SCStore::bindPoint2Setting(const int nPointID,const SCString& strSettingKey)
-    {
-        SCASSERT(nPointID>0);
-        SC_RETURN_IF(nPointID<=0, false);
-        SC_RETURN_IF(strSettingKey.isEmpty(), false);
-        
-        auto it = _pointID2WatchIntMap.find(nPointID);
-        
-        SC_RETURN_IF(_pointID2WatchIntMap.end()==it, false);
-        
         return false;
     }
     
@@ -230,5 +219,36 @@ namespace SpeedCC
         {
             return (info.nPointID>0) ? kBUY_CONSUMABLE : kBUY_NONCONSUMABLE;
         }
+    }
+    
+    bool SCStore::bindPoint2Setting(const int nPointID,const SCString& strSettingKey)
+    {
+        SCASSERT(nPointID>0);
+        SC_RETURN_IF(nPointID<=0, false);
+        SC_RETURN_IF(strSettingKey.isEmpty(), false);
+        
+        auto it = _pointID2WatchIntMap.find(nPointID);
+        
+        SC_RETURN_IF(_pointID2WatchIntMap.end()==it, false);
+        
+        auto ptr = SCSetting::getInstance()->getWatchInt(strSettingKey);
+        *ptr = *(*it).second;
+        (*it).second = ptr;
+        
+        return true;
+    }
+    
+    bool SCStore::bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey)
+    {
+        SC_RETURN_IF(nFeatureID<=0 || strSettingKey.isEmpty(), false);
+        
+        auto it = _feature2InfoMap.find(nFeatureID);
+        SC_RETURN_IF(it==_feature2InfoMap.end(), false);
+        
+        auto ptr = SCSetting::getInstance()->getWatchBool(strSettingKey);
+        *ptr = *(*it).second.bFeatureLockedPtr;
+        (*it).second.bFeatureLockedPtr = ptr;
+        
+        return true;
     }
 }

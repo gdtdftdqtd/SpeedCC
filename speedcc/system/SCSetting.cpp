@@ -150,7 +150,12 @@ namespace SpeedCC
         return ret;
     }
     
-    SCDictionary SCSetting::exportAsDictionary()
+    void SCSetting::flush()
+    {
+        cocos2d::UserDefault::getInstance()->flush();
+    }
+    
+    SCDictionary SCSetting::asDictionary()
     {
         SCDictionary ret;
         

@@ -29,7 +29,9 @@ namespace SpeedCC
         SCWatchDouble::Ptr getWatchDouble(const SCString& strKey,const double dDefault=0.0);
         SCWatchString::Ptr getWatchString(const SCString& strKey);
         
-        SCDictionary exportAsDictionary();
+        void flush();
+        
+        SCDictionary asDictionary();
         
     private:
         SCSetting() {}

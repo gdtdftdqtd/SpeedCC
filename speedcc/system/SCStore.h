@@ -43,7 +43,6 @@ namespace SpeedCC
         bool purchaseFeature(const int nFeatureID);
         bool isFeatureEnable(const int nFeatureID) const;
         bool setFeatureEnable(const int nFeatureID,const bool bEnable);
-        bool bindPoint2Setting(const int nPointID,const SCString& strSettingKey);
         
         bool getIAPPriceInfo(const SCString& strIAP,SPriceInfo& info,const bool bRquest=true);
         SCString getIAPByFeature(const int nFeatureID);
@@ -53,6 +52,8 @@ namespace SpeedCC
         bool restorePurchased();
         bool requestPriceInfo(const SCString& strIAP);
         
+        bool bindPoint2Setting(const int nPointID,const SCString& strSettingKey);
+        bool bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey);
     private:
         enum EBuyType
         {
@@ -73,18 +74,19 @@ namespace SpeedCC
              2) (nFeatureID > 0) and (strIAP == "")
                 after feature be purchased, SCWatchInt of nPointID will decrease by nPointInc
             */
-            int         nFeatureID;
-            int         nPointID;
-            SCString    strIAP;
-            int         nPointInc;
-            bool        bFeatureLocked;
+            int             nFeatureID;
+            int             nPointID;
+            SCString        strIAP;
+            int             nPointInc;
+            SCWatchBool::Ptr bFeatureLockedPtr;
             
             SFeaturePointInfo():
             nFeatureID(0),
             nPointID(0),
-            nPointInc(0),
-            bFeatureLocked(true)
-            {}
+            nPointInc(0)
+            {
+                bFeatureLockedPtr = SCWatchBool::create(true);
+            }
         };
         
         SCStore();
