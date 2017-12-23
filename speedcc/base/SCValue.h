@@ -17,7 +17,7 @@ namespace SpeedCC
         union
         {
             void*           pObject;
-            INT64       llValue;
+            INT64           llValue;
             char            cValue;
             unsigned char   byValue;
             int             nValue;
@@ -187,42 +187,8 @@ namespace SpeedCC
             return value;
         }
         
-        static SCValue create(const char value)
-        {
-            return SCValue(value);
-        }
-        
-        static SCValue create(const unsigned char value)
-        {
-            return SCValue(value);
-        }
-        
-        static SCValue create(const int value)
-        {
-            return SCValue(value);
-        }
-        
-        static SCValue create(const unsigned int value)
-        {
-            return SCValue(value);
-        }
-        
-        static SCValue create(const float value)
-        {
-            return SCValue(value);
-        }
-        
-        static SCValue create(const double value)
-        {
-            return SCValue(value);
-        }
-        
-        static SCValue create(const long value)
-        {
-            return SCValue(value);
-        }
-        
-        static SCValue create(const INT64 value)
+        template<typename T,typename = typename std::enable_if<std::is_arithmetic<T>::value,T>::type >
+        static SCValue create(const T value)
         {
             return SCValue(value);
         }
@@ -232,7 +198,7 @@ namespace SpeedCC
             return SCValue(value);
         }
         
-        template<typename ObjectT,bool IsClass=std::is_class<ObjectT>::value>
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value,ObjectT>::type>
         static SCValue create(const ObjectT& value)
         {
             SCValue ret;
