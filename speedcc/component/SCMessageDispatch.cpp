@@ -106,6 +106,13 @@ namespace SpeedCC
         this->getMsgQueRecive().push_back(mi);
     }
     
+    void SCMessageDispatch::postMessage(const int nMsgID)
+    {
+        SSCMessageInfo mi;
+        mi.nMsgID = nMsgID;
+        this->postMessage(mi);
+    }
+    
     void SCMessageDispatch::updateMutableListener()
     {
         SCASSERT(_nSendMsgCallStackCounter==0);

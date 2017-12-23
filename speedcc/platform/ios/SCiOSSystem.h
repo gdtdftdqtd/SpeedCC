@@ -4,9 +4,10 @@
 
 #import <UIKit/UIKit.h>
 
-//@interface SCiOSSystem : NSObject
-//
-//@end
+@interface SCiOSSystem : NSObject
+
+-(id)init;
+@end
 
 
 #endif // __SC__SCiOSSYSTEM_H__

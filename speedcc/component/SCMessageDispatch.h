@@ -30,6 +30,7 @@ namespace SpeedCC
         
         void sendMessage(SSCMessageInfo mi);
         void postMessage(const SSCMessageInfo& mi);
+        void postMessage(const int nMsgID);
         
     protected:
         SCMessageDispatch();

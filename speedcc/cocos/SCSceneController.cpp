@@ -42,15 +42,14 @@ namespace SpeedCC
         // generate modal mssage
         SSCMessageInfo mi;
         
-        mi.nMsgID = SCMessage_ModalSceneLostFocus;
-        mi.paramters.setValue(MSG_ARG_KEY_CONTROLLER,this);
+        mi.nMsgID = kSCMsgModalSceneLostFocus;
+        mi.paramters.setValue(MSG_KEY_CONTROLLER,this);
         SCMessageDispatch::getInstance()->postMessage(mi);
         
-        mi.nMsgID = SCMessage_ModalSceneGotFocus;
-        mi.paramters.setValue(MSG_ARG_KEY_CONTROLLER,controllerPtr.getRawPointer());
+        mi.nMsgID = kSCMsgModalSceneGotFocus;
+        mi.paramters.setValue(MSG_KEY_CONTROLLER,controllerPtr.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(mi);
     }
-    
     
     SCSceneController::Ptr SCSceneController::popModalFromParent()
     {
@@ -68,8 +67,8 @@ namespace SpeedCC
         
         // generate modal mssage
         SSCMessageInfo mi;
-        mi.nMsgID = SCMessage_ModalSceneGotFocus;
-        mi.paramters.setValue(MSG_ARG_KEY_CONTROLLER,ret.getRawPointer());
+        mi.nMsgID = kSCMsgModalSceneGotFocus;
+        mi.paramters.setValue(MSG_KEY_CONTROLLER,ret.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(mi);
         
         return ret;

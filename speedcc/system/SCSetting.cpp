@@ -40,10 +40,10 @@ namespace SpeedCC
         
         ret->addUpdateFun([strKey](SCWatchInt::Ptr watchPtr,const int nNew,const int nOld)
                                {
-                                   cocos2d::UserDefault::getInstance()->setIntegerForKey(strKey, nNew);
+                                   SCCCUserDefault()->setIntegerForKey(strKey, nNew);
                                });
         
-        (*ret) = cocos2d::UserDefault::getInstance()->getIntegerForKey(strKey,nDefault);
+        (*ret) = SCCCUserDefault()->getIntegerForKey(strKey,nDefault);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -66,10 +66,10 @@ namespace SpeedCC
         
         ret->addUpdateFun([strKey](SCWatchBool::Ptr watchPtr,const bool bNew,const bool bOld)
                           {
-                              cocos2d::UserDefault::getInstance()->setBoolForKey(strKey, bNew);
+                              SCCCUserDefault()->setBoolForKey(strKey, bNew);
                           });
         
-        (*ret) = cocos2d::UserDefault::getInstance()->getBoolForKey(strKey,bDefault);
+        (*ret) = SCCCUserDefault()->getBoolForKey(strKey,bDefault);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -92,10 +92,10 @@ namespace SpeedCC
         
         ret->addUpdateFun([strKey](SCWatchFloat::Ptr watchPtr,const float fNew,const float fOld)
                           {
-                              cocos2d::UserDefault::getInstance()->setFloatForKey(strKey, fNew);
+                              SCCCUserDefault()->setFloatForKey(strKey, fNew);
                           });
         
-        (*ret) = cocos2d::UserDefault::getInstance()->getFloatForKey(strKey,fDefault);
+        (*ret) = SCCCUserDefault()->getFloatForKey(strKey,fDefault);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -117,10 +117,10 @@ namespace SpeedCC
         
         ret->addUpdateFun([strKey](SCWatchDouble::Ptr watchPtr,const double dNew,const double dOld)
                           {
-                              cocos2d::UserDefault::getInstance()->setDoubleForKey(strKey, dNew);
+                              SCCCUserDefault()->setDoubleForKey(strKey, dNew);
                           });
         
-        (*ret) = cocos2d::UserDefault::getInstance()->getDoubleForKey(strKey,dDefault);
+        (*ret) = SCCCUserDefault()->getDoubleForKey(strKey,dDefault);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -142,17 +142,17 @@ namespace SpeedCC
         
         ret->addUpdateFun([strKey](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
                           {
-                              cocos2d::UserDefault::getInstance()->setStringForKey(strKey, strNew.c_str());
+                              SCCCUserDefault()->setStringForKey(strKey, strNew.c_str());
                           });
         
-        (*ret) = cocos2d::UserDefault::getInstance()->getStringForKey(strKey);
+        (*ret) = SCCCUserDefault()->getStringForKey(strKey);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
     
     void SCSetting::flush()
     {
-        cocos2d::UserDefault::getInstance()->flush();
+        SCCCUserDefault()->flush();
     }
     
     SCDictionary SCSetting::asDictionary()

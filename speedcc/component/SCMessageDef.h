@@ -7,48 +7,53 @@
 
 namespace SpeedCC
 {
-#define MSG_ARG_KEY_CONTROLLER     "controller"
-#define MSG_ARG_KEY_NUMBER         "number"
-#define MSG_ARG_KEY_NAME           "name"
+#define MSG_KEY_CONTROLLER     "controller"     // SCController*
+#define MSG_KEY_NUMBER         "number"         // int
+#define MSG_KEY_NAME           "name"           // SCString
+#define MSG_KEY_STATE          "state"          // ESCState
     
     enum
     {
         // no parameter
-        SCMessage_NULL  =  0,
+        kSCMsgNULL  =  0,
         
         // no parameter
-        SCMessage_Quit,
+        kSCMsgQuit,
         
-        // app new launch
+        // app launch
         // no parameter
-        SCMessage_AppLaunch,
+        kSCMsgAppLaunch,
         
         // game enter foreground
         // no parameter
-        SCMessage_AppEnterForeground,
+        kSCMsgAppEnterForeground,
         
         // game enter background
         // no parameter
-        SCMessage_AppEnterBackground,
+        kSCMsgAppEnterBackground,
+        
+        // internet reachable changed
+        // key: MSG_KEY_STATE
+        kSCMsg_InternetReachableChanged,
         
         // "number" => int; number of scenes to back
-        SCMessage_SceneBack,
+        kSCMsgSceneBack,
         
         // "layer" => cocos2d::Ref*; touch belong to layer
-        SCMessage_Touch,
+        kSCMsgTouch,
         
         // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
-        SCMessage_ModalSceneGotFocus,
+        kSCMsgModalSceneGotFocus,
         
         // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
-        SCMessage_ModalSceneLostFocus,
+        kSCMsgModalSceneLostFocus,
         
 //        // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
-//        SCMessage_PushModalScene,
+//        kSCMsgPushModalScene,
         
         // user message define must begin from this value
         // "name" => SCString; required parameter
-        SCMessage_User = 65535
+        kSCMsgUser = 65535
     };
     
     
@@ -60,7 +65,7 @@ namespace SpeedCC
         
     public:
         SSCMessageInfo():
-        nMsgID(SCMessage_NULL),
+        nMsgID(kSCMsgNULL),
         bContinue(true)
         {}
     };

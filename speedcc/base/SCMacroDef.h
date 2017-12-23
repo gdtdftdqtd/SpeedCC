@@ -161,6 +161,9 @@
 #define SCSceneNav() \
     (SpeedCC::SCSceneNavigator::getInstance())
 
+#define SCMsgDisp() \
+    (SCMessageDispatch::getInstance())
+
 //#define SC_TRAIT_PTR_CLASS(_ptr_) \
 //    decltype(std::remove_reference<std::remove_const<_ptr_>::type>::type)::type
 

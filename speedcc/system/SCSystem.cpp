@@ -18,7 +18,7 @@ using namespace cocos2d;
 
 namespace SpeedCC
 {
-    int SCSystem::s_nSupportAssetType = (SCSystem::kAssetBitMaskXLarge|SCSystem::kAssetBitMaskLarge|SCSystem::kAssetBitMaskMedium|SCSystem::kAssetBitMaskSmall);
+    int SCSystem::s_nSupportAssetType = kSCDefaultResolutionAsset;
     
     void SCSystem::setMultipleTouch(const bool bEnable)
     {

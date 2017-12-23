@@ -8,12 +8,22 @@
 
 #include <sys/sysctl.h>
 
+#include "Reachability.h"
+
+
 UIViewController* s_rootViewController = nil;
 
 #ifdef __cplusplus
 extern "C" {
 #endif  // __cplusplus
     
+    // callback functions
+    void scbInternetReachableChanged(const bool bNewState);
+    void scbAppEnterBackground();
+    void scbAppEnterForeground();
+    void scbAppLaunched();
+    
+    // inernal functions
     bool scinGetVersion(NSString* versionString,int* pMajor,int* pMinor,int* pFix);
     
     ///---------------- datetime related
@@ -117,13 +127,14 @@ extern "C" {
         
         if(pDeviceType)
         {
+            *pDeviceType = 0;
             switch([UIDevice currentDevice].userInterfaceIdiom)
             {
                 case UIUserInterfaceIdiomUnspecified:   *pDeviceType = 0; break;
                 case UIUserInterfaceIdiomPhone:         *pDeviceType = 1; break;
                 case UIUserInterfaceIdiomPad:           *pDeviceType = 2; break;
-                case UIUserInterfaceIdiomTV:            *pDeviceType = 3; break;
-                case UIUserInterfaceIdiomCarPlay:       *pDeviceType = 4; break;
+//                case UIUserInterfaceIdiomTV:            *pDeviceType = 3; break;
+//                case UIUserInterfaceIdiomCarPlay:       *pDeviceType = 4; break;
             }
         }
         
@@ -297,3 +308,73 @@ extern "C" {
 }
 #endif  // __cplusplus
 
+
+////---------------- SCiOSSystem
+
+@implementation SCiOSSystem
+SCiOSSystem* s_shareSystem;
+
+-(id)init
+{
+    self = [super init];
+    
+    if(self)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(applicationDidFinishLaunching:)
+                                                     name: UIApplicationDidFinishLaunchingNotification
+                                                   object: nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(applicationDidBecomeActive:)
+                                                     name: UIApplicationDidBecomeActiveNotification
+                                                   object: nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(applicationWillEnterForeground:)
+                                                     name: UIApplicationWillEnterForegroundNotification
+                                                   object: nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(applicationDidEnterBackground:)
+                                                     name: UIApplicationDidEnterBackgroundNotification
+                                                   object: nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reachabilityChanged:)
+                                                     name:kReachabilityChangedNotification
+                                                   object:nil];
+    }
+    
+    return self;
+}
+
+-(void)reachabilityChanged:(NSNotification*)note
+{
+    Reachability *reach = [note object];
+    NetworkStatus status = [reach currentReachabilityStatus];
+    
+    scbInternetReachableChanged(status==NotReachable);
+}
+
+-(void) applicationDidFinishLaunching:(UIApplication*)application
+{
+    scbAppLaunched();
+}
+  
+-(void) applicationDidEnterBackground:(UIApplication*)application
+{   
+    scbAppEnterBackground();
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+-(void) applicationWillEnterForeground:(UIApplication*)application
+{
+    scbAppEnterForeground();
+}
+
+@end

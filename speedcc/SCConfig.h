@@ -1,7 +1,7 @@
 
 
-#ifndef __SC__CONFIG_H__
-#define __SC__CONFIG_H__
+#ifndef __SPEEDCC__SCCONFIG_H__
+#define __SPEEDCC__SCCONFIG_H__
 
 
 #define SPEEDCC_FEATURE_ENABLE_MEMORY_POOL
@@ -38,6 +38,10 @@
 #define kSCFolderOfLanguage                                       "lang"
 #endif
 
+#ifndef kSCDefaultResolutionAsset
+#define kSCDefaultResolutionAsset                                   SCSystem::kAssetBitMaskMedium
+#endif
+
 #ifndef kSCWidthOfAssetDesignBaseline
 #define kSCWidthOfAssetDesignBaseline                             (320)
 #endif
@@ -58,4 +62,4 @@
 #define kSCWidthOfAssetDesignXLarge                                (kSCWidthOfAssetDesignSmall*8)
 #define kSCHeightOfAssetDesignXLarge                               (kSCHeightOfAssetDesignSmall*8)
 
-#endif // __SC__CONFIG_H__
+#endif // __SPEEDCC__SCCONFIG_H__
