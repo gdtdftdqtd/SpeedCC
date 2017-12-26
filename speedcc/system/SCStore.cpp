@@ -75,7 +75,7 @@ namespace SpeedCC
         
         auto type = this->getBuyTypeByInfo((*it).second);
         SC_RETURN_IF(type!=kBUY_CONSUMABLE && type!=kBUY_NONCONSUMABLE, false);
-        ::scPurchaseItem((*it).second.strIAP,type==kBUY_CONSUMABLE);
+        ::scStorePurchaseItem((*it).second.strIAP,type==kBUY_CONSUMABLE);
         return true;
     }
     
@@ -101,7 +101,7 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCStore::getIAPPriceInfo(const SCString& strIAP,SPriceInfo& info,const bool bRquest)
+    bool SCStore::getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info,const bool bRquest)
     {
         SCASSERT(!strIAP.isEmpty());
         SC_RETURN_IF(strIAP.isEmpty(), false);
@@ -113,7 +113,7 @@ namespace SpeedCC
         {
             if(bRquest)
             {
-                this->requestPriceInfo(strIAP);
+//                this->requestPriceInfo(strIAP);
             }
         }
         else
@@ -127,16 +127,16 @@ namespace SpeedCC
     
     bool SCStore::restorePurchased()
     {
-        return ::scRestorePurchased();
+        return ::scStoreRestorePurchased();
     }
     
-    bool SCStore::requestPriceInfo(const SCString& strIAP)
+    bool SCStore::requestIAPPriceInfo(const SCString& strIAP)
     {
         SCASSERT(!strIAP.isEmpty());
         SC_RETURN_IF(strIAP.isEmpty(), false);
         SC_RETURN_IF(!this->isIAPExist(strIAP), false);
         
-        ::scRequestPurchasedItemInfo(strIAP);
+//        ::scStoreRequestItemInfo(strIAP);
         return false;
     }
     

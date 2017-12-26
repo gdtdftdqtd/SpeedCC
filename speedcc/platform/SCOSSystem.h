@@ -34,6 +34,12 @@ extern "C" {
                          const int nHwBufferSize);
     void scSetMultipleTouch(const bool bEnable);
     bool scGetMultipleTouch();
+    void scShowSystemAlertBox(const char* pszTitle,
+                              const char* pszMessge,
+                              const char* pszButton1,
+                              const char* pszButton2,
+                              const char* pszButton3,
+                              const int nAlertBoxID);
     
     ///-------- app
     int scGetProductName(char* pszBuffer, int nBufferSize);
@@ -42,11 +48,12 @@ extern "C" {
     
     ///-------- store
     // callback: scbPurchaseItemResult() 
-    bool scPurchaseItem(const char* pszIAP,const bool bConsumable);
+    bool scStorePurchaseItem(const char* pszIAP,const bool bConsumable);
     // callback: scbPurchaseItemInfoResult()
-    void scRequestPurchasedItemInfo(const char* pszIAP);
+    bool scStoreRequestItemInfo(const char** pszIAP,const int nIAPCount);
     // callback: scbPurchaseRestoreResult()
-    bool scRestorePurchased();
+    bool scStoreRestorePurchased();
+    
     
     // network
 //    bool scIsInternetAvailable(bool bAlert);

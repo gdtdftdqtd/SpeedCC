@@ -8,7 +8,7 @@
 
 #include <sys/sysctl.h>
 
-#include "Reachability.h"
+#import "support/Reachability.h"
 
 
 UIViewController* s_rootViewController = nil;
@@ -22,6 +22,14 @@ extern "C" {
     void scbAppEnterBackground();
     void scbAppEnterForeground();
     void scbAppLaunched();
+    
+    void scbAlertBoxSelected(const int nAlertBoxID,const int nButton);
+    void scbReflectShowAlertBox(const char* pszTitle,
+                                const char* pszMessge,
+                                const char* pszButton1,
+                                const char* pszButton2,
+                                const char* pszButton3,
+                                const int nAlertBoxID);
     
     // inernal functions
     bool scinGetVersion(NSString* versionString,int* pMajor,int* pMinor,int* pFix);
@@ -227,6 +235,52 @@ extern "C" {
         }
     }
     
+    
+    void scShowSystemAlertBox(const char* pszTitle,
+                              const char* pszMessge,
+                              const char* pszButton1,
+                              const char* pszButton2,
+                              const char* pszButton3,
+                              const int nAlertBoxID)
+    {
+        NSString* title = @"";
+        if(pszTitle!=NULL)
+        {
+            title = [NSString stringWithUTF8String:pszTitle];
+        }
+        
+        NSString* message = @"";
+        if(pszMessge!=NULL)
+        {
+            message = [NSString stringWithUTF8String:pszMessge];
+        }
+        
+        NSString* button1 = nil;
+        if(pszButton1!=NULL)
+        {
+            button1 = [NSString stringWithUTF8String:pszButton1];
+        }
+        
+        NSString* button2 = nil;
+        if(pszButton2!=NULL)
+        {
+            button2 = [NSString stringWithUTF8String:pszButton2];
+        }
+        
+        NSString* button3 = nil;
+        if(pszButton3!=NULL)
+        {
+            button3 = [NSString stringWithUTF8String:pszButton3];
+        }
+        
+        [[SCiOSSystem sharedSystem] showAlertView:title
+                                          message:message
+                                          button1:button1
+                                          button2:button2
+                                          button3:button3
+                                         buttonID:nAlertBoxID];
+    }
+    
     ///-------- app related
     
     bool scGetAppVersion(int* pMajor,int* pMinor,int* pFix)
@@ -312,7 +366,17 @@ extern "C" {
 ////---------------- SCiOSSystem
 
 @implementation SCiOSSystem
-SCiOSSystem* s_shareSystem;
+SCiOSSystem* s_shareSystem = nil;
+
++(SCiOSSystem*) sharedSystem
+{
+    if(s_shareSystem==nil)
+    {
+        s_shareSystem = [[SCiOSSystem alloc]init];
+    }
+    
+    return s_shareSystem;
+}
 
 -(id)init
 {
@@ -325,10 +389,10 @@ SCiOSSystem* s_shareSystem;
                                                      name: UIApplicationDidFinishLaunchingNotification
                                                    object: nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver: self
-                                                 selector: @selector(applicationDidBecomeActive:)
-                                                     name: UIApplicationDidBecomeActiveNotification
-                                                   object: nil];
+//        [[NSNotificationCenter defaultCenter] addObserver: self
+//                                                 selector: @selector(applicationDidBecomeActive:)
+//                                                     name: UIApplicationDidBecomeActiveNotification
+//                                                   object: nil];
         
         [[NSNotificationCenter defaultCenter] addObserver: self
                                                  selector: @selector(applicationWillEnterForeground:)
@@ -349,9 +413,32 @@ SCiOSSystem* s_shareSystem;
     return self;
 }
 
+-(void)showAlertView:(NSString*)title
+            message:(NSString*)message
+            button1:(NSString*)button1
+            button2:(NSString*)button2
+            button3:(NSString*)button3
+           buttonID:(int)buttonID
+{
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:button1
+                                          otherButtonTitles:[button2 length]>0?button2:nil,
+                          ([button2 length]>0 && [button3 length]>0)?button3:nil,
+                          nil];
+    alert.tag = buttonID;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    scbAlertBoxSelected((int)buttonIndex,(int)alertView.tag);
+}
+
 -(void)reachabilityChanged:(NSNotification*)note
 {
-    Reachability *reach = [note object];
+    Reachability* reach = [note object];
     NetworkStatus status = [reach currentReachabilityStatus];
     
     scbInternetReachableChanged(status==NotReachable);
@@ -367,10 +454,10 @@ SCiOSSystem* s_shareSystem;
     scbAppEnterBackground();
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    
-}
+//- (void)applicationDidBecomeActive:(UIApplication *)application
+//{
+//
+//}
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {

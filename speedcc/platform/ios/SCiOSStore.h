@@ -3,15 +3,27 @@
 #define __SPEEDCC__SCiOSSTORE_H__
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
 
-@interface SCiOSStore : NSObject
+@interface SCiOSStore : NSObject<SKPaymentTransactionObserver,SKRequestDelegate, SKProductsRequestDelegate>
+{
+    NSMutableDictionary*     _productID2ProductDic;
+}
 
-+(SCiOSStore*) shareStore;
+typedef NS_ENUM(NSInteger, IAPPurchaseNotificationStatus)
+{
+    IAPPurchaseFailed, // Indicates that the purchase was unsuccessful
+    IAPPurchaseSucceeded, // Indicates that the purchase was successful
+    IAPRestoredFailed, // Indicates that restoring products was unsuccessful
+    IAPRestoredSucceeded, // Indicates that restoring products was successful
+};
+
++(SCiOSStore*) sharedStore;
 
 -(id) init;
 -(BOOL) purchase:(NSString*)iap;
 -(BOOL) restore;
--(void) requestPrice:(NSString*)iap;
+-(void) requestIAPInfo:(NSArray<NSString*>*)iapArray;
 @end
 
 

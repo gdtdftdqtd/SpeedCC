@@ -1,20 +1,14 @@
 
 
-#ifndef __SC__BASEDEF_H__
-#define __SC__BASEDEF_H__
+#ifndef __SPEEDCC__SCBASEDEF_H__
+#define __SPEEDCC__SCBASEDEF_H__
 
-#include "SCMacroDef.h"
+//#include "SCMacroDef.h"
+#include "SCString.h"
 #include "cocos2d.h"
 
 namespace SpeedCC
 {
-    ///-------------------- structure definition
-    
-    
-    ///-------------------- function pointer type
-
-    
-    
     ///-------------------- type definition
     enum ESCState
     {
@@ -23,7 +17,26 @@ namespace SpeedCC
         kSCSTATE_STOPPED    = 2,
         kSCSTATE_PAUSED     = 3,
     };
+    
+    enum EErrorCode
+    {
+        kERROR_DEVICE_NOT_SUPPORT_IAP,
+    };
+    
+    ///-------------------- structure definition
+    
+    struct SErrorInfo
+    {
+        EErrorCode          code;
+        SCString            strMsg;
+    };
+    
+    ///-------------------- function pointer type
+
+    
+    
+    
 }
 
 
-#endif //__SC__BASEDEF_H__
+#endif //__SPEEDCC__SCBASEDEF_H__

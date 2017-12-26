@@ -29,6 +29,9 @@ namespace SpeedCC
         SCWatchDouble::Ptr getWatchDouble(const SCString& strKey,const double dDefault=0.0);
         SCWatchString::Ptr getWatchString(const SCString& strKey);
         
+        SCWatchBool::Ptr getSoundBool(const bool bDefault=true);
+        SCWatchBool::Ptr getMusicBool(const bool bDefault=true);
+        
         void flush();
         
         SCDictionary asDictionary();

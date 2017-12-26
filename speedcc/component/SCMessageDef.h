@@ -11,6 +11,7 @@ namespace SpeedCC
 #define MSG_KEY_NUMBER         "number"         // int
 #define MSG_KEY_NAME           "name"           // SCString
 #define MSG_KEY_STATE          "state"          // ESCState
+#define MSG_KEY_IAP             "iap"           // SCString
     
     enum
     {
@@ -19,6 +20,10 @@ namespace SpeedCC
         
         // no parameter
         kSCMsgQuit,
+        
+        // “code”: EErrorCode
+        // "message": SCString
+        kSCMsgError,
         
         // app launch
         // no parameter
@@ -39,8 +44,35 @@ namespace SpeedCC
         // "number" => int; number of scenes to back
         kSCMsgSceneBack,
         
+        // store prcoess cancelled by user
+        // no parameter
+        kSCMsgStoreUserCancelled,
+        
+        // IAP purchased is success
+        // "iap" => SCString
+        kSCMsgStorePurchaseSuccess,
+        
+        // IAP purchased is failed
+        // "iap" => SCString
+        kSCMsgStorePurchaseFailed,
+        
+        // IAP restored is success
+        kSCMsgStoreRestoreSuccess,
+        
+        // IAP restored is failed
+        kSCMsgStoreRestoreFailed,
+        
+        // retrieve IAP success
+        // "iap" => SCString
+        // "currency" => SCString
+        // "price" => float
+        kSCMsgStoreIAPInfoSuccess,
+        
+        // retrieve IAP failed
+        kSCMsgStoreIAPInfoFailed,
+        
         // "layer" => cocos2d::Ref*; touch belong to layer
-        kSCMsgTouch,
+//        kSCMsgTouch,
         
         // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
         kSCMsgModalSceneGotFocus,

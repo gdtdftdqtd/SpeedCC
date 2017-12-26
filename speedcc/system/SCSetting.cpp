@@ -150,6 +150,16 @@ namespace SpeedCC
         return ret;
     }
     
+    SCWatchBool::Ptr SCSetting::getSoundBool(const bool bDefault)
+    {
+        return this->getWatchBool("__speedcc_sound__",bDefault);
+    }
+    
+    SCWatchBool::Ptr SCSetting::getMusicBool(const bool bDefault)
+    {
+        return this->getWatchBool("__speedcc_music__",bDefault);
+    }
+    
     void SCSetting::flush()
     {
         SCCCUserDefault()->flush();

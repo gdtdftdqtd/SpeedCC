@@ -18,14 +18,16 @@ namespace SpeedCC
     class SCStore final
     {
     public:
-        struct SPriceInfo
+        struct SIAPInfo
         {
-            SCWatchFloat::Ptr    pricePtr;
+            SCWatchFloat::Ptr   fPricePtr;
             SCString            strCurrency;
+//            SCString            strTitle;
+//            SCString            strDescription;
             
-            SPriceInfo()
+            SIAPInfo()
             {
-                pricePtr = SCWatchFloat::create();
+                fPricePtr = SCWatchFloat::create();
             }
         };
         
@@ -44,13 +46,13 @@ namespace SpeedCC
         bool isFeatureEnable(const int nFeatureID) const;
         bool setFeatureEnable(const int nFeatureID,const bool bEnable);
         
-        bool getIAPPriceInfo(const SCString& strIAP,SPriceInfo& info,const bool bRquest=true);
+        bool getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info,const bool bRquest=true);
         SCString getIAPByFeature(const int nFeatureID);
         
         int getPointIDByFeature(const int nFeatureID);
         bool addPoint(const int nPointID,const int nPointInc);
         bool restorePurchased();
-        bool requestPriceInfo(const SCString& strIAP);
+        bool requestIAPPriceInfo(const SCString& strIAP);
         
         bool bindPoint2Setting(const int nPointID,const SCString& strSettingKey);
         bool bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey);
@@ -100,7 +102,7 @@ namespace SpeedCC
     private:
         std::map<int,SCWatchInt::Ptr>           _pointID2WatchIntMap;
         std::map<int,SFeaturePointInfo>         _feature2InfoMap;
-        std::map<SCString,SPriceInfo>           _iap2PriceInfoMap;
+        std::map<SCString,SIAPInfo>             _iap2PriceInfoMap;
         static SCStore*                         s_pInstance;
     };
 }
