@@ -103,6 +103,8 @@ namespace SpeedCC
         SCCCTouchDispatch()->removeEventListenersForTarget(this);
         SCCCTouchDispatch()->addEventListenerWithSceneGraphPriority(pEventListener,this);
         
+        this->setTag(kTAG);
+        
         Layer::onEnter();
     }
     

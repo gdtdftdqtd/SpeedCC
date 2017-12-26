@@ -73,6 +73,8 @@ namespace SpeedCC
     public:
         CREATE_FUNC(SCLayerNoTouch);
         
+        enum _tagNodeTag {kTAG = 1200};
+        
         virtual void onEnter() override;
         virtual void onExit() override;
         bool onSCTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent);

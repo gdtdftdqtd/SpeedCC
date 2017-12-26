@@ -30,6 +30,29 @@ namespace SpeedCC
         return ::scGetMultipleTouch();
     }
     
+    void SCSystem::setGlobalNoTouch(const bool bEnable)
+    {
+        auto pScene = SCCCDirector()->getRunningScene();
+        const bool bHas = (pScene->getChildByTag(SCLayerNoTouch::kTAG)!=NULL);
+        
+        if(bEnable && !bHas)
+        {
+            auto pLayer = SCLayerNoTouch::create();
+            pScene->addChild(pLayer);
+        }
+        else if(!bEnable && bHas)
+        {
+            pScene->removeChildByTag(SCLayerNoTouch::kTAG);
+        }
+        
+    }
+    
+    bool SCSystem::getGlobalNoTouch()
+    {
+        auto pScene = SCCCDirector()->getRunningScene();
+        return (pScene->getChildByTag(SCLayerNoTouch::kTAG)!=NULL);
+    }
+    
     SCString SCSystem::getProductName()
     {
         char szBuffer[64+1] = {0};

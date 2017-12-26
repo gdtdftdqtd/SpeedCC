@@ -433,7 +433,7 @@ SCiOSSystem* s_shareSystem = nil;
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    scbAlertBoxSelected((int)buttonIndex,(int)alertView.tag);
+    scbAlertBoxSelected((int)alertView.tag,(int)buttonIndex);
 }
 
 -(void)reachabilityChanged:(NSNotification*)note

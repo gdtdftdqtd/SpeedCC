@@ -50,7 +50,7 @@ extern "C" {
     // callback: scbPurchaseItemResult() 
     bool scStorePurchaseItem(const char* pszIAP,const bool bConsumable);
     // callback: scbPurchaseItemInfoResult()
-    bool scStoreRequestItemInfo(const char** pszIAP,const int nIAPCount);
+    bool scStoreRequestItemInfo(char** pszIAP,const int nIAPCount);
     // callback: scbPurchaseRestoreResult()
     bool scStoreRestorePurchased();
     

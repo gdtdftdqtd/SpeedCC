@@ -17,6 +17,7 @@ namespace SpeedCC
 {
     class SCStore final
     {
+        friend class SCMessageDefaultProc;
     public:
         struct SIAPInfo
         {
@@ -46,13 +47,13 @@ namespace SpeedCC
         bool isFeatureEnable(const int nFeatureID) const;
         bool setFeatureEnable(const int nFeatureID,const bool bEnable);
         
-        bool getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info,const bool bRquest=true);
+        bool getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info);
         SCString getIAPByFeature(const int nFeatureID);
         
         int getPointIDByFeature(const int nFeatureID);
         bool addPoint(const int nPointID,const int nPointInc);
         bool restorePurchased();
-        bool requestIAPPriceInfo(const SCString& strIAP);
+        bool requestIAPPriceInfo();
         
         bool bindPoint2Setting(const int nPointID,const SCString& strSettingKey);
         bool bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey);
@@ -98,6 +99,10 @@ namespace SpeedCC
         bool isIAPExist(const SCString& strIAP) const;
         EBuyType getBuyTypeByFeature(const int nFeatureID);
         EBuyType getBuyTypeByInfo(const SFeaturePointInfo& info);
+        
+        // called by message default processor
+        void setIAPPurchsed(const SCString& strIAP);
+        void setIAPInfo(const SCString& strIAP,const float fPrice,const SCString& strCurrency);
         
     private:
         std::map<int,SCWatchInt::Ptr>           _pointID2WatchIntMap;

@@ -23,7 +23,14 @@ namespace SpeedCC
         // nResult, 0: success; non-zero: failed
         void scbStoreRestoreItemResult(const char* pszIAP,int nResult)
         {
-            SCMsgDisp()->postMessage((nResult==0) ? kSCMsgStoreRestoreSuccess : kSCMsgStoreRestoreFailed);
+            SSCMessageInfo mi;
+            mi.nMsgID = ((nResult==0) ? kSCMsgStoreRestoreSuccess : kSCMsgStoreRestoreFailed);
+            
+            if(pszIAP!=NULL)
+            {
+                mi.paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
+            }
+            SCMsgDisp()->postMessage(mi);
         }
         
         void scbStoreUserCancelled()
@@ -52,27 +59,17 @@ namespace SpeedCC
             {// the retrieve all failed
                 SCMsgDisp()->postMessage(kSCMsgStoreIAPInfoFailed);
             }
-            else
-            {
-                
-            }
         }
         
         ///------------- system
         void scbAlertBoxSelected(const int nAlertBoxID,const int nButton)
         {
-            
+            SSCMessageInfo mi;
+            mi.nMsgID = kSCMsgAlertBoxSelected;
+            mi.paramters.setValue("id", nAlertBoxID);
+            mi.paramters.setValue("selected", nButton);
+            SCMsgDisp()->postMessage(mi);
         }
-        
-//        void scbReflectShowAlertBox(const char* pszTitle,
-//                                    const char* pszMessge,
-//                                    const char* pszButton1,
-//                                    const char* pszButton2,
-//                                    const char* pszButton3,
-//                                    const int nAlertBoxID)
-//        {
-//
-//        }
         
         ///------------- app
         void scbAppEnterBackground()

@@ -28,7 +28,7 @@ extern "C" {
     }
     
     // callback: scbPurchaseItemInfoResult()
-    bool scStoreRequestItemInfo(const char** pszIAP,const int nIAPCount)
+    bool scStoreRequestItemInfo(char** pszIAP,const int nIAPCount)
     {
         bool ret = false;
         

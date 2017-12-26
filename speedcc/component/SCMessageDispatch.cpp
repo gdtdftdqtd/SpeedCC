@@ -96,9 +96,18 @@ namespace SpeedCC
             {
                 (*it).pListener->onSCMessageProcess(mi);
             }
+            
+            _defaultProc.processMessage(mi);
         }
         
         --_nSendMsgCallStackCounter;
+    }
+    
+    void SCMessageDispatch::sendMessage(const int nMsgID)
+    {
+        SSCMessageInfo mi;
+        mi.nMsgID = nMsgID;
+        this->sendMessage(mi);
     }
     
     void SCMessageDispatch::postMessage(const SSCMessageInfo& mi)
@@ -188,7 +197,8 @@ namespace SpeedCC
                     (*it).pListener->onSCMessageProcess(msg) ;
                 }
             }
-            
+         
+            _defaultProc.processMessage(msg);
             workingQue.pop_front() ;
         }
         

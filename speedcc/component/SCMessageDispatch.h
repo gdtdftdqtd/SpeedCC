@@ -7,6 +7,7 @@
 
 
 #include "SCMessageDef.h"
+#include "SCMessageDefaultProc.h"
 #include "cocos2d.h"
 #include <list>
 
@@ -29,6 +30,7 @@ namespace SpeedCC
         void removeListener(SCMessageListener* pListener);
         
         void sendMessage(SSCMessageInfo mi);
+        void sendMessage(const int nMsgID);
         void postMessage(const SSCMessageInfo& mi);
         void postMessage(const int nMsgID);
         
@@ -84,6 +86,7 @@ namespace SpeedCC
         bool                                        _bMessageQueFlag;
         int                                         _nPostMsgCallStackCounter;
         int                                         _nSendMsgCallStackCounter;
+        SCMessageDefaultProc                        _defaultProc;
     };
 }
 

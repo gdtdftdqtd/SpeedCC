@@ -33,6 +33,7 @@
 		0A67CB841F97984F00FED9A5 /* SCEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB7C1F9512CD00FED9A5 /* SCEntity.cpp */; };
 		0A67CB851F97984F00FED9A5 /* SCBehavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB791F94FAFB00FED9A5 /* SCBehavior.cpp */; };
 		0A67CB861F97984F00FED9A5 /* SCOSSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */; };
+		0A6879A21FF25A64004DCED6 /* SCMessageDefaultProc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879A01FF25A64004DCED6 /* SCMessageDefaultProc.cpp */; };
 		0A8868181FDA536F00866266 /* SCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */; };
 		0A8868191FDA536F00866266 /* SCSceneNavigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */; };
 		0A88681A1FDA536F00866266 /* SCLayerRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCLayerRoot.cpp */; };
@@ -145,6 +146,8 @@
 		0A67CB7D1F9512CF00FED9A5 /* SCComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCComponent.h; sourceTree = "<group>"; };
 		0A67CB7E1F9512CF00FED9A5 /* SCEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEntity.h; sourceTree = "<group>"; };
 		0A67CB7F1F9512CF00FED9A5 /* SCComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCComponent.cpp; sourceTree = "<group>"; };
+		0A6879A01FF25A64004DCED6 /* SCMessageDefaultProc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMessageDefaultProc.cpp; sourceTree = "<group>"; };
+		0A6879A11FF25A64004DCED6 /* SCMessageDefaultProc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMessageDefaultProc.h; sourceTree = "<group>"; };
 		0A88680E1FDA536E00866266 /* SCNodeProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeProperty.h; sourceTree = "<group>"; };
 		0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeProperty.cpp; sourceTree = "<group>"; };
 		0A8868101FDA536E00866266 /* SCLayerRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLayerRoot.h; sourceTree = "<group>"; };
@@ -300,6 +303,8 @@
 				0A2803541FA8ACDD00E0174C /* SCMessageDef.h */,
 				0A2803551FA8ACDD00E0174C /* SCMessageDispatch.cpp */,
 				0A2803561FA8ACDD00E0174C /* SCMessageDispatch.h */,
+				0A6879A01FF25A64004DCED6 /* SCMessageDefaultProc.cpp */,
+				0A6879A11FF25A64004DCED6 /* SCMessageDefaultProc.h */,
 				0A67CB7F1F9512CF00FED9A5 /* SCComponent.cpp */,
 				0A67CB7D1F9512CF00FED9A5 /* SCComponent.h */,
 				0A67CB7C1F9512CD00FED9A5 /* SCEntity.cpp */,
@@ -445,6 +450,7 @@
 				0A41B3811FEA3706003945EB /* SCSceneController.cpp in Sources */,
 				0A28035A1FAB073B00E0174C /* SCDictionary.cpp in Sources */,
 				0A41B3651FE946B8003945EB /* SCString.cpp in Sources */,
+				0A6879A21FF25A64004DCED6 /* SCMessageDefaultProc.cpp in Sources */,
 				0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */,
 				0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */,
 				0A41B3471FE7D9FC003945EB /* SCWatchString.cpp in Sources */,

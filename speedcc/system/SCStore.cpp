@@ -101,7 +101,7 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCStore::getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info,const bool bRquest)
+    bool SCStore::getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info)
     {
         SCASSERT(!strIAP.isEmpty());
         SC_RETURN_IF(strIAP.isEmpty(), false);
@@ -111,10 +111,10 @@ namespace SpeedCC
         const auto& it = _iap2PriceInfoMap.find(strIAP);
         if(it==_iap2PriceInfoMap.end())
         {
-            if(bRquest)
-            {
+//            if(bRquest)
+//            {
 //                this->requestPriceInfo(strIAP);
-            }
+//            }
         }
         else
         {
@@ -130,14 +130,37 @@ namespace SpeedCC
         return ::scStoreRestorePurchased();
     }
     
-    bool SCStore::requestIAPPriceInfo(const SCString& strIAP)
+    bool SCStore::requestIAPPriceInfo()
     {
-        SCASSERT(!strIAP.isEmpty());
-        SC_RETURN_IF(strIAP.isEmpty(), false);
-        SC_RETURN_IF(!this->isIAPExist(strIAP), false);
+        bool bRet = false;
+        int nCount = 0;
+        char** pIAPArray = new char*[_feature2InfoMap.size()];
+        ::memset(pIAPArray,0,_feature2InfoMap.size());
         
-//        ::scStoreRequestItemInfo(strIAP);
-        return false;
+        for(const auto& it : _feature2InfoMap)
+        {
+            if(!it.second.strIAP.isEmpty())
+            {
+                char* pszIAP = (char*)::malloc(it.second.strIAP.getLength()+2);
+                ::strcpy(pszIAP,it.second.strIAP);
+                pIAPArray[nCount] = pszIAP;
+                ++nCount;
+            }
+        }
+        if(nCount>0)
+        {
+            bRet = ::scStoreRequestItemInfo(pIAPArray,nCount);
+            for(int i=0; i<nCount; ++i)
+            {
+                ::free(pIAPArray[i]);
+                pIAPArray[i] = NULL;
+            }
+        }
+        
+        delete [] pIAPArray;
+        pIAPArray = NULL;
+        
+        return bRet;
     }
     
     SCString SCStore::getIAPByFeature(const int nFeatureID)
@@ -250,5 +273,32 @@ namespace SpeedCC
         (*it).second.bFeatureLockedPtr = ptr;
         
         return true;
+    }
+    
+    void SCStore::setIAPPurchsed(const SCString& strIAP)
+    {
+        SC_RETURN_IF_V(strIAP.isEmpty());
+        
+        for(auto& it : _feature2InfoMap)
+        {
+            if(it.second.strIAP==strIAP)
+            {
+                *(it.second.bFeatureLockedPtr) = true;
+                break;
+            }
+        }
+    }
+    
+    void SCStore::setIAPInfo(const SCString& strIAP,const float fPrice,const SCString& strCurrency)
+    {
+        SC_RETURN_IF_V(strIAP.isEmpty());
+        
+        if(this->isIAPExist(strIAP))
+        {
+            SIAPInfo info;
+            *(info.fPricePtr) = fPrice;
+            info.strCurrency = strCurrency;
+            _iap2PriceInfoMap[strIAP] = info;
+        }
     }
 }

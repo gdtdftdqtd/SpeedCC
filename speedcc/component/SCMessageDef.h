@@ -11,7 +11,7 @@ namespace SpeedCC
 #define MSG_KEY_NUMBER         "number"         // int
 #define MSG_KEY_NAME           "name"           // SCString
 #define MSG_KEY_STATE          "state"          // ESCState
-#define MSG_KEY_IAP             "iap"           // SCString
+#define MSG_KEY_IAP            "iap"           // SCString
     
     enum
     {
@@ -39,10 +39,24 @@ namespace SpeedCC
         
         // internet reachable changed
         // key: MSG_KEY_STATE
-        kSCMsg_InternetReachableChanged,
+        kSCMsgInternetReachableChanged,
         
-        // "number" => int; number of scenes to back
-        kSCMsgSceneBack,
+        // show alert box,
+        // must block it if want to show customize alert box
+        // otherwise will show with system alert box
+        // "title" => SCString
+        // "message" => SCString
+        // "id" => int
+        // "button0" => SCString
+        // "button1" => SCString (optional)
+        // "button2" => SCString (optional)
+        kSCMsgShowAlertBox,
+        
+        // "id" => int
+        // "selected" => int
+        kSCMsgAlertBoxSelected,
+//        // "number" => int; number of scenes to back
+//        kSCMsgSceneBack,
         
         // store prcoess cancelled by user
         // no parameter
