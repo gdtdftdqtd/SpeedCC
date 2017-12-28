@@ -25,9 +25,9 @@ namespace SpeedCC
         
         SCWatchString(const SCWatchString& watch);
         
-        static Ptr create();
-        static Ptr create(const SCString& str);
-        static Ptr create(const char* pszStr);
+        SC_DEFINE_CREATE_FUN0(SCWatchString)
+        SC_DEFINE_CREATE_FUN1(SCWatchString,const SCString&)
+        SC_DEFINE_CREATE_FUN1(SCWatchString,const char*)
         
         void setEmpty();
         void format(const char* pszFormat, ...);

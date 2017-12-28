@@ -49,8 +49,8 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBinderLabel)
         SC_DEFINE_CLASS_PTR(SCBinderLabel)
         
-        static Ptr create();
-        static Ptr create(cocos2d::Label* pLabel);
+        SC_DEFINE_CREATE_FUN0(SCBinderLabel)
+        SC_DEFINE_CREATE_FUN1(SCBinderLabel,cocos2d::Label*)
         
         inline cocos2d::Label* getLabel() const { return _pLabel; }
         void setLabel(cocos2d::Label* pLabel);

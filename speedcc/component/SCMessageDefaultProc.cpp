@@ -16,7 +16,7 @@
 
 namespace SpeedCC
 {
-    void SCMessageDefaultProc::processMessage(SSCMessageInfo& mi)
+    void SCMessageDefaultProc::processMessage(SCMessageInfo& mi)
     {
         switch(mi.nMsgID)
         {

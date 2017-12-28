@@ -48,7 +48,7 @@ namespace SpeedCC
         
     protected:
         SCSceneController();
-        virtual void onSCMessageProcess(SSCMessageInfo& mi) override {}
+        virtual void onSCMessageProcess(SCMessageInfo& mi) override {}
         
     private:
         inline void setSceneRootLayer(SCLayerRoot* pLayer) { _pRootLayer = pLayer;}

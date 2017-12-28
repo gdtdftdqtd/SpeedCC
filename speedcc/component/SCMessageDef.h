@@ -97,23 +97,43 @@ namespace SpeedCC
 //        // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
 //        kSCMsgPushModalScene,
         
+        // MSG_KEY_NAME => SCString
+        kSCMsgUserLocalScene,
+        
+        // MSG_KEY_NAME => SCString
+        kSCMsgUserGlobalGame,
+        
         // user message define must begin from this value
         // "name" => SCString; required parameter
         kSCMsgUser = 65535
     };
     
     
-    struct SSCMessageInfo
+    struct SCMessageInfo
     {
         int                 nMsgID;
         SCDictionary        paramters;
         bool                bContinue;
         
-    public:
-        SSCMessageInfo():
+        SCMessageInfo():
         nMsgID(kSCMsgNULL),
         bContinue(true)
         {}
+        
+        inline bool operator==(const SCMessageInfo& mi) const
+        {
+            return (nMsgID==mi.nMsgID);
+        }
+        
+        inline bool operator<(const SCMessageInfo& mi) const
+        {
+            return (nMsgID<mi.nMsgID);
+        }
+        
+        inline bool operator>(const SCMessageInfo& mi) const
+        {
+            return (nMsgID>mi.nMsgID);
+        }
     };
 
 }

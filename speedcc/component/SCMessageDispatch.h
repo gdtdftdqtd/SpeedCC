@@ -16,7 +16,7 @@ namespace SpeedCC
     struct SCMessageListener
     {
         virtual ~SCMessageListener() {}
-        virtual void onSCMessageProcess(SSCMessageInfo& mi) {}
+        virtual void onSCMessageProcess(SCMessageInfo& mi) {}
     };
     
     
@@ -29,9 +29,9 @@ namespace SpeedCC
         void addListener(SCMessageListener* pListener,const int nPriority=0);
         void removeListener(SCMessageListener* pListener);
         
-        void sendMessage(SSCMessageInfo mi);
+        void sendMessage(SCMessageInfo& mi);
         void sendMessage(const int nMsgID);
-        void postMessage(const SSCMessageInfo& mi);
+        void postMessage(const SCMessageInfo& mi);
         void postMessage(const int nMsgID);
         
     protected:
@@ -39,11 +39,11 @@ namespace SpeedCC
         void onTimerMessagePump(float);
         
     private:
-        int dispatchMessage(SSCMessageInfo& mi);
+        int dispatchMessage(SCMessageInfo& mi);
         void updateMutableListener();
         
-        inline std::list<SSCMessageInfo>& getMsgQueRecive() {return _messageQueArray[_bMessageQueFlag?0:1];}
-        inline std::list<SSCMessageInfo>& getMsgQueDispatch() {return _messageQueArray[_bMessageQueFlag?1:0];}
+        inline std::list<SCMessageInfo>& getMsgQueRecive() {return _messageQueArray[_bMessageQueFlag?0:1];}
+        inline std::list<SCMessageInfo>& getMsgQueDispatch() {return _messageQueArray[_bMessageQueFlag?1:0];}
         inline void swapMsgQue() {_bMessageQueFlag=!_bMessageQueFlag;}
         
         struct SMutabelListenerInfo
@@ -82,7 +82,7 @@ namespace SpeedCC
         
         std::list<SMutabelListenerInfo>             _mutableListenerList;
         std::list<SListenerInfo>                    _listenerList;
-        std::list<SSCMessageInfo>                   _messageQueArray[2];
+        std::list<SCMessageInfo>                   _messageQueArray[2];
         bool                                        _bMessageQueFlag;
         int                                         _nPostMsgCallStackCounter;
         int                                         _nSendMsgCallStackCounter;

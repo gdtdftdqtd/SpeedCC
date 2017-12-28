@@ -39,53 +39,6 @@ namespace SpeedCC
     }
     
     ///----------- SCBehaviorCallFunc
-    SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create()
-    {
-        SCBehaviorCallFunc::Ptr retPtr;
-        retPtr.createInstanceWithCon([](void* pData)
-                                     {
-                                         new(pData)SCBehaviorCallFunc("");
-                                     });
-        return retPtr;
-    }
-    
-    SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create(const SCString& strName)
-    {
-        SCASSERT(!strName.isEmpty());
-        
-        SCBehaviorCallFunc::Ptr retPtr;
-        retPtr.createInstanceWithCon([strName](void* pData)
-                                     {
-                                         new(pData)SCBehaviorCallFunc(strName);
-                                     });
-        
-        return retPtr;
-    }
-    
-    SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create(const std::function<bool()>& startFunc)
-    {
-        SCBehaviorCallFunc::Ptr retPtr;
-        retPtr.createInstanceWithCon([](void* pData)
-                                     {
-                                         new(pData)SCBehaviorCallFunc("");
-                                     });
-        retPtr->setOnStartFunc(startFunc);
-        
-        return retPtr;
-    }
-    
-    SCBehaviorCallFunc::Ptr SCBehaviorCallFunc::create(const std::function<bool(SCDictionary& par)>& startFunc)
-    {
-        SCBehaviorCallFunc::Ptr retPtr;
-        retPtr.createInstanceWithCon([](void* pData)
-                                     {
-                                         new(pData)SCBehaviorCallFunc("");
-                                     });
-        retPtr->setOnStartFunc(startFunc);
-        
-        return retPtr;
-    }
-    
     bool SCBehaviorCallFunc::start()
     {
         SC_RETURN_IF(_start2Func==NULL,true);
@@ -153,16 +106,6 @@ namespace SpeedCC
     }
     
     ///----------- SCBehaviorGroup
-    
-    SCBehaviorGroup::Ptr SCBehaviorGroup::create()
-    {
-        SCBehaviorGroup::Ptr retPtr;
-        retPtr.createInstanceWithCon([](void* pData)
-                                     {
-                                         new(pData)SCBehaviorGroup("");
-                                     });
-        return retPtr;
-    }
     
     bool SCBehaviorGroup::start()
     {

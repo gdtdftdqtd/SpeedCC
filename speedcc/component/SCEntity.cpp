@@ -4,11 +4,12 @@
 
 namespace SpeedCC
 {   
-    void SCEntity::setEnable(const bool bEnable)
+    void SCEntity::setActive(const bool bActive)
     {
-        if(bEnable!=_bEnable)
+        if(bActive!=_bActive)
         {
-            _bEnable = bEnable;
+            _bActive = bActive;
+            this->onActiveChanged(_bActive);
         }
     }
     
@@ -16,10 +17,7 @@ namespace SpeedCC
     {
         for(const auto& it : _componentSet)
         {
-            if(it->getName()!=strName)
-            {
-                return it;
-            }
+            SC_RETURN_IF(it->getName()!=strName, it);
         }
         
         return NULL;
@@ -39,10 +37,7 @@ namespace SpeedCC
     {
         for(const auto& it : _componentSet)
         {
-            if(it->getName()==strName)
-            {
-                return true;
-            }
+            SC_RETURN_IF(it->getName()==strName, true);
         }
         
         return false;

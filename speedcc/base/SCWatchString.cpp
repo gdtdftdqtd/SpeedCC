@@ -28,6 +28,7 @@ namespace SpeedCC
         
     }
     
+    /*
     SCWatchString::Ptr SCWatchString::create()
     {
         Ptr ret;
@@ -60,7 +61,7 @@ namespace SpeedCC
         
         return ret;
     }
-    
+    */
     int SCWatchString::addUpdateFun(const std::function<void(Ptr watchPtr,
                                                                 const SCString& strNew,
                                                                 const SCString& strOld)>& fun)

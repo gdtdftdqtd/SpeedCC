@@ -53,8 +53,8 @@ namespace SpeedCC
     public:
         SC_DEFINE_CLASS_PTR(SCComponentValue)
         
-        static Ptr create();
-        static Ptr create(const SCString& strName,const SCValue& value);
+        SC_DEFINE_CREATE_FUN0(SCComponentValue)
+        SC_DEFINE_CREATE_FUN2(SCComponentValue,const SCString&,const SCValue&) // arg1: name; arg2: value
         
         SCValue getValue() const;
         SCValue& getValue();

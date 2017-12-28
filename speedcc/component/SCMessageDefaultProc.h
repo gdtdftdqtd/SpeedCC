@@ -18,7 +18,7 @@ namespace SpeedCC
         friend class SCMessageDispatch;
         
     protected:
-        void processMessage(SSCMessageInfo& mi);
+        void processMessage(SCMessageInfo& mi);
     };
 }
 

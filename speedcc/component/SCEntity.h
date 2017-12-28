@@ -16,12 +16,12 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCEntity)
         
         SCEntity():
-        _bEnable(true)
+        _bActive(true)
         {}
         
         SCEntity(const SCString& strName):
         _strName(strName),
-        _bEnable(true)
+        _bActive(true)
         {}
         
     public:
@@ -79,16 +79,19 @@ namespace SpeedCC
         void removeComponentByName(const SCString& strName);
         bool hasComponentByName(const SCString& strName);
         
-        inline bool getEnable() const {return _bEnable;}
-        void setEnable(const bool bEnable);
+        inline bool getActive() const {return _bActive;}
+        void setActive(const bool _bActive);
         inline SCString getName() const { return _strName; }
         void setName(SCString strName) {_strName = strName;}
+        
+    protected:
+        virtual void onActiveChanged(const bool bNewActive){}
         
     protected:
         std::list<SCComponent::Ptr>          _componentSet;
         
     private:
-        bool        _bEnable;
+        bool        _bActive;
         SCString    _strName;
     };
 }

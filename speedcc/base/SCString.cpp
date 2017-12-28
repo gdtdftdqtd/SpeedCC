@@ -1121,7 +1121,7 @@ namespace SpeedCC
         
         size_t start_pos = 0;
         
-        stl_string strThis = _pchStrData;
+        std::string strThis = _pchStrData;
         
         int i = 0;
         while((start_pos = strThis.find(lpszOld, start_pos)) != std::string::npos)

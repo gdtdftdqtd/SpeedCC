@@ -121,25 +121,8 @@ namespace SpeedCC
         {
         }
         
-        static Ptr create()
-        {
-            Ptr ret;
-            ret.createInstanceWithCon([](void* pData)
-                                      {
-                                          new(pData)SCWatchNumberT();
-                                      });
-            return ret;
-        }
-        
-        static Ptr create(const T num)
-        {
-            Ptr ret;
-            ret.createInstanceWithCon([num](void* pData)
-                                      {
-                                          new(pData)SCWatchNumberT(num);
-                                      });
-            return ret;
-        }
+        SC_DEFINE_CREATE_FUN0(SCWatchNumberT)
+        SC_DEFINE_CREATE_FUN1(SCWatchNumberT,const T)
         
         SC_DEFINE_NUMBER_CONSTRUCTOR(int)
         SC_DEFINE_NUMBER_CONSTRUCTOR(unsigned int)
@@ -330,25 +313,8 @@ namespace SpeedCC
         {
         }
         
-        static Ptr create()
-        {
-            Ptr ret;
-            ret.createInstanceWithCon([](void* pData)
-                                      {
-                                          new(pData)SCWatchNumberT();
-                                      });
-            return ret;
-        }
-        
-        static Ptr create(const bool num)
-        {
-            Ptr ret;
-            ret.createInstanceWithCon([num](void* pData)
-                                      {
-                                          new(pData)SCWatchNumberT(num);
-                                      });
-            return ret;
-        }
+        SC_DEFINE_CREATE_FUN0(SCWatchNumberT<bool>)
+        SC_DEFINE_CREATE_FUN1(SCWatchNumberT<bool>,const bool)
         
         inline operator bool() const {return _number;}
         inline bool operator==(const bool num) { return _number==num; }

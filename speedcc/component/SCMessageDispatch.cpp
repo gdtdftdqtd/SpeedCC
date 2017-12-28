@@ -78,7 +78,7 @@ namespace SpeedCC
         }
     }
     
-    void SCMessageDispatch::sendMessage(SSCMessageInfo mi)
+    void SCMessageDispatch::sendMessage(SCMessageInfo& mi)
     {
         if(_nPostMsgCallStackCounter==0 && _nSendMsgCallStackCounter==0)
         {
@@ -105,19 +105,19 @@ namespace SpeedCC
     
     void SCMessageDispatch::sendMessage(const int nMsgID)
     {
-        SSCMessageInfo mi;
+        SCMessageInfo mi;
         mi.nMsgID = nMsgID;
         this->sendMessage(mi);
     }
     
-    void SCMessageDispatch::postMessage(const SSCMessageInfo& mi)
+    void SCMessageDispatch::postMessage(const SCMessageInfo& mi)
     {
         this->getMsgQueRecive().push_back(mi);
     }
     
     void SCMessageDispatch::postMessage(const int nMsgID)
     {
-        SSCMessageInfo mi;
+        SCMessageInfo mi;
         mi.nMsgID = nMsgID;
         this->postMessage(mi);
     }
@@ -176,7 +176,7 @@ namespace SpeedCC
     
     void SCMessageDispatch::onTimerMessagePump(float fDelta)
     {
-        stl_list<SSCMessageInfo>& workingQue = this->getMsgQueRecive();
+        std::list<SCMessageInfo>& workingQue = this->getMsgQueRecive();
         this->swapMsgQue();
         
         // update mutable listener first before message loop

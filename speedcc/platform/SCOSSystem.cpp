@@ -14,7 +14,7 @@ namespace SpeedCC
         // nResult, 0: success; non-zero: failed
         void scbStorePurchaseItemResult(const char* pszIAP,int nResult)
         {
-            SSCMessageInfo mi;
+            SCMessageInfo mi;
             mi.nMsgID = (nResult==0) ? kSCMsgStorePurchaseSuccess : kSCMsgStorePurchaseFailed;
             mi.paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
             SCMsgDisp()->postMessage(mi);
@@ -23,7 +23,7 @@ namespace SpeedCC
         // nResult, 0: success; non-zero: failed
         void scbStoreRestoreItemResult(const char* pszIAP,int nResult)
         {
-            SSCMessageInfo mi;
+            SCMessageInfo mi;
             mi.nMsgID = ((nResult==0) ? kSCMsgStoreRestoreSuccess : kSCMsgStoreRestoreFailed);
             
             if(pszIAP!=NULL)
@@ -43,7 +43,7 @@ namespace SpeedCC
         {
             if(nResult==0 && pszIAP!=NULL)
             {// all are fine
-                SSCMessageInfo mi;
+                SCMessageInfo mi;
                 mi.nMsgID = kSCMsgStoreIAPInfoSuccess;
                 mi.paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
                 mi.paramters.setValue("currency", SCString(pszCurrency));
@@ -64,7 +64,7 @@ namespace SpeedCC
         ///------------- system
         void scbAlertBoxSelected(const int nAlertBoxID,const int nButton)
         {
-            SSCMessageInfo mi;
+            SCMessageInfo mi;
             mi.nMsgID = kSCMsgAlertBoxSelected;
             mi.paramters.setValue("id", nAlertBoxID);
             mi.paramters.setValue("selected", nButton);

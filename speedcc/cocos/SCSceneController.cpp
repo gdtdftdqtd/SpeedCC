@@ -40,7 +40,7 @@ namespace SpeedCC
         this->setNoTouch(true);
         
         // generate modal mssage
-        SSCMessageInfo mi;
+        SCMessageInfo mi;
         
         mi.nMsgID = kSCMsgModalSceneLostFocus;
         mi.paramters.setValue(MSG_KEY_CONTROLLER,this);
@@ -66,7 +66,7 @@ namespace SpeedCC
         _pRootLayer->removeFromParent();
         
         // generate modal mssage
-        SSCMessageInfo mi;
+        SCMessageInfo mi;
         mi.nMsgID = kSCMsgModalSceneGotFocus;
         mi.paramters.setValue(MSG_KEY_CONTROLLER,ret.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(mi);

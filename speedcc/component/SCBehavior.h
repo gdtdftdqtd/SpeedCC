@@ -18,6 +18,10 @@ namespace SpeedCC
         _state(STOPPED)
         {}
         
+        SCBehavior():
+        _state(STOPPED)
+        {}
+        
     public:
         SC_AVOID_CLASS_COPY(SCBehavior)
         SC_DEFINE_CLASS_PTR(SCBehavior)
@@ -47,14 +51,27 @@ namespace SpeedCC
         SCBehavior(strName)
         {}
         
+        SCBehaviorCallFunc()
+        {}
+        
+        SCBehaviorCallFunc(const std::function<bool()>& startFunc)
+        {
+            this->setOnStartFunc(startFunc);
+        }
+        
+        SCBehaviorCallFunc(const std::function<bool(SCDictionary& par)>& startFunc)
+        {
+            this->setOnStartFunc(startFunc);
+        }
+        
     public:
         SC_AVOID_CLASS_COPY(SCBehaviorCallFunc)
         SC_DEFINE_CLASS_PTR(SCBehaviorCallFunc)
         
-        static Ptr create();
-        static Ptr create(const std::function<bool(SCDictionary& par)>& startFunc);
-        static Ptr create(const std::function<bool()>& startFunc);
-        static Ptr create(const SCString& strName);
+        SC_DEFINE_CREATE_FUN0(SCBehaviorCallFunc)
+        SC_DEFINE_CREATE_FUN1(SCBehaviorCallFunc,const std::function<bool(SCDictionary& par)>&)
+        SC_DEFINE_CREATE_FUN1(SCBehaviorCallFunc,const std::function<bool()>&)
+        SC_DEFINE_CREATE_FUN1(SCBehaviorCallFunc,const SCString&)
         
         virtual bool start();
         virtual bool start(SCDictionary& par);
@@ -84,11 +101,14 @@ namespace SpeedCC
         SCBehavior(strName)
         {}
         
+        SCBehaviorGroup()
+        {}
+        
     public:
         SC_AVOID_CLASS_COPY(SCBehaviorGroup)
         SC_DEFINE_CLASS_PTR(SCBehaviorGroup)
         
-        static Ptr create();
+        SC_DEFINE_CREATE_FUN0(SCBehaviorGroup)
         
         virtual bool start();
         virtual bool start(SCDictionary& par);

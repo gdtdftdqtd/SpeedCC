@@ -210,36 +210,6 @@ namespace SpeedCC
     using MySTLAllocator = std::allocator<T>;
 #endif // SPEEDCC_FEATURE_ENABLE_MEMORY_POOL
     
-    ///----------- stl allocator
-    
-    template <typename T>
-    using stl_vector = std::vector<T, MySTLAllocator<T> >;
-    
-    template <typename T>
-    using stl_list = std::list<T, MySTLAllocator<T> >;
-    
-    template <typename T1,typename T2,typename T3=std::less<T1> >
-    using stl_map = std::map<T1,T2,T3, MySTLAllocator<std::pair<const T1, T2> > >;
-    
-    template <typename T1,typename T2,typename T3=std::less<T1> >
-    using stl_multimap = std::multimap<T1,T2,T3, MySTLAllocator<std::pair<const T1, T2> > >;
-    
-    template <typename T1,typename T2=std::less<T1> >
-    using stl_set = std::set<T1,T2, MySTLAllocator<T1> >;
-    
-    template <typename T1,typename T2=std::less<T1> >
-    using stl_multiset = std::multiset<T1,T2, MySTLAllocator<T1> >;
-    
-    template <typename T>
-    using stl_deque = std::deque<T, MySTLAllocator<T> >;
-    
-    template <typename T>
-    using stl_queue = std::queue<T, stl_deque<T> >;
-    
-    template <typename T>
-    using stl_stack = std::stack<T, stl_deque<T> >;
-    
-    typedef std::basic_string<char,std::char_traits<char>,MySTLAllocator<char> > stl_string;
 }
 
 #endif // __SPEEDCC__SCMEMALLOCATOR_H__
