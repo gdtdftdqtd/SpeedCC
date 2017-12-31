@@ -79,7 +79,7 @@ namespace SpeedCC
 			return SCSceneNavigator::getInstance()->switchScene(switchInfo);
 		}
 
-        SCSceneController::Ptr getCurrentSceneController() {return s_currentSceneControllerPtr;}
+        SCSceneController::Ptr getCurrentController() {return s_currentSceneControllerPtr;}
         void back(int nNumber = 1);
         void reset();
         void setSceneParameter(const SCDictionary& dic);
@@ -105,6 +105,7 @@ namespace SpeedCC
                 sceneCtlrPtr->setScene(scene);
                 sceneCtlrPtr->setSceneRootLayer(pRootLayer);
                 sceneCtlrPtr->onCreate(parameterDic);
+                sceneCtlrPtr->onSetupStage();
                 
             } while (0);
             
@@ -123,6 +124,7 @@ namespace SpeedCC
             
             sceneCtlrPtr->setScene(NULL);
             sceneCtlrPtr->onCreate(parameterDic);
+            sceneCtlrPtr->onSetupStage();
             
             return sceneCtlrPtr;
         }

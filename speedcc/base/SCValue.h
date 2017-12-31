@@ -85,6 +85,12 @@ namespace SpeedCC
         SCValue(SCDateTime& dateTime);
         SCValue(const SCDataBlock& dataBlock);
         SCValue(const std::vector<SCValue>& valueVtr);
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value,ObjectT>::type>
+        SCValue(const ObjectT& obj)
+        {
+            auto result = SCValue::create(obj);
+            _pObjData = result._pObjData;
+        }
         
         virtual ~SCValue();
         
@@ -174,6 +180,33 @@ namespace SpeedCC
                 *pResult = true;
             }
             return *((ObjectT*)(stub.data.pObject));
+        }
+        
+        template<typename ObjectT>
+        ObjectT* getRefObject(bool* pResult=NULL)
+        {
+            if(pResult!=NULL)
+            {
+                *pResult = false;
+            }
+            
+            if(this->getCookieDesc()->cookie!=OBJECT_TYPE)
+            {
+                return NULL;
+            }
+            
+            const SCValueStub& stub = *(this->getStub());
+            
+            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycle<ObjectT>::destroy)
+            {
+                return NULL;
+            }
+            
+            if(pResult!=NULL)
+            {
+                *pResult = true;
+            }
+            return (ObjectT*)(stub.data.pObject);
         }
         
         template<typename ObjectT>

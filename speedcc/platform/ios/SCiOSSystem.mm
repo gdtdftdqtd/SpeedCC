@@ -136,13 +136,22 @@ extern "C" {
         if(pDeviceType)
         {
             *pDeviceType = 0;
-            switch([UIDevice currentDevice].userInterfaceIdiom)
+            UIUserInterfaceIdiom device = [UIDevice currentDevice].userInterfaceIdiom;
+            if(device==UIUserInterfaceIdiomUnspecified)
             {
-                case UIUserInterfaceIdiomUnspecified:   *pDeviceType = 0; break;
-                case UIUserInterfaceIdiomPhone:         *pDeviceType = 1; break;
-                case UIUserInterfaceIdiomPad:           *pDeviceType = 2; break;
-//                case UIUserInterfaceIdiomTV:            *pDeviceType = 3; break;
-//                case UIUserInterfaceIdiomCarPlay:       *pDeviceType = 4; break;
+                *pDeviceType = 0;
+            }
+            else if(device==UIUserInterfaceIdiomPhone)
+            {
+                *pDeviceType = 1;
+            }
+            else if(device==UIUserInterfaceIdiomPad)
+            {
+                *pDeviceType = 2;
+            }
+            else
+            {
+                *pDeviceType = 0;
             }
         }
         

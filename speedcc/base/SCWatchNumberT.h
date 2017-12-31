@@ -121,8 +121,8 @@ namespace SpeedCC
         {
         }
         
-        SC_DEFINE_CREATE_FUN0(SCWatchNumberT)
-        SC_DEFINE_CREATE_FUN1(SCWatchNumberT,const T)
+        SC_DEFINE_CREATE_FUNC0(SCWatchNumberT)
+        SC_DEFINE_CREATE_FUNC1(SCWatchNumberT,const T)
         
         SC_DEFINE_NUMBER_CONSTRUCTOR(int)
         SC_DEFINE_NUMBER_CONSTRUCTOR(unsigned int)
@@ -313,8 +313,8 @@ namespace SpeedCC
         {
         }
         
-        SC_DEFINE_CREATE_FUN0(SCWatchNumberT<bool>)
-        SC_DEFINE_CREATE_FUN1(SCWatchNumberT<bool>,const bool)
+        SC_DEFINE_CREATE_FUNC0(SCWatchNumberT<bool>)
+        SC_DEFINE_CREATE_FUNC1(SCWatchNumberT<bool>,const bool)
         
         inline operator bool() const {return _number;}
         inline bool operator==(const bool num) { return _number==num; }

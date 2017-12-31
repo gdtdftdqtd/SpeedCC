@@ -11,6 +11,7 @@
 		0A41B34E1FE7EEEB003945EB /* TestLabelBinderController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */; };
 		0A41B3CD1FED34FF003945EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A41B3CC1FED34FE003945EB /* StoreKit.framework */; };
 		0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc.a */; };
+		0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */; };
 		0AADA6C91FDD784800E43DC6 /* TestPage1Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AADA6C71FDD784800E43DC6 /* TestPage1Controller.cpp */; };
 		0AEA3C501FE101BB004C1F13 /* assets-small in Resources */ = {isa = PBXBuildFile; fileRef = 0AEA3C4C1FE101BA004C1F13 /* assets-small */; };
 		0AEA3C511FE101BB004C1F13 /* assets-large in Resources */ = {isa = PBXBuildFile; fileRef = 0AEA3C4D1FE101BB004C1F13 /* assets-large */; };
@@ -97,6 +98,8 @@
 		0A41B34D1FE7EEEB003945EB /* TestLabelBinderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLabelBinderController.h; sourceTree = "<group>"; };
 		0A41B3CC1FED34FE003945EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		0A67CAB11F80E75100FED9A5 /* speedcc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = speedcc.xcodeproj; path = ../../../speedcc/platform/ios/speedcc.xcodeproj; sourceTree = "<group>"; };
+		0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestStageController.cpp; sourceTree = "<group>"; };
+		0A6879C21FF7ED25004DCED6 /* TestStageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStageController.h; sourceTree = "<group>"; };
 		0AADA6C71FDD784800E43DC6 /* TestPage1Controller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestPage1Controller.cpp; sourceTree = "<group>"; };
 		0AADA6C81FDD784800E43DC6 /* TestPage1Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestPage1Controller.h; sourceTree = "<group>"; };
 		0AEA3C4C1FE101BA004C1F13 /* assets-small */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "assets-small"; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */,
+				0A6879C21FF7ED25004DCED6 /* TestStageController.h */,
 				0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */,
 				0A41B34D1FE7EEEB003945EB /* TestLabelBinderController.h */,
 				0A1556C81FD69CA200CF7420 /* TestHomeController.cpp */,
@@ -492,6 +497,7 @@
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */,
 				0AADA6C91FDD784800E43DC6 /* TestPage1Controller.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,

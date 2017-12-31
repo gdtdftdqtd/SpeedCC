@@ -3,21 +3,15 @@
 #ifndef __SPEEDCC__SCBEHAVIOR_H__
 #define __SPEEDCC__SCBEHAVIOR_H__
 
-#include "SCComponent.h"
+#include "SCPerformObject.h"
 #include "../base/SCDictionary.h"
 
 namespace SpeedCC
 {
     ///-------------- SCBehavior
-    class SCBehavior : public SCComponent
+    class SCBehavior : public SCPerformObject
     {
     protected:
-        SCBehavior(const SCString& strName):
-        SCComponent(),
-        _strName(strName),
-        _state(STOPPED)
-        {}
-        
         SCBehavior():
         _state(STOPPED)
         {}
@@ -28,8 +22,8 @@ namespace SpeedCC
         
         enum EState {RUNNING,PAUSED,STOPPED};
         
-        void setName(const SCString& strName);
-        inline SCString getName() const { return _strName; }
+//        void setName(const SCString& strName);
+//        inline SCString getName() const { return _strName; }
         inline EState getState() const {return _state;}
         
         virtual bool start();
@@ -39,7 +33,6 @@ namespace SpeedCC
         virtual void stop(void);
         
     private:
-        SCString    _strName;
         EState      _state;
     };
     
@@ -47,9 +40,6 @@ namespace SpeedCC
     class SCBehaviorCallFunc : public SCBehavior
     {
     protected:
-        SCBehaviorCallFunc(const SCString& strName):
-        SCBehavior(strName)
-        {}
         
         SCBehaviorCallFunc()
         {}
@@ -68,10 +58,10 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorCallFunc)
         SC_DEFINE_CLASS_PTR(SCBehaviorCallFunc)
         
-        SC_DEFINE_CREATE_FUN0(SCBehaviorCallFunc)
-        SC_DEFINE_CREATE_FUN1(SCBehaviorCallFunc,const std::function<bool(SCDictionary& par)>&)
-        SC_DEFINE_CREATE_FUN1(SCBehaviorCallFunc,const std::function<bool()>&)
-        SC_DEFINE_CREATE_FUN1(SCBehaviorCallFunc,const SCString&)
+        SC_DEFINE_CREATE_FUNC0(SCBehaviorCallFunc)
+        SC_DEFINE_CREATE_FUNC1(SCBehaviorCallFunc,const std::function<bool(SCDictionary& par)>&)
+        SC_DEFINE_CREATE_FUNC1(SCBehaviorCallFunc,const std::function<bool()>&)
+//        SC_DEFINE_CREATE_FUNC1(SCBehaviorCallFunc,const SCString&)
         
         virtual bool start();
         virtual bool start(SCDictionary& par);
@@ -97,10 +87,6 @@ namespace SpeedCC
     class SCBehaviorGroup : public SCBehavior
     {
     protected:
-        SCBehaviorGroup(const SCString& strName):
-        SCBehavior(strName)
-        {}
-        
         SCBehaviorGroup()
         {}
         
@@ -108,7 +94,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorGroup)
         SC_DEFINE_CLASS_PTR(SCBehaviorGroup)
         
-        SC_DEFINE_CREATE_FUN0(SCBehaviorGroup)
+        SC_DEFINE_CREATE_FUNC0(SCBehaviorGroup)
         
         virtual bool start();
         virtual bool start(SCDictionary& par);
@@ -117,10 +103,15 @@ namespace SpeedCC
         virtual void stop(void);
         
         void addBehavior(const SCBehavior::Ptr& ptrBvr);
-        void removeBehavior(const SCString& strName);
+        void removeBehavior(const int nID);
         
     private:
         std::list<SCBehavior::Ptr> _behaviorList;
+    };
+    
+    class SCBehaviorStrategySwitch : public SCBehavior
+    {
+        
     };
 }
 

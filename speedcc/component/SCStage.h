@@ -9,32 +9,34 @@
 #ifndef __SPEEDCC__SCSTAGE_H__
 #define __SPEEDCC__SCSTAGE_H__
 
-//#include "SCStrategy.h"
+#include "SCPerformObject.h"
 #include "SCRole.h"
 #include "SCMessageDef.h"
+#include "SCMessageDispatch.h"
 
 namespace SpeedCC
 {
-    class SCStage : public SCObject
+    class SCStage :
+    public SCPerformObject,
+    public SCMessageListener
     {
     public:
         SC_AVOID_CLASS_COPY(SCStage)
         SC_DEFINE_CLASS_PTR(SCStage)
         
-//        void addRole(SCRole::Ptr rolePtr);
-//        void addStrategy(SCStrategy::Ptr strategyPtr);
+        SC_DEFINE_CREATE_FUNC0(SCStage)
+        
+        virtual ~SCStage();
         
         void removeRole(const SCString& strName);
-//        void removeStrategy(const SCString& strName);
         
-        void setCreateRoleFun(const std::function<SCRole::Ptr (const SCString& strName)>& fun);
-        void setCreateStrategyFun(const std::function<SCStrategy::Ptr (const SCString& strName)>& fun);
+        void setCreateRoleFunc(const std::function<SCRole::Ptr (const SCString& strName)>& fun);
+        void setCreateStrategyFunc(const std::function<SCStrategy::Ptr (const SCString& strName)>& fun);
         
-//        SCRole::Ptr getRole(const SCString& );
+        void addRole(SCRole::Ptr rolePtr);
+        virtual void setUp(){}
         
-        virtual void update(SCMessageInfo& mi);
-        virtual void setUp();
-        
+        virtual void onSCMessageProcess(SCMessageInfo& mi);
     private:
         struct SFlowInfo
         {
@@ -46,7 +48,7 @@ namespace SpeedCC
         SCStage();
         
     private:
-        std::map<SCString,SCRole::Ptr>          _name2RoleMap;
+        std::map<SCString,SCRole::Ptr>                              _name2RoleMap;
         
         std::function<SCRole::Ptr (const SCString& strName)>        _createRoleFun;
         std::function<SCStrategy::Ptr (const SCString& strName)>    _createStrategyFun;

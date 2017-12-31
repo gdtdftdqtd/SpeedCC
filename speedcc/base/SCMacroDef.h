@@ -113,7 +113,7 @@
 #define SC_HAS_CLASS(_ptr_,_class_) \
     ((_ptr_).cast<_class_>()!=NULL)
 
-#define SC_DEFINE_CREATE_FUN0(_class_)\
+#define SC_DEFINE_CREATE_FUNC0(_class_)\
     static _class_::Ptr create(){\
         _class_::Ptr ptrRet;\
         ptrRet.createInstanceWithCon([](void* pData){\
@@ -122,7 +122,7 @@
         return ptrRet;\
     }
 
-#define SC_DEFINE_CREATE_FUN1(_class_,_type1_)\
+#define SC_DEFINE_CREATE_FUNC1(_class_,_type1_)\
     static _class_::Ptr create(_type1_ arg1){\
         _class_::Ptr ptrRet;\
         ptrRet.createInstanceWithCon([arg1](void* pData){\
@@ -131,11 +131,20 @@
         return ptrRet;\
     }
 
-#define SC_DEFINE_CREATE_FUN2(_class_,_type1_,_type2_)\
+#define SC_DEFINE_CREATE_FUNC2(_class_,_type1_,_type2_)\
     static _class_::Ptr create(_type1_ arg1,_type2_ arg2){\
         _class_::Ptr ptrRet;\
         ptrRet.createInstanceWithCon([arg1,arg2](void* pData){\
                                         new(pData)_class_(arg1,arg2);\
+                                    });\
+        return ptrRet;\
+    }
+
+#define SC_DEFINE_CREATE_FUNC3(_class_,_type1_,_type2_,_type3_)\
+    static _class_::Ptr create(_type1_ arg1,_type2_ arg2,_type3_ arg3){\
+        _class_::Ptr ptrRet;\
+        ptrRet.createInstanceWithCon([arg1,arg2,arg3](void* pData){\
+                                        new(pData)_class_(arg1,arg2,arg3);\
                                     });\
         return ptrRet;\
     }

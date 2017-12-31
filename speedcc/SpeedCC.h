@@ -33,4 +33,14 @@
 #include "cocos/SCNodeUtils.h"
 #include "cocos/SCUIMacro.h"
 
+#include "component/SCFlowMacro.h"
+#include "component/SCStage.h"
+#include "component/SCRole.h"
+#include "component/SCStrategy.h"
+#include "component/SCPerformer.h"
+#include "component/SCMessageDispatch.h"
+#include "component/SCBehavior.h"
+
+
+
 #endif // __SPEEDCC__SPEEDCC_H__

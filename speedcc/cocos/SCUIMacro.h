@@ -477,4 +477,6 @@ do{\
     SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLayer)>::type>(pSCTemLayer,SCUISetup::purifyString((_property_))); \
     sc_container_LayoutObjectList.push_back(pSCTemLayer);
 
+
+
 #endif // __SPEEDCC__SCUIMACRO_H__

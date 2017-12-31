@@ -6,10 +6,10 @@
 namespace SpeedCC
 {
     ///----------- SCBehavior
-    void SCBehavior::setName(const SCString& strName)
-    {
-        _strName = strName;
-    }
+//    void SCBehavior::setName(const SCString& strName)
+//    {
+//        _strName = strName;
+//    }
     
     bool SCBehavior::start()
     {
@@ -163,12 +163,12 @@ namespace SpeedCC
         _behaviorList.push_back(ptrBvr);
     }
     
-    void SCBehaviorGroup::removeBehavior(const SCString& strName)
+    void SCBehaviorGroup::removeBehavior(const int nID)
     {
-        SC_RETURN_IF_V(strName.isEmpty());
-        _behaviorList.remove_if([strName](const SCBehavior::Ptr& ptrBvr)
+        SC_RETURN_IF_V(nID==0);
+        _behaviorList.remove_if([nID](const SCBehavior::Ptr& ptrBvr)
                                  {
-                                     return (ptrBvr->getName()==strName);
+                                     return (ptrBvr->getID()==nID);
                                  });
     }
 }
