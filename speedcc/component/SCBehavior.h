@@ -32,6 +32,10 @@ namespace SpeedCC
         virtual void resume(void);
         virtual void stop(void);
         
+        inline bool canStart() const { return (_state==STOPPED); }
+        inline bool canPause() const { return (_state==RUNNING); }
+        inline bool canResume() const { return (_state==PAUSED); }
+        
     private:
         EState      _state;
     };
@@ -109,9 +113,27 @@ namespace SpeedCC
         std::list<SCBehavior::Ptr> _behaviorList;
     };
     
-    class SCBehaviorStrategySwitch : public SCBehavior
+    ///--------------- SCBehaviorState
+    class SCBehaviorState : public SCBehavior
     {
+    protected:
+        SCBehaviorState(SCBehavior::Ptr bvrPtr, EState state):
+        _targetBvrPtr(bvrPtr),
+        _targetState(state)
+        {}
         
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorState)
+        SC_DEFINE_CLASS_PTR(SCBehaviorState)
+        
+        SC_DEFINE_CREATE_FUNC2(SCBehaviorState,SCBehavior::Ptr,EState)
+        
+        virtual bool start() override;
+        virtual bool start(SCDictionary& par) override;
+        
+    private:
+        SCBehavior::Ptr     _targetBvrPtr;
+        EState              _targetState;
     };
 }
 

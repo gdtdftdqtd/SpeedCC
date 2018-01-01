@@ -14,13 +14,11 @@ namespace SpeedCC
     _pNoTouchLayer(NULL),
     _pBlackMaskLayer(NULL),
     _bBlackMaskForModal(true)
-    {
-        SCMessageDispatch::getInstance()->addListener(this);
+    {   
     }
     
     SCSceneController::~SCSceneController()
     {
-        SCMessageDispatch::getInstance()->removeListener(this);
     }
     
     void SCSceneController::ownLifecycle(cocos2d::Ref* pObject)
@@ -146,23 +144,27 @@ namespace SpeedCC
         this->getRootLayer()->runAction(pSeqAction);
     }
     
-    void SCSceneController::addRole(SCRole::Ptr rolePtr)
+    void SCSceneController::onSCMessageProcess(SCMessageInfo& mi)
     {
-        if(_stagePtr==NULL)
-        {
-            _stagePtr = SCStage::create();
-            _stagePtr->setCreateRoleFunc([this](const SCString& strName) -> SCRole::Ptr
-                                        {
-                                            return onCreateRole(strName);
-                                        });
-            
-            _stagePtr->setCreateStrategyFunc([this](const SCString& strName) -> SCStrategy::Ptr
-                                            {
-                                                return onCreateStrategy(strName);
-                                            });
-        }
-        
-        _stagePtr->addRole(rolePtr);
+        SCStage::onSCMessageProcess(mi);
     }
+//    void SCSceneController::addRole(SCRole::Ptr rolePtr)
+//    {
+//        if(_stagePtr==NULL)
+//        {
+//            _stagePtr = SCStage::create();
+//            _stagePtr->setCreateRoleFunc([this](const SCString& strName) -> SCRole::Ptr
+//                                        {
+//                                            return onCreateRole(strName);
+//                                        });
+//
+//            _stagePtr->setCreateStrategyFunc([this](const SCString& strName) -> SCStrategy::Ptr
+//                                            {
+//                                                return onCreateStrategy(strName);
+//                                            });
+//        }
+//
+//        _stagePtr->addRole(rolePtr);
+//    }
 }
 

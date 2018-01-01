@@ -6,19 +6,17 @@
 namespace SpeedCC
 {
     ///----------- SCBehavior
-//    void SCBehavior::setName(const SCString& strName)
-//    {
-//        _strName = strName;
-//    }
     
     bool SCBehavior::start()
     {
+        SC_RETURN_IF(_state!=STOPPED, false);
         _state = RUNNING;
         return true;
     }
     
     bool SCBehavior::start(SCDictionary& par)
     {
+        SC_RETURN_IF(_state!=STOPPED, false);
         _state = RUNNING;
         return true;
     }
@@ -41,43 +39,53 @@ namespace SpeedCC
     ///----------- SCBehaviorCallFunc
     bool SCBehaviorCallFunc::start()
     {
+        SC_RETURN_IF(!this->canStart(),false);
         SC_RETURN_IF(_start2Func==NULL,true);
-        SCBehavior::start();
+        SC_RETURN_IF(!SCBehavior::start(),false);
         return _start2Func();
     }
     
     bool SCBehaviorCallFunc::start(SCDictionary& par)
     {
+        SC_RETURN_IF(!this->canStart(),false);
+        
         SC_RETURN_IF(_startFunc==NULL,true);
-        SCBehavior::start(par);
+        SC_RETURN_IF(!SCBehavior::start(par),false);
         return _startFunc(par);
     }
     
     void SCBehaviorCallFunc::pause(void)
     {
-        SCBehavior::pause();
+        SC_RETURN_IF_V(!this->canPause());
+        
         if(_pauseFunc!=NULL)
         {
             _pauseFunc();
         }
+        SCBehavior::pause();
     }
     
     void SCBehaviorCallFunc::resume(void)
     {
-        SCBehavior::resume();
+        SC_RETURN_IF_V(!this->canResume());
+        
         if(_resumeFunc!=NULL)
         {
             _resumeFunc();
         }
+        SCBehavior::resume();
     }
     
     void SCBehaviorCallFunc::stop(void)
     {
-        SCBehavior::stop();
+        SC_RETURN_IF_V(this->getState()==STOPPED);
+        
         if(_stopFunc!=NULL)
         {
             _stopFunc();
         }
+        
+        SCBehavior::stop();
     }
     
     void SCBehaviorCallFunc::setOnStartFunc(const std::function<bool()>& func)
@@ -109,17 +117,19 @@ namespace SpeedCC
     
     bool SCBehaviorGroup::start()
     {
-        SCBehavior::start();
+        SC_RETURN_IF(!this->canStart(), false);
         for(auto& it : _behaviorList)
         {
             it->start();
         }
         
+        SCBehavior::start();
         return true;
     }
     
     bool SCBehaviorGroup::start(SCDictionary& par)
     {
+        SC_RETURN_IF(!this->canStart(), false);
         SCBehavior::start(par);
         
         for(auto& it : _behaviorList)
@@ -132,6 +142,7 @@ namespace SpeedCC
     
     void SCBehaviorGroup::pause(void)
     {
+        SC_RETURN_IF_V(!this->canPause());
         for(auto& it : _behaviorList)
         {
             it->pause();
@@ -141,15 +152,18 @@ namespace SpeedCC
     
     void SCBehaviorGroup::resume(void)
     {
-        SCBehavior::resume();
+        SC_RETURN_IF_V(!this->canResume());
         for(auto& it : _behaviorList)
         {
             it->resume();
         }
+        SCBehavior::resume();
     }
     
     void SCBehaviorGroup::stop(void)
     {
+        SC_RETURN_IF_V(this->getState()==STOPPED);
+        
         for(auto& it : _behaviorList)
         {
             it->stop();
@@ -170,6 +184,71 @@ namespace SpeedCC
                                  {
                                      return (ptrBvr->getID()==nID);
                                  });
+    }
+    
+    ///---------------- SCBehaviorState
+    bool SCBehaviorState::start()
+    {
+        SC_RETURN_IF(!this->canStart(), false);
+        if(_targetBvrPtr!=NULL)
+        {
+            switch(_targetState)
+            {
+                case SCBehavior::RUNNING:
+                    if(_targetBvrPtr->getState()==STOPPED)
+                    {
+                        _targetBvrPtr->start();
+                    }
+                    else if(_targetBvrPtr->getState()==PAUSED)
+                    {
+                        _targetBvrPtr->resume();
+                    }
+                    break;
+                    
+                case SCBehavior::PAUSED:
+                    _targetBvrPtr->pause();
+                    break;
+                    
+                case SCBehavior::STOPPED:
+                    _targetBvrPtr->stop();
+                    break;
+                    
+                default: break;
+            }
+        }
+        return SCBehavior::start();
+    }
+    
+    bool SCBehaviorState::start(SCDictionary& par)
+    {
+        SC_RETURN_IF(!this->canStart(), false);
+        if(_targetBvrPtr!=NULL)
+        {
+            switch(_targetState)
+            {
+                case SCBehavior::RUNNING:
+                    if(_targetBvrPtr->getState()==STOPPED)
+                    {
+                        _targetBvrPtr->start(par);
+                    }
+                    else if(_targetBvrPtr->getState()==PAUSED)
+                    {
+                        _targetBvrPtr->resume();
+                    }
+                    break;
+                    
+                case SCBehavior::PAUSED:
+                    _targetBvrPtr->pause();
+                    break;
+                    
+                case SCBehavior::STOPPED:
+                    _targetBvrPtr->stop();
+                    break;
+                    
+                default: break;
+            }
+        }
+        return SCBehavior::start(par);
     }
 }
 

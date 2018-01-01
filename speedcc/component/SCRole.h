@@ -25,27 +25,30 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC2(SCRole, const SCString&,SCStage*);
         
-        int addPerformer(SCPerformer::Ptr performerPtr);
-        bool removePerformer(const int nID);
+        bool addPerformer(SCPerformer::Ptr performerPtr);
+        void removePerformer(const int nID);
+        bool hasPerformer(const int nID) const;
+        SCPerformer::Ptr getPerformer(const int nID);
         
         void forEach(const std::function<bool(const SCPerformer::Ptr& performerPtr)>& func) const;
         void forEach(const std::function<bool(SCPerformer::Ptr& performerPtr)>& func);
         
-        void addStrategy(SCStrategy::Ptr strategyPtr);
-        SCStrategy::Ptr getStrategy(const SCString& strName) const;
-        void setInitStrategy(SCStrategy::Ptr strategyPtr);
+        void addStrategy(SCStrategy::Ptr strategyPtr,const bool bInit=false);
+        SCStrategy::Ptr getStrategy(const int nID) const;
+        bool hasStrategy(const int nID) const;
         
         virtual void update(SCMessageInfo& mi);
-//        virtual void visit(SCPerformer::Ptr performerPtr);
         
     protected:
         SCRole(const SCString& strName,SCStage* pStage);
         
     private:
+        int                                     _nInitStrategyID;
         SCStrategy::Ptr                         _initStrategyPtr;
-        int                                     _nIDCounter;
-        std::map<int,SCPerformer::Ptr>          _id2PerformerPtrMap;
-        std::map<SCString,SCStrategy::Ptr>      _name2StrategyMap;
+//        int                                     _nIDCounter;
+//        std::map<int,SCPerformer::Ptr>          _id2PerformerMap;
+        std::list<SCPerformer::Ptr>             _performerList;
+        std::map<int,SCStrategy::Ptr>           _id2StrategyMap;
         SCStage*                                _pOwnerStage;
     };
 }

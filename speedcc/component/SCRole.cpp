@@ -12,93 +12,111 @@
 namespace SpeedCC
 {
     SCRole::SCRole(const SCString& strName,SCStage* pStage):
-    _pOwnerStage(pStage),
-    _nIDCounter(0)
+    _pOwnerStage(pStage)
     {
     }
     
-    int SCRole::addPerformer(SCPerformer::Ptr performerPtr)
+    bool SCRole::addPerformer(SCPerformer::Ptr performerPtr)
     {
         SCASSERT(performerPtr!=NULL);
-        ++_nIDCounter;
-        performerPtr->setID(_nIDCounter);
-        
-        if(_initStrategyPtr!=NULL)
-        {
-            _initStrategyPtr->enter(performerPtr.getRawPointer());
-        }
-        return _nIDCounter;
+        SC_RETURN_IF(performerPtr==NULL,false);
+        SC_RETURN_IF(this->hasPerformer(performerPtr->getID()), false);
+        _performerList.push_back(performerPtr);
+        return true;
     }
     
-    bool SCRole::removePerformer(const int nID)
+    void SCRole::removePerformer(const int nID)
     {
-        bool bRet = false;
-        auto it = _id2PerformerPtrMap.find(nID);
-        if(it!=_id2PerformerPtrMap.end())
+        SC_RETURN_IF_V(nID<=0);
+        _performerList.remove_if([nID](const SCPerformer::Ptr performerPtr) -> bool
+                                 {
+                                     return (performerPtr->getID()==nID);
+                                 });
+    }
+    
+    bool SCRole::hasPerformer(const int nID) const
+    {
+        SC_RETURN_IF(nID<=0, false);
+        for(auto it : _performerList)
         {
-            if(_initStrategyPtr!=NULL)
+            if(it->getID()==nID)
             {
-                _initStrategyPtr->exit((*it).second.getRawPointer());
+                return true;
             }
-            
-            SCSceneNav()->getCurrentController()->delayExecute(0, [nID,this]()
-                                                               {
-                                                                   _id2PerformerPtrMap.erase(nID);
-                                                               });
-            bRet = true;
         }
         
-        return bRet;
+        return false;
     }
     
-    void SCRole::setInitStrategy(SCStrategy::Ptr strategyPtr)
+    SCPerformer::Ptr SCRole::getPerformer(const int nID)
     {
-        _initStrategyPtr = strategyPtr;
+        SC_RETURN_IF(nID<=0, NULL);
+        for(auto it : _performerList)
+        {
+            if(it->getID()==nID)
+            {
+                return it;
+            }
+        }
+        
+        return NULL;
     }
     
-    void SCRole::addStrategy(SCStrategy::Ptr strategyPtr)
+    void SCRole::addStrategy(SCStrategy::Ptr strategyPtr,const bool bInit)
     {
         SCASSERT(strategyPtr!=NULL);
         SCASSERT(strategyPtr->getID()>0);
         
-        _name2StrategyMap[strategyPtr->getID()] = strategyPtr;
+        _id2StrategyMap[strategyPtr->getID()] = strategyPtr;
+        
+        if(bInit)
+        {
+            _nInitStrategyID = strategyPtr->getID();
+        }
     }
     
-    SCStrategy::Ptr SCRole::getStrategy(const SCString& strName) const
+    SCStrategy::Ptr SCRole::getStrategy(const int nID) const
     {
-        SC_RETURN_IF(_name2StrategyMap.empty() || strName.isEmpty(), NULL);
+        SC_RETURN_IF(_id2StrategyMap.empty() || nID<=0, NULL);
         
-        auto it = _name2StrategyMap.find(strName);
-        SC_RETURN_IF(it==_name2StrategyMap.end(), NULL);
+        auto it = _id2StrategyMap.find(nID);
+        SC_RETURN_IF(it==_id2StrategyMap.end(), NULL);
         
         return (*it).second;
     }
     
+    bool SCRole::hasStrategy(const int nID) const
+    {
+        SC_RETURN_IF(nID<=0, false);
+        
+        return (_id2StrategyMap.find(nID)!=_id2StrategyMap.end());
+    }
+    
     void SCRole::forEach(const std::function<bool(const SCPerformer::Ptr& performerPtr)>& func) const
     {
-        for(const auto& it : _id2PerformerPtrMap)
+        for(const auto& it : _performerList)
         {
-            SC_RETURN_IF_V(!func(it.second));
+            SC_RETURN_IF_V(!func(it));
         }
     }
     
     void SCRole::forEach(const std::function<bool(SCPerformer::Ptr& performerPtr)>& func)
     {
-        for(auto& it : _id2PerformerPtrMap)
+        for(auto& it : _performerList)
         {
-            SC_RETURN_IF_V(!func(it.second));
+            SC_RETURN_IF_V(!func(it));
         }
     }
     
     void SCRole::update(SCMessageInfo& mi)
     {
-        SC_RETURN_IF_V(_id2PerformerPtrMap.empty());
+        SC_RETURN_IF_V(_performerList.empty());
         SC_RETURN_IF_V(!this->getActive());
         
-        for(auto it : _id2PerformerPtrMap)
+        for(auto it : _performerList)
         {
             SC_RETURN_IF_V(!this->getActive());
-            it.second->update(mi);
+            it->update(mi);
         }
     }
     

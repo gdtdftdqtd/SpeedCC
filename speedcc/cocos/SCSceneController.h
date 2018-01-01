@@ -21,8 +21,7 @@ namespace SpeedCC
 {
 
     class SCSceneController :
-    public SCObject,
-    public SCMessageListener,
+    public SCStage,
     public cocos2d::Ref
     {
     public:
@@ -34,9 +33,9 @@ namespace SpeedCC
         virtual ~SCSceneController();
         
         virtual void onCreate(SCDictionary parameters){}
-        virtual void onSetupStage() {}
-        virtual SCRole::Ptr onCreateRole(const SCString& strName) { return NULL;}
-        virtual SCStrategy::Ptr onCreateStrategy(const SCString& strName) { return NULL;}
+//        virtual void onSetupStage() {}
+//        virtual SCRole::Ptr onCreateRole(const SCString& strName) { return NULL;}
+//        virtual SCStrategy::Ptr onCreateStrategy(const SCString& strName) { return NULL;}
         
         inline bool isNoTouch() const  {return (_pNoTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
@@ -56,10 +55,10 @@ namespace SpeedCC
         
         void delayExecute(float fDelay,const std::function<void ()>& fun);
         
-        void addRole(SCRole::Ptr rolePtr);
+//        void addRole(SCRole::Ptr rolePtr);
     protected:
         SCSceneController();
-        virtual void onSCMessageProcess(SCMessageInfo& mi) override {}
+        virtual void onSCMessageProcess(SCMessageInfo& mi) override;
         
     private:
         inline void setSceneRootLayer(SCLayerRoot* pLayer) { _pRootLayer = pLayer;}
@@ -68,8 +67,6 @@ namespace SpeedCC
         
     protected:
         std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
-        
-        SCStage::Ptr                            _stagePtr;
         
     private:
         SCLayerRoot*			                _pRootLayer;
