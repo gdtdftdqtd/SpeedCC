@@ -20,7 +20,7 @@ namespace SpeedCC
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
-            _enterBehaviorPtr->start(dic);
+            _enterBehaviorPtr->execute(dic);
         }
     }
     
@@ -33,7 +33,7 @@ namespace SpeedCC
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
-            _exitBehaviorPtr->start(dic);
+            _exitBehaviorPtr->execute(dic);
         }
     }
     
@@ -137,7 +137,7 @@ namespace SpeedCC
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
-            pBehaviorInfo->behaviorPtr->start(dic);
+            pBehaviorInfo->behaviorPtr->execute(dic);
         }
     }
     

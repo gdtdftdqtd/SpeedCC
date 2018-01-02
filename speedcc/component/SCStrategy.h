@@ -9,12 +9,12 @@
 #ifndef __SPEEDCC__SCSTRATEGY_H__
 #define __SPEEDCC__SCSTRATEGY_H__
 
-#include "SCBehavior.h"
 #include "SCMessageDef.h"
 #include "SCPerformObject.h"
 
-#define SC_BVR_ARG_PERFORMER    "performer"
-#define SC_BVR_ARG_STRATEGY     "strategy"
+#define SC_BVR_ARG_PERFORMER    "performer" // SCPerformer::Ptr
+#define SC_BVR_ARG_STRATEGY     "strategy" // SCStrategy::Ptr
+#define SC_BVR_ARG_ROLE         "role" // SCRole::Ptr
 
 
 namespace SpeedCC

@@ -7,7 +7,6 @@
 //
 
 #include "SCPerformer.h"
-#include "SCStrategy.h"
 #include "SCRole.h"
 
 namespace SpeedCC

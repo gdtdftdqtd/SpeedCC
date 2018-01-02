@@ -11,138 +11,27 @@
 namespace SpeedCC
 {
     ///----------- SCBehaviorCallFunc
-    bool SCBehaviorCallFunc::start()
+    
+    void SCBehaviorCallFunc::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF(!this->canStart(),false);
-        SC_RETURN_IF(_start2Func==NULL,true);
-        SC_RETURN_IF(!SCBehavior::start(),false);
-        return _start2Func();
+        SC_RETURN_IF_V(_startFunc==NULL);
+        _startFunc(par);
     }
     
-    bool SCBehaviorCallFunc::start(SCDictionary& par)
-    {
-        SC_RETURN_IF(!this->canStart(),false);
-        
-        SC_RETURN_IF(_startFunc==NULL,true);
-        SC_RETURN_IF(!SCBehavior::start(par),false);
-        return _startFunc(par);
-    }
-    
-    void SCBehaviorCallFunc::pause(void)
-    {
-        SC_RETURN_IF_V(!this->canPause());
-        
-        if(_pauseFunc!=NULL)
-        {
-            _pauseFunc();
-        }
-        SCBehavior::pause();
-    }
-    
-    void SCBehaviorCallFunc::resume(void)
-    {
-        SC_RETURN_IF_V(!this->canResume());
-        
-        if(_resumeFunc!=NULL)
-        {
-            _resumeFunc();
-        }
-        SCBehavior::resume();
-    }
-    
-    void SCBehaviorCallFunc::stop(void)
-    {
-        SC_RETURN_IF_V(this->getState()==STOPPED);
-        
-        if(_stopFunc!=NULL)
-        {
-            _stopFunc();
-        }
-        
-        SCBehavior::stop();
-    }
-    
-    void SCBehaviorCallFunc::setOnStartFunc(const std::function<bool()>& func)
-    {
-        _start2Func = func;
-    }
-    
-    void SCBehaviorCallFunc::setOnStartFunc(const std::function<bool(SCDictionary& par)>& func)
+    void SCBehaviorCallFunc::setOnStartFunc(const std::function<void(const SCDictionary& par)>& func)
     {
         _startFunc = func;
     }
     
-    void SCBehaviorCallFunc::setOnPauseFunc(const std::function<void(void)>& func)
-    {
-        _pauseFunc = func;
-    }
-    
-    void SCBehaviorCallFunc::setOnResumeFunc(const std::function<void(void)>& func)
-    {
-        _resumeFunc = func;
-    }
-    
-    void SCBehaviorCallFunc::setOnStopFunc(const std::function<void(void)>& func)
-    {
-        _stopFunc = func;
-    }
     
     ///----------- SCBehaviorGroup
     
-    bool SCBehaviorGroup::start()
+    void SCBehaviorGroup::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF(!this->canStart(), false);
         for(auto& it : _behaviorList)
         {
-            it->start();
+            it->execute(par);
         }
-        
-        SCBehavior::start();
-        return true;
-    }
-    
-    bool SCBehaviorGroup::start(SCDictionary& par)
-    {
-        SC_RETURN_IF(!this->canStart(), false);
-        SCBehavior::start(par);
-        
-        for(auto& it : _behaviorList)
-        {
-            it->start(par);
-        }
-        
-        return true;
-    }
-    
-    void SCBehaviorGroup::pause(void)
-    {
-        SC_RETURN_IF_V(!this->canPause());
-        for(auto& it : _behaviorList)
-        {
-            it->pause();
-        }
-        SCBehavior::pause();
-    }
-    
-    void SCBehaviorGroup::resume(void)
-    {
-        SC_RETURN_IF_V(!this->canResume());
-        for(auto& it : _behaviorList)
-        {
-            it->resume();
-        }
-        SCBehavior::resume();
-    }
-    
-    void SCBehaviorGroup::stop(void)
-    {
-        SC_RETURN_IF_V(this->getState()==STOPPED);
-        
-        for(auto& it : _behaviorList)
-        {
-            it->stop();
-        }
-        SCBehavior::stop();
     }
     
     void SCBehaviorGroup::addBehavior(const SCBehavior::Ptr& ptrBvr)
@@ -160,90 +49,29 @@ namespace SpeedCC
                                 });
     }
     
-    ///---------------- SCBehaviorState
-    bool SCBehaviorState::start()
-    {
-        SC_RETURN_IF(!this->canStart(), false);
-        if(_targetBvrPtr!=NULL)
-        {
-            switch(_targetState)
-            {
-                case SCBehavior::RUNNING:
-                    if(_targetBvrPtr->getState()==STOPPED)
-                    {
-                        _targetBvrPtr->start();
-                    }
-                    else if(_targetBvrPtr->getState()==PAUSED)
-                    {
-                        _targetBvrPtr->resume();
-                    }
-                    break;
-                    
-                case SCBehavior::PAUSED:
-                    _targetBvrPtr->pause();
-                    break;
-                    
-                case SCBehavior::STOPPED:
-                    _targetBvrPtr->stop();
-                    break;
-                    
-                default: break;
-            }
-        }
-        return SCBehavior::start();
-    }
-    
-    bool SCBehaviorState::start(SCDictionary& par)
-    {
-        SC_RETURN_IF(!this->canStart(), false);
-        if(_targetBvrPtr!=NULL)
-        {
-            switch(_targetState)
-            {
-                case SCBehavior::RUNNING:
-                    if(_targetBvrPtr->getState()==STOPPED)
-                    {
-                        _targetBvrPtr->start(par);
-                    }
-                    else if(_targetBvrPtr->getState()==PAUSED)
-                    {
-                        _targetBvrPtr->resume();
-                    }
-                    break;
-                    
-                case SCBehavior::PAUSED:
-                    _targetBvrPtr->pause();
-                    break;
-                    
-                case SCBehavior::STOPPED:
-                    _targetBvrPtr->stop();
-                    break;
-                    
-                default: break;
-            }
-        }
-        return SCBehavior::start(par);
-    }
-    
     ///--------------- SCBehaviorStrategySwitch
-    bool SCBehaviorStrategySwitch::start()
+    
+    void SCBehaviorStrategySwitch::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF(!this->canStart(), false);
-        SC_RETURN_IF(_performerPtr==NULL || _nStragtegyID==0, false);
+        SC_RETURN_IF_V(_performerPtr==NULL || _nStragtegyID==0);
         
         auto stragtegy = _performerPtr->getRole()->getStrategy(_nStragtegyID);
-        SC_RETURN_IF(stragtegy==NULL, false);
+        SC_RETURN_IF_V(stragtegy==NULL);
         _performerPtr->setStrategy(stragtegy.getRawPointer());
-        
-        return true;
     }
     
-    bool SCBehaviorStrategySwitch::start(SCDictionary& par)
+    ///--------------- SCBehaviorRemovePerformer
+    
+    void SCBehaviorRemovePerformer::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF(!this->canStart(), false);
-        SC_RETURN_IF(_performerPtr==NULL || _nStragtegyID==0, false);
+        auto roleValue = par.getValue(SC_BVR_ARG_ROLE);
+        SC_RETURN_IF_V(!roleValue.isValidObject<SCRole::Ptr>());
+        auto performerValue = par.getValue(SC_BVR_ARG_PERFORMER);
+        SC_RETURN_IF_V(!performerValue.isValidObject<SCPerformer::Ptr>());
         
-        return true;
+        auto rolePtr = roleValue.getObject<SCRole::Ptr>();
+        auto performerPtr = performerValue.getObject<SCPerformer::Ptr>();
+        rolePtr->removePerformer(performerPtr->getID());
     }
 }
 

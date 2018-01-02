@@ -68,22 +68,18 @@ namespace SpeedCC
         
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_CallFunc fun,cocos2d::Ref* pSender)
         {
-            auto bvr = SCBehaviorCallFunc::create([pCall,fun]() -> bool
+            return SCBehaviorCallFunc::create([pCall,fun](const SCDictionary& par)
                                                   {
                                                       (pCall->*fun)();
-                                                      return true;
                                                   });
-            return bvr;
         }
         
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_MenuHandler fun,cocos2d::Ref* pSender)
         {
-            auto bvr = SCBehaviorCallFunc::create([pCall,fun,pSender](SCDictionary& par) -> bool
+            return SCBehaviorCallFunc::create([pCall,fun,pSender](const SCDictionary& par)
                                                   {
                                                       (pCall->*fun)(pSender);
-                                                      return true;
                                                   });
-            return bvr;
         }
         
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,SCBehavior::Ptr bvr,cocos2d::Ref* pSender){ return bvr; }

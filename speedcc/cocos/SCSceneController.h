@@ -13,7 +13,6 @@
 #include "../base/SCObject.h"
 
 #include "../component/SCMessageDispatch.h"
-#include "../component/SCBehavior.h"
 #include "../component/SCStage.h"
 
 

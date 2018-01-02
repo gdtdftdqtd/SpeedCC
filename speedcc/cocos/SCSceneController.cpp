@@ -132,7 +132,7 @@ namespace SpeedCC
         {
             if((*it).second!=NULL)
             {
-                (*it).second->start();
+                (*it).second->execute();
             }
         }
     }

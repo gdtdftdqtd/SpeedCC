@@ -44,7 +44,6 @@ namespace SpeedCC
         
     private:
         int                                     _nInitStrategyID;
-//        SCStrategy::Ptr                         _initStrategyPtr;
         std::list<SCPerformer::Ptr>             _performerList;
         std::map<int,SCStrategy::Ptr>           _id2StrategyMap;
         SCStage*                                _pOwnerStage;

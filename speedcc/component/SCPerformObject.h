@@ -11,6 +11,7 @@
 
 #include "../base/SCObject.h"
 #include "../base/SCValue.h"
+#include "../base/SCDictionary.h"
 
 namespace SpeedCC
 {
@@ -34,6 +35,20 @@ namespace SpeedCC
     private:
         int         _nID;
         bool        _bActive;
+    };
+    
+    class SCBehavior : public SCPerformObject
+    {
+    protected:
+        SCBehavior()
+        {}
+        
+    public:
+        SC_AVOID_CLASS_COPY(SCBehavior)
+        SC_DEFINE_CLASS_PTR(SCBehavior)
+        
+        virtual ~SCBehavior() {}
+        virtual void execute(const SCDictionary& par=SCDictionary()) = 0;
     };
     
     class SCComponentHolder : public SCPerformObject
