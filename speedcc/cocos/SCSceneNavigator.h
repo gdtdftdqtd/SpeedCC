@@ -105,7 +105,7 @@ namespace SpeedCC
                 sceneCtlrPtr->setScene(scene);
                 sceneCtlrPtr->setSceneRootLayer(pRootLayer);
                 sceneCtlrPtr->onCreate(parameterDic);
-//                sceneCtlrPtr->onSetupStage();
+                sceneCtlrPtr->onStageSetup();
                 
             } while (0);
             
@@ -124,7 +124,7 @@ namespace SpeedCC
             
             sceneCtlrPtr->setScene(NULL);
             sceneCtlrPtr->onCreate(parameterDic);
-//            sceneCtlrPtr->onSetupStage();
+            sceneCtlrPtr->onStageSetup();
             
             return sceneCtlrPtr;
         }

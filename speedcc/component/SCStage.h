@@ -28,15 +28,15 @@ namespace SpeedCC
         
         virtual ~SCStage();
         
-        void removeRole(const SCString& strName);
-        
-        void setCreateRoleFunc(const std::function<SCRole::Ptr (const SCString& strName)>& fun);
-        void setCreateStrategyFunc(const std::function<SCStrategy::Ptr (const SCString& strName)>& fun);
-        
         void addRole(SCRole::Ptr rolePtr);
-        virtual void setUp(){}
+        void removeRole(const int nID);
+        SCRole::Ptr getRole(const int nID);
         
-        virtual void onSCMessageProcess(SCMessageInfo& mi);
+        virtual void setUp(){}
+        virtual SCRole::Ptr onCreateRole(const int nID) {SCASSERT(false); return NULL;}
+        virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
+        
+        virtual void onSCMessageProcess(SCMessageInfo& mi) override;
     private:
         struct SFlowInfo
         {
@@ -47,11 +47,10 @@ namespace SpeedCC
     protected:
         SCStage();
         
-    private:
-        std::map<SCString,SCRole::Ptr>                              _name2RoleMap;
+        virtual void onActiveChanged(const bool bNewActive) override;
         
-        std::function<SCRole::Ptr (const SCString& strName)>        _createRoleFun;
-        std::function<SCStrategy::Ptr (const SCString& strName)>    _createStrategyFun;
+    private:
+        std::map<int,SCRole::Ptr>                              _id2RoleMap;
     };
 }
 

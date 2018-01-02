@@ -27,6 +27,8 @@ namespace SpeedCC
         
     protected:
         SCPerformObject();
+        SCPerformObject(const int nID);
+        
         virtual void onActiveChanged(const bool bNewActive){}
         
     private:
@@ -58,6 +60,14 @@ namespace SpeedCC
         
         bool hasComponent(const int nID) const;
         void removeComponent(const int nID);
+        
+    protected:
+        SCComponentHolder()
+        {}
+        
+        SCComponentHolder(const int nID):
+        SCPerformObject(nID)
+        {}
         
     private:
         std::map<int,SCValue>   _id2ComponentMap;

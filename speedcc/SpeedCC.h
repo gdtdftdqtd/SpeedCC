@@ -37,6 +37,7 @@
 #include "component/SCStage.h"
 #include "component/SCRole.h"
 #include "component/SCStrategy.h"
+#include "component/SCStrategyCommon.h"
 #include "component/SCPerformer.h"
 #include "component/SCMessageDispatch.h"
 #include "component/SCBehavior.h"

@@ -23,7 +23,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCRole)
         SC_DEFINE_CLASS_PTR(SCRole)
         
-        SC_DEFINE_CREATE_FUNC2(SCRole, const SCString&,SCStage*);
+        SC_DEFINE_CREATE_FUNC2(SCRole, const int,SCStage*);
         
         bool addPerformer(SCPerformer::Ptr performerPtr);
         void removePerformer(const int nID);
@@ -40,13 +40,11 @@ namespace SpeedCC
         virtual void update(SCMessageInfo& mi);
         
     protected:
-        SCRole(const SCString& strName,SCStage* pStage);
+        SCRole(const int nID,SCStage* pStage);
         
     private:
         int                                     _nInitStrategyID;
-        SCStrategy::Ptr                         _initStrategyPtr;
-//        int                                     _nIDCounter;
-//        std::map<int,SCPerformer::Ptr>          _id2PerformerMap;
+//        SCStrategy::Ptr                         _initStrategyPtr;
         std::list<SCPerformer::Ptr>             _performerList;
         std::map<int,SCStrategy::Ptr>           _id2StrategyMap;
         SCStage*                                _pOwnerStage;

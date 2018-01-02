@@ -16,4 +16,15 @@ namespace SpeedCC
     {
         return Vec2(ptRel.x*frameSize.width,ptRel.y*frameSize.height);
     }
+    
+    bool SCNodeUtils::setRelPosition(cocos2d::Node* pNode,const cocos2d::Vec2& ptRel)
+    {
+        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,false);
+        
+        const auto frameSize = pNode->getParent()->getContentSize();
+        const auto pos = SCNodeUtils::posR2A(ptRel,frameSize);
+        pNode->setPosition(pos);
+        
+        return true;
+    }
 }

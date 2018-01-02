@@ -29,6 +29,10 @@ namespace SpeedCC
         this->ownLifecycle(ptr);
     }
     
+    void SCSceneController::onStageSetup()
+    {
+        this->setActive(true); // active stage
+    }
     
     void SCSceneController::pushModalController(SCSceneController::Ptr controllerPtr)
     {
@@ -148,6 +152,7 @@ namespace SpeedCC
     {
         SCStage::onSCMessageProcess(mi);
     }
+    
 //    void SCSceneController::addRole(SCRole::Ptr rolePtr)
 //    {
 //        if(_stagePtr==NULL)

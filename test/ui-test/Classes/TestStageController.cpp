@@ -23,18 +23,34 @@ void TestStageController::onCreate(SCDictionary parameters)
     
 }
 
-void TestStageController::onSetupStage()
+void TestStageController::onStageSetup()
 {
-//    SC_BEGIN_ROLE("test_role",NULL)
-//    SC_END_ROLE
+    SC_BEGIN_ROLE(123,0)
+        IN_STRATEGY(22)
+            ON_ENTER_STRATEGE(SCBehaviorCallFunc::create())
+            ON_EXIT_STRATEGE(SCBehaviorCallFunc::create())
+            ON_MSG_BEHAVIOR(11,SCBehaviorCallFunc::create())
+            ON_CMD_BEHAVIOR("eee",SCBehaviorCallFunc::create())
+        ENDIN_STRATEGY
+    
+        IN_STRATEGY(24)
+            ON_ENTER_STRATEGE(SCBehaviorCallFunc::create())
+            ON_EXIT_STRATEGE(SCBehaviorCallFunc::create())
+            ON_MSG_BEHAVIOR(11,SCBehaviorCallFunc::create())
+            ON_CMD_BEHAVIOR("eee",SCBehaviorCallFunc::create())
+            ON_FRAME(SCBehaviorCallFunc::create())
+        ENDIN_STRATEGY
+    
+        ON_MSG_BEHAVIOR(11,SCBehaviorCallFunc::create())
+    SC_END_ROLE
 }
 
-SCRole::Ptr TestStageController::onCreateRole(const SCString& strName)
+SCRole::Ptr TestStageController::onCreateRole(const int nID)
 {
     return NULL;
 }
 
-SCStrategy::Ptr TestStageController::onCreateStrategy(const SCString& strName)
+SCStrategy::Ptr TestStageController::onCreateStrategy(const int nID)
 {
     return NULL;
 }

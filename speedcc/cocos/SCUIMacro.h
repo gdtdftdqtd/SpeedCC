@@ -3,6 +3,8 @@
 #ifndef __SPEEDCC__SCUIMACRO_H__
 #define __SPEEDCC__SCUIMACRO_H__
 
+#include "../component/SCStrategyCommon.h"
+
 namespace SpeedCC
 {
     class SCUISetup
@@ -250,16 +252,18 @@ do{\
 // insert customize Node that user created
 #define SC_INSERT_USER_NODE(_node_,_x_,_y_,_property_) \
     do{\
-        ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,(_node_),(_x_),(_y_));\
-        SCNodeProperty::setProperty<std::remove_pointer<decltype(_node_)>::type>((_node_),SCUISetup::purifyString((_property_)));\
+        auto pSCUserNode = (_node_);\
+        ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCUserNode,(_x_),(_y_));\
+        SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCUserNode)>::type>(pSCUserNode,SCUISetup::purifyString((_property_)));\
     }while(0);
 
 
 #define SC_BEGIN_CONTAINER_USER_NODE(_node_,_x_,_y_,_property_) \
 {\
-    ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,(_node_),(_x_),(_y_));\
-    SCNodeProperty::setProperty<std::remove_pointer<decltype(_node_)>::type>((_node_),SCUISetup::purifyString((_property_)));\
-    ___SC_INSIDE_DEFINE_CONTAINER_VAR((_node_))
+    auto pSCUserNode = (_node_);\
+    ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCUserNode,(_x_),(_y_));\
+    SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCUserNode)>::type>(pSCUserNode,SCUISetup::purifyString((_property_)));\
+    ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCUserNode)
 
 ///-------------- label related
 

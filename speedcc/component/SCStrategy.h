@@ -11,6 +11,7 @@
 
 #include "SCBehavior.h"
 #include "SCMessageDef.h"
+#include "SCPerformObject.h"
 
 #define SC_BVR_ARG_PERFORMER    "performer"
 #define SC_BVR_ARG_STRATEGY     "strategy"
@@ -20,7 +21,7 @@ namespace SpeedCC
 {
     class SCPerformer;
     
-    class SCStrategy : public SCBehavior
+    class SCStrategy : public SCPerformObject
     {
     public:
         SC_AVOID_CLASS_COPY(SCStrategy)
@@ -32,15 +33,13 @@ namespace SpeedCC
         void enter(SCPerformer* pPerformer);
         void exit(SCPerformer* pPerformer);
         
-//        bool addStrategy(SCStrategy::Ptr strategyPtr);
-//        SCStrategy::Ptr getStrategy(const int nID) const;
-        
         bool addBehavior(const int nMsgID,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
-        bool addBehaviorWithCommand(const int nCommand,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
+        bool addBehavior(const SCString& strCommand,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
         bool addBehavior(SCMessageMatcher::Ptr matcherPtr,SCBehavior::Ptr bvrPtr);
         
         void setEnterBehavior(SCBehavior::Ptr bvrPtr);
         void setExitBehavior(SCBehavior::Ptr bvrPtr);
+        
     protected:
         SCStrategy()
         {}
@@ -56,10 +55,9 @@ namespace SpeedCC
         SCStrategy*                             _pParentStrategy;
         SCBehavior::Ptr                         _enterBehaviorPtr;
         SCBehavior::Ptr                         _exitBehaviorPtr;
-//        std::map<SCString,SCStrategy::Ptr>      _name2ChildStrategyMap;
         
         std::map<int,SBehaviorInfo>             _msgID2BehaviorMap;
-        std::map<int,SBehaviorInfo>             _userCommand2BehaviorMap;
+        std::map<SCString,SBehaviorInfo>        _command2BehaviorMap;
     };
     
     

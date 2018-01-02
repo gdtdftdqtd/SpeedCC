@@ -28,6 +28,8 @@ namespace SpeedCC
         void setStrategy(SCStrategy* pStrategy);
         void removeFromRole();
         
+        inline SCRole* getRole() {return _pOwnerRole;}
+        
         virtual void update(SCMessageInfo& mi);
         
     protected:

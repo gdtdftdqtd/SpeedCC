@@ -11,9 +11,12 @@
 
 namespace SpeedCC
 {
-    SCRole::SCRole(const SCString& strName,SCStage* pStage):
-    _pOwnerStage(pStage)
+    SCRole::SCRole(const int nID,SCStage* pStage):
+    SCComponentHolder(nID),
+    _pOwnerStage(pStage),
+    _nInitStrategyID(0)
     {
+        
     }
     
     bool SCRole::addPerformer(SCPerformer::Ptr performerPtr)
@@ -22,6 +25,8 @@ namespace SpeedCC
         SC_RETURN_IF(performerPtr==NULL,false);
         SC_RETURN_IF(this->hasPerformer(performerPtr->getID()), false);
         _performerList.push_back(performerPtr);
+        auto strategy = this->getStrategy(_nInitStrategyID);
+        performerPtr->setStrategy(strategy.getRawPointer());
         return true;
     }
     
@@ -112,10 +117,12 @@ namespace SpeedCC
     {
         SC_RETURN_IF_V(_performerList.empty());
         SC_RETURN_IF_V(!this->getActive());
+        SC_RETURN_IF_V(!_pOwnerStage->getActive());
         
         for(auto it : _performerList)
         {
             SC_RETURN_IF_V(!this->getActive());
+            SC_RETURN_IF_V(!_pOwnerStage->getActive());
             it->update(mi);
         }
     }

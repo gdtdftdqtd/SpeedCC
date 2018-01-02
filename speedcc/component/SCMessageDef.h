@@ -90,6 +90,9 @@ namespace SpeedCC
         // "layer" => cocos2d::Ref*; touch belong to layer
 //        kSCMsgTouch,
         
+        // send this message every frame
+        kSCMsgFrame,
+        
         // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
         kSCMsgModalSceneGotFocus,
         
@@ -100,7 +103,7 @@ namespace SpeedCC
 //        kSCMsgPushModalScene,
         
         // MSG_KEY_COMMAND => SCString
-        kSCMsgUserCommand,
+        kSCMsgCommand,
         
         // user message define must begin from this value
         // "name" => SCString; required parameter
@@ -142,7 +145,7 @@ namespace SpeedCC
         SC_DEFINE_CLASS_PTR(SCMessageMatcher)
         
         SC_DEFINE_CREATE_FUNC2(SCMessageMatcher,const int,const std::function<bool (const SCMessageInfo& mi)>&)
-//        SC_DEFINE_CREATE_FUNC2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessageInfo& mi)>&)
+        SC_DEFINE_CREATE_FUNC2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessageInfo& mi)>&)
         
         bool isMatch(const SCMessageInfo& mi) const
         {
@@ -151,10 +154,30 @@ namespace SpeedCC
                 return false;
             }
             
+            if(_nMsgID==kSCMsgCommand)
+            {
+                if(_strCommand.isEmpty())
+                {
+                    return false;
+                }
+                
+                auto value = mi.paramters.getValue(MSG_KEY_COMMAND);
+                if(!value.isValidObject<SCString>())
+                {
+                    return false;
+                }
+                
+                auto command = value.getString();
+                if(command!=_strCommand)
+                {
+                    return false;
+                }
+            }
+            
             return _func(mi);
         }
         
-        inline int getCommand() const { return _nCommand; }
+        inline SCString getCommand() const { return _strCommand; }
         inline int getMessageID() const { return _nMsgID; }
         
     protected:
@@ -164,15 +187,15 @@ namespace SpeedCC
         {
         }
         
-//        SCMessageMatcher(const SCString& strCommand,const std::function<bool (const SCMessageInfo& mi)>& func):
-//        _strCommand(strCommand),
-//        _nMsgID(kSCMsgUserCommand),
-//        _func(func)
-//        {
-//        }
+        SCMessageMatcher(const SCString& strCommand,const std::function<bool (const SCMessageInfo& mi)>& func):
+        _strCommand(strCommand),
+        _nMsgID(kSCMsgCommand),
+        _func(func)
+        {
+        }
         
     private:
-        int                                             _nCommand;
+        SCString                                        _strCommand;
         int                                             _nMsgID;
         std::function<bool (const SCMessageInfo& mi)>   _func;
     };

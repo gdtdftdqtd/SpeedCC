@@ -14,8 +14,12 @@ namespace SpeedCC
     _nID(0),
     _bActive(true)
     {
-        
     }
+    
+    SCPerformObject::SCPerformObject(const int nID):
+    _nID(nID),
+    _bActive(true)
+    {}
     
     SCPerformObject::~SCPerformObject()
     {

@@ -14,20 +14,22 @@ namespace SpeedCC
     class SCFlowSetup
     {
     public:
-        static SCString purifyString(const int n) {return "";}
-        static SCString purifyString(const SCString& str) {return str;}
+        static int extractMsgID(const int nMsgID) { return nMsgID;}
+        static int extractMsgID(SCMessageMatcher::Ptr matcherPtr) { return matcherPtr->getMessageID();}
+        
+        static SCMessageMatcher::Ptr extractMsgMatcher(const int nMsgID) { return NULL;}
+        static SCMessageMatcher::Ptr extractMsgMatcher(SCMessageMatcher::Ptr matcherPtr) { return matcherPtr;}
     };
 }
 
 // flow block
-#define SC_BEGIN_ROLE(_role_,_init_strategy_) \
+// _strategy_id_ for initial strategy
+#define SC_BEGIN_ROLE(_role_id_,_strategy_id_) \
 {\
-    SCASSERT(_createRoleFun!=NULL);\
-    SCASSERT(_createStrategyFun!=NULL);\
-    auto sc_flow_role = _createRoleFun((_role_));\
-    sc_flow_role->setName((_role_));\
-    ___SC_FLOW_ADD_STRATEGY_TO_ROLE(_init_strategy_)\
-    auto sc_strategy_container = sc_flow_role;
+    SCStrategy::Ptr sc_flow_in_strategy;\
+    auto sc_flow_role = this->onCreateRole((_role_id_));\
+    sc_flow_role->setID((_role_id_));\
+    ___SC_FLOW_ADD_STRATEGY_TO_ROLE(sc_flow_in_strategy,_strategy_id_)\
 
 
 
@@ -37,12 +39,11 @@ namespace SpeedCC
 
 
 // strategy block
-#define IN_STRATEGY(_strategy_) \
+#define IN_STRATEGY(_strategy_id_) \
 {\
-    SCStrategy::Ptr sc_tem_in_strategy;\
-    ___SC_FLOW_CREATE_STRATEGY(sc_tem_in_strategy_strategy_)\
-    sc_strategy_container->addStrategy(sc_tem_in_strategy);\
-    auto sc_strategy_container = sc_tem_in_strategy;\
+    SCStrategy::Ptr sc_flow_in_strategy;\
+    ___SC_FLOW_CREATE_STRATEGY(sc_flow_in_strategy,_strategy_id_)\
+    sc_flow_role->addStrategy(sc_flow_in_strategy);\
 
 
 #define ENDIN_STRATEGY \
@@ -51,25 +52,37 @@ namespace SpeedCC
 //
 #define ON_ENTER_STRATEGE(_behavior_) \
 {\
-    auto bvrPtr = _createStrategyFun((_behavior_));\
-    sc_strategy_container->setEnterBehavior(bvrPtr);\
+    sc_flow_in_strategy->setEnterBehavior((_behavior_));\
 }
     
 
 #define ON_EXIT_STRATEGE(_behavior_) \
 {\
-    auto bvrPtr = _createStrategyFun((_behavior_));\
-    sc_strategy_container->setExitBehavior(bvrPtr);\
+    sc_flow_in_strategy->setExitBehavior((_behavior_));\
 }
 
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
 {\
-    sc_tem_in_strategy->addBehavior(_msg_,_behavior_);\
+    auto temMsg = (_msg_);\
+    auto temBehavior = (_behavior_);\
+    const int nMsg = SCFlowSetup::extractMsgID(temMsg);\
+    auto matchPtr = SCFlowSetup::extractMsgMatcher(temMsg);\
+    sc_flow_in_strategy->addBehavior(nMsg,temBehavior,matchPtr);\
 }
 
-#define ON_MSG_NEXT_STRATEGY(_msg_,_stragegy_) \
+#define ON_CMD_BEHAVIOR(_command_,_behavior_) \
 {\
-    auto bvrPtr = SCBehaviorStrategySwitch::create();\
+    sc_flow_in_strategy->addBehavior((_command_),(_behavior_));\
+}
+
+#define ON_FRAME(_behavior_) \
+{\
+    sc_flow_in_strategy->addBehavior(kSCMsgFrame,(_behavior_));\
+}
+
+#define ON_MSG_NEXT_STRATEGY(_msg_,_stragegy_id_) \
+{\
+    auto bvrPtr = SCBehaviorStrategySwitch::create(sc_flow_role,(_stragegy_id_));\
     ON_MSG_BEHAVIOR(_msg_,bvrPtr)\
 }
 
@@ -78,25 +91,23 @@ namespace SpeedCC
 
 
 ////----------------------
-#define ___SC_FLOW_ADD_STRATEGY_TO_ROLE(_strategy_)\
+#define ___SC_FLOW_ADD_STRATEGY_TO_ROLE(_strategy_ptr_,_strategy_id_)\
 {\
-    SCStrategy::Ptr sc_tem_strategy;\
-    ___SC_FLOW_CREATE_STRATEGY(sc_tem_strategy,(_strategy_))\
-    sc_flow_role->addStrategy(sc_tem_strategy);\
+    ___SC_FLOW_CREATE_STRATEGY(_strategy_ptr_,(_strategy_id_))\
+    sc_flow_role->addStrategy(_strategy_ptr_);\
 }\
 
 #define ___SC_FLOW_ADD_STRATEGY_TO_STRATEGY(_strategy_parent_,_strategy_)\
 
 
-#define ___SC_FLOW_CREATE_STRATEGY(_strategy_ptr_,_strategy_name_) \
+#define ___SC_FLOW_CREATE_STRATEGY(_strategy_ptr_,_strategy_id_) \
 {\
-    auto strSCIniStrategy = SCFlowSetup::purifyString((_strategy_name_));\
-    if(strSCIniStrategy==""){\
+    if(_strategy_id_==0){\
         (_strategy_ptr_) = SCStrategyEmpty::create();\
     }else{\
-        (_strategy_ptr_) = _createStrategyFun(strSCIniStrategy);\
+        (_strategy_ptr_) = this->onCreateStrategy((_strategy_id_));\
     }\
-    (_strategy_ptr_)->setName((_strategy_name_));\
+    (_strategy_ptr_)->setID((_strategy_id_));\
 }
 
 #endif // __SPEEDCC__SCFLOWMACRO_H__

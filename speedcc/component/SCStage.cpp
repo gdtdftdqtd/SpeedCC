@@ -13,6 +13,7 @@ namespace SpeedCC
 {
     SCStage::SCStage()
     {
+        this->setActive(false);
         SCMessageDispatch::getInstance()->addListener(this);
     }
     
@@ -25,36 +26,39 @@ namespace SpeedCC
     {
         SCASSERT(rolePtr->getID()>0);
         
-        _name2RoleMap[rolePtr->getID()] = rolePtr;
+        _id2RoleMap[rolePtr->getID()] = rolePtr;
     }
     
-    void SCStage::removeRole(const SCString& strName)
+    void SCStage::removeRole(const int nID)
     {
-        _name2RoleMap.erase(strName);
+        _id2RoleMap.erase(nID);
     }
     
-    void SCStage::setCreateRoleFunc(const std::function<SCRole::Ptr (const SCString& strName)>& fun)
+    SCRole::Ptr SCStage::getRole(const int nID)
     {
-        _createRoleFun = fun;
-    }
-    
-    void SCStage::setCreateStrategyFunc(const std::function<SCStrategy::Ptr (const SCString& strName)>& fun)
-    {
-        _createStrategyFun = fun;
+        SC_RETURN_IF(nID<=0,NULL);
+        
+        auto it = _id2RoleMap.find(nID);
+        SC_RETURN_IF(it==_id2RoleMap.end(),NULL);
+        return (*it).second;
     }
     
     void SCStage::onSCMessageProcess(SCMessageInfo& mi)
     {
-        SC_RETURN_IF_V(_name2RoleMap.empty());
+        SC_RETURN_IF_V(_id2RoleMap.empty());
         SC_RETURN_IF_V(!this->getActive());
         
-        for(auto it : _name2RoleMap)
+        for(auto it : _id2RoleMap)
         {
             SC_RETURN_IF_V(!this->getActive());
             it.second->update(mi);
         }
     }
     
+    void SCStage::onActiveChanged(const bool bNewActive)
+    {
+        
+    }
 }
 
 

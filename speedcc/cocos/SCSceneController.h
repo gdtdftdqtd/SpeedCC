@@ -33,9 +33,12 @@ namespace SpeedCC
         virtual ~SCSceneController();
         
         virtual void onCreate(SCDictionary parameters){}
-//        virtual void onSetupStage() {}
+        virtual void onStageSetup();
+        
+//        virtual void setUp() override;
 //        virtual SCRole::Ptr onCreateRole(const SCString& strName) { return NULL;}
 //        virtual SCStrategy::Ptr onCreateStrategy(const SCString& strName) { return NULL;}
+
         
         inline bool isNoTouch() const  {return (_pNoTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
@@ -59,6 +62,10 @@ namespace SpeedCC
     protected:
         SCSceneController();
         virtual void onSCMessageProcess(SCMessageInfo& mi) override;
+        
+//        virtual void setUp(){}
+//        virtual SCRole::Ptr onCreateRole(const int nID) {SCASSERT(false); return NULL;}
+//        virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
         
     private:
         inline void setSceneRootLayer(SCLayerRoot* pLayer) { _pRootLayer = pLayer;}
