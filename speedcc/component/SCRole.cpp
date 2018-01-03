@@ -26,7 +26,7 @@ namespace SpeedCC
         SC_RETURN_IF(this->hasPerformer(performerPtr->getID()), false);
         _performerList.push_back(performerPtr);
         auto strategy = this->getStrategy(_nInitStrategyID);
-        performerPtr->setStrategy(strategy.getRawPointer());
+        performerPtr->applyStrategy(strategy.getRawPointer());
         return true;
     }
     

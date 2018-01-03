@@ -14,6 +14,7 @@ namespace SpeedCC
     
     void SCBehaviorCallFunc::execute(const SCDictionary& par)
     {
+        SC_RETURN_IF_V(!this->getActive());
         SC_RETURN_IF_V(_startFunc==NULL);
         _startFunc(par);
     }
@@ -28,6 +29,7 @@ namespace SpeedCC
     
     void SCBehaviorGroup::execute(const SCDictionary& par)
     {
+        SC_RETURN_IF_V(!this->getActive());
         for(auto& it : _behaviorList)
         {
             it->execute(par);
@@ -53,17 +55,19 @@ namespace SpeedCC
     
     void SCBehaviorStrategySwitch::execute(const SCDictionary& par)
     {
+        SC_RETURN_IF_V(!this->getActive());
         SC_RETURN_IF_V(_performerPtr==NULL || _nStragtegyID==0);
         
         auto stragtegy = _performerPtr->getRole()->getStrategy(_nStragtegyID);
         SC_RETURN_IF_V(stragtegy==NULL);
-        _performerPtr->setStrategy(stragtegy.getRawPointer());
+        _performerPtr->applyStrategy(stragtegy.getRawPointer());
     }
     
     ///--------------- SCBehaviorRemovePerformer
     
     void SCBehaviorRemovePerformer::execute(const SCDictionary& par)
     {
+        SC_RETURN_IF_V(!this->getActive());
         auto roleValue = par.getValue(SC_BVR_ARG_ROLE);
         SC_RETURN_IF_V(!roleValue.isValidObject<SCRole::Ptr>());
         auto performerValue = par.getValue(SC_BVR_ARG_PERFORMER);

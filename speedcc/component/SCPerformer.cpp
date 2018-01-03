@@ -17,7 +17,7 @@ namespace SpeedCC
     {
     }
     
-    void SCPerformer::setStrategy(SCStrategy* pStrategy)
+    void SCPerformer::applyStrategy(SCStrategy* pStrategy)
     {
         if(_pCurStrategy!=NULL)
         {

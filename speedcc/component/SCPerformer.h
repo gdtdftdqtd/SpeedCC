@@ -25,7 +25,7 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC0(SCPerformer)
         
-        void setStrategy(SCStrategy* pStrategy);
+        void applyStrategy(SCStrategy* pStrategy);
         void removeFromRole();
         
         inline SCRole* getRole() {return _pOwnerRole;}
