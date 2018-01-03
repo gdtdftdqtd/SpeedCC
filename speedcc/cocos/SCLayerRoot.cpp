@@ -91,14 +91,14 @@ namespace SpeedCC
         return _pRootLayer;
     }
     
-    ///-------------- SCNoTouchLayer
+    ///-------------- SCDisableTouchLayer
     
-    void SCLayerNoTouch::onEnter()
+    void SCLayerDisableTouch::onEnter()
     {
         EventListenerTouchOneByOne* pEventListener = EventListenerTouchOneByOne::create();
         pEventListener->setSwallowTouches(true);
         
-        pEventListener->onTouchBegan = CC_CALLBACK_2(SCLayerNoTouch::onSCTouchBegan, this);
+        pEventListener->onTouchBegan = CC_CALLBACK_2(SCLayerDisableTouch::onSCTouchBegan, this);
         
         SCCCTouchDispatch()->removeEventListenersForTarget(this);
         SCCCTouchDispatch()->addEventListenerWithSceneGraphPriority(pEventListener,this);
@@ -108,13 +108,13 @@ namespace SpeedCC
         Layer::onEnter();
     }
     
-    void SCLayerNoTouch::onExit()
+    void SCLayerDisableTouch::onExit()
     {
         SCCCTouchDispatch()->removeEventListenersForTarget(this);
         Layer::onExit();
     }
     
-    bool SCLayerNoTouch::onSCTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
+    bool SCLayerDisableTouch::onSCTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         return true;
     }

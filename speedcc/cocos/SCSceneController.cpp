@@ -11,7 +11,7 @@ namespace SpeedCC
     SCSceneController::SCSceneController():
     _pRootLayer(NULL),
     _pScene(NULL),
-    _pNoTouchLayer(NULL),
+    _pDisableTouchLayer(NULL),
     _pBlackMaskLayer(NULL),
     _bBlackMaskForModal(true)
     {   
@@ -46,7 +46,7 @@ namespace SpeedCC
         }
         
         _pScene->addChild(controllerPtr->getRootLayer());
-        this->setNoTouch(true);
+        this->setDisableTouch(true);
         
         // generate modal mssage
         SCMessageInfo mi;
@@ -65,7 +65,7 @@ namespace SpeedCC
         SCASSERT(_parentModalControllerPtr!=NULL);
         auto ret = _parentModalControllerPtr->makeObjPtr<SCSceneController>();
         
-        _parentModalControllerPtr->setNoTouch(false);
+        _parentModalControllerPtr->setDisableTouch(false);
         if(_parentModalControllerPtr->isBlackMaskForModal())
         {
             _parentModalControllerPtr->showBlackMask(false);
@@ -84,20 +84,20 @@ namespace SpeedCC
     }
     
     
-    void SCSceneController::setNoTouch(const bool bNoTouch)
+    void SCSceneController::setDisableTouch(const bool bDisableTouch)
     {
-        if(_pNoTouchLayer==NULL && bNoTouch)
+        if(_pDisableTouchLayer==NULL && bDisableTouch)
         {// turn to no touch
-            auto pLayer = SCLayerNoTouch::create();
+            auto pLayer = SCLayerDisableTouch::create();
             _pRootLayer->addChild(pLayer);
             pLayer->setPosition(cocos2d::Vec2(0,0));
             
-            _pNoTouchLayer = pLayer;
+            _pDisableTouchLayer = pLayer;
         }
-        else if(_pNoTouchLayer!=NULL && !bNoTouch)
+        else if(_pDisableTouchLayer!=NULL && !bDisableTouch)
         {// turn to touchable
-            _pNoTouchLayer->removeFromParentAndCleanup(true);
-            _pNoTouchLayer = NULL;
+            _pDisableTouchLayer->removeFromParentAndCleanup(true);
+            _pDisableTouchLayer = NULL;
         }
     }
     

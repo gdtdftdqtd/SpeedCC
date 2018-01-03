@@ -39,12 +39,12 @@ namespace SpeedCC
 //        virtual SCStrategy::Ptr onCreateStrategy(const SCString& strName) { return NULL;}
 
         
-        inline bool isNoTouch() const  {return (_pNoTouchLayer==NULL);}
+        inline bool isDisableTouch() const  {return (_pDisableTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
         inline cocos2d::Layer* getRootLayer()  {return _pRootLayer;}
         inline SCScene* getScene()  {return _pScene;}
         
-        void setNoTouch(const bool bNoTouch) ;
+        void setDisableTouch(const bool bDisableTouch) ;
         void showBlackMask(const bool bShow) ;
 
         void pushModalController(SCSceneController::Ptr controllerPtr) ;
@@ -78,7 +78,7 @@ namespace SpeedCC
         SCLayerRoot*			                _pRootLayer;
         SCScene*                                _pScene;
         SCSceneController::WeakPtr              _parentModalControllerPtr;
-        SCLayerNoTouch*                         _pNoTouchLayer;
+        SCLayerDisableTouch*                         _pDisableTouchLayer;
         cocos2d::Layer*                         _pBlackMaskLayer;
         bool                                    _bBlackMaskForModal;
         std::list<SCObject::Ptr>                _ownLifecycleList;

@@ -30,7 +30,7 @@ namespace SpeedCC
             case kSCMsgStoreUserCancelled:
             {
                 SCLog("IAP operation cancelled by user.");
-                SCSystem::setGlobalNoTouch(false);
+                SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 
@@ -46,14 +46,14 @@ namespace SpeedCC
                     SCStore::getInstance()->setIAPPurchsed(strIAP);
                 }
                 
-                SCSystem::setGlobalNoTouch(false);
+                SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 
             case kSCMsgStorePurchaseFailed:
             {
                 SCLog("IAP Purchase failed.");
-                SCSystem::setGlobalNoTouch(false);
+                SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 
@@ -69,14 +69,14 @@ namespace SpeedCC
                     SCStore::getInstance()->setIAPPurchsed(strIAP);
                 }
                 
-                SCSystem::setGlobalNoTouch(false);
+                SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 
             case kSCMsgStoreRestoreFailed:
             {
                 SCLog("Restored IAP failed.");
-                SCSystem::setGlobalNoTouch(false);
+                SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 

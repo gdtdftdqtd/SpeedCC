@@ -51,41 +51,41 @@ namespace SpeedCC
         virtual void execute(const SCDictionary& par=SCDictionary()) = 0;
     };
     
-    class SCComponentHolder : public SCPerformObject
+    class SCPropertyHolder : public SCPerformObject
     {
     public:
         template<typename T>
-        void addComponent(const int nID,const T& component)
+        void addProperty(const int nID,const T& Property)
         {
             SCObjPtrT<T> cmpPtr;
             cmpPtr.createInstance();
-            *cmpPtr = component;
+            *cmpPtr = Property;
             
-            _id2ComponentMap[nID] = SCValue::create(cmpPtr);
+            _id2PropertyMap[nID] = SCValue::create(cmpPtr);
         }
         
         template<typename T>
-        SCObjPtrT<T> getComponent(const int nID)
+        SCObjPtrT<T> getProperty(const int nID)
         {
-            auto it = _id2ComponentMap.find(nID);
-            SC_RETURN_IF(it==_id2ComponentMap.end(),NULL);
+            auto it = _id2PropertyMap.find(nID);
+            SC_RETURN_IF(it==_id2PropertyMap.end(),NULL);
             SC_RETURN_IF(!(*it).second.isValidObject<SCObjPtrT<T>>(),NULL);
             return (*it).second.getObject<SCObjPtrT<T>>();
         }
         
-        bool hasComponent(const int nID) const;
-        void removeComponent(const int nID);
+        bool hasProperty(const int nID) const;
+        void removeProperty(const int nID);
         
     protected:
-        SCComponentHolder()
+        SCPropertyHolder()
         {}
         
-        SCComponentHolder(const int nID):
+        SCPropertyHolder(const int nID):
         SCPerformObject(nID)
         {}
         
     private:
-        std::map<int,SCValue>   _id2ComponentMap;
+        std::map<int,SCValue>   _id2PropertyMap;
     };
 }
 

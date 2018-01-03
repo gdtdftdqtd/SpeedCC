@@ -34,14 +34,14 @@ namespace SpeedCC
         }
     }
     
-    ///----------- SCComponentHolder
-    bool SCComponentHolder::hasComponent(const int nID) const
+    ///----------- SCPropertyHolder
+    bool SCPropertyHolder::hasProperty(const int nID) const
     {
-        return (_id2ComponentMap.find(nID)!=_id2ComponentMap.end());
+        return (_id2PropertyMap.find(nID)!=_id2PropertyMap.end());
     }
     
-    void SCComponentHolder::removeComponent(const int nID)
+    void SCPropertyHolder::removeProperty(const int nID)
     {
-        _id2ComponentMap.erase(nID);
+        _id2PropertyMap.erase(nID);
     }
 }

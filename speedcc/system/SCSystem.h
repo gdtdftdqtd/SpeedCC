@@ -76,8 +76,8 @@ namespace SpeedCC
         static bool getMultipleTouch();
         
         static int getSupportAssetSizeType();
-        static void setGlobalNoTouch(const bool bEnable);
-        static bool getGlobalNoTouch();
+        static void setGlobalDisableTouch(const bool bDisable);
+        static bool getGlobalDisableTouch();
         
         static bool getDeviceInfo(SDeviceInfo& di);
         static SCString getProductName();

@@ -17,7 +17,7 @@ namespace SpeedCC
 {
     class SCStage;
     
-    class SCRole : public SCComponentHolder
+    class SCRole : public SCPropertyHolder
     {   
     public:
         SC_AVOID_CLASS_COPY(SCRole)
@@ -37,6 +37,7 @@ namespace SpeedCC
         SCStrategy::Ptr getStrategy(const int nID) const;
         bool hasStrategy(const int nID) const;
         
+        inline SCStage* getStage() const { return _pOwnerStage;}
         virtual void update(SCMessageInfo& mi);
         
     protected:

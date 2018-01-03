@@ -8,6 +8,7 @@
 
 #include "SCPerformer.h"
 #include "SCRole.h"
+#include "SCStage.h"
 
 namespace SpeedCC
 {
@@ -17,8 +18,13 @@ namespace SpeedCC
     {
     }
     
-    void SCPerformer::applyStrategy(SCStrategy* pStrategy)
+    bool SCPerformer::applyStrategy(SCStrategy* pStrategy)
     {
+        SC_RETURN_IF(_pOwnerRole==NULL,false);
+        SC_RETURN_IF(!_pOwnerRole->getActive(),false);
+        SC_RETURN_IF(!_pOwnerRole->getStage()->getActive(),false);
+        
+        
         if(_pCurStrategy!=NULL)
         {
             _pCurStrategy->exit(this);
@@ -30,6 +36,8 @@ namespace SpeedCC
         {
             _pCurStrategy->enter(this);
         }
+        
+        return true;
     }
     
     void SCPerformer::removeFromRole()

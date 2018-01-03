@@ -67,11 +67,11 @@ namespace SpeedCC
         SCLayerRoot*           _pRootLayer;
     };
     
-    ///------------ SCLayerNoTouch
-    class SCLayerNoTouch : public cocos2d::Layer
+    ///------------ SCLayerDisableTouch
+    class SCLayerDisableTouch : public cocos2d::Layer
     {
     public:
-        CREATE_FUNC(SCLayerNoTouch);
+        CREATE_FUNC(SCLayerDisableTouch);
         
         enum _tagNodeTag {kTAG = 1200};
         

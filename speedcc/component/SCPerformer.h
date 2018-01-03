@@ -17,7 +17,7 @@ namespace SpeedCC
     class SCStrategy;
     class SCRole;
     
-    class SCPerformer : public SCComponentHolder
+    class SCPerformer : public SCPropertyHolder
     {
     public:
         SC_AVOID_CLASS_COPY(SCPerformer)
@@ -25,7 +25,7 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC0(SCPerformer)
         
-        void applyStrategy(SCStrategy* pStrategy);
+        bool applyStrategy(SCStrategy* pStrategy);
         void removeFromRole();
         
         inline SCRole* getRole() {return _pOwnerRole;}

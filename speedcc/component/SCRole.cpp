@@ -12,7 +12,7 @@
 namespace SpeedCC
 {
     SCRole::SCRole(const int nID,SCStage* pStage):
-    SCComponentHolder(nID),
+    SCPropertyHolder(nID),
     _pOwnerStage(pStage),
     _nInitStrategyID(0)
     {
