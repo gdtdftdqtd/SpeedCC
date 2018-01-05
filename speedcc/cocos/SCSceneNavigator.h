@@ -5,6 +5,7 @@
 
 #include "cocos2d.h"
 #include "../base/SCBaseDef.h"
+#include "SCCocosDef.h"
 #include "SCSceneController.h"
 
 namespace SpeedCC
@@ -14,9 +15,9 @@ namespace SpeedCC
 	public:
 		enum ESceneSwitchType
 		{
-			SWITCH_REPLACE, // use cocos2d replace scene
-			SWITCH_PUSH, // use cocos2d push scene
-			SWITCH_MODAL, // push SCSceneLayer as modal layer
+			kSceneReplace, // use cocos2d replace scene
+			kScenePush, // use cocos2d push scene
+			kSceneModal, // push SCSceneLayer as modal layer
 		};
 
     private:
@@ -33,7 +34,7 @@ namespace SpeedCC
 			FUN_SCLayerCreateFunctor_t              pfunCurrentLayerCreator;
 
 			SSceneSwitchInfo() :
-				switchType(SWITCH_REPLACE),
+				switchType(kSceneReplace),
 				pfunSelfTransCreator(NULL),
 				pfunOppositeTransCreator(NULL),
 				pfunCurrentSceneCreator(NULL),
@@ -62,7 +63,7 @@ namespace SpeedCC
         static SCSceneNavigator* getInstance();
         
 		template<typename SceneT, typename TransT = SCClassNull>
-        bool switchScene(const ESceneSwitchType place = SWITCH_REPLACE, SCDictionary dic = SCDictionary())
+        bool switchScene(const ESceneSwitchType place = kSceneReplace, SCDictionary dic = SCDictionary())
 		{
 			SCASSERTCT(!SCIsEmptyClassT<SceneT>::value);
 
@@ -105,7 +106,6 @@ namespace SpeedCC
                 sceneCtlrPtr->setScene(scene);
                 sceneCtlrPtr->setSceneRootLayer(pRootLayer);
                 sceneCtlrPtr->onCreate(parameterDic);
-                sceneCtlrPtr->onStageSetup();
                 
             } while (0);
             
@@ -124,7 +124,6 @@ namespace SpeedCC
             
             sceneCtlrPtr->setScene(NULL);
             sceneCtlrPtr->onCreate(parameterDic);
-            sceneCtlrPtr->onStageSetup();
             
             return sceneCtlrPtr;
         }

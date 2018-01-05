@@ -24,6 +24,7 @@ namespace SpeedCC
     
     void SCStage::addRole(SCRole::Ptr rolePtr)
     {
+        SCASSERT(rolePtr!=NULL);
         SCASSERT(rolePtr->getID()>0);
         
         _id2RoleMap[rolePtr->getID()] = rolePtr;

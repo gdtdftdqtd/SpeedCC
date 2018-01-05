@@ -11,14 +11,29 @@ namespace SpeedCC
     class SCDictionary : public SCObjRefT<std::map<SCString,SCValue> >
     {
     public:
+        struct SPair
+        {
+            SCString    strKey;
+            SCValue     value;
+        };
+        
+    public:
         SCDictionary();
+        SCDictionary(const SCString& strKey,const SCValue& value);
+        SCDictionary(const SPair& pair);
+        SCDictionary(const SPair* pPairArray,const int nCount);
+        SCDictionary(const std::vector<SPair>& pairVct);
         SCDictionary(const SCString& strJson);
+        
         bool loadFromJsonString(const SCString& strJson);
         SCString exportJsonString();
         SCValue& operator[](const SCString& strKey);
         SCValue operator[](const SCString& strKey) const;
         
         void setValue(const SCString& strKey,const SCValue& value);
+        void setValue(const SPair& pair);
+        void setValue(const SPair* pPairArray,const int nCount);
+        void setValue(const std::vector<SPair>& pairVct);
         void setDictionary(const SCString& strKey,const SCDictionary& dic);
         
         SCValue getValue(const SCString& strKey) const;
@@ -31,6 +46,7 @@ namespace SpeedCC
         bool isEmpty();
         void forEach(const std::function<bool(const SCString& strKey,const SCValue& value)>& func) const;
         void forEach(const std::function<bool(const SCString& strKey,SCValue& value)>& func);
+        
     };
 }
 

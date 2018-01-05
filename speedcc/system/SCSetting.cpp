@@ -8,6 +8,7 @@
 
 #include "cocos2d.h"
 #include "SCSetting.h"
+#include "../cocos/SCCocosDef.h"
 
 namespace SpeedCC
 {

@@ -27,7 +27,7 @@ namespace SpeedCC
 #define SC_BEGIN_ROLE(_role_id_,_strategy_id_) \
 {\
     SCStrategy::Ptr sc_flow_in_strategy;\
-    auto sc_flow_role = this->onCreateRole((_role_id_));\
+    auto sc_flow_role = SpeedCC::SCRole::create((_role_id_), this);\
     sc_flow_role->setID((_role_id_));\
     ___SC_FLOW_ADD_STRATEGY_TO_ROLE(sc_flow_in_strategy,_strategy_id_)\
 

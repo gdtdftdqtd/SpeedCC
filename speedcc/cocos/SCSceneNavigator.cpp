@@ -36,7 +36,7 @@ namespace SpeedCC
         
         switch(navigateInfo.sceneCreatorInfo.switchType)
         {
-            case SWITCH_MODAL: // modal
+            case kSceneModal: // modal
             {
                 SC_RETURN_IF(s_currentSceneControllerPtr==NULL, false);
                 
@@ -49,8 +49,8 @@ namespace SpeedCC
             }
                 break;
                 
-            case SWITCH_REPLACE: // replace
-            case SWITCH_PUSH: // push
+            case kSceneReplace: // replace
+            case kScenePush: // push
             {
                 auto controllerPtr = (info.pfunCurrentSceneCreator)(s_SceneParameterDic);
                 s_SceneParameterDic.removeAllKeys();
@@ -64,7 +64,7 @@ namespace SpeedCC
                 
                 if(SCCCDirector()->getRunningScene())
                 {
-                    if(navigateInfo.sceneCreatorInfo.switchType==SWITCH_REPLACE)
+                    if(navigateInfo.sceneCreatorInfo.switchType==kSceneReplace)
                     {
                         SCCCDirector()->replaceScene(pScene);
                         
@@ -73,7 +73,7 @@ namespace SpeedCC
                         s_sceneStack.remove_if([&bRemoved](const SStackSceneInfo& stackInfo) -> bool
                                                {
                                                    SC_RETURN_IF(bRemoved, false);
-                                                   SC_RETURN_IF(!bRemoved && stackInfo.sceneCreatorInfo.switchType==SWITCH_MODAL, true);
+                                                   SC_RETURN_IF(!bRemoved && stackInfo.sceneCreatorInfo.switchType==kSceneModal, true);
                                                    bRemoved = true;
                                                    return false;
                                                });
@@ -112,7 +112,7 @@ namespace SpeedCC
         SC_RETURN_IF_V(nSize<=nNumber);
         
         FUN_SCSceneTransitionCreateFunctor_t oppositeTrans = NULL;
-        auto switchType = SWITCH_REPLACE;
+        auto switchType = kSceneReplace;
         
         SStackSceneInfo navigateInfo1;
         
@@ -131,13 +131,13 @@ namespace SpeedCC
         
         switch(switchType)
         {
-            case SWITCH_MODAL: // mmodal
+            case kSceneModal: // modal
             {
                 s_currentSceneControllerPtr = s_currentSceneControllerPtr->popModalFromParent();
             }
                 break;
                 
-            case SWITCH_PUSH: // push
+            case kScenePush: // push
             {
                 SCCCDirector()->popScene();
                 SCScene* pScene = (SCScene*)SCCCDirector()->getRunningScene();
@@ -148,15 +148,15 @@ namespace SpeedCC
             }
                 break;
                 
-            case SWITCH_REPLACE: // replace
+            case kSceneReplace: // replace
             {
                 SCASSERT(navigateInfo2.sceneCreatorInfo.pfunCurrentSceneCreator!=NULL);
                 
-                // remove all of SWITCH_MODAL layer from navigator stack
+                // remove all of kSceneModal layer from navigator stack
                 size_t nStackSize = s_sceneStack.size();
                 while(nStackSize>2)
                 {
-                    SC_BREAK_IF(s_sceneStack.front().sceneCreatorInfo.switchType!=SWITCH_MODAL)
+                    SC_BREAK_IF(s_sceneStack.front().sceneCreatorInfo.switchType!=kSceneModal)
                     s_sceneStack.pop_front();
                     --nStackSize;
                 }

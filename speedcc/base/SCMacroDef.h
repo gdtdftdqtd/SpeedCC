@@ -158,46 +158,6 @@
 //    const char* _class_::CMP_ID = #_class_
 
 
-///-------- cocos2d efficiency macro
-#define SCCCFileUtils() \
-    (cocos2d::FileUtils::getInstance())
-
-#define SCCCUserDefault() \
-    (cocos2d::UserDefault::getInstance())
-
-#define SCCCDirector() \
-    (cocos2d::Director::getInstance())
-
-#define SCCCTouchDispatch()\
-    (SCCCDirector()->getEventDispatcher())
-
-#define SCCCSoundEngine()\
-    (CocosDenshion::SimpleAudioEngine::getInstance())
-
-#define SCSchedule(_selector_,_target_,_interval_,_pause_)\
-    (SCCCDirector()->getScheduler()->schedule((_selector_),(_target_),(_interval_),(_pause_)))
-
-#define SCUnschedule(_selector_,_target_) \
-    (SCCCDirector()->getScheduler()->unschedule((_selector_),(_target_)))
-
-#define SCWinSize() \
-    (SCCCDirector()->getWinSize())
-
-#define SCCCScheduler()\
-    (SCCCDirector()->getScheduler())
-
-#define SC_FUNC(_fun_)\
-    (decltype(SCTraitFunctionPointerType(&_fun_))(&_fun_))
-
-#define SCF(_fun_)\
-    ((decltype(SCTraitFunctionPointerType(&std::remove_pointer<decltype(this)>::type::_fun_)))(&std::remove_pointer<decltype(this)>::type::_fun_))
-
-#define SCSceneNav() \
-    (SpeedCC::SCSceneNavigator::getInstance())
-
-#define SCMsgDisp() \
-    (SCMessageDispatch::getInstance())
-
 //#define SC_TRAIT_PTR_CLASS(_ptr_) \
 //    decltype(_ptr_)::type
 

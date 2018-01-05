@@ -29,6 +29,9 @@ namespace SpeedCC
         static inline SCString purifyLabelString(float n) {return SCString(n);}
         static inline SCString purifyLabelString(double n) {return SCString(n);}
         
+//        static inline cocos2d::Rect purifyRect(int) { return cocos2d::Rec::ZERO;}
+//        static inline cocos2d::Rect purifyRect(const cocos2d::Rect& rect) { return rect;}
+        
         static inline void bindLabel(...) {}
         static inline void bindLabel(cocos2d::Label* pLabel,...) {}
         static inline void bindLabel(cocos2d::Label* pLabel,SCBinderLabel::Ptr binderPtr)
@@ -167,6 +170,23 @@ SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNod
     SCUISetup::assignNode(pSCContainerSprite,(_node_)); \
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerSprite)
 
+/*
+// scale9 sprite
+#define SC_INSERT_SPRITE9(_node_,_x_,_y_,_property_,_image_,_rect_deli_,_rect_inset_) \
+do{\
+    cocos2d::ui::Scale9Sprite* pSCTemSprite = NULL; \
+    auto scDeliRect = SCUISetup::purifyRect((_rect_deli_));\
+    if(scDeliRect==cocos2d::Rect::ZERO){\
+        pSCTemSprite = cocos2d::ui::Scale9Sprite::create((_rect_inset_),SCFileUtils::getFullPathFile((_image_)).c_str());\
+    }else{\
+        pSCTemSprite = cocos2d::ui::Scale9Sprite::create(SCFileUtils::getFullPathFile((_image_)).c_str(),scDeliRect,(_rect_inset_));\
+    }\
+    SCUISetup::assignNode(pSCTemSprite,(_node_));\
+    sc_container_LayoutObjectList.push_back(pSCTemSprite);\
+    ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemSprite,_x_,_y_)\
+    SpeedCC::SCNodeProperty::setProperty<cocos2d::Sprite>(pSCTemSprite,SCUISetup::purifyString((_property_)));\
+}while(0);
+*/
 ///-------------- button related
 // insert image button
 #define SC_INSERT_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_fun_)\

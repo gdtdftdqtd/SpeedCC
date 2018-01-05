@@ -2,6 +2,7 @@
 #include "SCLayerRoot.h"
 #include "SCSceneController.h"
 #include "SCNodeUtils.h"
+#include "SCCocosDef.h"
 
 using namespace cocos2d;
 
@@ -24,21 +25,37 @@ namespace SpeedCC
     void SCLayerRoot::onEnter()
     {
         cocos2d::Layer::onEnter();
+        
+        SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
+        SCDictionary dic(pair);
+        SCMsgDisp()->sendMessage(kSCMsgSceneEnter,dic);
     }
     
     void SCLayerRoot::onEnterTransitionDidFinish()
     {
         cocos2d::Layer::onEnterTransitionDidFinish();
+        
+        SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
+        SCDictionary dic(pair);
+        SCMsgDisp()->sendMessage(kSCMsgSceneEnterTransitionDidFinish,dic);
     }
     
     void SCLayerRoot::onExit()
     {
         cocos2d::Layer::onExit();
+        
+        SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
+        SCDictionary dic(pair);
+        SCMsgDisp()->sendMessage(kSCMsgSceneExit,dic);
     }
     
     void SCLayerRoot::onExitTransitionDidStart()
     {
         cocos2d::Layer::onExitTransitionDidStart();
+        
+        SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
+        SCDictionary dic(pair);
+        SCMsgDisp()->sendMessage(kSCMsgSceneExitTransitionDidStart,dic);
     }
 
     ///-------------- SCScene

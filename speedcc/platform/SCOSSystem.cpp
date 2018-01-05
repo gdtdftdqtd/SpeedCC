@@ -2,6 +2,7 @@
 
 #include "../component/SCMessageDispatch.h"
 #include "../base/SCMacroDef.h"
+#include "../cocos/SCCocosDef.h"
 
 namespace SpeedCC
 {

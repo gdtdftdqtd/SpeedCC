@@ -26,13 +26,15 @@ namespace SpeedCC
     public:
         static SCMessageDispatch* getInstance();
         
-        void addListener(SCMessageListener* pListener,const int nPriority=0);
+        void addListener(SCMessageListener* pListener,const unsigned char nPriority=128);
         void removeListener(SCMessageListener* pListener);
         
         void sendMessage(SCMessageInfo& mi);
         void sendMessage(const int nMsgID);
+        void sendMessage(const int nMsgID,const SCDictionary& dic);
         void postMessage(const SCMessageInfo& mi);
         void postMessage(const int nMsgID);
+        void postMessage(const int nMsgID,const SCDictionary& dic);
         
     protected:
         SCMessageDispatch();
@@ -48,9 +50,9 @@ namespace SpeedCC
         
         struct SMutabelListenerInfo
         {
-            SCMessageListener*        pListener;
+            SCMessageListener*      pListener;
             bool                    bAdd;
-            int                     nPriority;
+            unsigned char           byPriority; // 0: highest; 255: lowest
             
             bool operator==(const SMutabelListenerInfo& info) const
             {
@@ -60,22 +62,22 @@ namespace SpeedCC
             SMutabelListenerInfo():
             pListener(NULL),
             bAdd(true),
-            nPriority(0)
+            byPriority(0)
             {}
         };
         
         struct SListenerInfo
         {
-            int                 nPriority;
+            unsigned char                 byPriority;
             SCMessageListener*    pListener;
             
             SListenerInfo():
-            nPriority(0),
+            byPriority(0),
             pListener(NULL)
             {}
             
-            inline bool operator<(const SListenerInfo& info) const { return nPriority<info.nPriority; }
-            inline bool operator>(const SListenerInfo& info) const { return nPriority>info.nPriority; }
+            inline bool operator<(const SListenerInfo& info) const { return byPriority<info.byPriority; }
+            inline bool operator>(const SListenerInfo& info) const { return byPriority>info.byPriority; }
         };
     private:
         static SCMessageDispatch*                     _pInstance;

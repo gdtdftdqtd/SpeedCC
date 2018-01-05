@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 
 #include "SCSceneController.h"
+#include "SCCocosDef.h"
 
 
 namespace SpeedCC
@@ -29,10 +30,10 @@ namespace SpeedCC
         this->ownLifecycle(ptr);
     }
     
-    void SCSceneController::onStageSetup()
-    {
-        this->setActive(true); // active stage
-    }
+//    void SCSceneController::onStageSetup()
+//    {
+//        this->setActive(true); // active stage
+//    }
     
     void SCSceneController::pushModalController(SCSceneController::Ptr controllerPtr)
     {
@@ -152,24 +153,5 @@ namespace SpeedCC
     {
         SCStage::onSCMessageProcess(mi);
     }
-    
-//    void SCSceneController::addRole(SCRole::Ptr rolePtr)
-//    {
-//        if(_stagePtr==NULL)
-//        {
-//            _stagePtr = SCStage::create();
-//            _stagePtr->setCreateRoleFunc([this](const SCString& strName) -> SCRole::Ptr
-//                                        {
-//                                            return onCreateRole(strName);
-//                                        });
-//
-//            _stagePtr->setCreateStrategyFunc([this](const SCString& strName) -> SCStrategy::Ptr
-//                                            {
-//                                                return onCreateStrategy(strName);
-//                                            });
-//        }
-//
-//        _stagePtr->addRole(rolePtr);
-//    }
 }
 

@@ -15,6 +15,30 @@ namespace SpeedCC
         this->createInstance();
     }
     
+    SCDictionary::SCDictionary(const SCString& strKey,const SCValue& value)
+    {
+        this->createInstance();
+        this->setValue(strKey, value);
+    }
+    
+    SCDictionary::SCDictionary(const SPair& pair)
+    {
+        this->createInstance();
+        this->setValue(pair);
+    }
+    
+    SCDictionary::SCDictionary(const SPair* pPairArray,const int nCount)
+    {
+        this->createInstance();
+        this->setValue(pPairArray,nCount);
+    }
+    
+    SCDictionary::SCDictionary(const std::vector<SPair>& pairVct)
+    {
+        this->createInstance();
+        this->setValue(pairVct);
+    }
+    
     SCDictionary::SCDictionary(const SCString& strJson)
     {
         this->createInstance();
@@ -40,6 +64,41 @@ namespace SpeedCC
         this->clone4Write();
         auto& map = (*this->getStub());
         map[strKey] = value;
+    }
+    
+    void SCDictionary::setValue(const SPair& pair)
+    {
+        SCASSERT(!pair.strKey.isEmpty());
+        this->clone4Write();
+        auto& map = (*this->getStub());
+        map[pair.strKey] = pair.value;
+    }
+    
+    void SCDictionary::setValue(const SPair* pPairArray,const int nCount)
+    {
+        SC_RETURN_IF_V(pPairArray==NULL || nCount<=0);
+        this->clone4Write();
+        auto& map = (*this->getStub());
+        
+        for(int i=0;i<nCount;++i)
+        {
+            auto pair = pPairArray[i];
+            SCASSERT(!pair.strKey.isEmpty());
+            map[pair.strKey] = pair.value;
+        }
+    }
+    
+    void SCDictionary::setValue(const std::vector<SPair>& pairVct)
+    {
+        SC_RETURN_IF_V(pairVct.empty());
+        this->clone4Write();
+        auto& map = (*this->getStub());
+
+        for(const auto pair : pairVct)
+        {
+            SCASSERT(!pair.strKey.isEmpty());
+            map[pair.strKey] = pair.value;
+        }
     }
     
     void SCDictionary::setDictionary(const SCString& strKey,const SCDictionary& dic)

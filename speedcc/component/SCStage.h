@@ -33,7 +33,6 @@ namespace SpeedCC
         SCRole::Ptr getRole(const int nID);
         
         virtual void setUp(){}
-        virtual SCRole::Ptr onCreateRole(const int nID) {SCASSERT(false); return NULL;}
         virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
         
         virtual void onSCMessageProcess(SCMessageInfo& mi) override;

@@ -2,6 +2,7 @@
 
 #include "SCMessageDispatch.h"
 #include "../base/SCTemplateDef.h"
+#include "../cocos/SCCocosDef.h"
 
 using namespace std ;
 
@@ -29,7 +30,7 @@ namespace SpeedCC
     {
     }
     
-    void SCMessageDispatch::addListener(SCMessageListener* pListener,const int nPriority)
+    void SCMessageDispatch::addListener(SCMessageListener* pListener,const unsigned char nPriority)
     {
         SCASSERT(pListener!=NULL) ;
         
@@ -37,7 +38,7 @@ namespace SpeedCC
         
         info.bAdd = true;
         info.pListener = pListener;
-        info.nPriority = nPriority;
+        info.byPriority = nPriority;
         
         auto it = std::find(_mutableListenerList.begin(),_mutableListenerList.end(),info) ;
         
@@ -110,6 +111,14 @@ namespace SpeedCC
         this->sendMessage(mi);
     }
     
+    void SCMessageDispatch::sendMessage(const int nMsgID,const SCDictionary& dic)
+    {
+        SCMessageInfo mi;
+        mi.nMsgID = nMsgID;
+        mi.paramters = dic;
+        this->sendMessage(mi);
+    }
+    
     void SCMessageDispatch::postMessage(const SCMessageInfo& mi)
     {
         this->getMsgQueRecive().push_back(mi);
@@ -119,6 +128,14 @@ namespace SpeedCC
     {
         SCMessageInfo mi;
         mi.nMsgID = nMsgID;
+        this->postMessage(mi);
+    }
+    
+    void SCMessageDispatch::postMessage(const int nMsgID,const SCDictionary& dic)
+    {
+        SCMessageInfo mi;
+        mi.nMsgID = nMsgID;
+        mi.paramters = dic;
         this->postMessage(mi);
     }
     

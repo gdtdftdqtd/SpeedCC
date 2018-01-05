@@ -1,7 +1,8 @@
 
 
 #include "SCNodeUtils.h"
-#include "../base/SCMacroDef.h"
+#include "SCMacroDef.h"
+#include "SCCocosDef.h"
 
 using namespace cocos2d;
 

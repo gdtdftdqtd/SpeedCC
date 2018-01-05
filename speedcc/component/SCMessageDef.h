@@ -43,6 +43,17 @@ namespace SpeedCC
         // key: MSG_KEY_STATE
         kSCMsgInternetReachableChanged,
         
+        // key: MSG_KEY_CONTROLLER
+        kSCMsgSceneEnter,
+        
+        // key: MSG_KEY_CONTROLLER
+        kSCMsgSceneEnterTransitionDidFinish,
+        
+        // key: MSG_KEY_CONTROLLER
+        kSCMsgSceneExit,
+        
+        // key: MSG_KEY_CONTROLLER 
+        kSCMsgSceneExitTransitionDidStart,
         // show alert box,
         // must block it if want to show customize alert box
         // otherwise will show with system alert box
@@ -73,9 +84,11 @@ namespace SpeedCC
         kSCMsgStorePurchaseFailed,
         
         // IAP restored is success
+        // delivery: post
         kSCMsgStoreRestoreSuccess,
         
         // IAP restored is failed
+        // delivery: post
         kSCMsgStoreRestoreFailed,
         
         // retrieve IAP success
@@ -91,6 +104,7 @@ namespace SpeedCC
 //        kSCMsgTouch,
         
         // send this message every frame
+        // delivery: send
         kSCMsgFrame,
         
         // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
