@@ -101,7 +101,7 @@ namespace SpeedCC
                 SC_BREAK_IF(sceneCtlrPtr.isNull());
                 
                 auto scene = SCScene::create();
-                auto pRootLayer = scene->getRootLayer();
+                auto pRootLayer = scene->getSceneNode();
                 pRootLayer->setController(sceneCtlrPtr);
                 sceneCtlrPtr->setScene(scene);
                 sceneCtlrPtr->setSceneRootLayer(pRootLayer);

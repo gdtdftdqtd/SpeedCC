@@ -327,7 +327,7 @@ namespace SpeedCC
                 case FLOAT_TYPE: bRet = (data.fValue!=0.0f); break;
                 case DOUBLE_TYPE: bRet = (data.dValue!=0.0); break;
                 case POINTER_TYPE: bRet = (data.pValue!=NULL); break;
-                case BOOL_TYPE: bRet = data.bValue ; break;
+                case BOOL_TYPE: bRet = data.bValue; break;
                     
                 default:bResult = false; break;
             }

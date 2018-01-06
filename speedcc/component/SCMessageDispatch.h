@@ -56,7 +56,7 @@ namespace SpeedCC
             
             bool operator==(const SMutabelListenerInfo& info) const
             {
-                return (info.pListener!=NULL && info.pListener==this->pListener)  ;
+                return (info.pListener!=NULL && info.pListener==this->pListener);
             }
             
             SMutabelListenerInfo():

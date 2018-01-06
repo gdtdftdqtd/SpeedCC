@@ -82,7 +82,7 @@
     if((_condition_)) {SCLog((_log_),##__VA_ARGS__); return (_result_);}
 
 #define SC_RETURN_IF_V(_condition_)\
-    if((_condition_)) {return ;}
+    if((_condition_)) {return;}
 
 #define SC_BREAK_IF(_condition_)\
     if((_condition_)) break;

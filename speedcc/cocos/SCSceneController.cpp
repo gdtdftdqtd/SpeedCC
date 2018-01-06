@@ -28,11 +28,6 @@ namespace SpeedCC
         this->ownLifecycle(ptr);
     }
     
-//    void SCSceneController::onStageSetup()
-//    {
-//        this->setActive(true); // active stage
-//    }
-    
     void SCSceneController::pushModalController(SCSceneController::Ptr controllerPtr)
     {
         SCSceneController::WeakPtr controllerPtr2 = this->makeObjPtr<SCSceneController>();
@@ -44,8 +39,8 @@ namespace SpeedCC
             this->showBlackMask(true);
         }
         
-        _pScene->addChild(controllerPtr->getRootLayer());
-        this->setDisableTouch(true);
+        _pScene->addChild(controllerPtr->getSceneNode());
+        this->setAllTouch(false);
         
         // generate modal mssage
         SCMessageInfo mi;
@@ -64,7 +59,7 @@ namespace SpeedCC
         SCASSERT(_parentModalControllerPtr!=NULL);
         auto ret = _parentModalControllerPtr->makeObjPtr<SCSceneController>();
         
-        _parentModalControllerPtr->setDisableTouch(false);
+        _parentModalControllerPtr->setAllTouch(true);
         if(_parentModalControllerPtr->isBlackMaskForModal())
         {
             _parentModalControllerPtr->showBlackMask(false);
@@ -82,10 +77,9 @@ namespace SpeedCC
         return ret;
     }
     
-    
-    void SCSceneController::setDisableTouch(const bool bDisableTouch)
+    void SCSceneController::setAllTouch(const bool bEnable)
     {
-        if(_pDisableTouchLayer==NULL && bDisableTouch)
+        if(_pDisableTouchLayer==NULL && !bEnable)
         {// turn to no touch
             auto pLayer = SCLayerDisableTouch::create();
             _pRootLayer->addChild(pLayer);
@@ -93,7 +87,7 @@ namespace SpeedCC
             
             _pDisableTouchLayer = pLayer;
         }
-        else if(_pDisableTouchLayer!=NULL && !bDisableTouch)
+        else if(_pDisableTouchLayer!=NULL && bEnable)
         {// turn to touchable
             _pDisableTouchLayer->removeFromParentAndCleanup(true);
             _pDisableTouchLayer = NULL;
@@ -144,7 +138,7 @@ namespace SpeedCC
                                     ACallFunc(fun),
                                     NULL);
         
-        this->getRootLayer()->runAction(pSeqAction);
+        this->getSceneNode()->runAction(pSeqAction);
     }
     
     void SCSceneController::delayExecute(float fDelay,FUN_SCDelayExecute_t pfnFunc,const SCDictionary& dic)

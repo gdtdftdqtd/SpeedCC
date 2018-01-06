@@ -23,6 +23,7 @@ namespace SpeedCC
         virtual ~SCRefHolder();
         static Ptr create(cocos2d::Ref* pObject);
         
+        inline cocos2d::Ref* getRef() const {return _pObject;}
     protected:
         SCRefHolder():
         _pObject(NULL)

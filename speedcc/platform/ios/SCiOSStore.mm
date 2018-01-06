@@ -87,7 +87,7 @@ static SCiOSStore* s_shareStore = nil;
         _productID2ProductDic = [[NSMutableDictionary alloc]init];
     }
     
-    return self ;
+    return self;
 }
 
 -(BOOL) purchase:(NSString*)iap

@@ -4,7 +4,7 @@
 #include "../base/SCTemplateDef.h"
 #include "../cocos/SCCocosDef.h"
 
-using namespace std ;
+using namespace std;
 
 namespace SpeedCC
 {
@@ -20,7 +20,7 @@ namespace SpeedCC
             SCSchedule(SC_FUNC(SCMessageDispatch::onTimerMessagePump),_pInstance,0,false);
         }
         
-        return _pInstance ;
+        return _pInstance;
     }
     
     SCMessageDispatch::SCMessageDispatch():
@@ -32,22 +32,22 @@ namespace SpeedCC
     
     void SCMessageDispatch::addListener(SCMessageListener* pListener,const unsigned char nPriority)
     {
-        SCASSERT(pListener!=NULL) ;
+        SCASSERT(pListener!=NULL);
         
-        SMutabelListenerInfo info ;
+        SMutabelListenerInfo info;
         
         info.bAdd = true;
         info.pListener = pListener;
         info.byPriority = nPriority;
         
-        auto it = std::find(_mutableListenerList.begin(),_mutableListenerList.end(),info) ;
+        auto it = std::find(_mutableListenerList.begin(),_mutableListenerList.end(),info);
         
         if(it!=_mutableListenerList.end())
         {
             _mutableListenerList.erase(it);
         }
         
-        _mutableListenerList.push_back(info) ;
+        _mutableListenerList.push_back(info);
         
         if(_nPostMsgCallStackCounter==0 && _nSendMsgCallStackCounter==0)
         {
@@ -57,14 +57,14 @@ namespace SpeedCC
     
     void SCMessageDispatch::removeListener(SCMessageListener* pListener)
     {
-        SCASSERT(pListener!=NULL) ;
+        SCASSERT(pListener!=NULL);
         
-        SMutabelListenerInfo info ;
+        SMutabelListenerInfo info;
         
-        info.bAdd = false ;
-        info.pListener = pListener ;
+        info.bAdd = false;
+        info.pListener = pListener;
         
-        auto it = std::find(_mutableListenerList.begin(),_mutableListenerList.end(),info) ;
+        auto it = std::find(_mutableListenerList.begin(),_mutableListenerList.end(),info);
         
         if(it!=_mutableListenerList.end())
         {
@@ -165,7 +165,7 @@ namespace SpeedCC
                                   
                                   _listenerList.push_back(listenerInfo);
                               }
-                          }) ;
+                          });
             
             // remove listener
             std::for_each(_mutableListenerList.begin(),_mutableListenerList.end(),
@@ -187,7 +187,7 @@ namespace SpeedCC
             _listenerList.sort(std::greater<SListenerInfo>());
         }
         
-        _mutableListenerList.clear() ;
+        _mutableListenerList.clear();
     }
     
     
@@ -197,13 +197,13 @@ namespace SpeedCC
         this->swapMsgQue();
         
         // update mutable listener first before message loop
-        this->updateMutableListener() ;
+        this->updateMutableListener();
         
         ++_nPostMsgCallStackCounter;
         
         while(!workingQue.empty())
         {
-            auto& msg = workingQue.front() ;
+            auto& msg = workingQue.front();
             
             auto it = _listenerList.begin();
             for(;it!=_listenerList.end() && msg.bContinue;++it)
@@ -211,12 +211,12 @@ namespace SpeedCC
                 SCASSERT((*it).pListener!=NULL);
                 if((*it).pListener!=NULL)
                 {
-                    (*it).pListener->onSCMessageProcess(msg) ;
+                    (*it).pListener->onSCMessageProcess(msg);
                 }
             }
          
             _defaultProc.processMessage(msg);
-            workingQue.pop_front() ;
+            workingQue.pop_front();
         }
         
         --_nPostMsgCallStackCounter;

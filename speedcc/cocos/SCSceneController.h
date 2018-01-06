@@ -29,21 +29,21 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCSceneController)
         
         friend class SCSceneNavigator;
-        friend class SCSceneNode;
+//        friend class SCSceneNode;
         
         virtual ~SCSceneController();
         
         virtual void onCreate(SCDictionary parameters){}
         
-        inline bool isDisableTouch() const  {return (_pDisableTouchLayer==NULL);}
+        inline bool getAllTouch() const  {return (_pDisableTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
-        inline cocos2d::Node* getRootLayer()  {return _pRootLayer;}
+        inline cocos2d::Node* getSceneNode()  {return _pRootLayer;}
         inline SCScene* getScene()  {return _pScene;}
         
-        void setDisableTouch(const bool bDisableTouch) ;
-        void showBlackMask(const bool bShow) ;
+        void setAllTouch(const bool bEnable);
+        void showBlackMask(const bool bShow);
 
-        void pushModalController(SCSceneController::Ptr controllerPtr) ;
+        void pushModalController(SCSceneController::Ptr controllerPtr);
         SCSceneController::Ptr popModalFromParent();
         
         void onSCMenuItemPressed(cocos2d::Ref* pSender);
@@ -57,9 +57,10 @@ namespace SpeedCC
         
         cocos2d::Node* getLayoutNode(const int nID);
         
+        virtual void onSCMessageProcess(SCMessageInfo& mi) override;
+        
     protected:
         SCSceneController();
-        virtual void onSCMessageProcess(SCMessageInfo& mi) override;
         
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
         void storeLayoutNode(...){}

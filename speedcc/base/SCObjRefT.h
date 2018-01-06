@@ -212,7 +212,7 @@ namespace SpeedCC
             auto pDesc = this->getCookieDesc();
             SCDataTypeLifeCycle<SCookieDesc>::destroy(pDesc);
             SCMemAllocator::deallocate(pDesc, pDesc->nMallocBufSize);
-            _pObjData = NULL ;
+            _pObjData = NULL;
         }
     }
     

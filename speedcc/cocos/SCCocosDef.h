@@ -14,6 +14,13 @@
 
 namespace SpeedCC
 {
+    enum ETouchMode
+    {
+        kTouchModeNone,
+        kTouchModeSingle,
+        kTouchModeMultiple,
+    };
+    
     ///------- define function type
     typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessageInfo& mi);
     typedef void (cocos2d::Ref::*FUN_SCDelayExecute_t)(const SCDictionary& dic);

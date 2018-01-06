@@ -14,6 +14,8 @@ namespace SpeedCC
 #define MSG_KEY_COMMAND        "command"        // SCString
 #define MSG_KEY_STATE          "state"          // ESCState
 #define MSG_KEY_IAP            "iap"           // SCString
+#define MSG_KEY_TOUCH          "touch"           // cocos2d::Touch*
+#define MSG_KEY_TOUCHES        "touches"        // std::vector<cocos2d::Touch*>
     
     enum
     {
@@ -58,6 +60,27 @@ namespace SpeedCC
         // key: MSG_KEY_CONTROLLER
         // lisenter: owner scene controller
         kSCMsgSceneExitTransitionDidStart,
+        
+        // key: MSG_KEY_TOUCH       (if single touch)
+        // key: "result" => bool  (result from receiver, by defualt is true)
+        // key: MSG_KEY_TOUCHES     (if multiple touch)
+        // lisenter: owner scene controller
+        kSCMsgTouchBegan,
+        
+        // key: MSG_KEY_TOUCH       (if single touch)
+        // key: MSG_KEY_TOUCHES     (if multiple touch)
+        // lisenter: owner scene controller
+        kSCMsgTouchMoved,
+        
+        // key: MSG_KEY_TOUCH       (if single touch)
+        // key: MSG_KEY_TOUCHES     (if multiple touch)
+        // lisenter: owner scene controller
+        kSCMsgTouchEnded,
+        
+        // key: MSG_KEY_TOUCH       (if single touch)
+        // key: MSG_KEY_TOUCHES     (if multiple touch)
+        // lisenter: owner scene controller
+        kSCMsgTouchCancelled,
         
         // show alert box,
         // must block it if want to show customize alert box

@@ -724,7 +724,7 @@ namespace SpeedCC
         // Adjust for no year 0
         if (year <= 0)
         {
-            --year ;
+            --year;
         }
         
         const Date result = { year, month, day };

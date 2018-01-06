@@ -5,6 +5,7 @@
 
 #include "cocos2d.h"
 #include "../base/SCObject.h"
+#include "SCCocosDef.h"
 
 namespace SpeedCC
 {
@@ -17,7 +18,21 @@ namespace SpeedCC
         inline SCObject::Ptr getController() {return _sceneControllerPtr;}
         
         virtual bool init() override;
+        
+        void setTouchMode(const ETouchMode touch);
+        inline ETouchMode getTouchMode() const { return _touchMode;}
     protected:
+        
+        bool onSingleTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
+        void onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
+        void onSingleTouchEnded(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
+        void onSingleTouchCancelled(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
+        
+        void onMultipleTouchBegan(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
+        void onMultipleTouchMoved(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
+        void onMultipleTouchEnded(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
+        void onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
+        
         /*
         virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
         virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event);
@@ -43,7 +58,14 @@ namespace SpeedCC
 //        virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
         
     private:
-        SCObject::Ptr           _sceneControllerPtr;
+        
+//        void sendTouchMessage(const int nMsg,cocos2d::Touch* pTouch);
+//        void sendMultipleTouchMessage(const int nMsg,const std::vector<cocos2d::Touch*>& touchVtr);
+        
+    private:
+        SCObject::Ptr               _sceneControllerPtr;
+        ETouchMode                  _touchMode;
+        cocos2d::EventListener*     _touchListener;
     };
     
     ///----------- SCScene
@@ -61,7 +83,7 @@ namespace SpeedCC
         virtual void onExitTransitionDidStart() override;
         
         void setSceneNode(SCSceneNode* pLayer);
-        SCSceneNode* getRootLayer();
+        SCSceneNode* getSceneNode();
         
         
     private:

@@ -165,13 +165,13 @@ namespace SpeedCC
         const SCString& operator+=(const SCEncodingChar& encodingChar);
         
         // compare
-        bool operator==(const char* psz) const ;
-        bool operator==(const std::string& str) const ;
-        bool operator==(char ch) const ;
+        bool operator==(const char* psz) const;
+        bool operator==(const std::string& str) const;
+        bool operator==(char ch) const;
         
-        bool operator!=(const char* psz) const ;
-        bool operator!=(const std::string& str) const ;
-        bool operator!=(char ch) const ;
+        bool operator!=(const char* psz) const;
+        bool operator!=(const std::string& str) const;
+        bool operator!=(char ch) const;
         
         bool operator<(const SCString& str) const;
         bool operator>(const SCString& str) const;
@@ -244,21 +244,21 @@ namespace SpeedCC
     private:
         inline SStringDesc* getStringDesc() const {return (((SStringDesc*)_pchStrData)-1); }
         
-        void allocBuf(const int nStringSize) ;
-        void freeBuf() ;
+        void allocBuf(const int nStringSize);
+        void freeBuf();
         
-        int decreaseRef() ;
+        int decreaseRef();
         int increaseRef() const;
         
-        void beforeWrite(const int nStringSize) ;
-        void cloneBeforeWrite() ;
+        void beforeWrite(const int nStringSize);
+        void cloneBeforeWrite();
         
         inline SStringDesc* getEmptyBuffer() const { return (SStringDesc*)_emptyBuf;}
         char* getEncodingPointer(const int nEncodingCharIndex) const;
         
     protected:
-        char*                               _pchStrData ;
-        static unsigned char	_emptyBuf[sizeof(SStringDesc)+sizeof(char)*2] ;
+        char*                               _pchStrData;
+        static unsigned char	_emptyBuf[sizeof(SStringDesc)+sizeof(char)*2];
     };
 }
 

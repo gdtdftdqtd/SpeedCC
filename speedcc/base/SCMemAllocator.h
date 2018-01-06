@@ -98,7 +98,7 @@ namespace SpeedCC
         static size_t _nHeapSize;
         static SCMemBlock* _pFreeList[NUMBER_OF_FREE_LIST];
         
-    } ;
+    };
     
     class SCSimpleAllocator
     {

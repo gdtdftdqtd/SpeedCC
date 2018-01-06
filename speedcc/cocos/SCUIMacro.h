@@ -119,7 +119,7 @@ namespace SpeedCC
 ///-------------- root container
 
 #define SC_BEGIN_CONTAINER_ROOT(_node_,_x_,_y_,_property_,_size_) \
-    SC_BEGIN_CONTAINER_ROOT_EX((_node_),(_x_),(_y_),(_property_),(_size_),getRootLayer())
+    SC_BEGIN_CONTAINER_ROOT_EX((_node_),(_x_),(_y_),(_property_),(_size_),getSceneNode())
 
 #define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_)\
 {\
@@ -130,7 +130,7 @@ namespace SpeedCC
     sc_container_pParentNode->setIgnoreAnchorPointForPosition(false);\
     cocos2d::Size temSize = (_size_);\
     if(temSize.width==0 || temSize.height==0) {temSize= sc_container_pParentNode->getContentSize();} \
-    sc_container_pParentNode->setPosition(SCNodeUtils::posR2A(cocos2d::Vec2((_x_),(_y_)),temSize)) ; \
+    sc_container_pParentNode->setPosition(SCNodeUtils::posR2A(cocos2d::Vec2((_x_),(_y_)),temSize)); \
     ___SC_INSIDE_ASSIGN_NODE(sc_container_pParentNode,(_node_));\
 SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNode)>::type>(sc_container_pParentNode,SCUISetup::purifyString((_property_)));\
     sc_container_LayoutObjectList.push_back(sc_container_pParentNode);
@@ -469,7 +469,7 @@ do{\
     }else if(sc_container_pButtonListMenu!=NULL){\
         sc_container_pButtonListMenu->addChild(pSCTemItemLabel);\
     }else{\
-        cocos2d::Menu* pMenu = cocos2d::Menu::create(pSCTemItemLabel,NULL) ;\
+        cocos2d::Menu* pMenu = cocos2d::Menu::create(pSCTemItemLabel,NULL);\
         ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pMenu,(_x_),(_y_));\
         SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,SCUISetup::purifyString((_property_)));\
     }\

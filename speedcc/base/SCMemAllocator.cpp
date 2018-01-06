@@ -81,7 +81,7 @@ namespace SpeedCC
             _nHeapSize += nSizeOfGet;
             _pFreeEnd = _pFreeStart + nSizeOfGet;
             
-            return SCPoolAllocator::allocChunk(nSize, nNodeNumber) ;
+            return SCPoolAllocator::allocChunk(nSize, nNodeNumber);
         }
     }
     
@@ -105,7 +105,7 @@ namespace SpeedCC
         pRet = (SCMemBlock*)pChunk;
         *pFreeList = pNode = (SCMemBlock*)(pChunk + nSize);
         
-        for (int i = 1; ; i++)
+        for (int i = 1;; i++)
         {
             pCurrentNode = pNode;
             pNode = (SCMemBlock*)((char*)pNode + nSize);
