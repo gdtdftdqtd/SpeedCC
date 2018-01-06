@@ -10,9 +10,14 @@
 #define __SPEEDCC__SCCOCOSDEF_H__
 
 #include "../base/SCTemplateDef.h"
+#include "../component/SCMessageDef.h"
 
 namespace SpeedCC
 {
+    ///------- define function type
+    typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessageInfo& mi);
+    typedef void (cocos2d::Ref::*FUN_SCDelayExecute_t)(const SCDictionary& dic);
+    
     ///------- trait function
     template<typename T>
     cocos2d::SEL_MenuHandler SCTraitFunctionPointerType(void (T::*)(cocos2d::Ref*));
@@ -29,8 +34,12 @@ namespace SpeedCC
     template<typename T>
     cocos2d::SEL_CallFuncND SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*,void*));
     
-//    template<typename T>
-//    void SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*));
+    template<typename T>
+    FUN_SCMapMessage_t SCTraitFunctionPointerType(void (T::*)(SCMessageInfo& mi));
+    
+    template<typename T>
+    FUN_SCDelayExecute_t SCTraitFunctionPointerType(void (T::*)(const SCDictionary& dic));
+    
     
     ///--------------------- cocos2d transition template
     

@@ -44,16 +44,21 @@ namespace SpeedCC
         kSCMsgInternetReachableChanged,
         
         // key: MSG_KEY_CONTROLLER
+        // lisenter: owner scene controller
         kSCMsgSceneEnter,
         
         // key: MSG_KEY_CONTROLLER
+        // lisenter: owner scene controller
         kSCMsgSceneEnterTransitionDidFinish,
         
         // key: MSG_KEY_CONTROLLER
+        // lisenter: owner scene controller
         kSCMsgSceneExit,
         
-        // key: MSG_KEY_CONTROLLER 
+        // key: MSG_KEY_CONTROLLER
+        // lisenter: owner scene controller
         kSCMsgSceneExitTransitionDidStart,
+        
         // show alert box,
         // must block it if want to show customize alert box
         // otherwise will show with system alert box

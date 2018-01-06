@@ -676,7 +676,7 @@ namespace SpeedCC
     bool SCNodeProperty::parseVec2(SCString strValue,cocos2d::Vec2& vec2)
     {
         bool bRet = false;
-        if(strValue.getLength()>5 &&
+        if(strValue.getLength()>=5 &&
            ((strValue[0]=='(' && strValue[strValue.getLength()-1]==')') || (strValue[0]=='{' && strValue[strValue.getLength()-1]=='}')))
         {// {?,?} or (?,?)
             strValue.trimLeft('(');

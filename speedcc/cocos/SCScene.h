@@ -1,7 +1,7 @@
 
 
-#ifndef __SPEEDCC__SCSCENELAYER_H__
-#define __SPEEDCC__SCSCENELAYER_H__
+#ifndef __SPEEDCC__SCSCENE_H__
+#define __SPEEDCC__SCSCENE_H__
 
 #include "cocos2d.h"
 #include "../base/SCObject.h"
@@ -9,10 +9,10 @@
 namespace SpeedCC
 {
     ///----------- SCSceneLayer
-    class SCLayerRoot : public cocos2d::Layer
+    class SCSceneNode : public cocos2d::Node
     {
     public:
-        CREATE_FUNC(SCLayerRoot);
+        CREATE_FUNC(SCSceneNode);
         void setController(SCObject::Ptr controllerPtr);
         inline SCObject::Ptr getController() {return _sceneControllerPtr;}
         
@@ -28,6 +28,7 @@ namespace SpeedCC
         virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *unused_event);
         virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *unused_event);
         virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*>&touches, cocos2d::Event *unused_event);
+        
         
         virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* unused_event);
         
@@ -59,12 +60,12 @@ namespace SpeedCC
         virtual void onExit() override;
         virtual void onExitTransitionDidStart() override;
         
-        void setRootLayer(SCLayerRoot* pLayer);
-        SCLayerRoot* getRootLayer();
+        void setSceneNode(SCSceneNode* pLayer);
+        SCSceneNode* getRootLayer();
         
         
     private:
-        SCLayerRoot*           _pRootLayer;
+        SCSceneNode*           _pRootLayer;
     };
     
     ///------------ SCLayerDisableTouch
@@ -82,4 +83,4 @@ namespace SpeedCC
     
 }
 
-#endif // __SPEEDCC__SCSCENELAYER_H__
+#endif // __SPEEDCC__SCSCENE_H__

@@ -39,7 +39,7 @@
 		0A6879CC1FFC3F7D004DCED6 /* SCStrategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879CA1FFC3F7C004DCED6 /* SCStrategy.cpp */; };
 		0A8868181FDA536F00866266 /* SCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */; };
 		0A8868191FDA536F00866266 /* SCSceneNavigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */; };
-		0A88681A1FDA536F00866266 /* SCLayerRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCLayerRoot.cpp */; };
+		0A88681A1FDA536F00866266 /* SCScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCScene.cpp */; };
 		0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868151FDA536E00866266 /* SCNodeUtils.cpp */; };
 /* End PBXBuildFile section */
 
@@ -161,10 +161,10 @@
 		0A6879CB1FFC3F7C004DCED6 /* SCStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCStrategy.h; sourceTree = "<group>"; };
 		0A88680E1FDA536E00866266 /* SCNodeProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeProperty.h; sourceTree = "<group>"; };
 		0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeProperty.cpp; sourceTree = "<group>"; };
-		0A8868101FDA536E00866266 /* SCLayerRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLayerRoot.h; sourceTree = "<group>"; };
+		0A8868101FDA536E00866266 /* SCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCScene.h; sourceTree = "<group>"; };
 		0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCSceneNavigator.cpp; sourceTree = "<group>"; };
 		0A8868121FDA536E00866266 /* SCNodeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeUtils.h; sourceTree = "<group>"; };
-		0A8868131FDA536E00866266 /* SCLayerRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCLayerRoot.cpp; sourceTree = "<group>"; };
+		0A8868131FDA536E00866266 /* SCScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCScene.cpp; sourceTree = "<group>"; };
 		0A8868151FDA536E00866266 /* SCNodeUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeUtils.cpp; sourceTree = "<group>"; };
 		0A8868161FDA536E00866266 /* SCSceneNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneNavigator.h; sourceTree = "<group>"; };
 		0A8868171FDA536E00866266 /* SCUIMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUIMacro.h; sourceTree = "<group>"; };
@@ -341,8 +341,8 @@
 				0A41B3801FEA3706003945EB /* SCSceneController.h */,
 				0A88680E1FDA536E00866266 /* SCNodeProperty.h */,
 				0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */,
-				0A8868101FDA536E00866266 /* SCLayerRoot.h */,
-				0A8868131FDA536E00866266 /* SCLayerRoot.cpp */,
+				0A8868101FDA536E00866266 /* SCScene.h */,
+				0A8868131FDA536E00866266 /* SCScene.cpp */,
 				0A8868121FDA536E00866266 /* SCNodeUtils.h */,
 				0A8868151FDA536E00866266 /* SCNodeUtils.cpp */,
 				0A8868161FDA536E00866266 /* SCSceneNavigator.h */,
@@ -449,7 +449,7 @@
 				0A6879BF1FF50132004DCED6 /* SCRole.cpp in Sources */,
 				0A41B3A01FEB8C60003945EB /* SCStore.cpp in Sources */,
 				0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */,
-				0A88681A1FDA536F00866266 /* SCLayerRoot.cpp in Sources */,
+				0A88681A1FDA536F00866266 /* SCScene.cpp in Sources */,
 				0A6879BC1FF50132004DCED6 /* SCStage.cpp in Sources */,
 				0A6879CC1FFC3F7D004DCED6 /* SCStrategy.cpp in Sources */,
 				0A6879C61FF9339C004DCED6 /* SCPerformObject.cpp in Sources */,

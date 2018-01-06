@@ -3,8 +3,6 @@
 #include "cocos2d.h"
 
 #include "SCSceneController.h"
-#include "SCCocosDef.h"
-
 
 namespace SpeedCC
 {
@@ -149,8 +147,56 @@ namespace SpeedCC
         this->getRootLayer()->runAction(pSeqAction);
     }
     
+    void SCSceneController::delayExecute(float fDelay,FUN_SCDelayExecute_t pfnFunc,const SCDictionary& dic)
+    {
+        SC_RETURN_IF_V(pfnFunc==NULL);
+        
+        this->delayExecute(fDelay,[this,dic,pfnFunc]()
+                           {
+                               (this->*(pfnFunc))(dic);
+                           });
+    }
+    
+    void SCSceneController::listenMessage(const int nMsg,FUN_SCMapMessage_t pfnFunc)
+    {
+        SC_RETURN_IF_V(nMsg<=0);
+        
+        if(pfnFunc==NULL)
+        {// remove mapping
+            _msg2FuncMap.erase(nMsg);
+        }
+        else
+        {
+            _msg2FuncMap[nMsg] = pfnFunc;
+        }
+    }
+    
+    cocos2d::Node* SCSceneController::getLayoutNode(const int nID)
+    {
+        SC_RETURN_IF(nID<=0, NULL);
+        
+        auto it = _id2NodeMap.find(nID);
+        SC_RETURN_IF(it==_id2NodeMap.end(), NULL);
+        
+        return (*it).second;
+    }
+    
+    void SCSceneController::storeLayoutNode(const int nID,cocos2d::Node* pNode)
+    {
+        SC_RETURN_IF_V(nID<=0 || pNode==NULL);
+        
+        _id2NodeMap[nID] = pNode;
+    }
+    
     void SCSceneController::onSCMessageProcess(SCMessageInfo& mi)
     {
+        auto it = _msg2FuncMap.find(mi.nMsgID);
+        
+        if(it!=_msg2FuncMap.end() && (*it).second!=NULL)
+        {
+            (this->*(*it).second)(mi);
+        }
+        
         SCStage::onSCMessageProcess(mi);
     }
 }

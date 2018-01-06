@@ -1,5 +1,5 @@
 
-#include "SCLayerRoot.h"
+#include "SCScene.h"
 #include "SCSceneController.h"
 #include "SCNodeUtils.h"
 #include "SCCocosDef.h"
@@ -10,52 +10,68 @@ namespace SpeedCC
 {
     ///------------- SCSceneLayer
     
-    bool SCLayerRoot::init()
+    bool SCSceneNode::init()
     {
-        SC_RETURN_IF(!Layer::init(),false);
+        SC_RETURN_IF(!Node::init(),false);
         this->setContentSize(SCWinSize());
         return true;
     }
     
-    void SCLayerRoot::setController(SCObject::Ptr controllerPtr)
+    void SCSceneNode::setController(SCObject::Ptr controllerPtr)
     {
         _sceneControllerPtr = controllerPtr;
     }
     
-    void SCLayerRoot::onEnter()
+    void SCSceneNode::onEnter()
     {
-        cocos2d::Layer::onEnter();
+        cocos2d::Node::onEnter();
         
         SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
         SCDictionary dic(pair);
-        SCMsgDisp()->sendMessage(kSCMsgSceneEnter,dic);
+        
+        SCMessageInfo mi;
+        mi.nMsgID = kSCMsgSceneEnter;
+        mi.paramters = dic;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
-    void SCLayerRoot::onEnterTransitionDidFinish()
+    void SCSceneNode::onEnterTransitionDidFinish()
     {
-        cocos2d::Layer::onEnterTransitionDidFinish();
+        cocos2d::Node::onEnterTransitionDidFinish();
         
         SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
         SCDictionary dic(pair);
-        SCMsgDisp()->sendMessage(kSCMsgSceneEnterTransitionDidFinish,dic);
+
+        SCMessageInfo mi;
+        mi.nMsgID = kSCMsgSceneEnterTransitionDidFinish;
+        mi.paramters = dic;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
-    void SCLayerRoot::onExit()
+    void SCSceneNode::onExit()
     {
-        cocos2d::Layer::onExit();
+        cocos2d::Node::onExit();
         
         SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
         SCDictionary dic(pair);
-        SCMsgDisp()->sendMessage(kSCMsgSceneExit,dic);
+
+        SCMessageInfo mi;
+        mi.nMsgID = kSCMsgSceneExit;
+        mi.paramters = dic;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
-    void SCLayerRoot::onExitTransitionDidStart()
+    void SCSceneNode::onExitTransitionDidStart()
     {
-        cocos2d::Layer::onExitTransitionDidStart();
+        cocos2d::Node::onExitTransitionDidStart();
         
         SCDictionary::SPair pair = {MSG_KEY_CONTROLLER,this};
         SCDictionary dic(pair);
-        SCMsgDisp()->sendMessage(kSCMsgSceneExitTransitionDidStart,dic);
+        
+        SCMessageInfo mi;
+        mi.nMsgID = kSCMsgSceneExitTransitionDidStart;
+        mi.paramters = dic;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
 
     ///-------------- SCScene
@@ -70,7 +86,7 @@ namespace SpeedCC
     {
         SC_RETURN_IF(!Scene::init(),false);
         
-        _pRootLayer = SCLayerRoot::create();
+        _pRootLayer = SCSceneNode::create();
         _pRootLayer->setContentSize(SCWinSize());
         _pRootLayer->setPosition(SCNodeUtils::posR2A(Vec2(0,0),SCWinSize()));
         this->addChild(_pRootLayer);
@@ -98,12 +114,12 @@ namespace SpeedCC
         cocos2d::Scene::onExitTransitionDidStart();
 	}
     
-    void SCScene::setRootLayer(SCLayerRoot* pLayer)
+    void SCScene::setSceneNode(SCSceneNode* pLayer)
     {
         _pRootLayer = pLayer;
     }
     
-    SCLayerRoot* SCScene::getRootLayer()
+    SCSceneNode* SCScene::getRootLayer()
     {
         return _pRootLayer;
     }

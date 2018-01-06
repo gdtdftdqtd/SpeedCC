@@ -118,7 +118,7 @@ namespace SpeedCC
             SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
             sceneCtlrPtr.createInstance();
             
-            auto rootLayer = SCLayerRoot::create();
+            auto rootLayer = SCSceneNode::create();
             rootLayer->setController(sceneCtlrPtr);
             sceneCtlrPtr->setSceneRootLayer(rootLayer);
             

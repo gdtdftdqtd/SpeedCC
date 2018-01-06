@@ -5,8 +5,9 @@
 
 #include "cocos2d.h"
 
-#include "SCLayerRoot.h"
+#include "SCScene.h"
 #include "SCRefHolder.h"
+#include "SCCocosDef.h"
 
 #include "../base/SCBaseDef.h"
 #include "../base/SCObjPtrT.h"
@@ -28,6 +29,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCSceneController)
         
         friend class SCSceneNavigator;
+        friend class SCSceneNode;
         
         virtual ~SCSceneController();
         
@@ -35,7 +37,7 @@ namespace SpeedCC
         
         inline bool isDisableTouch() const  {return (_pDisableTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
-        inline cocos2d::Layer* getRootLayer()  {return _pRootLayer;}
+        inline cocos2d::Node* getRootLayer()  {return _pRootLayer;}
         inline SCScene* getScene()  {return _pScene;}
         
         void setDisableTouch(const bool bDisableTouch) ;
@@ -50,15 +52,19 @@ namespace SpeedCC
         void ownLifecycle(cocos2d::Ref* pObject);
         
         void delayExecute(float fDelay,const std::function<void ()>& fun);
+        void delayExecute(float fDelay,FUN_SCDelayExecute_t pfnFunc,const SCDictionary& dic=SCDictionary());
+        void listenMessage(const int nMsg,FUN_SCMapMessage_t pfnFunc);
         
-//        void mapMessage2Func();
+        cocos2d::Node* getLayoutNode(const int nID);
         
     protected:
         SCSceneController();
         virtual void onSCMessageProcess(SCMessageInfo& mi) override;
         
+        void storeLayoutNode(const int nID,cocos2d::Node* pNode);
+        void storeLayoutNode(...){}
     private:
-        inline void setSceneRootLayer(SCLayerRoot* pLayer) { _pRootLayer = pLayer;}
+        inline void setSceneRootLayer(SCSceneNode* pLayer) { _pRootLayer = pLayer;}
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _parentModalControllerPtr = controllerPtr;}
         
@@ -66,13 +72,15 @@ namespace SpeedCC
         std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
         
     private:
-        SCLayerRoot*			                _pRootLayer;
+        SCSceneNode*			                _pRootLayer;
         SCScene*                                _pScene;
         SCSceneController::WeakPtr              _parentModalControllerPtr;
-        SCLayerDisableTouch*                         _pDisableTouchLayer;
+        SCLayerDisableTouch*                    _pDisableTouchLayer;
         cocos2d::Layer*                         _pBlackMaskLayer;
         bool                                    _bBlackMaskForModal;
         std::list<SCObject::Ptr>                _ownLifecycleList;
+        std::map<int,FUN_SCMapMessage_t>        _msg2FuncMap;
+        std::map<int,cocos2d::Node*>            _id2NodeMap;
     };
     
     
