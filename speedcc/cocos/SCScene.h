@@ -19,31 +19,10 @@ namespace SpeedCC
         
         virtual bool init() override;
         
-        void setTouchMode(const ETouchMode touch);
-        inline ETouchMode getTouchMode() const { return _touchMode;}
     protected:
-        
-        bool onSingleTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        void onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        void onSingleTouchEnded(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        void onSingleTouchCancelled(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        
-        void onMultipleTouchBegan(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        void onMultipleTouchMoved(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        void onMultipleTouchEnded(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        void onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        
+
+//        void onAcceleration(cocos2d::Acceleration* pAcc, cocos2d::Event* pEvent);
         /*
-        virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
-        virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event);
-        virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
-        virtual void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *unused_event);
-        
-        virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *unused_event);
-        virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *unused_event);
-        virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *unused_event);
-        virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*>&touches, cocos2d::Event *unused_event);
-        
         
         virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* unused_event);
         
@@ -58,14 +37,8 @@ namespace SpeedCC
 //        virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
         
     private:
-        
-//        void sendTouchMessage(const int nMsg,cocos2d::Touch* pTouch);
-//        void sendMultipleTouchMessage(const int nMsg,const std::vector<cocos2d::Touch*>& touchVtr);
-        
-    private:
         SCObject::Ptr               _sceneControllerPtr;
-        ETouchMode                  _touchMode;
-        cocos2d::EventListener*     _touchListener;
+        cocos2d::EventListener*     _accListener;
     };
     
     ///----------- SCScene
@@ -85,9 +58,8 @@ namespace SpeedCC
         void setSceneNode(SCSceneNode* pLayer);
         SCSceneNode* getSceneNode();
         
-        
     private:
-        SCSceneNode*           _pRootLayer;
+        SCSceneNode*           _pSceneNode;
     };
     
     ///------------ SCLayerDisableTouch

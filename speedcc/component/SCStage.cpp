@@ -13,7 +13,6 @@ namespace SpeedCC
 {
     SCStage::SCStage()
     {
-        this->setActive(false);
         SCMessageDispatch::getInstance()->addListener(this);
     }
     
@@ -52,6 +51,7 @@ namespace SpeedCC
         for(auto it : _id2RoleMap)
         {
             SC_RETURN_IF_V(!this->getActive());
+            SC_BREAK_IF(!mi.bContinue);
             it.second->update(mi);
         }
     }

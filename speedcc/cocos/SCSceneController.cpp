@@ -12,7 +12,9 @@ namespace SpeedCC
     _pScene(NULL),
     _pDisableTouchLayer(NULL),
     _pBlackMaskLayer(NULL),
-    _bBlackMaskForModal(true)
+    _bBlackMaskForModal(true),
+    _touchMode(kTouchModeNone),
+    _pTouchListener(NULL)
     {   
     }
     
@@ -40,7 +42,7 @@ namespace SpeedCC
         }
         
         _pScene->addChild(controllerPtr->getSceneNode());
-        this->setAllTouch(false);
+        this->setAllTouchEnabled(false);
         
         // generate modal mssage
         SCMessageInfo mi;
@@ -59,7 +61,7 @@ namespace SpeedCC
         SCASSERT(_parentModalControllerPtr!=NULL);
         auto ret = _parentModalControllerPtr->makeObjPtr<SCSceneController>();
         
-        _parentModalControllerPtr->setAllTouch(true);
+        _parentModalControllerPtr->setAllTouchEnabled(true);
         if(_parentModalControllerPtr->isBlackMaskForModal())
         {
             _parentModalControllerPtr->showBlackMask(false);
@@ -77,7 +79,7 @@ namespace SpeedCC
         return ret;
     }
     
-    void SCSceneController::setAllTouch(const bool bEnable)
+    void SCSceneController::setAllTouchEnabled(const bool bEnable)
     {
         if(_pDisableTouchLayer==NULL && !bEnable)
         {// turn to no touch
@@ -192,6 +194,118 @@ namespace SpeedCC
         }
         
         SCStage::onSCMessageProcess(mi);
+    }
+    
+    ///--------------- cocos2d Events
+    
+    cocos2d::EventListener* SCSceneController::getEventListener(cocos2d::EventListener::Type type) const
+    {
+        SC_RETURN_IF((type!=cocos2d::EventListener::Type::TOUCH_ONE_BY_ONE && type!=cocos2d::EventListener::Type::TOUCH_ALL_AT_ONCE),NULL);
+        
+        if(type==cocos2d::EventListener::Type::TOUCH_ONE_BY_ONE)
+        {
+            return dynamic_cast<cocos2d::EventListenerTouchOneByOne*>(_pTouchListener);
+        }
+        else
+        {
+            return dynamic_cast<cocos2d::EventListenerTouchAllAtOnce*>(_pTouchListener);
+        }
+    }
+    
+    void SCSceneController::setTouchMode(const ETouchMode touch)
+    {
+        SC_RETURN_IF_V(touch==_touchMode);
+        
+        if(_pTouchListener!=NULL)
+        {
+            SCCCDirector()->getEventDispatcher()->removeEventListener(_pTouchListener);
+            _pTouchListener = NULL;
+        }
+        
+        switch(touch)
+        {
+            case kTouchModeSingle:
+            {
+                auto pListener = cocos2d::EventListenerTouchOneByOne::create();
+                pListener->setSwallowTouches(true);
+                pListener->onTouchBegan = CC_CALLBACK_2(SCSceneController::onSingleTouchBegan, this);
+                pListener->onTouchMoved = CC_CALLBACK_2(SCSceneController::onSingleTouchMoved, this);
+                pListener->onTouchEnded = CC_CALLBACK_2(SCSceneController::onSingleTouchEnded, this);
+                pListener->onTouchCancelled = CC_CALLBACK_2(SCSceneController::onSingleTouchCancelled, this);
+                
+                _pTouchListener = pListener;
+                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pRootLayer);
+            }
+                break;
+                
+            case kTouchModeMultiple:
+            {
+                auto pListener = cocos2d::EventListenerTouchAllAtOnce::create();
+                pListener->onTouchesBegan = CC_CALLBACK_2(SCSceneController::onMultipleTouchBegan, this);
+                pListener->onTouchesMoved = CC_CALLBACK_2(SCSceneController::onMultipleTouchMoved, this);
+                pListener->onTouchesEnded = CC_CALLBACK_2(SCSceneController::onMultipleTouchEnded, this);
+                pListener->onTouchesCancelled = CC_CALLBACK_2(SCSceneController::onMultipleTouchCancelled, this);
+                
+                _pTouchListener = pListener;
+                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pRootLayer);
+            }
+                break;
+                
+            case kTouchModeNone: break;
+        }
+    }
+    
+    bool SCSceneController::onSingleTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
+    {
+        SCDictionary::SPair pair[] =
+        {
+            {MSG_KEY_TOUCH,pTouch},
+            {"result",true},
+        };
+        
+        SCDictionary dic(pair,SC_ARRAY_LENGTH(pair));
+        
+        SCMessageInfo mi;
+        mi.nMsgID = kSCMsgTouchBegan;
+        mi.paramters = dic;
+        this->onSCMessageProcess(mi);
+        
+        return mi.paramters.getValue("result").getBool();
+    }
+    
+    void SCSceneController::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
+    {
+        this->sendTouchMessage(kSCMsgTouchMoved,pTouch);
+    }
+    
+    void SCSceneController::onSingleTouchEnded(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
+    {
+        this->sendTouchMessage(kSCMsgTouchEnded,pTouch);
+    }
+    
+    void SCSceneController::onSingleTouchCancelled(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
+    {
+        this->sendTouchMessage(kSCMsgTouchCancelled,pTouch);
+    }
+    
+    void SCSceneController::onMultipleTouchBegan(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
+    {
+        this->sendTouchMessage(kSCMsgTouchBegan,touchVtr);
+    }
+    
+    void SCSceneController::onMultipleTouchMoved(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
+    {
+        this->sendTouchMessage(kSCMsgTouchMoved,touchVtr);
+    }
+    
+    void SCSceneController::onMultipleTouchEnded(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
+    {
+        this->sendTouchMessage(kSCMsgTouchEnded,touchVtr);
+    }
+    
+    void SCSceneController::onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
+    {
+        this->sendTouchMessage(kSCMsgTouchCancelled,touchVtr);
     }
 }
 
