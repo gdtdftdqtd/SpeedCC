@@ -23,7 +23,7 @@ void TestStageController::onCreate(SCDictionary parameters)
     
 }
 
-void TestStageController::onStageSetup()
+void TestStageController::setUpStage()
 {
     SC_BEGIN_ROLE(123,0)
         IN_STRATEGY(22)
@@ -43,11 +43,6 @@ void TestStageController::onStageSetup()
     
         ON_MSG_BEHAVIOR(11,SCBehaviorCallFunc::create())
     SC_END_ROLE
-}
-
-SCRole::Ptr TestStageController::onCreateRole(const int nID)
-{
-    return NULL;
 }
 
 SCStrategy::Ptr TestStageController::onCreateStrategy(const int nID)

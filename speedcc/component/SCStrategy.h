@@ -27,7 +27,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCStrategy)
         SC_DEFINE_CLASS_PTR(SCStrategy)
         
-        SC_DEFINE_CREATE_FUNC0(SCStrategy)
+        SC_DEFINE_CREATE_FUNC_0(SCStrategy)
         
         virtual void update(SCPerformer* pPerformer,SCMessageInfo& mi);
         void enter(SCPerformer* pPerformer);
@@ -67,7 +67,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCStrategyEmpty)
         SC_DEFINE_CLASS_PTR(SCStrategyEmpty)
         
-        SC_DEFINE_CREATE_FUNC0(SCStrategyEmpty)
+        SC_DEFINE_CREATE_FUNC_0(SCStrategyEmpty)
         
     protected:
         SCStrategyEmpty() {}

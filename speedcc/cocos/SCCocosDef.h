@@ -14,11 +14,11 @@
 
 namespace SpeedCC
 {
-    enum ETouchMode
+    enum class ETouchMode
     {
-        kTouchModeNone,
-        kTouchModeSingle,
-        kTouchModeMultiple,
+        kTouchNone,
+        kTouchSingle,
+        kTouchMultiple,
     };
     
     ///------- define function type

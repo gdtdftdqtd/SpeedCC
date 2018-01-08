@@ -152,7 +152,7 @@ namespace SpeedCC
             }
             
             const SCValueStub& stub = *(this->getStub());
-            return (stub.pfunDestroyFunctor_t==SCDataTypeLifeCycle<ObjectT>::destroy);
+            return (stub.pfunDestroyFunctor_t==SCDataTypeLifeCycleT<ObjectT>::destroy);
         }
         
         template<typename ObjectT>
@@ -170,7 +170,7 @@ namespace SpeedCC
             
             const SCValueStub& stub = *(this->getStub());
             
-            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycle<ObjectT>::destroy)
+            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycleT<ObjectT>::destroy)
             {
                 return ObjectT();
             }
@@ -197,7 +197,7 @@ namespace SpeedCC
             
             const SCValueStub& stub = *(this->getStub());
             
-            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycle<ObjectT>::destroy)
+            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycleT<ObjectT>::destroy)
             {
                 return NULL;
             }
@@ -247,7 +247,7 @@ namespace SpeedCC
             ObjectT* pMyClass = new(pBuf)ObjectT();
             *pMyClass = value;
             stub.data.pObject = pMyClass;
-            stub.pfunDestroyFunctor_t = SCDataTypeLifeCycle<ObjectT>::destroy;
+            stub.pfunDestroyFunctor_t = SCDataTypeLifeCycleT<ObjectT>::destroy;
             
             return ret;
         }

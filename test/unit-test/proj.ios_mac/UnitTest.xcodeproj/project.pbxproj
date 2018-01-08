@@ -16,6 +16,7 @@
 		0A41B3751FE948CE003945EB /* TestSCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36C1FE948CD003945EB /* TestSCNodeProperty.cpp */; };
 		0A41B3761FE948CE003945EB /* TestSCComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36D1FE948CD003945EB /* TestSCComponent.cpp */; };
 		0A41B3771FE948CE003945EB /* TestSCWatchNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B36E1FE948CD003945EB /* TestSCWatchNumber.cpp */; };
+		0A6218D720033BAA00459055 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6218D620033BAA00459055 /* StoreKit.framework */; };
 		0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc.a */; };
 		0A67CAFD1F814CA000FED9A5 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */; };
 		0A67CAFE1F814CA000FED9A5 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */; };
@@ -111,6 +112,7 @@
 		0A41B36C1FE948CD003945EB /* TestSCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCNodeProperty.cpp; sourceTree = "<group>"; };
 		0A41B36D1FE948CD003945EB /* TestSCComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCComponent.cpp; sourceTree = "<group>"; };
 		0A41B36E1FE948CD003945EB /* TestSCWatchNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCWatchNumber.cpp; sourceTree = "<group>"; };
+		0A6218D620033BAA00459055 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		0A67CAB11F80E75100FED9A5 /* speedcc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = speedcc.xcodeproj; path = ../../../speedcc/platform/ios/speedcc.xcodeproj; sourceTree = "<group>"; };
 		0A67CAFC1F814C9F00FED9A5 /* gtest-all.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-all.cc"; path = "../../gtest/src/gtest-all.cc"; sourceTree = "<group>"; };
 		0A67CB3A1F8914A200FED9A5 /* TestSCString.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestSCString.cpp; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A6218D720033BAA00459055 /* StoreKit.framework in Frameworks */,
 				0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
@@ -268,6 +271,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A6218D620033BAA00459055 /* StoreKit.framework */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,

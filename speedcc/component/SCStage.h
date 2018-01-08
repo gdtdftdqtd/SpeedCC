@@ -24,7 +24,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCStage)
         SC_DEFINE_CLASS_PTR(SCStage)
         
-        SC_DEFINE_CREATE_FUNC0(SCStage)
+        SC_DEFINE_CREATE_FUNC_0(SCStage)
         
         virtual ~SCStage();
         

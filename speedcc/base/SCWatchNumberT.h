@@ -121,8 +121,8 @@ namespace SpeedCC
         {
         }
         
-        SC_DEFINE_CREATE_FUNC0(SCWatchNumberT)
-        SC_DEFINE_CREATE_FUNC1(SCWatchNumberT,const T)
+        SC_DEFINE_CREATE_FUNC_0(SCWatchNumberT)
+        SC_DEFINE_CREATE_FUNC_1(SCWatchNumberT,const T)
         
         SC_DEFINE_NUMBER_CONSTRUCTOR(int)
         SC_DEFINE_NUMBER_CONSTRUCTOR(unsigned int)
@@ -313,8 +313,8 @@ namespace SpeedCC
         {
         }
         
-        SC_DEFINE_CREATE_FUNC0(SCWatchNumberT<bool>)
-        SC_DEFINE_CREATE_FUNC1(SCWatchNumberT<bool>,const bool)
+        SC_DEFINE_CREATE_FUNC_0(SCWatchNumberT<bool>)
+        SC_DEFINE_CREATE_FUNC_1(SCWatchNumberT<bool>,const bool)
         
         inline operator bool() const {return _number;}
         inline bool operator==(const bool num) { return _number==num; }
@@ -422,20 +422,20 @@ namespace SpeedCC
     
     class SCWatchString;
     
-    typedef SCLASSLIST_12(SCWatchShort,
-                         SCWatchUnsignedShort,
-                         SCWatchChar,
-                         SCWatchByte,
-                         SCWatchInt,
-                         SCWatchUnsignedInt,
-                         SCWatchLong,
-                         SCWatchUnsignedLong,
-                         SCWatchInt64,
-                         SCWatchFloat,
-                         SCWatchDouble,
-                         SCWatchBool)       SCWatchNumberList_t;
+    typedef std::tuple<SCWatchShort,
+                        SCWatchUnsignedShort,
+                        SCWatchChar,
+                        SCWatchByte,
+                        SCWatchInt,
+                        SCWatchUnsignedInt,
+                        SCWatchLong,
+                        SCWatchUnsignedLong,
+                        SCWatchInt64,
+                        SCWatchFloat,
+                        SCWatchDouble,
+                        SCWatchBool>        SCWatchNumberList_t;
     
-    typedef SCLASSLIST_13(SCWatchShort,
+    typedef std::tuple<SCWatchShort,
                           SCWatchUnsignedShort,
                           SCWatchChar,
                           SCWatchByte,
@@ -447,13 +447,14 @@ namespace SpeedCC
                           SCWatchFloat,
                           SCWatchDouble,
                           SCWatchBool,
-                          SCWatchString)     SCWatchClassList_t;
+                          SCWatchString>     SCWatchClassList_t;
     
     template<typename T>
-    struct SCIsWatchNumber {enum {value=(SCGetIndexByClassT<SCWatchNumberList_t,T>::value==-1) ? 0 : 1};};
+    struct SCIsWatchNumber {enum {value=(SCGetIndexByClassT<T,SCWatchNumberList_t>::value== std::tuple_size<SCWatchNumberList_t>::value) ? 0 : 1};};
     
     template<typename T>
-    struct SCIsWatchClass {enum {value=(SCGetIndexByClassT<SCWatchClassList_t,T>::value==-1) ? 0 : 1};};
+    struct SCIsWatchClass {enum {value=(SCGetIndexByClassT<T,SCWatchClassList_t>::value==std::tuple_size<SCWatchNumberList_t>::value) ? 0 : 1};};
+    
 }
 
 #endif // __SPEEDCC__SCWATCHNUMBERT_H__

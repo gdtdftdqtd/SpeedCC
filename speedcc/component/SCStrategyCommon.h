@@ -31,8 +31,8 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorCallFunc)
         SC_DEFINE_CLASS_PTR(SCBehaviorCallFunc)
         
-        SC_DEFINE_CREATE_FUNC0(SCBehaviorCallFunc)
-        SC_DEFINE_CREATE_FUNC1(SCBehaviorCallFunc,const std::function<void(const SCDictionary& par)>&)
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorCallFunc)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorCallFunc,const std::function<void(const SCDictionary& par)>&)
         
         virtual void execute(const SCDictionary& par) override;
         
@@ -53,7 +53,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorGroup)
         SC_DEFINE_CLASS_PTR(SCBehaviorGroup)
         
-        SC_DEFINE_CREATE_FUNC0(SCBehaviorGroup)
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorGroup)
         
         virtual void execute(const SCDictionary& par) override;
         
@@ -72,7 +72,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorStrategySwitch)
         SC_DEFINE_CLASS_PTR(SCBehaviorStrategySwitch)
         
-        SC_DEFINE_CREATE_FUNC2(SCBehaviorStrategySwitch,SCPerformer::Ptr,const int)
+        SC_DEFINE_CREATE_FUNC_2(SCBehaviorStrategySwitch,SCPerformer::Ptr,const int)
         
         virtual void execute(const SCDictionary& par) override;
         
@@ -94,7 +94,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorRemovePerformer)
         SC_DEFINE_CLASS_PTR(SCBehaviorRemovePerformer)
         
-        SC_DEFINE_CREATE_FUNC0(SCBehaviorRemovePerformer)
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorRemovePerformer)
         
         virtual void execute(const SCDictionary& par) override;
         

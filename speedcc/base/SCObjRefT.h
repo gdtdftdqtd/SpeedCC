@@ -123,7 +123,7 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pObjData);
+        SCDataTypeLifeCycleT<StubT>::construct(_pObjData);
         this->onInstanceCreated(_pObjData);
     }
     
@@ -146,7 +146,7 @@ namespace SpeedCC
 //    {
 //        this->decreaseRef();
 //        this->allocBuf();
-//        SCDataTypeLifeCycle<StubT>::construct(_pObjData, _VSTD::forward<_Args>(__args)...);
+//        SCDataTypeLifeCycleT<StubT>::construct(_pObjData, _VSTD::forward<_Args>(__args)...);
 //        this->onInstanceCreated(_pObjData);
 //    }
     
@@ -157,7 +157,7 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pObjData,arg1);
+        SCDataTypeLifeCycleT<StubT>::construct(_pObjData,arg1);
     }
     
     template<typename StubT,typename CookieT>
@@ -166,7 +166,7 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pObjData,arg1,arg2);
+        SCDataTypeLifeCycleT<StubT>::construct(_pObjData,arg1,arg2);
     }
     
     
@@ -176,7 +176,7 @@ namespace SpeedCC
     {
         this->decreaseRef();
         this->allocBuf();
-        SCDataTypeLifeCycle<StubT>::construct(_pObjData,arg1,arg2,arg3);
+        SCDataTypeLifeCycleT<StubT>::construct(_pObjData,arg1,arg2,arg3);
     }
      */
     
@@ -192,7 +192,7 @@ namespace SpeedCC
         const int nBufferSize = nSize+sizeof(SCookieDesc);
         
         auto pDesc = (SCookieDesc*)SCMemAllocator::allocate(nBufferSize);
-        SCDataTypeLifeCycle<SCookieDesc>::construct(pDesc);
+        SCDataTypeLifeCycleT<SCookieDesc>::construct(pDesc);
         pDesc->nMallocBufSize = nBufferSize;
         
         _pObjData = (char*)pDesc->getBufferPtr();
@@ -207,10 +207,10 @@ namespace SpeedCC
     {
         if(_pObjData!=NULL)
         {
-            SCDataTypeLifeCycle<StubT>::destroy(_pObjData);
+            SCDataTypeLifeCycleT<StubT>::destroy(_pObjData);
             // free buffer directly, does not check buffer whether illegal
             auto pDesc = this->getCookieDesc();
-            SCDataTypeLifeCycle<SCookieDesc>::destroy(pDesc);
+            SCDataTypeLifeCycleT<SCookieDesc>::destroy(pDesc);
             SCMemAllocator::deallocate(pDesc, pDesc->nMallocBufSize);
             _pObjData = NULL;
         }
@@ -235,7 +235,7 @@ namespace SpeedCC
         else
         {
             this->allocBuf();
-            SCDataTypeLifeCycle<StubT>::construct(_pObjData);
+            SCDataTypeLifeCycleT<StubT>::construct(_pObjData);
             *(StubT*)_pObjData = *(StubT*)sb._pObjData;
         }
     }

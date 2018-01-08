@@ -36,7 +36,7 @@ namespace SpeedCC
         
         inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
-        inline cocos2d::Node* getSceneNode()  {return _pRootLayer;}
+        inline cocos2d::Node* getSceneNode()  {return _pRootNode;}
         inline SCScene* getScene()  {return _pScene;}
         
         void setAllTouchEnabled(const bool bEnabled);
@@ -69,7 +69,7 @@ namespace SpeedCC
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
         void storeLayoutNode(...){}
     private:
-        inline void setSceneRootLayer(SCSceneNode* pLayer) { _pRootLayer = pLayer;}
+        inline void setSceneRootLayer(SCSceneNode* pLayer) { _pRootNode = pLayer;}
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _parentModalControllerPtr = controllerPtr;}
         
@@ -101,7 +101,7 @@ namespace SpeedCC
         std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
         
     private:
-        SCSceneNode*			                _pRootLayer;
+        SCSceneNode*			                _pRootNode;
         SCScene*                                _pScene;
         SCSceneController::WeakPtr              _parentModalControllerPtr;
         SCLayerDisableTouch*                    _pDisableTouchLayer;

@@ -115,7 +115,7 @@ namespace SpeedCC
         EventListenerTouchOneByOne* pEventListener = EventListenerTouchOneByOne::create();
         pEventListener->setSwallowTouches(true);
         
-        pEventListener->onTouchBegan = CC_CALLBACK_2(SCLayerDisableTouch::onSCTouchBegan, this);
+        pEventListener->onTouchBegan = SC_MAKE_FUNC(onSCTouchBegan, this);
         
         SCCCTouchDispatch()->removeEventListenersForTarget(this);
         SCCCTouchDispatch()->addEventListenerWithSceneGraphPriority(pEventListener,this);

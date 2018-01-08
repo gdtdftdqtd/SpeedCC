@@ -25,11 +25,11 @@ void TestHomeController::onCreate(SCDictionary parameters)
 
 void TestHomeController::onButtonClicked()
 {
-    SCSceneNav()->switchScene<TestLabelBinderController>(SCSceneNavigator::SWITCH_REPLACE);
+    SCSceneNav()->switchScene<TestLabelBinderController>(SCSceneNavigator::kSceneModal);
 }
 
 void TestHomeController::onButtonStage()
 {
-    SCSceneNav()->switchScene<TestStageController>(SCSceneNavigator::SWITCH_REPLACE);
+    SCSceneNav()->switchScene<TestStageController>(SCSceneNavigator::kSceneReplace);
 }
 

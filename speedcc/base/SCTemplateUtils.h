@@ -11,7 +11,7 @@
 namespace SpeedCC
 {
     template<typename T,bool isClass=(std::is_class<T>::value || SCIsEmptyClassT<T>::value || SCIsNullClassT<T>::value) >
-    struct SCDataTypeLifeCycle
+    struct SCDataTypeLifeCycleT
     {
         static void construct(void* p) {new(p)T();}
         
@@ -28,10 +28,90 @@ namespace SpeedCC
     };
     
     template<typename T>
-    struct SCDataTypeLifeCycle<T,false>
+    struct SCDataTypeLifeCycleT<T,false>
     {
         static void construct(void* p){}
         static int destroy(void* p){return 0;}
+    };
+    
+    
+    struct SCTemplateUtils
+    {
+        template<typename T1, typename T2, typename ...Ts>
+        static constexpr std::integral_constant<int, sizeof ...(Ts)> getFuncArgsCount( T1(T2::*pfunc)(Ts ...))
+        {
+            return std::integral_constant<int, sizeof ...(Ts)>{};
+        }
+    };
+    
+    template<int n>
+    struct SCBindFuncUtilsT
+    {
+        template<typename T1, typename T2>
+        static int makeFunc(T1 t1, T2 t2)
+        {
+            return 0;
+        }
+    };
+    
+    template<>
+    struct SCBindFuncUtilsT<0>
+    {
+        template<typename T1, typename T2, typename ...Ts>
+        static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
+        {
+            return std::bind(pfunc,t2);
+        }
+    };
+    
+    template<>
+    struct SCBindFuncUtilsT<1>
+    {
+        template<typename T1, typename T2, typename ...Ts>
+        static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
+        {
+            return std::bind(pfunc,t2,std::placeholders::_1);
+        }
+    };
+    
+    template<>
+    struct SCBindFuncUtilsT<2>
+    {
+        template<typename T1, typename T2, typename ...Ts>
+        static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
+        {
+            return std::bind(pfunc,t2,std::placeholders::_1,std::placeholders::_2);
+        }
+    };
+    
+    template<>
+    struct SCBindFuncUtilsT<3>
+    {
+        template<typename T1, typename T2, typename ...Ts>
+        static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
+        {
+            return std::bind(pfunc,t2,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3);
+        }
+    };
+    
+    template<>
+    struct SCBindFuncUtilsT<4>
+    {
+        template<typename T1, typename T2, typename ...Ts>
+        static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
+        {
+            return std::bind(pfunc,t2,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4);
+        }
+    };
+    
+    template<>
+    struct SCBindFuncUtilsT<5>
+    {
+        template<typename T1, typename T2, typename ...Ts>
+        static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
+        {
+            return std::bind(pfunc,t2,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4,std::placeholders::_5);
+        }
     };
     
 }

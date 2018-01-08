@@ -25,7 +25,7 @@ namespace SpeedCC
 // flow block
 // _strategy_id_ for initial strategy
 #define SC_BEGIN_ROLE(_role_id_,_strategy_id_) \
-{\
+do{\
     SCStrategy::Ptr sc_flow_in_strategy;\
     auto sc_flow_role = SpeedCC::SCRole::create((_role_id_), this);\
     sc_flow_role->setID((_role_id_));\
@@ -35,7 +35,7 @@ namespace SpeedCC
 
 #define SC_END_ROLE \
     this->addRole(sc_flow_role);\
-}
+}while(0);
 
 
 // strategy block
@@ -51,40 +51,40 @@ namespace SpeedCC
 
 //
 #define ON_ENTER_STRATEGE(_behavior_) \
-{\
+do{\
     sc_flow_in_strategy->setEnterBehavior((_behavior_));\
-}
+}while(0);
     
 
 #define ON_EXIT_STRATEGE(_behavior_) \
-{\
+do{\
     sc_flow_in_strategy->setExitBehavior((_behavior_));\
-}
+}while(0);
 
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
-{\
+do{\
     auto temMsg = (_msg_);\
     auto temBehavior = (_behavior_);\
     const int nMsg = SCFlowSetup::extractMsgID(temMsg);\
     auto matchPtr = SCFlowSetup::extractMsgMatcher(temMsg);\
     sc_flow_in_strategy->addBehavior(nMsg,temBehavior,matchPtr);\
-}
+}while(0);
 
 #define ON_CMD_BEHAVIOR(_command_,_behavior_) \
-{\
+do{\
     sc_flow_in_strategy->addBehavior((_command_),(_behavior_));\
-}
+}while(0);
 
 #define ON_FRAME(_behavior_) \
-{\
+do{\
     sc_flow_in_strategy->addBehavior(kSCMsgFrame,(_behavior_));\
-}
+}while(0);
 
 #define ON_MSG_NEXT_STRATEGY(_msg_,_stragegy_id_) \
-{\
+do{\
     auto bvrPtr = SCBehaviorStrategySwitch::create(sc_flow_role,(_stragegy_id_));\
     ON_MSG_BEHAVIOR(_msg_,bvrPtr)\
-}
+}while(0);
 
 //#define ON_MSG_SEND_MSG(_msg_,_send_) \
 

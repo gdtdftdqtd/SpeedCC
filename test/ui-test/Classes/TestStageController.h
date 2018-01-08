@@ -11,9 +11,9 @@ class TestStageController : public SpeedCC::SCSceneController
 public:
     
     virtual void onCreate(SpeedCC::SCDictionary parameters);
-    virtual void onStageSetup() override;
-    virtual SCRole::Ptr onCreateRole(const int nID) override;
     virtual SCStrategy::Ptr onCreateStrategy(const int nID) override;
+    
+    void setUpStage();
     
     void onButtonAdd();
     void onButtonBack();

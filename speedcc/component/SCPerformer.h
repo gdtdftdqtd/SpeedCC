@@ -23,7 +23,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCPerformer)
         SC_DEFINE_CLASS_PTR(SCPerformer)
         
-        SC_DEFINE_CREATE_FUNC0(SCPerformer)
+        SC_DEFINE_CREATE_FUNC_0(SCPerformer)
         
         bool applyStrategy(SCStrategy* pStrategy);
         void removeFromRole();

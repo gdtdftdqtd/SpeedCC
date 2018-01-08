@@ -186,8 +186,8 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCMessageMatcher)
         SC_DEFINE_CLASS_PTR(SCMessageMatcher)
         
-        SC_DEFINE_CREATE_FUNC2(SCMessageMatcher,const int,const std::function<bool (const SCMessageInfo& mi)>&)
-        SC_DEFINE_CREATE_FUNC2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessageInfo& mi)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const std::function<bool (const SCMessageInfo& mi)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessageInfo& mi)>&)
         
         bool isMatch(const SCMessageInfo& mi) const
         {

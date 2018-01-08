@@ -23,7 +23,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCRole)
         SC_DEFINE_CLASS_PTR(SCRole)
         
-        SC_DEFINE_CREATE_FUNC2(SCRole, const int,SCStage*);
+        SC_DEFINE_CREATE_FUNC_2(SCRole, const int,SCStage*);
         
         bool addPerformer(SCPerformer::Ptr performerPtr);
         void removePerformer(const int nID);

@@ -3,17 +3,18 @@
 #include "cocos2d.h"
 
 #include "SCSceneController.h"
+#include "../base/SCTemplateUtils.h"
 
 namespace SpeedCC
 {
     ////-------------- member methods
     SCSceneController::SCSceneController():
-    _pRootLayer(NULL),
+    _pRootNode(NULL),
     _pScene(NULL),
     _pDisableTouchLayer(NULL),
     _pBlackMaskLayer(NULL),
     _bBlackMaskForModal(true),
-    _touchMode(kTouchModeNone),
+    _touchMode(ETouchMode::kTouchNone),
     _pTouchListener(NULL)
     {   
     }
@@ -68,7 +69,7 @@ namespace SpeedCC
         }
         
         _parentModalControllerPtr = NULL;
-        _pRootLayer->removeFromParent();
+        _pRootNode->removeFromParent();
         
         // generate modal mssage
         SCMessageInfo mi;
@@ -84,7 +85,7 @@ namespace SpeedCC
         if(_pDisableTouchLayer==NULL && !bEnable)
         {// turn to no touch
             auto pLayer = SCLayerDisableTouch::create();
-            _pRootLayer->addChild(pLayer);
+            _pRootNode->addChild(pLayer);
             pLayer->setPosition(cocos2d::Vec2(0,0));
             
             _pDisableTouchLayer = pLayer;
@@ -104,7 +105,7 @@ namespace SpeedCC
             if(_pBlackMaskLayer==NULL)
             {
                 _pBlackMaskLayer = cocos2d::LayerColor::create(cocos2d::Color4B(0, 0, 0, 200));
-                _pRootLayer->addChild(_pBlackMaskLayer);
+                _pRootNode->addChild(_pBlackMaskLayer);
             }
         }
         else
@@ -224,34 +225,37 @@ namespace SpeedCC
         
         switch(touch)
         {
-            case kTouchModeSingle:
+            case ETouchMode::kTouchSingle:
             {
                 auto pListener = cocos2d::EventListenerTouchOneByOne::create();
                 pListener->setSwallowTouches(true);
-                pListener->onTouchBegan = CC_CALLBACK_2(SCSceneController::onSingleTouchBegan, this);
-                pListener->onTouchMoved = CC_CALLBACK_2(SCSceneController::onSingleTouchMoved, this);
-                pListener->onTouchEnded = CC_CALLBACK_2(SCSceneController::onSingleTouchEnded, this);
-                pListener->onTouchCancelled = CC_CALLBACK_2(SCSceneController::onSingleTouchCancelled, this);
+                pListener->onTouchBegan = SCBindFuncUtilsT<decltype(SCTemplateUtils::getFuncArgsCount(&SCSceneController::onSingleTouchBegan))::value>::makeFunc(&SCSceneController::onSingleTouchBegan, this);
+                pListener->onTouchMoved = SCBindFuncUtilsT<2>::makeFunc(&SCSceneController::onSingleTouchMoved, this);
+                
+                pListener->onTouchBegan = SC_MAKE_FUNC(onSingleTouchBegan, this);
+                pListener->onTouchMoved = SC_MAKE_FUNC(onSingleTouchMoved, this);
+                pListener->onTouchEnded = SC_MAKE_FUNC(onSingleTouchEnded, this);
+                pListener->onTouchCancelled = SC_MAKE_FUNC(onSingleTouchCancelled, this);
                 
                 _pTouchListener = pListener;
-                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pRootLayer);
+                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pRootNode);
             }
                 break;
                 
-            case kTouchModeMultiple:
+            case ETouchMode::kTouchMultiple:
             {
                 auto pListener = cocos2d::EventListenerTouchAllAtOnce::create();
-                pListener->onTouchesBegan = CC_CALLBACK_2(SCSceneController::onMultipleTouchBegan, this);
-                pListener->onTouchesMoved = CC_CALLBACK_2(SCSceneController::onMultipleTouchMoved, this);
-                pListener->onTouchesEnded = CC_CALLBACK_2(SCSceneController::onMultipleTouchEnded, this);
-                pListener->onTouchesCancelled = CC_CALLBACK_2(SCSceneController::onMultipleTouchCancelled, this);
+                pListener->onTouchesBegan = SC_MAKE_FUNC(onMultipleTouchBegan, this);
+                pListener->onTouchesMoved = SC_MAKE_FUNC(onMultipleTouchMoved, this);
+                pListener->onTouchesEnded = SC_MAKE_FUNC(onMultipleTouchEnded, this);
+                pListener->onTouchesCancelled = SC_MAKE_FUNC(onMultipleTouchCancelled, this);
                 
                 _pTouchListener = pListener;
-                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pRootLayer);
+                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pRootNode);
             }
                 break;
                 
-            case kTouchModeNone: break;
+            case ETouchMode::kTouchNone: break;
         }
     }
     
