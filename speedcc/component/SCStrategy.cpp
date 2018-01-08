@@ -137,7 +137,7 @@ namespace SpeedCC
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
-//            dic.setValue();
+            dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(mi));
             pBehaviorInfo->behaviorPtr->execute(dic);
         }
     }

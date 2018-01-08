@@ -53,7 +53,6 @@ namespace SpeedCC
     template<typename T>
     struct SCTransitionCreator
     {
-        typedef T    OppositeType;
         static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
         {
             return T::create(duration, pScene);
@@ -63,71 +62,42 @@ namespace SpeedCC
     template<>
     struct SCTransitionCreator<SCClassNull>
     {
-        typedef SCClassNull    OppositeType;
         static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
         {return pScene;}
     };
     
-    template<>
-    struct SCTransitionCreator<void>
-    {
-        typedef SCClassNull    OppositeType;
-        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
-        {return pScene;}
-    };
+    SCClassNull SCTraitTransitionSceneOpposite(SCClassNull*);
+    cocos2d::TransitionRotoZoom SCTraitTransitionSceneOpposite(cocos2d::TransitionRotoZoom*);
+    cocos2d::TransitionJumpZoom SCTraitTransitionSceneOpposite(cocos2d::TransitionJumpZoom*);
+    cocos2d::TransitionShrinkGrow SCTraitTransitionSceneOpposite(cocos2d::TransitionShrinkGrow*);
+    cocos2d::TransitionFlipX SCTraitTransitionSceneOpposite(cocos2d::TransitionFlipX*);
+    cocos2d::TransitionFlipY SCTraitTransitionSceneOpposite(cocos2d::TransitionFlipY*);
+    cocos2d::TransitionFlipAngular SCTraitTransitionSceneOpposite(cocos2d::TransitionFlipAngular*);
+    cocos2d::TransitionZoomFlipX SCTraitTransitionSceneOpposite(cocos2d::TransitionZoomFlipX*);
+    cocos2d::TransitionZoomFlipY SCTraitTransitionSceneOpposite(cocos2d::TransitionZoomFlipY*);
+    cocos2d::TransitionZoomFlipAngular SCTraitTransitionSceneOpposite(cocos2d::TransitionZoomFlipAngular*);
+    cocos2d::TransitionFade SCTraitTransitionSceneOpposite(cocos2d::TransitionFade*);
+    cocos2d::TransitionTurnOffTiles SCTraitTransitionSceneOpposite(cocos2d::TransitionTurnOffTiles*);
+    cocos2d::TransitionSplitCols SCTraitTransitionSceneOpposite(cocos2d::TransitionSplitCols*);
+    cocos2d::TransitionSplitRows SCTraitTransitionSceneOpposite(cocos2d::TransitionSplitRows*);
+    cocos2d::TransitionFadeTR SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeTR*);
+    cocos2d::TransitionFadeBL SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeBL*);
+    cocos2d::TransitionProgressRadialCCW SCTraitTransitionSceneOpposite(cocos2d::TransitionProgressRadialCCW*);
     
-    // single transition
-#define SC_DEFINE_TRANSITION_SINGLE(_transition_)\
-    template<>\
-    struct SCTransitionCreator<_transition_>\
-    {\
-        typedef _transition_    OppositeType;\
-        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
-        {return _transition_::create(duration,(cocos2d::Scene*)pScene);}\
-    };
+    cocos2d::TransitionMoveInL SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInR*);
+    cocos2d::TransitionMoveInR SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInL*);
     
-    // pair transition
-#define SC_DEFINE_TRANSITION_PAIR(_transition1_,_transition2_)\
-    template<>\
-    struct SCTransitionCreator<_transition1_>\
-    {\
-        typedef _transition2_    OppositeType;\
-        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
-        {return _transition1_::create(duration,(cocos2d::Scene*)pScene);}\
-    };\
-    template<>\
-    struct SCTransitionCreator<_transition2_>\
-    {\
-        typedef _transition1_    OppositeType;\
-        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)\
-        {return _transition2_::create(duration,(cocos2d::Scene*)pScene);}\
-    };
+    cocos2d::TransitionMoveInT SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInB*);
+    cocos2d::TransitionMoveInB SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInT*);
     
+    cocos2d::TransitionSlideInL SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInR*);
+    cocos2d::TransitionSlideInR SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInL*);
     
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionRotoZoom)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionJumpZoom)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionShrinkGrow)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFlipX)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFlipY)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFlipAngular)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionZoomFlipX)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionZoomFlipY)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionZoomFlipAngular)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFade)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionTurnOffTiles)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionSplitCols)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionSplitRows)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFadeTR)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionFadeBL)
-    SC_DEFINE_TRANSITION_SINGLE(cocos2d::TransitionProgressRadialCCW)
+    cocos2d::TransitionSlideInB SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInT*);
+    cocos2d::TransitionSlideInT SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInB*);
     
-    //DEFINE_TRANSITION_SINGLE(cocos2d::TransitionPageTurn)
-    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionMoveInL,cocos2d::TransitionMoveInR)
-    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionMoveInT,cocos2d::TransitionMoveInB)
-    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionSlideInL,cocos2d::TransitionSlideInR)
-    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionSlideInT,cocos2d::TransitionSlideInB)
-    SC_DEFINE_TRANSITION_PAIR(cocos2d::TransitionFadeUp,cocos2d::TransitionFadeDown)
-    
+    cocos2d::TransitionFadeUp SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeDown*);
+    cocos2d::TransitionFadeDown SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeUp*);
     
     ///-------- cocos2d efficiency macro
 #define SCCCFileUtils() \

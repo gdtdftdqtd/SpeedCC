@@ -30,11 +30,6 @@
 
 // SPEEDCC_TEST_MODE
 
-///---------- assert at compile time
-#define SCASSERTCT(_condition_) \
-    do { char SCAssertArrayCT[(_condition_)?1:-1];SCAssertArrayCT[0]=0;} while(0)
-
-
 #define SC_IN_RANGE(_v_,_min_,_max_)\
     MAX((_min_),MIN((_max_),(_v_)))
 
@@ -151,7 +146,7 @@
 
 
 #define SC_MAKE_FUNC(_func_,_p_) \
-SCBindFuncUtilsT<decltype(SCTemplateUtils::getFuncArgsCount(&std::remove_pointer<decltype((_p_))>::type::_func_))::value>::makeFunc(&std::remove_pointer<decltype((_p_))>::type::_func_,(_p_))
+SCBindFuncUtilsT<SCTraitMemberFuncT<decltype((&std::remove_pointer<decltype((_p_))>::type::_func_))>::ArgCount>::makeFunc(&std::remove_pointer<decltype((_p_))>::type::_func_,(_p_))
 
 //#define SC_DECLEAR_COMPONENT_ID \
 //    public: \

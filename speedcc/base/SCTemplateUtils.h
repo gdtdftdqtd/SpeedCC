@@ -35,15 +35,6 @@ namespace SpeedCC
     };
     
     
-    struct SCTemplateUtils
-    {
-        template<typename T1, typename T2, typename ...Ts>
-        static constexpr std::integral_constant<int, sizeof ...(Ts)> getFuncArgsCount( T1(T2::*pfunc)(Ts ...))
-        {
-            return std::integral_constant<int, sizeof ...(Ts)>{};
-        }
-    };
-    
     template<int n>
     struct SCBindFuncUtilsT
     {
@@ -100,7 +91,11 @@ namespace SpeedCC
         template<typename T1, typename T2, typename ...Ts>
         static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
         {
-            return std::bind(pfunc,t2,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4);
+            return std::bind(pfunc,t2,
+                             std::placeholders::_1,
+                             std::placeholders::_2,
+                             std::placeholders::_3,
+                             std::placeholders::_4);
         }
     };
     
@@ -110,7 +105,12 @@ namespace SpeedCC
         template<typename T1, typename T2, typename ...Ts>
         static std::function<T1(Ts...)> makeFunc(T1(T2::*pfunc)(Ts ...),T2* t2)
         {
-            return std::bind(pfunc,t2,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4,std::placeholders::_5);
+            return std::bind(pfunc,t2,
+                             std::placeholders::_1,
+                             std::placeholders::_2,
+                             std::placeholders::_3,
+                             std::placeholders::_4,
+                             std::placeholders::_5);
         }
     };
     

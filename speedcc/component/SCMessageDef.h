@@ -231,7 +231,7 @@ namespace SpeedCC
     private:
         SCString                                        _strCommand;
         int                                             _nMsgID;
-        std::function<bool (SCMessage::Ptr mi)>     _func;
+        std::function<bool (SCMessage::Ptr mi)>         _func;
     };
 
 }

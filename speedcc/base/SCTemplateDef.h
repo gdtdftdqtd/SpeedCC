@@ -48,6 +48,8 @@ namespace SpeedCC
         enum {value = SCIsSameTypeT<decltype(check(Host<BaseT,DeriveT>(), int())),int>::value};
     };
     
+    
+    ///---------- SCGetIndexByClassT
     template <typename T, typename Tuple>
     struct SCGetIndexByClassT { enum {value=0}; };
     
@@ -58,6 +60,30 @@ namespace SpeedCC
     struct SCGetIndexByClassT<T1, std::tuple<T2, Ts...>>
     {
         enum {value = (1 + SCGetIndexByClassT<T1, std::tuple<Ts...>>::value)};
+    };
+    
+    ///----------- SCTraitMemberFunc
+    template <typename>
+    struct SCTraitMemberFuncT;
+    
+    template <typename T1, typename T2, typename... Ts>
+    struct SCTraitMemberFuncT<T1 (T2::*)(Ts...)>
+    {
+        typedef T1 return_type;
+        typedef T2 class_type;
+        typedef T2& class_reference;
+        
+        enum {ArgCount = sizeof...(Ts)};
+    };
+    
+    template <typename T1, typename T2, typename... Ts>
+    struct SCTraitMemberFuncT<T1 (T2::*)(Ts...) const>
+    {
+        typedef T1 return_type;
+        typedef T2 class_type;
+        typedef T2 const& class_reference;
+        
+        enum {ArgCount = sizeof...(Ts)};
     };
     
 }

@@ -229,9 +229,6 @@ namespace SpeedCC
             {
                 auto pListener = cocos2d::EventListenerTouchOneByOne::create();
                 pListener->setSwallowTouches(true);
-                pListener->onTouchBegan = SCBindFuncUtilsT<decltype(SCTemplateUtils::getFuncArgsCount(&SCSceneController::onSingleTouchBegan))::value>::makeFunc(&SCSceneController::onSingleTouchBegan, this);
-                pListener->onTouchMoved = SCBindFuncUtilsT<2>::makeFunc(&SCSceneController::onSingleTouchMoved, this);
-                
                 pListener->onTouchBegan = SC_MAKE_FUNC(onSingleTouchBegan, this);
                 pListener->onTouchMoved = SC_MAKE_FUNC(onSingleTouchMoved, this);
                 pListener->onTouchEnded = SC_MAKE_FUNC(onSingleTouchEnded, this);

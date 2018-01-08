@@ -62,18 +62,19 @@ namespace SpeedCC
     public:
         static SCSceneNavigator* getInstance();
         
-		template<typename SceneT, typename TransT = SCClassNull>
+        template<typename SceneT, typename TransT = SCClassNull>
         bool switchScene(const ESceneSwitchType place = kSceneReplace, SCDictionary dic = SCDictionary())
 		{
-			SCASSERTCT(!SCIsEmptyClassT<SceneT>::value);
+            static_assert(!SCIsEmptyClassT<SceneT>::value,"target scene should not empty class");
 
 			s_SceneParameterDic = dic;
 
 			SSceneSwitchInfo switchInfo;
 
+            TransT* pTrans = NULL;
 			switchInfo.switchType = place;
 			switchInfo.pfunSelfTransCreator = &SCTransitionCreator<TransT>::create;
-			switchInfo.pfunOppositeTransCreator = &SCTransitionCreator<typename SCTransitionCreator<TransT>::OppositeType>::create;
+            switchInfo.pfunOppositeTransCreator = &SCTransitionCreator< decltype(SCTraitTransitionSceneOpposite(pTrans)) >::create;
             switchInfo.pfunCurrentSceneCreator = (FUN_SCSceneCreateFunctor_t)(&SCSceneNavigator::createScene<SceneT>);
             switchInfo.pfunCurrentLayerCreator = (FUN_SCLayerCreateFunctor_t)(&SCSceneNavigator::createLayer<SceneT>);
 

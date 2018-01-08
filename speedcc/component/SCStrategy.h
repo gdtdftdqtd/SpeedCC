@@ -15,7 +15,7 @@
 #define SC_BVR_ARG_PERFORMER    "performer" // SCPerformer::Ptr
 #define SC_BVR_ARG_STRATEGY     "strategy" // SCStrategy::Ptr
 #define SC_BVR_ARG_ROLE         "role" // SCRole::Ptr
-#define SC_BVR_ARG_MSG          "msg"   // SCMessage
+#define SC_BVR_ARG_MESSAGE      "message"   // SCMessage::Ptr
 
 
 namespace SpeedCC
@@ -65,6 +65,7 @@ namespace SpeedCC
     class SCStrategyEmpty : public SCStrategy
     {
     public:
+//        enum {ID = 1;}
         SC_AVOID_CLASS_COPY(SCStrategyEmpty)
         SC_DEFINE_CLASS_PTR(SCStrategyEmpty)
         
