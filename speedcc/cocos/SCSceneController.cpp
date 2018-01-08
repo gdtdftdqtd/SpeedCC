@@ -46,14 +46,14 @@ namespace SpeedCC
         this->setAllTouchEnabled(false);
         
         // generate modal mssage
-        SCMessageInfo mi;
+        SCMessage::Ptr mi = SCMessage::create();
         
-        mi.nMsgID = kSCMsgModalSceneLostFocus;
-        mi.paramters.setValue(MSG_KEY_CONTROLLER,this);
+        mi->nMsgID = kSCMsgModalSceneLostFocus;
+        mi->paramters.setValue(MSG_KEY_CONTROLLER,this);
         SCMessageDispatch::getInstance()->postMessage(mi);
         
-        mi.nMsgID = kSCMsgModalSceneGotFocus;
-        mi.paramters.setValue(MSG_KEY_CONTROLLER,controllerPtr.getRawPointer());
+        mi->nMsgID = kSCMsgModalSceneGotFocus;
+        mi->paramters.setValue(MSG_KEY_CONTROLLER,controllerPtr.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(mi);
     }
     
@@ -72,9 +72,9 @@ namespace SpeedCC
         _pRootNode->removeFromParent();
         
         // generate modal mssage
-        SCMessageInfo mi;
-        mi.nMsgID = kSCMsgModalSceneGotFocus;
-        mi.paramters.setValue(MSG_KEY_CONTROLLER,ret.getRawPointer());
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = kSCMsgModalSceneGotFocus;
+        mi->paramters.setValue(MSG_KEY_CONTROLLER,ret.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(mi);
         
         return ret;
@@ -185,16 +185,16 @@ namespace SpeedCC
         _id2NodeMap[nID] = pNode;
     }
     
-    void SCSceneController::onSCMessageProcess(SCMessageInfo& mi)
+    void SCSceneController::onSCMessageProcess(SCMessage::Ptr msgPtr)
     {
-        auto it = _msg2FuncMap.find(mi.nMsgID);
+        auto it = _msg2FuncMap.find(msgPtr->nMsgID);
         
         if(it!=_msg2FuncMap.end() && (*it).second!=NULL)
         {
-            (this->*(*it).second)(mi);
+            (this->*(*it).second)(msgPtr);
         }
         
-        SCStage::onSCMessageProcess(mi);
+        SCStage::onSCMessageProcess(msgPtr);
     }
     
     ///--------------- cocos2d Events
@@ -269,12 +269,12 @@ namespace SpeedCC
         
         SCDictionary dic(pair,SC_ARRAY_LENGTH(pair));
         
-        SCMessageInfo mi;
-        mi.nMsgID = kSCMsgTouchBegan;
-        mi.paramters = dic;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = kSCMsgTouchBegan;
+        mi->paramters = dic;
         this->onSCMessageProcess(mi);
         
-        return mi.paramters.getValue("result").getBool();
+        return mi->paramters.getValue("result").getBool();
     }
     
     void SCSceneController::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)

@@ -16,7 +16,7 @@ namespace SpeedCC
     struct SCMessageListener
     {
         virtual ~SCMessageListener() {}
-        virtual void onSCMessageProcess(SCMessageInfo& mi) {}
+        virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) {}
     };
     
     
@@ -29,10 +29,10 @@ namespace SpeedCC
         void addListener(SCMessageListener* pListener,const unsigned char nPriority=128);
         void removeListener(SCMessageListener* pListener);
         
-        void sendMessage(SCMessageInfo& mi);
+        void sendMessage(SCMessage::Ptr msgPtr);
         void sendMessage(const int nMsgID);
         void sendMessage(const int nMsgID,const SCDictionary& dic);
-        void postMessage(const SCMessageInfo& mi);
+        void postMessage(SCMessage::Ptr msgPtr);
         void postMessage(const int nMsgID);
         void postMessage(const int nMsgID,const SCDictionary& dic);
         
@@ -41,11 +41,11 @@ namespace SpeedCC
         void onTimerMessagePump(float);
         
     private:
-        int dispatchMessage(SCMessageInfo& mi);
+        int dispatchMessage(SCMessage& mi);
         void updateMutableListener();
         
-        inline std::list<SCMessageInfo>& getMsgQueRecive() {return _messageQueArray[_bMessageQueFlag?0:1];}
-        inline std::list<SCMessageInfo>& getMsgQueDispatch() {return _messageQueArray[_bMessageQueFlag?1:0];}
+        inline std::list<SCMessage::Ptr>& getMsgQueRecive() {return _messageQueArray[_bMessageQueFlag?0:1];}
+        inline std::list<SCMessage::Ptr>& getMsgQueDispatch() {return _messageQueArray[_bMessageQueFlag?1:0];}
         inline void swapMsgQue() {_bMessageQueFlag=!_bMessageQueFlag;}
         
         struct SMutabelListenerInfo
@@ -84,7 +84,7 @@ namespace SpeedCC
         
         std::list<SMutabelListenerInfo>             _mutableListenerList;
         std::list<SListenerInfo>                    _listenerList;
-        std::list<SCMessageInfo>                   _messageQueArray[2];
+        std::list<SCMessage::Ptr>               _messageQueArray[2];
         bool                                        _bMessageQueFlag;
         int                                         _nPostMsgCallStackCounter;
         int                                         _nSendMsgCallStackCounter;

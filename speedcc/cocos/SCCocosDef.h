@@ -22,7 +22,7 @@ namespace SpeedCC
     };
     
     ///------- define function type
-    typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessageInfo& mi);
+    typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessage::Ptr mi);
     typedef void (cocos2d::Ref::*FUN_SCDelayExecute_t)(const SCDictionary& dic);
     
     ///------- trait function
@@ -42,7 +42,7 @@ namespace SpeedCC
     cocos2d::SEL_CallFuncND SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*,void*));
     
     template<typename T>
-    FUN_SCMapMessage_t SCTraitFunctionPointerType(void (T::*)(SCMessageInfo& mi));
+    FUN_SCMapMessage_t SCTraitFunctionPointerType(void (T::*)(SCMessage& mi));
     
     template<typename T>
     FUN_SCDelayExecute_t SCTraitFunctionPointerType(void (T::*)(const SCDictionary& dic));

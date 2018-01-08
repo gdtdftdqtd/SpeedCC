@@ -46,7 +46,7 @@ namespace SpeedCC
         _pOwnerRole->removePerformer(this->getID());
     }
     
-    void SCPerformer::update(SCMessageInfo& mi)
+    void SCPerformer::update(SCMessage::Ptr mi)
     {
         SC_RETURN_IF_V(_pCurStrategy==NULL);
         SC_RETURN_IF_V(!this->getActive());

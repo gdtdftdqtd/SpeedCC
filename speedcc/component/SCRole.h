@@ -38,7 +38,7 @@ namespace SpeedCC
         bool hasStrategy(const int nID) const;
         
         inline SCStage* getStage() const { return _pOwnerStage;}
-        virtual void update(SCMessageInfo& mi);
+        virtual void update(SCMessage::Ptr mi);
         
     protected:
         SCRole(const int nID,SCStage* pStage);

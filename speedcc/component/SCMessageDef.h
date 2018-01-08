@@ -153,31 +153,23 @@ namespace SpeedCC
     };
     
     
-    struct SCMessageInfo
+    struct SCMessage : public SCObject
     {
-        int                 nMsgID;
-        SCDictionary        paramters;
-        bool                bContinue;
-        
-        SCMessageInfo():
+    protected:
+        SCMessage():
         nMsgID(kSCMsgNULL),
         bContinue(true)
         {}
         
-        inline bool operator==(const SCMessageInfo& mi) const
-        {
-            return (nMsgID==mi.nMsgID);
-        }
+    public:
+        SC_AVOID_CLASS_COPY(SCMessage)
+        SC_DEFINE_CLASS_PTR(SCMessage)
         
-        inline bool operator<(const SCMessageInfo& mi) const
-        {
-            return (nMsgID<mi.nMsgID);
-        }
+        SC_DEFINE_CREATE_FUNC_0(SCMessage)
         
-        inline bool operator>(const SCMessageInfo& mi) const
-        {
-            return (nMsgID>mi.nMsgID);
-        }
+        int                 nMsgID;
+        SCDictionary        paramters;
+        bool                bContinue;
     };
     
     class SCMessageMatcher : public SCObject
@@ -186,12 +178,12 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCMessageMatcher)
         SC_DEFINE_CLASS_PTR(SCMessageMatcher)
         
-        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const std::function<bool (const SCMessageInfo& mi)>&)
-        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessageInfo& mi)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const std::function<bool (const SCMessage::Ptr mi)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessage::Ptr mi)>&)
         
-        bool isMatch(const SCMessageInfo& mi) const
+        bool isMatch(const SCMessage::Ptr mi) const
         {
-            if(_func==NULL || _nMsgID!=mi.nMsgID)
+            if(_func==NULL || mi==NULL || _nMsgID!=mi->nMsgID)
             {
                 return false;
             }
@@ -203,7 +195,7 @@ namespace SpeedCC
                     return false;
                 }
                 
-                auto value = mi.paramters.getValue(MSG_KEY_COMMAND);
+                auto value = mi->paramters.getValue(MSG_KEY_COMMAND);
                 if(!value.isValidObject<SCString>())
                 {
                     return false;
@@ -223,13 +215,13 @@ namespace SpeedCC
         inline int getMessageID() const { return _nMsgID; }
         
     protected:
-        SCMessageMatcher(const int nMsgID,const std::function<bool (const SCMessageInfo& mi)>& func):
+        SCMessageMatcher(const int nMsgID,const std::function<bool (SCMessage::Ptr mi)>& func):
         _nMsgID(nMsgID),
         _func(func)
         {
         }
         
-        SCMessageMatcher(const SCString& strCommand,const std::function<bool (const SCMessageInfo& mi)>& func):
+        SCMessageMatcher(const SCString& strCommand,const std::function<bool (SCMessage::Ptr mi)>& func):
         _strCommand(strCommand),
         _nMsgID(kSCMsgCommand),
         _func(func)
@@ -239,7 +231,7 @@ namespace SpeedCC
     private:
         SCString                                        _strCommand;
         int                                             _nMsgID;
-        std::function<bool (const SCMessageInfo& mi)>   _func;
+        std::function<bool (SCMessage::Ptr mi)>     _func;
     };
 
 }

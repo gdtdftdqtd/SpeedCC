@@ -98,17 +98,17 @@ namespace SpeedCC
         _exitBehaviorPtr = bvrPtr;
     }
     
-    void SCStrategy::update(SCPerformer* pPerformer,SCMessageInfo& mi)
+    void SCStrategy::update(SCPerformer* pPerformer,SCMessage::Ptr mi)
     {
         SC_RETURN_IF_V(!this->getActive());
         SBehaviorInfo* pBehaviorInfo = NULL;
         
-        if(mi.nMsgID==kSCMsgCommand)
+        if(mi->nMsgID==kSCMsgCommand)
         {
             SC_RETURN_IF_V(_command2BehaviorMap.empty());
             
             bool bResult = false;
-            auto nCommand = mi.paramters.getValue(MSG_KEY_COMMAND).getInt(&bResult);
+            auto nCommand = mi->paramters.getValue(MSG_KEY_COMMAND).getInt(&bResult);
             if(bResult && nCommand>0)
             {
                 auto it = _command2BehaviorMap.find(nCommand);
@@ -120,7 +120,7 @@ namespace SpeedCC
         }
         else
         {
-            auto it = _msgID2BehaviorMap.find(mi.nMsgID);
+            auto it = _msgID2BehaviorMap.find(mi->nMsgID);
             if(it!=_msgID2BehaviorMap.end())
             {
                 pBehaviorInfo = &(*it).second;
@@ -137,6 +137,7 @@ namespace SpeedCC
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
+//            dic.setValue();
             pBehaviorInfo->behaviorPtr->execute(dic);
         }
     }

@@ -15,13 +15,26 @@ namespace SpeedCC
     void SCBehaviorCallFunc::execute(const SCDictionary& par)
     {
         SC_RETURN_IF_V(!this->getActive());
-        SC_RETURN_IF_V(_startFunc==NULL);
-        _startFunc(par);
+        if(_startFunc!=NULL)
+        {
+            _startFunc(par);
+        }
+        else if(_startFunc2!=NULL)
+        {
+            _startFunc2();
+        }
     }
     
     void SCBehaviorCallFunc::setOnStartFunc(const std::function<void(const SCDictionary& par)>& func)
     {
         _startFunc = func;
+        _startFunc2 = NULL;
+    }
+    
+    void SCBehaviorCallFunc::setOnStartFunc(const std::function<void()>& func)
+    {
+        _startFunc2 = func;
+        _startFunc = NULL;
     }
     
     

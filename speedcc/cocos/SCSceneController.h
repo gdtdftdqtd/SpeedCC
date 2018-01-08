@@ -61,7 +61,7 @@ namespace SpeedCC
         
         cocos2d::EventListener* getEventListener(cocos2d::EventListener::Type type) const;
         
-        virtual void onSCMessageProcess(SCMessageInfo& mi) override;
+        virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) override;
         
     protected:
         SCSceneController();
@@ -92,9 +92,9 @@ namespace SpeedCC
             
             SCDictionary dic(pair);
             
-            SCMessageInfo mi;
-            mi.nMsgID = nMsg;
-            mi.paramters = dic;
+            SCMessage::Ptr mi = SCMessage::create();
+            mi->nMsgID = nMsg;
+            mi->paramters = dic;
             this->onSCMessageProcess(mi);
         }
     protected:

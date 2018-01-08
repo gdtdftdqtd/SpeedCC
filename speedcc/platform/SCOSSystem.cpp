@@ -15,21 +15,21 @@ namespace SpeedCC
         // nResult, 0: success; non-zero: failed
         void scbStorePurchaseItemResult(const char* pszIAP,int nResult)
         {
-            SCMessageInfo mi;
-            mi.nMsgID = (nResult==0) ? kSCMsgStorePurchaseSuccess : kSCMsgStorePurchaseFailed;
-            mi.paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
+            SCMessage::Ptr mi = SCMessage::create();
+            mi->nMsgID = (nResult==0) ? kSCMsgStorePurchaseSuccess : kSCMsgStorePurchaseFailed;
+            mi->paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
             SCMsgDisp()->postMessage(mi);
         }
         
         // nResult, 0: success; non-zero: failed
         void scbStoreRestoreItemResult(const char* pszIAP,int nResult)
         {
-            SCMessageInfo mi;
-            mi.nMsgID = ((nResult==0) ? kSCMsgStoreRestoreSuccess : kSCMsgStoreRestoreFailed);
+            SCMessage::Ptr mi = SCMessage::create();
+            mi->nMsgID = ((nResult==0) ? kSCMsgStoreRestoreSuccess : kSCMsgStoreRestoreFailed);
             
             if(pszIAP!=NULL)
             {
-                mi.paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
+                mi->paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
             }
             SCMsgDisp()->postMessage(mi);
         }
@@ -44,11 +44,11 @@ namespace SpeedCC
         {
             if(nResult==0 && pszIAP!=NULL)
             {// all are fine
-                SCMessageInfo mi;
-                mi.nMsgID = kSCMsgStoreIAPInfoSuccess;
-                mi.paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
-                mi.paramters.setValue("currency", SCString(pszCurrency));
-                mi.paramters.setValue("price", fPrice);
+                SCMessage::Ptr mi = SCMessage::create();
+                mi->nMsgID = kSCMsgStoreIAPInfoSuccess;
+                mi->paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
+                mi->paramters.setValue("currency", SCString(pszCurrency));
+                mi->paramters.setValue("price", fPrice);
                 
                 SCMsgDisp()->postMessage(mi);
             }
@@ -65,10 +65,10 @@ namespace SpeedCC
         ///------------- system
         void scbAlertBoxSelected(const int nAlertBoxID,const int nButton)
         {
-            SCMessageInfo mi;
-            mi.nMsgID = kSCMsgAlertBoxSelected;
-            mi.paramters.setValue("id", nAlertBoxID);
-            mi.paramters.setValue("selected", nButton);
+            SCMessage::Ptr mi = SCMessage::create();
+            mi->nMsgID = kSCMsgAlertBoxSelected;
+            mi->paramters.setValue("id", nAlertBoxID);
+            mi->paramters.setValue("selected", nButton);
             SCMsgDisp()->postMessage(mi);
         }
         

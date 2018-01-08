@@ -26,8 +26,8 @@ namespace SpeedCC
     {
         cocos2d::Node::onEnter();
         
-        SCMessageInfo mi;
-        mi.nMsgID = kSCMsgSceneEnter;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = kSCMsgSceneEnter;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
@@ -35,8 +35,8 @@ namespace SpeedCC
     {
         cocos2d::Node::onEnterTransitionDidFinish();
         
-        SCMessageInfo mi;
-        mi.nMsgID = kSCMsgSceneEnterTransitionDidFinish;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = kSCMsgSceneEnterTransitionDidFinish;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
@@ -44,8 +44,8 @@ namespace SpeedCC
     {
         cocos2d::Node::onExit();
         
-        SCMessageInfo mi;
-        mi.nMsgID = kSCMsgSceneExit;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = kSCMsgSceneExit;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
@@ -53,8 +53,8 @@ namespace SpeedCC
     {
         cocos2d::Node::onExitTransitionDidStart();
         
-        SCMessageInfo mi;
-        mi.nMsgID = kSCMsgSceneExitTransitionDidStart;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = kSCMsgSceneExitTransitionDidStart;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
 

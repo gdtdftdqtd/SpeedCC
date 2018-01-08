@@ -43,7 +43,7 @@ namespace SpeedCC
         return (*it).second;
     }
     
-    void SCStage::onSCMessageProcess(SCMessageInfo& mi)
+    void SCStage::onSCMessageProcess(SCMessage::Ptr msgPtr)
     {
         SC_RETURN_IF_V(_id2RoleMap.empty());
         SC_RETURN_IF_V(!this->getActive());
@@ -51,8 +51,8 @@ namespace SpeedCC
         for(auto it : _id2RoleMap)
         {
             SC_RETURN_IF_V(!this->getActive());
-            SC_BREAK_IF(!mi.bContinue);
-            it.second->update(mi);
+            SC_BREAK_IF(!msgPtr->bContinue);
+            it.second->update(msgPtr);
         }
     }
     

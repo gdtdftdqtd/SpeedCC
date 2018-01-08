@@ -30,7 +30,7 @@ namespace SpeedCC
         
         inline SCRole* getRole() {return _pOwnerRole;}
         
-        virtual void update(SCMessageInfo& mi);
+        virtual void update(SCMessage::Ptr mi);
         
     protected:
         SCPerformer();

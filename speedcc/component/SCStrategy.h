@@ -15,6 +15,7 @@
 #define SC_BVR_ARG_PERFORMER    "performer" // SCPerformer::Ptr
 #define SC_BVR_ARG_STRATEGY     "strategy" // SCStrategy::Ptr
 #define SC_BVR_ARG_ROLE         "role" // SCRole::Ptr
+#define SC_BVR_ARG_MSG          "msg"   // SCMessage
 
 
 namespace SpeedCC
@@ -29,7 +30,7 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_0(SCStrategy)
         
-        virtual void update(SCPerformer* pPerformer,SCMessageInfo& mi);
+        virtual void update(SCPerformer* pPerformer,SCMessage::Ptr mi);
         void enter(SCPerformer* pPerformer);
         void exit(SCPerformer* pPerformer);
         

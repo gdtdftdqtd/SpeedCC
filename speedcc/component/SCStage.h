@@ -35,7 +35,7 @@ namespace SpeedCC
         virtual void setUp(){}
         virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
         
-        virtual void onSCMessageProcess(SCMessageInfo& mi) override;
+        virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) override;
     private:
         struct SFlowInfo
         {

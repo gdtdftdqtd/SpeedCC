@@ -18,11 +18,15 @@ namespace SpeedCC
     class SCBehaviorCallFunc : public SCBehavior
     {
     protected:
-        
         SCBehaviorCallFunc()
         {}
         
         SCBehaviorCallFunc(const std::function<void(const SCDictionary& par)>& startFunc)
+        {
+            this->setOnStartFunc(startFunc);
+        }
+        
+        SCBehaviorCallFunc(const std::function<void()>& startFunc)
         {
             this->setOnStartFunc(startFunc);
         }
@@ -33,13 +37,16 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorCallFunc)
         SC_DEFINE_CREATE_FUNC_1(SCBehaviorCallFunc,const std::function<void(const SCDictionary& par)>&)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorCallFunc,const std::function<void()>&)
         
         virtual void execute(const SCDictionary& par) override;
         
         void setOnStartFunc(const std::function<void(const SCDictionary& par)>& func);
+        void setOnStartFunc(const std::function<void()>& func);
         
     private:
         std::function<void(const SCDictionary& par)>  _startFunc;
+        std::function<void()>  _startFunc2;
     };
     
     ///-------------- SCBehaviorGroup

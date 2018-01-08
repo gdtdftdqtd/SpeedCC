@@ -79,7 +79,7 @@ namespace SpeedCC
         }
     }
     
-    void SCMessageDispatch::sendMessage(SCMessageInfo& mi)
+    void SCMessageDispatch::sendMessage(SCMessage::Ptr msgPtr)
     {
         if(_nPostMsgCallStackCounter==0 && _nSendMsgCallStackCounter==0)
         {
@@ -89,16 +89,16 @@ namespace SpeedCC
         ++_nSendMsgCallStackCounter;
         
         auto it = _listenerList.begin();
-        for(;it!=_listenerList.end() && mi.bContinue;++it)
+        for(;it!=_listenerList.end() && msgPtr->bContinue;++it)
         {
             SCASSERT((*it).pListener!=NULL);
             
             if((*it).pListener!=NULL)
             {
-                (*it).pListener->onSCMessageProcess(mi);
+                (*it).pListener->onSCMessageProcess(msgPtr);
             }
             
-            _defaultProc.processMessage(mi);
+            _defaultProc.processMessage(msgPtr);
         }
         
         --_nSendMsgCallStackCounter;
@@ -106,36 +106,36 @@ namespace SpeedCC
     
     void SCMessageDispatch::sendMessage(const int nMsgID)
     {
-        SCMessageInfo mi;
-        mi.nMsgID = nMsgID;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = nMsgID;
         this->sendMessage(mi);
     }
     
     void SCMessageDispatch::sendMessage(const int nMsgID,const SCDictionary& dic)
     {
-        SCMessageInfo mi;
-        mi.nMsgID = nMsgID;
-        mi.paramters = dic;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = nMsgID;
+        mi->paramters = dic;
         this->sendMessage(mi);
     }
     
-    void SCMessageDispatch::postMessage(const SCMessageInfo& mi)
+    void SCMessageDispatch::postMessage(SCMessage::Ptr msgPtr)
     {
-        this->getMsgQueRecive().push_back(mi);
+        this->getMsgQueRecive().push_back(msgPtr);
     }
     
     void SCMessageDispatch::postMessage(const int nMsgID)
     {
-        SCMessageInfo mi;
-        mi.nMsgID = nMsgID;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = nMsgID;
         this->postMessage(mi);
     }
     
     void SCMessageDispatch::postMessage(const int nMsgID,const SCDictionary& dic)
     {
-        SCMessageInfo mi;
-        mi.nMsgID = nMsgID;
-        mi.paramters = dic;
+        SCMessage::Ptr mi = SCMessage::create();
+        mi->nMsgID = nMsgID;
+        mi->paramters = dic;
         this->postMessage(mi);
     }
     
@@ -193,7 +193,7 @@ namespace SpeedCC
     
     void SCMessageDispatch::onTimerMessagePump(float fDelta)
     {
-        std::list<SCMessageInfo>& workingQue = this->getMsgQueRecive();
+        std::list<SCMessage::Ptr>& workingQue = this->getMsgQueRecive();
         this->swapMsgQue();
         
         // update mutable listener first before message loop
@@ -206,7 +206,7 @@ namespace SpeedCC
             auto& msg = workingQue.front();
             
             auto it = _listenerList.begin();
-            for(;it!=_listenerList.end() && msg.bContinue;++it)
+            for(;it!=_listenerList.end() && msg->bContinue;++it)
             {
                 SCASSERT((*it).pListener!=NULL);
                 if((*it).pListener!=NULL)

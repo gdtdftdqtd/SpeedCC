@@ -55,11 +55,21 @@ namespace SpeedCC
     {
     public:
         template<typename T>
-        void addProperty(const int nID,const T& Property)
+        void addProperty(const int nID,const T& property)
         {
             SCObjPtrT<T> cmpPtr;
             cmpPtr.createInstance();
-            *cmpPtr = Property;
+            *cmpPtr = property;
+            
+            _id2PropertyMap[nID] = SCValue::create(cmpPtr);
+        }
+        
+        template<typename T>
+        void addProperty(const int nID)
+        {
+            SCObjPtrT<T> cmpPtr;
+            cmpPtr.createInstance();
+            *cmpPtr = T();
             
             _id2PropertyMap[nID] = SCValue::create(cmpPtr);
         }

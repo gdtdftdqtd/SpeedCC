@@ -113,7 +113,7 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::update(SCMessageInfo& mi)
+    void SCRole::update(SCMessage::Ptr mi)
     {
         SC_RETURN_IF_V(_performerList.empty());
         SC_RETURN_IF_V(!this->getActive());
