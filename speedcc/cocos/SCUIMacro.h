@@ -3,7 +3,7 @@
 #ifndef __SPEEDCC__SCUIMACRO_H__
 #define __SPEEDCC__SCUIMACRO_H__
 
-#include "../component/SCStrategyCommon.h"
+#include "../component/SCBehaviorCommon.h"
 
 namespace SpeedCC
 {
@@ -119,7 +119,7 @@ namespace SpeedCC
 ///-------------- root container
 
 #define SC_BEGIN_CONTAINER_ROOT(_node_,_x_,_y_,_property_,_size_) \
-    SC_BEGIN_CONTAINER_ROOT_EX((_node_),(_x_),(_y_),(_property_),(_size_),getSceneNode())
+    SC_BEGIN_CONTAINER_ROOT_EX((_node_),(_x_),(_y_),(_property_),(_size_),getBedNode())
 
 #define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_)\
 {\

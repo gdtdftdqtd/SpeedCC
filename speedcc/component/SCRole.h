@@ -40,14 +40,29 @@ namespace SpeedCC
         inline SCStage* getStage() const { return _pOwnerStage;}
         virtual void update(SCMessage::Ptr mi);
         
+        void increaseMsgFilter(const int nMsgID);
+        void increaseCmdFilter(const SCString& strCmd);
+        void decreaseMsgFilter(const int nMsgID);
+        void decreaseCmdFilter(const SCString& strCmd);
+        
+        inline bool getMsgFilterEnabled() const {return _bFilterMsg;}
+        inline void setMsgFilterEnabled(const bool bEnable) {_bFilterMsg = bEnable;}
+        
     protected:
         SCRole(const int nID,SCStage* pStage);
+        
+    private:
+        bool filterMsg(SCMessage::Ptr msgPtr);
         
     private:
         int                                     _nInitStrategyID;
         std::list<SCPerformer::Ptr>             _performerList;
         std::map<int,SCStrategy::Ptr>           _id2StrategyMap;
         SCStage*                                _pOwnerStage;
+        bool                                    _bFilterMsg;
+        
+        std::map<int,int>                       _msgID2FilterCounterMap;
+        std::map<SCString,int>                  _cmd2FilterCounterMap;
     };
 }
 

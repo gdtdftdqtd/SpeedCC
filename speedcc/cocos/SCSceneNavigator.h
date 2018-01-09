@@ -102,10 +102,10 @@ namespace SpeedCC
                 SC_BREAK_IF(sceneCtlrPtr.isNull());
                 
                 auto scene = SCScene::create();
-                auto pRootLayer = scene->getSceneNode();
+                auto pRootLayer = scene->getBedNode();
                 pRootLayer->setController(sceneCtlrPtr);
                 sceneCtlrPtr->setScene(scene);
-                sceneCtlrPtr->setSceneRootLayer(pRootLayer);
+                sceneCtlrPtr->setBedNode(pRootLayer);
                 sceneCtlrPtr->onCreate(parameterDic);
                 
             } while (0);
@@ -119,9 +119,9 @@ namespace SpeedCC
             SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
             sceneCtlrPtr.createInstance();
             
-            auto rootLayer = SCSceneNode::create();
+            auto rootLayer = SCBedNode::create();
             rootLayer->setController(sceneCtlrPtr);
-            sceneCtlrPtr->setSceneRootLayer(rootLayer);
+            sceneCtlrPtr->setBedNode(rootLayer);
             
             sceneCtlrPtr->setScene(NULL);
             sceneCtlrPtr->onCreate(parameterDic);

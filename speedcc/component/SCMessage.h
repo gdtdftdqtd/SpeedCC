@@ -1,0 +1,57 @@
+//
+
+#ifndef __SPEEDCC__SCMESSAGEDEF_H__
+#define __SPEEDCC__SCMESSAGEDEF_H__
+
+#include "../base/SCDictionary.h"
+#include "../base/SCObject.h"
+#include "SCPerformIDDef.h"
+
+namespace SpeedCC
+{
+    struct SCMessage : public SCObject
+    {
+    protected:
+        SCMessage():
+        nMsgID(SCID::Msg::kSCMsgNULL),
+        bContinue(true)
+        {}
+        
+    public:
+        SC_AVOID_CLASS_COPY(SCMessage)
+        SC_DEFINE_CLASS_PTR(SCMessage)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCMessage)
+        
+        int                 nMsgID;
+        SCDictionary        paramters;
+        bool                bContinue;
+    };
+    
+    class SCMessageMatcher : public SCObject
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCMessageMatcher)
+        SC_DEFINE_CLASS_PTR(SCMessageMatcher)
+        
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const std::function<bool (const SCMessage::Ptr mi)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessage::Ptr mi)>&)
+        
+        bool isMatch(const SCMessage::Ptr mi) const;
+        
+        inline SCString getCommand() const { return _strCommand; }
+        inline int getMessageID() const { return _nMsgID; }
+        
+    protected:
+        SCMessageMatcher(const int nMsgID,const std::function<bool (SCMessage::Ptr mi)>& func);
+        SCMessageMatcher(const SCString& strCommand,const std::function<bool (SCMessage::Ptr mi)>& func);
+        
+    private:
+        SCString                                        _strCommand;
+        int                                             _nMsgID;
+        std::function<bool (SCMessage::Ptr mi)>         _func;
+    };
+
+}
+
+#endif // __SPEEDCC__SCMESSAGEDEF_H__

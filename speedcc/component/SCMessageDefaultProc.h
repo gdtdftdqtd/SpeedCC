@@ -9,7 +9,7 @@
 #ifndef __SPEEDCC__SCMESSAGEDEFAULTPROC_H__
 #define __SPEEDCC__SCMESSAGEDEFAULTPROC_H__
 
-#include "SCMessageDef.h"
+#include "SCMessage.h"
 
 namespace SpeedCC
 {

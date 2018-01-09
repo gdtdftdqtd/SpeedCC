@@ -141,7 +141,7 @@ namespace SpeedCC
             {
                 SCCCDirector()->popScene();
                 SCScene* pScene = (SCScene*)SCCCDirector()->getRunningScene();
-                auto rootLayer = pScene->getSceneNode();
+                auto rootLayer = pScene->getBedNode();
                 SCASSERT(rootLayer!=NULL);
                 s_currentSceneControllerPtr = rootLayer->getController().cast<SCSceneController>();
                 SCASSERT(s_currentSceneControllerPtr!=NULL);

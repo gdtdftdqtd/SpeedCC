@@ -10,10 +10,10 @@
 namespace SpeedCC
 {
     ///----------- SCSceneLayer
-    class SCSceneNode : public cocos2d::Node
+    class SCBedNode : public cocos2d::Node
     {
     public:
-        CREATE_FUNC(SCSceneNode);
+        CREATE_FUNC(SCBedNode);
         void setController(SCObject::Ptr controllerPtr);
         inline SCObject::Ptr getController() {return _sceneControllerPtr;}
         
@@ -55,11 +55,11 @@ namespace SpeedCC
         virtual void onExit() override;
         virtual void onExitTransitionDidStart() override;
         
-        void setSceneNode(SCSceneNode* pLayer);
-        SCSceneNode* getSceneNode();
+        void setSceneNode(SCBedNode* pLayer);
+        SCBedNode* getBedNode();
         
     private:
-        SCSceneNode*           _pSceneNode;
+        SCBedNode*           _pSceneNode;
     };
     
     ///------------ SCLayerDisableTouch

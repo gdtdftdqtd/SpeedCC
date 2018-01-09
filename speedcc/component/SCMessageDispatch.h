@@ -6,7 +6,7 @@
 #define __SPEEDCC__SCMESSAGEDISPATCH_H__
 
 
-#include "SCMessageDef.h"
+#include "SCMessage.h"
 #include "SCMessageDefaultProc.h"
 #include "cocos2d.h"
 #include <list>

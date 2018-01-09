@@ -10,16 +10,11 @@
 #define __SPEEDCC__SCCOCOSDEF_H__
 
 #include "../base/SCTemplateDef.h"
-#include "../component/SCMessageDef.h"
+#include "../component/SCMessage.h"
 
 namespace SpeedCC
 {
-    enum class ETouchMode
-    {
-        kTouchNone,
-        kTouchSingle,
-        kTouchMultiple,
-    };
+    
     
     ///------- define function type
     typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessage::Ptr mi);

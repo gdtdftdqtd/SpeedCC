@@ -37,11 +37,10 @@ namespace SpeedCC
         }
     }
     
+    // bvrPtr can be NULL
     bool SCStrategy::addBehavior(const int nMsgID,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr)
     {
         SCASSERT(nMsgID>0);
-        SCASSERT(bvrPtr!=NULL);
-        
         SC_RETURN_IF(nMsgID<=0 || bvrPtr==NULL,false);
         
         SBehaviorInfo bi;
@@ -53,12 +52,11 @@ namespace SpeedCC
         return true;
     }
     
+    // bvrPtr can be NULL
     bool SCStrategy::addBehavior(const SCString& strCommand,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr)
     {
         SCASSERT(!strCommand.isEmpty());
-        SCASSERT(bvrPtr!=NULL);
-        
-        SC_RETURN_IF(strCommand.isEmpty() || bvrPtr==NULL,false);
+        SC_RETURN_IF(strCommand.isEmpty(),false);
         
         SBehaviorInfo bi;
         bi.behaviorPtr = bvrPtr;
@@ -69,13 +67,13 @@ namespace SpeedCC
         return true;
     }
     
+    // bvrPtr can be NULL
     bool SCStrategy::addBehavior(SCMessageMatcher::Ptr matcherPtr,SCBehavior::Ptr bvrPtr)
     {
-        SCASSERT(bvrPtr!=NULL);
         SCASSERT(matcherPtr!=NULL);
         
         bool bRet = false;
-        if(matcherPtr->getMessageID()==kSCMsgCommand)
+        if(matcherPtr->getMessageID()==SCID::Msg::kSCMsgCommand)
         {
             SC_RETURN_IF(matcherPtr->getCommand()<=0,false);
             bRet = this->addBehavior(matcherPtr->getCommand(),bvrPtr,matcherPtr);
@@ -103,15 +101,15 @@ namespace SpeedCC
         SC_RETURN_IF_V(!this->getActive());
         SBehaviorInfo* pBehaviorInfo = NULL;
         
-        if(mi->nMsgID==kSCMsgCommand)
+        if(mi->nMsgID==SCID::Msg::kSCMsgCommand)
         {
             SC_RETURN_IF_V(_command2BehaviorMap.empty());
             
             bool bResult = false;
-            auto nCommand = mi->paramters.getValue(MSG_KEY_COMMAND).getInt(&bResult);
-            if(bResult && nCommand>0)
+            auto strCommand = mi->paramters.getValue(MSG_KEY_COMMAND).getString(&bResult);
+            if(bResult && !strCommand.isEmpty())
             {
-                auto it = _command2BehaviorMap.find(nCommand);
+                auto it = _command2BehaviorMap.find(strCommand);
                 if(it!=_command2BehaviorMap.end())
                 {
                     pBehaviorInfo = &(*it).second;
@@ -140,6 +138,19 @@ namespace SpeedCC
             dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(mi));
             pBehaviorInfo->behaviorPtr->execute(dic);
         }
+    }
+    
+    
+    ///------------------ SCStrategyFunc
+    
+    void SCStrategyFunc::update(SCPerformer* pPerformer,SCMessage::Ptr msgPtr)
+    {
+        if(_func!=NULL)
+        {
+            _func(pPerformer,msgPtr);
+        }
+        
+        SCStrategy::update(pPerformer,msgPtr);
     }
     
 }

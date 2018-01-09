@@ -25,17 +25,5 @@ namespace SpeedCC
             _pObject->release();
         }
     }
-    
-    SCRefHolder::Ptr SCRefHolder::create(cocos2d::Ref* pObject)
-    {
-        SCASSERT(pObject!=NULL);
-        Ptr ret;
-        ret.createInstanceWithCon([pObject](void* pData)
-                                  {
-                                      new(pData)SCRefHolder(pObject);
-                                  });
-        
-        return ret;
-    }
 }
 

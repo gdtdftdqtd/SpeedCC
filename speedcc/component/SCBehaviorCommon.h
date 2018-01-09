@@ -1,13 +1,13 @@
 //
-//  SCStrategyCommon.hpp
+//  SCBehaviorCommon.hpp
 //  libspeedcc
 //
 //  Created by Kevin on 2/1/2018.
 //  Copyright © 2018 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCSTRATEGYCOMMON_H__
-#define __SPEEDCC__SCSTRATEGYCOMMON_H__
+#ifndef __SPEEDCC__SCBEHAVIORCOMMON_H__
+#define __SPEEDCC__SCBEHAVIORCOMMON_H__
 
 #include "SCRole.h"
 
@@ -111,4 +111,4 @@ namespace SpeedCC
     };
 }
 
-#endif // __SPEEDCC__SCSTRATEGYCOMMON_H__
+#endif // __SPEEDCC__SCBEHAVIORCOMMON_H__

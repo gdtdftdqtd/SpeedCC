@@ -9,52 +9,52 @@ namespace SpeedCC
 {
     ///------------- SCSceneLayer
     
-    bool SCSceneNode::init()
+    bool SCBedNode::init()
     {
         SC_RETURN_IF(!Node::init(),false);
         this->setContentSize(SCWinSize());
         return true;
     }
     
-    void SCSceneNode::setController(SCObject::Ptr controllerPtr)
+    void SCBedNode::setController(SCObject::Ptr controllerPtr)
     {
         _sceneControllerPtr = controllerPtr;
     }
     
     
-    void SCSceneNode::onEnter()
+    void SCBedNode::onEnter()
     {
         cocos2d::Node::onEnter();
         
         SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = kSCMsgSceneEnter;
+        mi->nMsgID = SCID::Msg::kSCMsgSceneEnter;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
-    void SCSceneNode::onEnterTransitionDidFinish()
+    void SCBedNode::onEnterTransitionDidFinish()
     {
         cocos2d::Node::onEnterTransitionDidFinish();
         
         SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = kSCMsgSceneEnterTransitionDidFinish;
+        mi->nMsgID = SCID::Msg::kSCMsgSceneEnterTransitionDidFinish;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
-    void SCSceneNode::onExit()
+    void SCBedNode::onExit()
     {
         cocos2d::Node::onExit();
         
         SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = kSCMsgSceneExit;
+        mi->nMsgID = SCID::Msg::kSCMsgSceneExit;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
     
-    void SCSceneNode::onExitTransitionDidStart()
+    void SCBedNode::onExitTransitionDidStart()
     {
         cocos2d::Node::onExitTransitionDidStart();
         
         SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = kSCMsgSceneExitTransitionDidStart;
+        mi->nMsgID = SCID::Msg::kSCMsgSceneExitTransitionDidStart;
         _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
     }
 
@@ -70,7 +70,7 @@ namespace SpeedCC
     {
         SC_RETURN_IF(!Scene::init(),false);
         
-        _pSceneNode = SCSceneNode::create();
+        _pSceneNode = SCBedNode::create();
         _pSceneNode->setContentSize(SCWinSize());
         _pSceneNode->setPosition(SCNodeUtils::posR2A(Vec2(0,0),SCWinSize()));
         this->addChild(_pSceneNode);
@@ -98,12 +98,12 @@ namespace SpeedCC
         cocos2d::Scene::onExitTransitionDidStart();
 	}
     
-    void SCScene::setSceneNode(SCSceneNode* pLayer)
+    void SCScene::setSceneNode(SCBedNode* pLayer)
     {
         _pSceneNode = pLayer;
     }
     
-    SCSceneNode* SCScene::getSceneNode()
+    SCBedNode* SCScene::getBedNode()
     {
         return _pSceneNode;
     }

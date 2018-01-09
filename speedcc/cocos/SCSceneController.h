@@ -36,7 +36,7 @@ namespace SpeedCC
         
         inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
-        inline cocos2d::Node* getSceneNode()  {return _pRootNode;}
+        inline cocos2d::Node* getBedNode()  {return _pBedNode;}
         inline SCScene* getScene()  {return _pScene;}
         
         void setAllTouchEnabled(const bool bEnabled);
@@ -56,11 +56,6 @@ namespace SpeedCC
         
         cocos2d::Node* getLayoutNode(const int nID);
         
-        void setTouchMode(const ETouchMode touch);
-        inline ETouchMode getTouchMode() const { return _touchMode;}
-        
-        cocos2d::EventListener* getEventListener(cocos2d::EventListener::Type type) const;
-        
         virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) override;
         
     protected:
@@ -69,39 +64,15 @@ namespace SpeedCC
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
         void storeLayoutNode(...){}
     private:
-        inline void setSceneRootLayer(SCSceneNode* pLayer) { _pRootNode = pLayer;}
+        inline void setBedNode(SCBedNode* pLayer) { _pBedNode = pLayer;}
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _parentModalControllerPtr = controllerPtr;}
         
-        bool onSingleTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        void onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        void onSingleTouchEnded(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        void onSingleTouchCancelled(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
-        
-        void onMultipleTouchBegan(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        void onMultipleTouchMoved(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        void onMultipleTouchEnded(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        void onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
-        
-        void onAcceleration(cocos2d::Acceleration* pAcc, cocos2d::Event* pEvent);
-        
-        template<typename T>
-        void sendTouchMessage(const int nMsg, T touch)
-        {
-            SCDictionary::SPair pair = {std::is_same<T,cocos2d::Touch*>::value ? MSG_KEY_TOUCH : MSG_KEY_TOUCHES,touch};
-            
-            SCDictionary dic(pair);
-            
-            SCMessage::Ptr mi = SCMessage::create();
-            mi->nMsgID = nMsg;
-            mi->paramters = dic;
-            this->onSCMessageProcess(mi);
-        }
     protected:
         std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
         
     private:
-        SCSceneNode*			                _pRootNode;
+        SCBedNode*			                    _pBedNode;
         SCScene*                                _pScene;
         SCSceneController::WeakPtr              _parentModalControllerPtr;
         SCLayerDisableTouch*                    _pDisableTouchLayer;
@@ -110,9 +81,6 @@ namespace SpeedCC
         std::list<SCObject::Ptr>                _ownLifecycleList;
         std::map<int,FUN_SCMapMessage_t>        _msg2FuncMap;
         std::map<int,cocos2d::Node*>            _id2NodeMap;
-        
-        ETouchMode                              _touchMode;
-        cocos2d::EventListener*                 _pTouchListener; // no need to remove from event dispatch
     };
     
     

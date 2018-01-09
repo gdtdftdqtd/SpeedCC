@@ -11,7 +11,7 @@
 
 #include "SCPerformObject.h"
 #include "SCRole.h"
-#include "SCMessageDef.h"
+#include "SCMessage.h"
 #include "SCMessageDispatch.h"
 
 namespace SpeedCC

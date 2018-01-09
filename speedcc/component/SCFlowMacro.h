@@ -29,7 +29,8 @@ do{\
     SCStrategy::Ptr sc_flow_in_strategy;\
     auto sc_flow_role = SpeedCC::SCRole::create((_role_id_), this);\
     sc_flow_role->setID((_role_id_));\
-    ___SC_FLOW_ADD_STRATEGY_TO_ROLE(sc_flow_in_strategy,_strategy_id_)\
+    ___SC_FLOW_CREATE_STRATEGY(sc_flow_in_strategy,(_strategy_id_))\
+    sc_flow_role->addStrategy(sc_flow_in_strategy,true);\
 
 
 
@@ -64,21 +65,26 @@ do{\
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
 do{\
     auto temMsg = (_msg_);\
-    auto temBehavior = (_behavior_);\
+    SCBehavior::Ptr temBehavior = (_behavior_);\
     const int nMsg = SCFlowSetup::extractMsgID(temMsg);\
     auto matchPtr = SCFlowSetup::extractMsgMatcher(temMsg);\
+    sc_flow_role->increaseMsgFilter(nMsg);\
     sc_flow_in_strategy->addBehavior(nMsg,temBehavior,matchPtr);\
 }while(0);
 
 #define ON_CMD_BEHAVIOR(_command_,_behavior_) \
 do{\
+    sc_flow_role->increaseCmdFilter(_command_);\
     sc_flow_in_strategy->addBehavior((_command_),(_behavior_));\
 }while(0);
 
-#define ON_FRAME(_behavior_) \
-do{\
-    sc_flow_in_strategy->addBehavior(kSCMsgFrame,(_behavior_));\
-}while(0);
+//#define ON_FRAME_BEHAVIOR(_behavior_) \
+//do{\
+//    sc_flow_in_strategy->addBehavior(kSCMsgFrame,(_behavior_));\
+//}while(0);
+
+#define ON_MSG(_msg_) \
+    ON_MSG_BEHAVIOR((_msg_),NULL)
 
 #define ON_MSG_NEXT_STRATEGY(_msg_,_stragegy_id_) \
 do{\
@@ -91,18 +97,14 @@ do{\
 
 
 ////----------------------
-#define ___SC_FLOW_ADD_STRATEGY_TO_ROLE(_strategy_ptr_,_strategy_id_)\
-{\
-    ___SC_FLOW_CREATE_STRATEGY(_strategy_ptr_,(_strategy_id_))\
-    sc_flow_role->addStrategy(_strategy_ptr_);\
-}\
+
 
 #define ___SC_FLOW_ADD_STRATEGY_TO_STRATEGY(_strategy_parent_,_strategy_)\
 
 
 #define ___SC_FLOW_CREATE_STRATEGY(_strategy_ptr_,_strategy_id_) \
 {\
-    if(_strategy_id_==0){\
+    if(_strategy_id_==SCID::Stg::kSCStgEmpty){\
         (_strategy_ptr_) = SCStrategyEmpty::create();\
     }else{\
         (_strategy_ptr_) = this->onCreateStrategy((_strategy_id_));\

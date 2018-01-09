@@ -10,7 +10,7 @@
 #define __SPEEDCC__SCPERFORMER_H__
 
 #include "SCPerformObject.h"
-#include "SCMessageDef.h"
+#include "SCMessage.h"
 
 namespace SpeedCC
 {
@@ -19,6 +19,8 @@ namespace SpeedCC
     
     class SCPerformer : public SCPropertyHolder
     {
+        friend class SCRole;
+        
     public:
         SC_AVOID_CLASS_COPY(SCPerformer)
         SC_DEFINE_CLASS_PTR(SCPerformer)
@@ -34,6 +36,8 @@ namespace SpeedCC
         
     protected:
         SCPerformer();
+        
+        void setRole(SCRole* pRole) {_pOwnerRole = pRole; }
         
     private:
         SCStrategy*             _pCurStrategy;

@@ -32,12 +32,13 @@
 #include "cocos/SCBinder.h"
 #include "cocos/SCNodeUtils.h"
 #include "cocos/SCUIMacro.h"
+#include "cocos/SCEventEmitter.h"
 
 #include "component/SCFlowMacro.h"
 #include "component/SCStage.h"
 #include "component/SCRole.h"
 #include "component/SCStrategy.h"
-#include "component/SCStrategyCommon.h"
+#include "component/SCBehaviorCommon.h"
 #include "component/SCPerformer.h"
 #include "component/SCMessageDispatch.h"
 

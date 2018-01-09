@@ -20,8 +20,9 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCRefHolder)
         SC_DEFINE_CLASS_PTR(SCRefHolder)
         
+        SC_DEFINE_CREATE_FUNC_1(SCRefHolder,cocos2d::Ref*)
+        
         virtual ~SCRefHolder();
-        static Ptr create(cocos2d::Ref* pObject);
         
         inline cocos2d::Ref* getRef() const {return _pObject;}
     protected:

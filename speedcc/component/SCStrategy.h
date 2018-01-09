@@ -9,7 +9,7 @@
 #ifndef __SPEEDCC__SCSTRATEGY_H__
 #define __SPEEDCC__SCSTRATEGY_H__
 
-#include "SCMessageDef.h"
+#include "SCMessage.h"
 #include "SCPerformObject.h"
 
 #define SC_BVR_ARG_PERFORMER    "performer" // SCPerformer::Ptr
@@ -61,18 +61,39 @@ namespace SpeedCC
         std::map<SCString,SBehaviorInfo>        _command2BehaviorMap;
     };
     
-    
+    ///------------- SCStrategyEmpty
     class SCStrategyEmpty : public SCStrategy
     {
     public:
-//        enum {ID = 1;}
         SC_AVOID_CLASS_COPY(SCStrategyEmpty)
         SC_DEFINE_CLASS_PTR(SCStrategyEmpty)
         
         SC_DEFINE_CREATE_FUNC_0(SCStrategyEmpty)
         
     protected:
-        SCStrategyEmpty() {}
+        SCStrategyEmpty()
+        {
+            this->setID(SCID::Stg::kSCStgEmpty);
+        }
+    };
+    
+    ///-------------- SCStrategyFunc
+    class SCStrategyFunc : public SCStrategy
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCStrategyFunc)
+        SC_DEFINE_CLASS_PTR(SCStrategyFunc)
+        
+        SC_DEFINE_CREATE_FUNC_1(SCStrategyFunc,const std::function<void(SCPerformer* pPerformer, SCMessage::Ptr msgPtr)>&)
+        
+        virtual void update(SCPerformer* pPerformer,SCMessage::Ptr msgPtr) override;
+    protected:
+        SCStrategyFunc(const std::function<void(SCPerformer* pPerformer,SCMessage::Ptr msgPtr)>& func):
+        _func(func)
+        {}
+        
+    private:
+        std::function<void(SCPerformer* pPerformer,SCMessage::Ptr msgPtr)>  _func;
     };
 }
 
