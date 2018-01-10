@@ -13,6 +13,8 @@
 #include "../base/SCValue.h"
 #include "../base/SCDictionary.h"
 
+#include <typeindex>
+
 namespace SpeedCC
 {
     class SCPerformObject : public SCObject
@@ -55,36 +57,59 @@ namespace SpeedCC
     {
     public:
         template<typename T>
-        void addProperty(const int nID,const T& property)
+        void addProperty(const T& property)
         {
             SCObjPtrT<T> cmpPtr;
             cmpPtr.createInstance();
             *cmpPtr = property;
             
-            _id2PropertyMap[nID] = SCValue::create(cmpPtr);
+            _id2PropertyMap[std::type_index(typeid(T))] = SCValue::create(cmpPtr);
+        }
+        
+        template<typename T1,typename T2,typename ...Ts>
+        void addProperty(const T1& arg1,const T2& arg2,Ts... args)
+        {
+            this->addProperty<T1>(arg1);
+            this->addProperty<T2,Ts...>(arg2,args...);
         }
         
         template<typename T>
-        void addProperty(const int nID)
+        void addProperty()
         {
             SCObjPtrT<T> cmpPtr;
             cmpPtr.createInstance();
             *cmpPtr = T();
             
-            _id2PropertyMap[nID] = SCValue::create(cmpPtr);
+            _id2PropertyMap[std::type_index(typeid(T))] = SCValue::create(cmpPtr);
+        }
+        
+        template<typename T1,typename T2,typename ...Ts>
+        void addProperty()
+        {
+            this->addProperty<T1>();
+            this->addProperty<T2,Ts...>();
         }
         
         template<typename T>
-        SCObjPtrT<T> getProperty(const int nID)
+        SCObjPtrT<T> getProperty()
         {
-            auto it = _id2PropertyMap.find(nID);
+            auto it = _id2PropertyMap.find(std::type_index(typeid(T)));
             SC_RETURN_IF(it==_id2PropertyMap.end(),NULL);
             SC_RETURN_IF(!(*it).second.isValidObject<SCObjPtrT<T>>(),NULL);
             return (*it).second.getObject<SCObjPtrT<T>>();
         }
         
-        bool hasProperty(const int nID) const;
-        void removeProperty(const int nID);
+        template<typename T>
+        bool hasProperty() const
+        {
+            return (_id2PropertyMap.find(std::type_index(typeid(T)))!=_id2PropertyMap.end());
+        }
+        
+        template<typename T>
+        void removeProperty()
+        {
+            _id2PropertyMap.erase(std::type_index(typeid(T)));
+        }
         
     protected:
         SCPropertyHolder()
@@ -95,7 +120,7 @@ namespace SpeedCC
         {}
         
     private:
-        std::map<int,SCValue>   _id2PropertyMap;
+        std::map<std::type_index,SCValue>   _id2PropertyMap;
     };
 }
 

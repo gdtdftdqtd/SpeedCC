@@ -34,8 +34,26 @@ namespace SpeedCC
         
         virtual void setUp(){}
         virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
-        
         virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) override;
+        
+        template<typename T1,typename T2,typename ...Ts>
+        void createActorToRole(const int nRoleID,const int nActorID=SCActor::kDefaultID)
+        {
+            auto actor = SCActor::create(nActorID);
+            actor->addProperty<T1,T2,Ts...>();
+            auto role = this->getRole(nRoleID);
+            role->addActor(actor);
+        }
+        
+        template<typename T>
+        void createActorToRole(const int nRoleID,const int nActorID=SCActor::kDefaultID)
+        {
+            auto actor = SCActor::create(nActorID);
+            actor->addProperty<T>();
+            auto role = this->getRole(nRoleID);
+            role->addActor(actor);
+        }
+        
     private:
         struct SFlowInfo
         {

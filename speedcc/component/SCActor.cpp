@@ -6,19 +6,20 @@
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#include "SCPerformer.h"
+#include "SCActor.h"
 #include "SCRole.h"
 #include "SCStage.h"
 
 namespace SpeedCC
 {
-    SCPerformer::SCPerformer():
+    SCActor::SCActor(const int nID):
     _pCurStrategy(NULL),
     _pOwnerRole(NULL)
     {
+        this->setID(nID);
     }
     
-    bool SCPerformer::applyStrategy(SCStrategy* pStrategy)
+    bool SCActor::applyStrategy(SCStrategy* pStrategy)
     {
         SC_RETURN_IF(_pOwnerRole==NULL,false);
         SC_RETURN_IF(!_pOwnerRole->getActive(),false);
@@ -40,13 +41,13 @@ namespace SpeedCC
         return true;
     }
     
-    void SCPerformer::removeFromRole()
+    void SCActor::removeFromRole()
     {
         SC_RETURN_IF_V(_pOwnerRole==NULL);
-        _pOwnerRole->removePerformer(this->getID());
+        _pOwnerRole->removeActor(this->getID());
     }
     
-    void SCPerformer::update(SCMessage::Ptr mi)
+    void SCActor::update(SCMessage::Ptr mi)
     {
         SC_RETURN_IF_V(_pCurStrategy==NULL);
         SC_RETURN_IF_V(!this->getActive());

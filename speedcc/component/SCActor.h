@@ -6,8 +6,8 @@
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCPERFORMER_H__
-#define __SPEEDCC__SCPERFORMER_H__
+#ifndef __SPEEDCC__SCACTOR_H__
+#define __SPEEDCC__SCACTOR_H__
 
 #include "SCPerformObject.h"
 #include "SCMessage.h"
@@ -17,15 +17,16 @@ namespace SpeedCC
     class SCStrategy;
     class SCRole;
     
-    class SCPerformer : public SCPropertyHolder
+    class SCActor : public SCPropertyHolder
     {
         friend class SCRole;
-        
     public:
-        SC_AVOID_CLASS_COPY(SCPerformer)
-        SC_DEFINE_CLASS_PTR(SCPerformer)
+        enum {kDefaultID = 1};
+    public:
+        SC_AVOID_CLASS_COPY(SCActor)
+        SC_DEFINE_CLASS_PTR(SCActor)
         
-        SC_DEFINE_CREATE_FUNC_0(SCPerformer)
+        SC_DEFINE_CREATE_FUNC_1(SCActor,const int)
         
         bool applyStrategy(SCStrategy* pStrategy);
         void removeFromRole();
@@ -35,7 +36,7 @@ namespace SpeedCC
         virtual void update(SCMessage::Ptr mi);
         
     protected:
-        SCPerformer();
+        SCActor(const int nID);
         
         void setRole(SCRole* pRole) {_pOwnerRole = pRole; }
         
@@ -46,4 +47,4 @@ namespace SpeedCC
     
 }
 
-#endif // __SPEEDCC__SCPERFORMER_H__
+#endif // __SPEEDCC__SCACTOR_H__

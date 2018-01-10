@@ -10,7 +10,7 @@
 #define __SPEEDCC__SCROLE_H__
 
 #include "SCPerformObject.h"
-#include "SCPerformer.h"
+#include "SCActor.h"
 #include "SCStrategy.h"
 
 namespace SpeedCC
@@ -25,13 +25,13 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_2(SCRole, const int,SCStage*);
         
-        bool addPerformer(SCPerformer::Ptr performerPtr);
-        void removePerformer(const int nID);
-        bool hasPerformer(const int nID) const;
-        SCPerformer::Ptr getPerformer(const int nID);
+        bool addActor(SCActor::Ptr actorPtr);
+        void removeActor(const int nID);
+        bool hasActor(const int nID) const;
+        SCActor::Ptr getActor(const int nID);
         
-        void forEach(const std::function<bool(const SCPerformer::Ptr& performerPtr)>& func) const;
-        void forEach(const std::function<bool(SCPerformer::Ptr& performerPtr)>& func);
+        void forEach(const std::function<bool(const SCActor::Ptr& actorPtr)>& func) const;
+        void forEach(const std::function<bool(SCActor::Ptr& actorPtr)>& func);
         
         void addStrategy(SCStrategy::Ptr strategyPtr,const bool bInit=false);
         SCStrategy::Ptr getStrategy(const int nID) const;
@@ -56,7 +56,7 @@ namespace SpeedCC
         
     private:
         int                                     _nInitStrategyID;
-        std::list<SCPerformer::Ptr>             _performerList;
+        std::list<SCActor::Ptr>                 _actorList;
         std::map<int,SCStrategy::Ptr>           _id2StrategyMap;
         SCStage*                                _pOwnerStage;
         bool                                    _bFilterMsg;

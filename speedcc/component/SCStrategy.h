@@ -12,7 +12,7 @@
 #include "SCMessage.h"
 #include "SCPerformObject.h"
 
-#define SC_BVR_ARG_PERFORMER    "performer" // SCPerformer::Ptr
+#define SC_BVR_ARG_ACTOR        "actor" // SCActor::Ptr
 #define SC_BVR_ARG_STRATEGY     "strategy" // SCStrategy::Ptr
 #define SC_BVR_ARG_ROLE         "role" // SCRole::Ptr
 #define SC_BVR_ARG_MESSAGE      "message"   // SCMessage::Ptr
@@ -20,7 +20,7 @@
 
 namespace SpeedCC
 {
-    class SCPerformer;
+    class SCActor;
     
     class SCStrategy : public SCPerformObject
     {
@@ -30,9 +30,9 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_0(SCStrategy)
         
-        virtual void update(SCPerformer* pPerformer,SCMessage::Ptr mi);
-        void enter(SCPerformer* pPerformer);
-        void exit(SCPerformer* pPerformer);
+        virtual void update(SCActor* pActor,SCMessage::Ptr mi);
+        void enter(SCActor* pActor);
+        void exit(SCActor* pActor);
         
         bool addBehavior(const int nMsgID,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
         bool addBehavior(const SCString& strCommand,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
@@ -84,16 +84,16 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCStrategyFunc)
         SC_DEFINE_CLASS_PTR(SCStrategyFunc)
         
-        SC_DEFINE_CREATE_FUNC_1(SCStrategyFunc,const std::function<void(SCPerformer* pPerformer, SCMessage::Ptr msgPtr)>&)
+        SC_DEFINE_CREATE_FUNC_1(SCStrategyFunc,const std::function<void(SCActor* pActor, SCMessage::Ptr msgPtr)>&)
         
-        virtual void update(SCPerformer* pPerformer,SCMessage::Ptr msgPtr) override;
+        virtual void update(SCActor* pActor,SCMessage::Ptr msgPtr) override;
     protected:
-        SCStrategyFunc(const std::function<void(SCPerformer* pPerformer,SCMessage::Ptr msgPtr)>& func):
+        SCStrategyFunc(const std::function<void(SCActor* pActor,SCMessage::Ptr msgPtr)>& func):
         _func(func)
         {}
         
     private:
-        std::function<void(SCPerformer* pPerformer,SCMessage::Ptr msgPtr)>  _func;
+        std::function<void(SCActor* pActor,SCMessage::Ptr msgPtr)>  _func;
     };
 }
 

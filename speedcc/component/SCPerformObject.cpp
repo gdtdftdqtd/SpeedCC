@@ -34,14 +34,4 @@ namespace SpeedCC
         }
     }
     
-    ///----------- SCPropertyHolder
-    bool SCPropertyHolder::hasProperty(const int nID) const
-    {
-        return (_id2PropertyMap.find(nID)!=_id2PropertyMap.end());
-    }
-    
-    void SCPropertyHolder::removeProperty(const int nID)
-    {
-        _id2PropertyMap.erase(nID);
-    }
 }

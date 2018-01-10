@@ -69,26 +69,36 @@ namespace SpeedCC
     void SCBehaviorStrategySwitch::execute(const SCDictionary& par)
     {
         SC_RETURN_IF_V(!this->getActive());
-        SC_RETURN_IF_V(_performerPtr==NULL || _nStragtegyID==0);
+        SC_RETURN_IF_V(_actorPtr==NULL || _nStragtegyID==0);
         
-        auto stragtegy = _performerPtr->getRole()->getStrategy(_nStragtegyID);
+        auto stragtegy = _actorPtr->getRole()->getStrategy(_nStragtegyID);
         SC_RETURN_IF_V(stragtegy==NULL);
-        _performerPtr->applyStrategy(stragtegy.getRawPointer());
+        _actorPtr->applyStrategy(stragtegy.getRawPointer());
     }
     
-    ///--------------- SCBehaviorRemovePerformer
+    ///--------------- SCBehaviorRemoveActor
     
-    void SCBehaviorRemovePerformer::execute(const SCDictionary& par)
+    void SCBehaviorRemoveActor::execute(const SCDictionary& par)
     {
         SC_RETURN_IF_V(!this->getActive());
         auto roleValue = par.getValue(SC_BVR_ARG_ROLE);
         SC_RETURN_IF_V(!roleValue.isValidObject<SCRole::Ptr>());
-        auto performerValue = par.getValue(SC_BVR_ARG_PERFORMER);
-        SC_RETURN_IF_V(!performerValue.isValidObject<SCPerformer::Ptr>());
+        auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
+        SC_RETURN_IF_V(!actorValue.isValidObject<SCActor::Ptr>());
         
         auto rolePtr = roleValue.getObject<SCRole::Ptr>();
-        auto performerPtr = performerValue.getObject<SCPerformer::Ptr>();
-        rolePtr->removePerformer(performerPtr->getID());
+        auto actorPtr = actorValue.getObject<SCActor::Ptr>();
+        rolePtr->removeActor(actorPtr->getID());
+    }
+    
+    ///--------------- SCBehaviorRoleActive
+    void SCBehaviorRoleActive::execute(const SCDictionary& par)
+    {
+        SC_RETURN_IF_V(!this->getActive());
+        auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
+        SC_RETURN_IF_V(!actorValue.isValidObject<SCActor::Ptr>());
+        auto actorPtr = actorValue.getObject<SCActor::Ptr>();
+        actorPtr->getRole()->setActive(_bActive);
     }
 }
 

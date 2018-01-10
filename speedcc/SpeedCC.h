@@ -39,7 +39,7 @@
 #include "component/SCRole.h"
 #include "component/SCStrategy.h"
 #include "component/SCBehaviorCommon.h"
-#include "component/SCPerformer.h"
+#include "component/SCActor.h"
 #include "component/SCMessageDispatch.h"
 
 

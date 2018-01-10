@@ -79,35 +79,59 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorStrategySwitch)
         SC_DEFINE_CLASS_PTR(SCBehaviorStrategySwitch)
         
-        SC_DEFINE_CREATE_FUNC_2(SCBehaviorStrategySwitch,SCPerformer::Ptr,const int)
+        SC_DEFINE_CREATE_FUNC_2(SCBehaviorStrategySwitch,SCActor::Ptr,const int)
         
         virtual void execute(const SCDictionary& par) override;
         
     protected:
-        SCBehaviorStrategySwitch(SCPerformer::Ptr performerPtr,const int nStragtegyID):
-        _performerPtr(performerPtr),
+        SCBehaviorStrategySwitch(SCActor::Ptr actorPtr,const int nStragtegyID):
+        _actorPtr(actorPtr),
         _nStragtegyID(nStragtegyID)
         {}
         
     private:
-        SCPerformer::Ptr            _performerPtr;
+        SCActor::Ptr            _actorPtr;
         int                         _nStragtegyID;
     };
     
-    ///----------- SCBehaviorRemovePerformer
-    class SCBehaviorRemovePerformer : public SCBehavior
+    ///----------- SCBehaviorRemoveActor
+    class SCBehaviorRemoveActor : public SCBehavior
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBehaviorRemovePerformer)
-        SC_DEFINE_CLASS_PTR(SCBehaviorRemovePerformer)
+        SC_AVOID_CLASS_COPY(SCBehaviorRemoveActor)
+        SC_DEFINE_CLASS_PTR(SCBehaviorRemoveActor)
         
-        SC_DEFINE_CREATE_FUNC_0(SCBehaviorRemovePerformer)
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorRemoveActor)
         
         virtual void execute(const SCDictionary& par) override;
         
     protected:
-        SCBehaviorRemovePerformer()
+        SCBehaviorRemoveActor()
         {}
+    };
+    
+    ///----------- SCBehaviorRoleActive
+    class SCBehaviorRoleActive : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorRoleActive)
+        SC_DEFINE_CLASS_PTR(SCBehaviorRoleActive)
+        
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorRoleActive,bool)
+        
+        virtual void execute(const SCDictionary& par) override;
+        
+    protected:
+        SCBehaviorRoleActive()
+        {}
+        
+        SCBehaviorRoleActive(const bool bActive):
+        _bActive(bActive)
+        {
+        }
+        
+    private:
+        bool        _bActive;
     };
 }
 

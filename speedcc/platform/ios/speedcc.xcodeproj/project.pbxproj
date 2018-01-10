@@ -34,7 +34,7 @@
 		0A67CB861F97984F00FED9A5 /* SCOSSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A67CB1E1F81EAB900FED9A5 /* SCOSSystem.cpp */; };
 		0A6879A21FF25A64004DCED6 /* SCMessageDefaultProc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879A01FF25A64004DCED6 /* SCMessageDefaultProc.cpp */; };
 		0A6879BC1FF50132004DCED6 /* SCStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879B41FF50131004DCED6 /* SCStage.cpp */; };
-		0A6879BE1FF50132004DCED6 /* SCPerformer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879B71FF50131004DCED6 /* SCPerformer.cpp */; };
+		0A6879BE1FF50132004DCED6 /* SCActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879B71FF50131004DCED6 /* SCActor.cpp */; };
 		0A6879BF1FF50132004DCED6 /* SCRole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879B91FF50132004DCED6 /* SCRole.cpp */; };
 		0A6879C61FF9339C004DCED6 /* SCPerformObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879C41FF9339C004DCED6 /* SCPerformObject.cpp */; };
 		0A6879C91FFB720E004DCED6 /* SCBehaviorCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879C71FFB720E004DCED6 /* SCBehaviorCommon.cpp */; };
@@ -155,8 +155,8 @@
 		0A6879B31FF50130004DCED6 /* SCFlowMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFlowMacro.h; sourceTree = "<group>"; };
 		0A6879B41FF50131004DCED6 /* SCStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCStage.cpp; sourceTree = "<group>"; };
 		0A6879B51FF50131004DCED6 /* SCRole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRole.h; sourceTree = "<group>"; };
-		0A6879B71FF50131004DCED6 /* SCPerformer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCPerformer.cpp; sourceTree = "<group>"; };
-		0A6879B81FF50131004DCED6 /* SCPerformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPerformer.h; sourceTree = "<group>"; };
+		0A6879B71FF50131004DCED6 /* SCActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCActor.cpp; sourceTree = "<group>"; };
+		0A6879B81FF50131004DCED6 /* SCActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCActor.h; sourceTree = "<group>"; };
 		0A6879B91FF50132004DCED6 /* SCRole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCRole.cpp; sourceTree = "<group>"; };
 		0A6879BA1FF50132004DCED6 /* SCStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCStage.h; sourceTree = "<group>"; };
 		0A6879C41FF9339C004DCED6 /* SCPerformObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCPerformObject.cpp; sourceTree = "<group>"; };
@@ -320,8 +320,8 @@
 				0A6879CA1FFC3F7C004DCED6 /* SCStrategy.cpp */,
 				0A6879CB1FFC3F7C004DCED6 /* SCStrategy.h */,
 				0A6879B31FF50130004DCED6 /* SCFlowMacro.h */,
-				0A6879B71FF50131004DCED6 /* SCPerformer.cpp */,
-				0A6879B81FF50131004DCED6 /* SCPerformer.h */,
+				0A6879B71FF50131004DCED6 /* SCActor.cpp */,
+				0A6879B81FF50131004DCED6 /* SCActor.h */,
 				0A6879B91FF50132004DCED6 /* SCRole.cpp */,
 				0A6879B51FF50131004DCED6 /* SCRole.h */,
 				0A6879B41FF50131004DCED6 /* SCStage.cpp */,
@@ -465,7 +465,7 @@
 				0A6879C61FF9339C004DCED6 /* SCPerformObject.cpp in Sources */,
 				0A6879C91FFB720E004DCED6 /* SCBehaviorCommon.cpp in Sources */,
 				0A1556C71FD4F31600CF7420 /* SCObject.cpp in Sources */,
-				0A6879BE1FF50132004DCED6 /* SCPerformer.cpp in Sources */,
+				0A6879BE1FF50132004DCED6 /* SCActor.cpp in Sources */,
 				0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */,
 				0A41B3A51FEBEE93003945EB /* SCSetting.cpp in Sources */,
 				0A41B3A21FEBC478003945EB /* SCiOSStore.mm in Sources */,

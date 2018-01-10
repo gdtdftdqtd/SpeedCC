@@ -19,6 +19,21 @@ namespace SpeedCC
         
         static SCMessageMatcher::Ptr extractMsgMatcher(const int nMsgID) { return NULL;}
         static SCMessageMatcher::Ptr extractMsgMatcher(SCMessageMatcher::Ptr matcherPtr) { return matcherPtr;}
+        
+        static SCBehavior::Ptr extractBehavior(SCBehavior::Ptr bvrPtr) {return bvrPtr;}
+        static SCBehavior::Ptr extractBehavior(const std::function<void(const SCDictionary& par)>& func)
+        {
+            return SCBehaviorCallFunc::create(func);
+        }
+        static SCBehavior::Ptr extractBehavior(const std::function<void()>& func)
+        {
+            return SCBehaviorCallFunc::create([func](const SCDictionary& par)
+                                              {
+                                                  func();
+                                              });
+        }
+        static SCBehavior::Ptr extractBehavior(void*) {return NULL;}
+        static SCBehavior::Ptr extractBehavior(...) {return NULL;}
     };
 }
 
@@ -53,19 +68,21 @@ do{\
 //
 #define ON_ENTER_STRATEGE(_behavior_) \
 do{\
-    sc_flow_in_strategy->setEnterBehavior((_behavior_));\
+    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
+    sc_flow_in_strategy->setEnterBehavior(temBehavior);\
 }while(0);
     
 
 #define ON_EXIT_STRATEGE(_behavior_) \
 do{\
-    sc_flow_in_strategy->setExitBehavior((_behavior_));\
+    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
+    sc_flow_in_strategy->setExitBehavior(temBehavior);\
 }while(0);
 
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
 do{\
     auto temMsg = (_msg_);\
-    SCBehavior::Ptr temBehavior = (_behavior_);\
+    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
     const int nMsg = SCFlowSetup::extractMsgID(temMsg);\
     auto matchPtr = SCFlowSetup::extractMsgMatcher(temMsg);\
     sc_flow_role->increaseMsgFilter(nMsg);\
@@ -74,8 +91,22 @@ do{\
 
 #define ON_CMD_BEHAVIOR(_command_,_behavior_) \
 do{\
+    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
     sc_flow_role->increaseCmdFilter(_command_);\
-    sc_flow_in_strategy->addBehavior((_command_),(_behavior_));\
+    sc_flow_in_strategy->addBehavior((_command_),temBehavior);\
+}while(0);
+
+
+#define ON_MSG_ACTIVE(_msg_,_active_) \
+do{\
+    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_active_)); \
+    ON_MSG_BEHAVIOR((_msg_),activeRoleBvrPtr)\
+}while(0);
+
+#define ON_CMD_ACTIVE(_command_,_active_) \
+do{\
+    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_active_)); \
+    ON_CMD_BEHAVIOR((_command_),activeRoleBvrPtr)\
 }while(0);
 
 //#define ON_FRAME_BEHAVIOR(_behavior_) \

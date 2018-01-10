@@ -7,32 +7,32 @@
 //
 
 #include "SCStrategy.h"
-#include "SCPerformer.h"
+#include "SCActor.h"
 
 namespace SpeedCC
 {
-    void SCStrategy::enter(SCPerformer* pPerformer)
+    void SCStrategy::enter(SCActor* pActor)
     {
-        SCASSERT(pPerformer!=NULL);
+        SCASSERT(pActor!=NULL);
         SC_RETURN_IF_V(!this->getActive());
         
         if(_enterBehaviorPtr!=NULL)
         {
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
+            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
             _enterBehaviorPtr->execute(dic);
         }
     }
     
-    void SCStrategy::exit(SCPerformer* pPerformer)
+    void SCStrategy::exit(SCActor* pActor)
     {
-        SCASSERT(pPerformer!=NULL);
+        SCASSERT(pActor!=NULL);
         SC_RETURN_IF_V(!this->getActive());
         
         if(_exitBehaviorPtr!=NULL)
         {
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
+            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
             _exitBehaviorPtr->execute(dic);
         }
     }
@@ -96,7 +96,7 @@ namespace SpeedCC
         _exitBehaviorPtr = bvrPtr;
     }
     
-    void SCStrategy::update(SCPerformer* pPerformer,SCMessage::Ptr mi)
+    void SCStrategy::update(SCActor* pActor,SCMessage::Ptr mi)
     {
         SC_RETURN_IF_V(!this->getActive());
         SBehaviorInfo* pBehaviorInfo = NULL;
@@ -133,7 +133,7 @@ namespace SpeedCC
             }
             SCASSERT(pBehaviorInfo->behaviorPtr!=NULL);
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_PERFORMER, SCValue::create(pPerformer->makeObjPtr<SCPerformer>()));
+            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
             dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(mi));
             pBehaviorInfo->behaviorPtr->execute(dic);
@@ -143,14 +143,14 @@ namespace SpeedCC
     
     ///------------------ SCStrategyFunc
     
-    void SCStrategyFunc::update(SCPerformer* pPerformer,SCMessage::Ptr msgPtr)
+    void SCStrategyFunc::update(SCActor* pActor,SCMessage::Ptr msgPtr)
     {
         if(_func!=NULL)
         {
-            _func(pPerformer,msgPtr);
+            _func(pActor,msgPtr);
         }
         
-        SCStrategy::update(pPerformer,msgPtr);
+        SCStrategy::update(pActor,msgPtr);
     }
     
 }

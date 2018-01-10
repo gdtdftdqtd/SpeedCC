@@ -20,31 +20,31 @@ namespace SpeedCC
         
     }
     
-    bool SCRole::addPerformer(SCPerformer::Ptr performerPtr)
+    bool SCRole::addActor(SCActor::Ptr actorPtr)
     {
-        SCASSERT(performerPtr!=NULL);
-        SC_RETURN_IF(performerPtr==NULL,false);
-        SC_RETURN_IF(this->hasPerformer(performerPtr->getID()), false);
-        performerPtr->setRole(this);
-        _performerList.push_back(performerPtr);
+        SCASSERT(actorPtr!=NULL);
+        SC_RETURN_IF(actorPtr==NULL,false);
+        SC_RETURN_IF(this->hasActor(actorPtr->getID()), false);
+        actorPtr->setRole(this);
+        _actorList.push_back(actorPtr);
         auto strategy = this->getStrategy(_nInitStrategyID);
-        performerPtr->applyStrategy(strategy.getRawPointer());
+        actorPtr->applyStrategy(strategy.getRawPointer());
         return true;
     }
     
-    void SCRole::removePerformer(const int nID)
+    void SCRole::removeActor(const int nID)
     {
         SC_RETURN_IF_V(nID<=0);
-        _performerList.remove_if([nID](const SCPerformer::Ptr performerPtr) -> bool
+        _actorList.remove_if([nID](const SCActor::Ptr actorPtr) -> bool
                                  {
-                                     return (performerPtr->getID()==nID);
+                                     return (actorPtr->getID()==nID);
                                  });
     }
     
-    bool SCRole::hasPerformer(const int nID) const
+    bool SCRole::hasActor(const int nID) const
     {
         SC_RETURN_IF(nID<=0, false);
-        for(auto it : _performerList)
+        for(auto it : _actorList)
         {
             if(it->getID()==nID)
             {
@@ -55,10 +55,10 @@ namespace SpeedCC
         return false;
     }
     
-    SCPerformer::Ptr SCRole::getPerformer(const int nID)
+    SCActor::Ptr SCRole::getActor(const int nID)
     {
         SC_RETURN_IF(nID<=0, NULL);
-        for(auto it : _performerList)
+        for(auto it : _actorList)
         {
             if(it->getID()==nID)
             {
@@ -99,17 +99,17 @@ namespace SpeedCC
         return (_id2StrategyMap.find(nID)!=_id2StrategyMap.end());
     }
     
-    void SCRole::forEach(const std::function<bool(const SCPerformer::Ptr& performerPtr)>& func) const
+    void SCRole::forEach(const std::function<bool(const SCActor::Ptr& actorPtr)>& func) const
     {
-        for(const auto& it : _performerList)
+        for(const auto& it : _actorList)
         {
             SC_RETURN_IF_V(!func(it));
         }
     }
     
-    void SCRole::forEach(const std::function<bool(SCPerformer::Ptr& performerPtr)>& func)
+    void SCRole::forEach(const std::function<bool(SCActor::Ptr& actorPtr)>& func)
     {
-        for(auto& it : _performerList)
+        for(auto& it : _actorList)
         {
             SC_RETURN_IF_V(!func(it));
         }
@@ -195,12 +195,12 @@ namespace SpeedCC
     
     void SCRole::update(SCMessage::Ptr msgPtr)
     {
-        SC_RETURN_IF_V(_performerList.empty());
+        SC_RETURN_IF_V(_actorList.empty());
         SC_RETURN_IF_V(!this->getActive());
         SC_RETURN_IF_V(!_pOwnerStage->getActive());
         SC_RETURN_IF_V(!this->filterMsg(msgPtr));
         
-        for(auto it : _performerList)
+        for(auto it : _actorList)
         {
             SC_RETURN_IF_V(!this->getActive());
             SC_RETURN_IF_V(!_pOwnerStage->getActive());

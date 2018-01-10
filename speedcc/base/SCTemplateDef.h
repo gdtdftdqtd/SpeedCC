@@ -53,10 +53,10 @@ namespace SpeedCC
     template <typename T, typename Tuple>
     struct SCGetIndexByClassT { enum {value=0}; };
     
-    template <typename T, typename... Ts>
+    template <typename T, typename ...Ts>
     struct SCGetIndexByClassT<T, std::tuple<T, Ts...>> { enum {value=0}; };
     
-    template <typename T1, typename T2, typename... Ts>
+    template <typename T1, typename T2, typename ...Ts>
     struct SCGetIndexByClassT<T1, std::tuple<T2, Ts...>>
     {
         enum {value = (1 + SCGetIndexByClassT<T1, std::tuple<Ts...>>::value)};
@@ -66,7 +66,7 @@ namespace SpeedCC
     template <typename>
     struct SCTraitMemberFuncT;
     
-    template <typename T1, typename T2, typename... Ts>
+    template <typename T1, typename T2, typename ...Ts>
     struct SCTraitMemberFuncT<T1 (T2::*)(Ts...)>
     {
         typedef T1 return_type;
@@ -76,7 +76,7 @@ namespace SpeedCC
         enum {ArgCount = sizeof...(Ts)};
     };
     
-    template <typename T1, typename T2, typename... Ts>
+    template <typename T1, typename T2, typename ...Ts>
     struct SCTraitMemberFuncT<T1 (T2::*)(Ts...) const>
     {
         typedef T1 return_type;
