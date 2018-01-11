@@ -166,6 +166,13 @@ namespace SpeedCC
             kSCStgUser = 65535
         };
         
+        enum Act
+        {
+            kSCActNull = 0,
+            kSCActEmpty,
+            
+            kSCActUser = 65535
+        };
         
     };
 }

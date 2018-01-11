@@ -63,19 +63,19 @@ namespace SpeedCC
         
         if(SCNodeProperty::getVec2(dic,SC_NODE_PROPERTY_XY,vec2))
         {
-            auto pos = SCNodeUtils::posR2A(vec2,pNode->getContentSize());
+            auto pos = SCNodeUtils::posP2A(vec2,pNode->getContentSize());
             pNode->setPosition(pos);
         }
         
         if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_X,fValue))
         {
-            auto pos = SCNodeUtils::posR2A(Vec2(fValue,0),pNode->getContentSize());
+            auto pos = SCNodeUtils::posP2A(Vec2(fValue,0),pNode->getContentSize());
             pNode->setPositionX(pos.x);
         }
         
         if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_Y,fValue))
         {
-            auto pos = SCNodeUtils::posR2A(Vec2(0,fValue),pNode->getContentSize());
+            auto pos = SCNodeUtils::posP2A(Vec2(0,fValue),pNode->getContentSize());
             pNode->setPositionY(pos.y);
         }
         

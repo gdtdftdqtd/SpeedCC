@@ -90,6 +90,7 @@ namespace SpeedCC
         {
             auto result = SCValue::create(obj);
             _pObjData = result._pObjData;
+            this->increaseRef();
         }
         
         virtual ~SCValue();

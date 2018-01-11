@@ -53,8 +53,11 @@ namespace SpeedCC
         
     private:
         bool filterMsg(SCMessage::Ptr msgPtr);
+        void updateVariationActor();
+        bool isActorInRemovedList(const int nID) const;
         
     private:
+        bool                                    _bUpdating;
         int                                     _nInitStrategyID;
         std::list<SCActor::Ptr>                 _actorList;
         std::map<int,SCStrategy::Ptr>           _id2StrategyMap;
@@ -63,6 +66,9 @@ namespace SpeedCC
         
         std::map<int,int>                       _msgID2FilterCounterMap;
         std::map<SCString,int>                  _cmd2FilterCounterMap;
+        
+        std::list<int>                          _removeActorList;
+        std::list<SCActor::Ptr>                 _addActorList;
     };
 }
 

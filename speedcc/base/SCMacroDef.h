@@ -108,6 +108,7 @@
 #define SC_HAS_CLASS(_ptr_,_class_) \
     ((_ptr_).cast<_class_>()!=NULL)
 
+
 #define SC_DEFINE_CREATE_FUNC_0(_class_)\
     static _class_::Ptr create(){\
         _class_::Ptr ptrRet;\
@@ -146,7 +147,7 @@
 
 
 #define SC_MAKE_FUNC(_func_,_p_) \
-SCBindFuncUtilsT<SCTraitMemberFuncT<decltype((&std::remove_pointer<decltype((_p_))>::type::_func_))>::ArgCount>::makeFunc(&std::remove_pointer<decltype((_p_))>::type::_func_,(_p_))
+SpeedCC::SCBindFuncUtilsT<SpeedCC::SCTraitMemberFuncT<decltype((&std::remove_pointer<decltype((_p_))>::type::_func_))>::ArgCount>::makeFunc(&std::remove_pointer<decltype((_p_))>::type::_func_,(_p_))
 
 //#define SC_DECLEAR_COMPONENT_ID \
 //    public: \

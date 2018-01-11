@@ -129,10 +129,6 @@ do{\
 
 ////----------------------
 
-
-#define ___SC_FLOW_ADD_STRATEGY_TO_STRATEGY(_strategy_parent_,_strategy_)\
-
-
 #define ___SC_FLOW_CREATE_STRATEGY(_strategy_ptr_,_strategy_id_) \
 {\
     if(_strategy_id_==SCID::Stg::kSCStgEmpty){\

@@ -88,7 +88,14 @@ namespace SpeedCC
         
         auto rolePtr = roleValue.getObject<SCRole::Ptr>();
         auto actorPtr = actorValue.getObject<SCActor::Ptr>();
-        rolePtr->removeActor(actorPtr->getID());
+        if(_nActorID==0)
+        {// remove all actors
+            actorPtr->removeFromRole();
+        }
+        else if(_nActorID==actorPtr->getID())
+        {
+            actorPtr->removeFromRole();
+        }
     }
     
     ///--------------- SCBehaviorRoleActive

@@ -54,6 +54,24 @@ namespace SpeedCC
             role->addActor(actor);
         }
         
+        template<typename T1,typename T2,typename ...Ts>
+        void createActorToRole(const int nRoleID,const int nActorID,const T1& t1,const T2& t2,Ts... ts)
+        {
+            auto actor = SCActor::create(nActorID);
+            actor->addProperty<T1,T2,Ts...>(t1,t2,ts...);
+            auto role = this->getRole(nRoleID);
+            role->addActor(actor);
+        }
+        
+        template<typename T>
+        void createActorToRole(const int nRoleID,const int nActorID,const T& t)
+        {
+            auto actor = SCActor::create(nActorID);
+            actor->addProperty<T>(t);
+            auto role = this->getRole(nRoleID);
+            role->addActor(actor);
+        }
+        
     private:
         struct SFlowInfo
         {

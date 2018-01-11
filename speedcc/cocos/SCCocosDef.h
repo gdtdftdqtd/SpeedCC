@@ -123,16 +123,16 @@ namespace SpeedCC
     (SCCCDirector()->getScheduler())
     
 #define SC_FUNC(_fun_)\
-    (decltype(SCTraitFunctionPointerType(&_fun_))(&_fun_))
+    (decltype(SpeedCC::SCTraitFunctionPointerType(&_fun_))(&_fun_))
     
 #define SCF(_fun_)\
-    ((decltype(SCTraitFunctionPointerType(&std::remove_pointer<decltype(this)>::type::_fun_)))(&std::remove_pointer<decltype(this)>::type::_fun_))
+    ((decltype(SpeedCC::SCTraitFunctionPointerType(&std::remove_pointer<decltype(this)>::type::_fun_)))(&std::remove_pointer<decltype(this)>::type::_fun_))
     
 #define SCSceneNav() \
     (SpeedCC::SCSceneNavigator::getInstance())
     
 #define SCMsgDisp() \
-    (SCMessageDispatch::getInstance())
+    (SpeedCC::SCMessageDispatch::getInstance())
 
     
     ////---------------------- Actions

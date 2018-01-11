@@ -15,18 +15,37 @@ namespace SpeedCC
     SCPropertyHolder(nID),
     _pOwnerStage(pStage),
     _nInitStrategyID(0),
-    _bFilterMsg(true)
+    _bFilterMsg(true),
+    _bUpdating(false)
     {
-        
     }
     
     bool SCRole::addActor(SCActor::Ptr actorPtr)
     {
         SCASSERT(actorPtr!=NULL);
         SC_RETURN_IF(actorPtr==NULL,false);
-        SC_RETURN_IF(this->hasActor(actorPtr->getID()), false);
+        const int nID = actorPtr->getID();
+        
+        if(this->isActorInRemovedList(nID))
+        {
+            _removeActorList.remove_if([nID](const int id)
+                                       {
+                                           return (nID==id);
+                                       });
+            
+            _actorList.remove_if([nID](SCActor::Ptr actorPtr)
+                                 {
+                                     return (actorPtr->getID()==nID);
+                                 });
+        }
+        else
+        {
+            SC_RETURN_IF(this->hasActor(nID), false);
+        }
+        
         actorPtr->setRole(this);
         _actorList.push_back(actorPtr);
+        
         auto strategy = this->getStrategy(_nInitStrategyID);
         actorPtr->applyStrategy(strategy.getRawPointer());
         return true;
@@ -35,15 +54,21 @@ namespace SpeedCC
     void SCRole::removeActor(const int nID)
     {
         SC_RETURN_IF_V(nID<=0);
-        _actorList.remove_if([nID](const SCActor::Ptr actorPtr) -> bool
-                                 {
-                                     return (actorPtr->getID()==nID);
-                                 });
+        
+        auto actorPtr = this->getActor(nID);
+        if(actorPtr!=NULL)
+        {
+            actorPtr->setActive(false);
+            _removeActorList.push_back(nID);
+        }
     }
     
     bool SCRole::hasActor(const int nID) const
     {
         SC_RETURN_IF(nID<=0, false);
+        
+        SC_RETURN_IF(this->isActorInRemovedList(nID),false);
+        
         for(auto it : _actorList)
         {
             if(it->getID()==nID)
@@ -58,6 +83,8 @@ namespace SpeedCC
     SCActor::Ptr SCRole::getActor(const int nID)
     {
         SC_RETURN_IF(nID<=0, NULL);
+        SC_RETURN_IF(this->isActorInRemovedList(nID),NULL);
+        
         for(auto it : _actorList)
         {
             if(it->getID()==nID)
@@ -67,6 +94,18 @@ namespace SpeedCC
         }
         
         return NULL;
+    }
+    
+    bool SCRole::isActorInRemovedList(const int nID) const
+    {
+        SC_RETURN_IF(_removeActorList.empty(), false);
+        
+        for(const auto& it : _removeActorList)
+        {
+            SC_RETURN_IF(it==nID, true);
+        }
+        
+        return false;
     }
     
     void SCRole::addStrategy(SCStrategy::Ptr strategyPtr,const bool bInit)
@@ -193,19 +232,43 @@ namespace SpeedCC
         return true;
     }
     
+    void SCRole::updateVariationActor()
+    {
+        if(!_removeActorList.empty())
+        {
+            for(auto it : _removeActorList)
+            {
+                _actorList.remove_if([it](const SCActor::Ptr actorPtr) -> bool
+                                     {
+                                         return (actorPtr->getID()==it);
+                                     });
+            }
+            _removeActorList.clear();
+        }
+    }
+    
     void SCRole::update(SCMessage::Ptr msgPtr)
     {
-        SC_RETURN_IF_V(_actorList.empty());
-        SC_RETURN_IF_V(!this->getActive());
-        SC_RETURN_IF_V(!_pOwnerStage->getActive());
-        SC_RETURN_IF_V(!this->filterMsg(msgPtr));
+        _bUpdating = true;
         
-        for(auto it : _actorList)
+        do
         {
-            SC_RETURN_IF_V(!this->getActive());
-            SC_RETURN_IF_V(!_pOwnerStage->getActive());
-            it->update(msgPtr);
-        }
+            SC_BREAK_IF(_actorList.empty());
+            SC_BREAK_IF(!this->getActive());
+            SC_BREAK_IF(!_pOwnerStage->getActive());
+            SC_BREAK_IF(!this->filterMsg(msgPtr));
+            
+            for(auto it : _actorList)
+            {
+                SC_BREAK_IF(!this->getActive());
+                SC_BREAK_IF(!_pOwnerStage->getActive());
+                it->update(msgPtr);
+            }
+        }while(0);
+        
+        _bUpdating = false;
+        
+        this->updateVariationActor();
     }
     
 }

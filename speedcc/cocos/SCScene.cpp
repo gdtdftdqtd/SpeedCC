@@ -72,7 +72,7 @@ namespace SpeedCC
         
         _pSceneNode = SCBedNode::create();
         _pSceneNode->setContentSize(SCWinSize());
-        _pSceneNode->setPosition(SCNodeUtils::posR2A(Vec2(0,0),SCWinSize()));
+        _pSceneNode->setPosition(SCNodeUtils::posP2A(Vec2(0,0),SCWinSize()));
         this->addChild(_pSceneNode);
         
         return true;

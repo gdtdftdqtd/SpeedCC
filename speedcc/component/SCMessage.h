@@ -17,11 +17,24 @@ namespace SpeedCC
         bContinue(true)
         {}
         
+        SCMessage(const int nMsgID1):
+        nMsgID(nMsgID1),
+        bContinue(true)
+        {}
+        
+        SCMessage(const int nMsgID1,const SCDictionary& par):
+        nMsgID(nMsgID1),
+        paramters(par),
+        bContinue(true)
+        {}
+        
     public:
         SC_AVOID_CLASS_COPY(SCMessage)
         SC_DEFINE_CLASS_PTR(SCMessage)
         
         SC_DEFINE_CREATE_FUNC_0(SCMessage)
+        SC_DEFINE_CREATE_FUNC_1(SCMessage,const int)
+        SC_DEFINE_CREATE_FUNC_2(SCMessage,const int,const SCDictionary&)
         
         int                 nMsgID;
         SCDictionary        paramters;

@@ -102,12 +102,22 @@ namespace SpeedCC
         SC_DEFINE_CLASS_PTR(SCBehaviorRemoveActor)
         
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorRemoveActor)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorRemoveActor,const int)
         
         virtual void execute(const SCDictionary& par) override;
         
     protected:
-        SCBehaviorRemoveActor()
+        // by default, remove all actors from role
+        SCBehaviorRemoveActor():
+        _nActorID(0)
         {}
+        
+        SCBehaviorRemoveActor(const int nActorID):
+        _nActorID(nActorID)
+        {}
+        
+    private:
+        int     _nActorID;
     };
     
     ///----------- SCBehaviorRoleActive

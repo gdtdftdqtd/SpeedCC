@@ -28,7 +28,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCStrategy)
         SC_DEFINE_CLASS_PTR(SCStrategy)
         
-        SC_DEFINE_CREATE_FUNC_0(SCStrategy)
+        SC_DEFINE_CREATE_FUNC_1(SCStrategy,const int)
         
         virtual void update(SCActor* pActor,SCMessage::Ptr mi);
         void enter(SCActor* pActor);
@@ -42,7 +42,8 @@ namespace SpeedCC
         void setExitBehavior(SCBehavior::Ptr bvrPtr);
         
     protected:
-        SCStrategy()
+        SCStrategy(const int nID):
+        SCPerformObject(nID)
         {}
         
     private:
@@ -71,9 +72,9 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_0(SCStrategyEmpty)
         
     protected:
-        SCStrategyEmpty()
+        SCStrategyEmpty():
+        SCStrategy(SCID::Stg::kSCStgEmpty)
         {
-            this->setID(SCID::Stg::kSCStgEmpty);
         }
     };
     
@@ -84,11 +85,12 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCStrategyFunc)
         SC_DEFINE_CLASS_PTR(SCStrategyFunc)
         
-        SC_DEFINE_CREATE_FUNC_1(SCStrategyFunc,const std::function<void(SCActor* pActor, SCMessage::Ptr msgPtr)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCStrategyFunc,const int,const std::function<void(SCActor* pActor, SCMessage::Ptr msgPtr)>&)
         
         virtual void update(SCActor* pActor,SCMessage::Ptr msgPtr) override;
     protected:
-        SCStrategyFunc(const std::function<void(SCActor* pActor,SCMessage::Ptr msgPtr)>& func):
+        SCStrategyFunc(const int nID,const std::function<void(SCActor* pActor,SCMessage::Ptr msgPtr)>& func):
+        SCStrategy(nID),
         _func(func)
         {}
         
