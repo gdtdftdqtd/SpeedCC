@@ -124,13 +124,19 @@ namespace SpeedCC
 #define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_)\
 {\
     int sc_root_nSCContainerStackCounter = 0;\
+    cocos2d::Size temSize = (_size_);\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(_parent_) \
-    sc_container_pParentNode->setContentSize(_size_);\
+    sc_container_pParentNode->setContentSize(temSize);\
     sc_container_pParentNode->setAnchorPoint(cocos2d::Vec2(0.5,0.5));\
     sc_container_pParentNode->setIgnoreAnchorPointForPosition(false);\
-    cocos2d::Size temSize = (_size_);\
     if(temSize.width==0 || temSize.height==0) {temSize= sc_container_pParentNode->getContentSize();} \
-    sc_container_pParentNode->setPosition(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),temSize)); \
+    if((_x_)!=kSCPositionIgnore && (_y_)!=kSCPositionIgnore){\
+        sc_container_pParentNode->setPosition(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),temSize)); \
+    } else if((_x_)!=kSCPositionIgnore){\
+        sc_container_pParentNode->setPositionX(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),temSize).x);\
+    }else if((_y_)!=kSCPositionIgnore){\
+        sc_container_pParentNode->setPositionY(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),temSize).y);\
+    }\
     ___SC_INSIDE_ASSIGN_NODE(sc_container_pParentNode,(_node_));\
 SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNode)>::type>(sc_container_pParentNode,SCUISetup::purifyString((_property_)));\
     sc_container_LayoutObjectList.push_back(sc_container_pParentNode);
@@ -387,7 +393,13 @@ do{\
     if(pSCTemParent){\
         const cocos2d::Size& tParentSizeTem = pSCTemParent->getContentSize();\
         pSCTemParent->addChild((_node_));\
-        (_node_)->setPosition(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),tParentSizeTem)); \
+        if((_x_)!=kSCPositionIgnore && (_y_)!=kSCPositionIgnore){\
+            (_node_)->setPosition(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),tParentSizeTem)); \
+        } else if((_x_)!=kSCPositionIgnore){\
+            (_node_)->setPositionX(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),tParentSizeTem).x);\
+        }else if((_y_)!=kSCPositionIgnore){\
+            (_node_)->setPositionY(SCNodeUtils::posP2A(cocos2d::Vec2((_x_),(_y_)),tParentSizeTem).y);\
+        }\
     }
 
 // sprite

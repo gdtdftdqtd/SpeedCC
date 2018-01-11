@@ -12,10 +12,10 @@
 #include "SCMessage.h"
 #include "SCPerformObject.h"
 
-#define SC_BVR_ARG_ACTOR        "actor" // SCActor::Ptr
-#define SC_BVR_ARG_STRATEGY     "strategy" // SCStrategy::Ptr
-#define SC_BVR_ARG_ROLE         "role" // SCRole::Ptr
-#define SC_BVR_ARG_MESSAGE      "message"   // SCMessage::Ptr
+#define SC_BVR_ARG_ACTOR            "actor" // SCActor::Ptr
+#define SC_BVR_ARG_STRATEGY         "strategy" // SCStrategy::Ptr
+#define SC_BVR_ARG_ROLE             "role" // SCRole::Ptr
+#define SC_BVR_ARG_MESSAGE          "message"   // SCMessage::Ptr
 
 
 namespace SpeedCC
@@ -38,8 +38,8 @@ namespace SpeedCC
         bool addBehavior(const SCString& strCommand,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
         bool addBehavior(SCMessageMatcher::Ptr matcherPtr,SCBehavior::Ptr bvrPtr);
         
-        void setEnterBehavior(SCBehavior::Ptr bvrPtr);
-        void setExitBehavior(SCBehavior::Ptr bvrPtr);
+        void addEnterBehavior(SCBehavior::Ptr bvrPtr);
+        void addExitBehavior(SCBehavior::Ptr bvrPtr);
         
     protected:
         SCStrategy(const int nID):
@@ -55,8 +55,8 @@ namespace SpeedCC
         
     private:
         SCStrategy*                             _pParentStrategy;
-        SCBehavior::Ptr                         _enterBehaviorPtr;
-        SCBehavior::Ptr                         _exitBehaviorPtr;
+        std::list<SCBehavior::Ptr>              _enterBehaviorPtrList;
+        std::list<SCBehavior::Ptr>              _exitBehaviorPtrList;
         
         std::map<int,SBehaviorInfo>             _msgID2BehaviorMap;
         std::map<SCString,SBehaviorInfo>        _command2BehaviorMap;

@@ -69,14 +69,14 @@ do{\
 #define ON_ENTER_STRATEGE(_behavior_) \
 do{\
     SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
-    sc_flow_in_strategy->setEnterBehavior(temBehavior);\
+    sc_flow_in_strategy->addEnterBehavior(temBehavior);\
 }while(0);
     
 
 #define ON_EXIT_STRATEGE(_behavior_) \
 do{\
     SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
-    sc_flow_in_strategy->setExitBehavior(temBehavior);\
+    sc_flow_in_strategy->addExitBehavior(temBehavior);\
 }while(0);
 
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \

@@ -16,11 +16,16 @@ namespace SpeedCC
         SCASSERT(pActor!=NULL);
         SC_RETURN_IF_V(!this->getActive());
         
-        if(_enterBehaviorPtr!=NULL)
+        if(!_enterBehaviorPtrList.empty())
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
-            _enterBehaviorPtr->execute(dic);
+            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
+
+            for(auto it : _enterBehaviorPtrList)
+            {
+                it->execute(dic);
+            }
         }
     }
     
@@ -29,11 +34,16 @@ namespace SpeedCC
         SCASSERT(pActor!=NULL);
         SC_RETURN_IF_V(!this->getActive());
         
-        if(_exitBehaviorPtr!=NULL)
+        if(!_exitBehaviorPtrList.empty())
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
-            _exitBehaviorPtr->execute(dic);
+            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
+            
+            for(auto it : _exitBehaviorPtrList)
+            {
+                it->execute(dic);
+            }
         }
     }
     
@@ -86,14 +96,16 @@ namespace SpeedCC
         return bRet;
     }
     
-    void SCStrategy::setEnterBehavior(SCBehavior::Ptr bvrPtr)
+    void SCStrategy::addEnterBehavior(SCBehavior::Ptr bvrPtr)
     {
-        _enterBehaviorPtr = bvrPtr;
+        SC_RETURN_IF_V(bvrPtr==NULL);
+        _enterBehaviorPtrList.push_back(bvrPtr);
     }
     
-    void SCStrategy::setExitBehavior(SCBehavior::Ptr bvrPtr)
+    void SCStrategy::addExitBehavior(SCBehavior::Ptr bvrPtr)
     {
-        _exitBehaviorPtr = bvrPtr;
+        SC_RETURN_IF_V(bvrPtr==NULL);
+        _exitBehaviorPtrList.push_back(bvrPtr);
     }
     
     void SCStrategy::update(SCActor* pActor,SCMessage::Ptr mi)

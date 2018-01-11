@@ -44,10 +44,18 @@ namespace SpeedCC
         }
         
         actorPtr->setRole(this);
-        _actorList.push_back(actorPtr);
-        
         auto strategy = this->getStrategy(_nInitStrategyID);
         actorPtr->applyStrategy(strategy.getRawPointer());
+        
+        if(_bUpdating)
+        {
+            _addActorList.push_back(actorPtr);
+        }
+        else
+        {
+            _actorList.push_back(actorPtr);
+        }
+        
         return true;
     }
     
@@ -58,8 +66,18 @@ namespace SpeedCC
         auto actorPtr = this->getActor(nID);
         if(actorPtr!=NULL)
         {
-            actorPtr->setActive(false);
-            _removeActorList.push_back(nID);
+            if(_bUpdating)
+            {
+                actorPtr->setActive(false);
+                _removeActorList.push_back(nID);
+            }
+            else
+            {
+                _actorList.remove_if([nID](SCActor::Ptr actorPtr)
+                                     {
+                                         return (actorPtr->getID()==nID);
+                                     });
+            }
         }
     }
     
@@ -244,6 +262,16 @@ namespace SpeedCC
                                      });
             }
             _removeActorList.clear();
+        }
+        
+        if(!_addActorList.empty())
+        {
+            for(auto it : _addActorList)
+            {
+                _actorList.push_back(it);
+            }
+            
+            _addActorList.clear();
         }
     }
     
