@@ -47,22 +47,22 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCMessageMatcher)
         SC_DEFINE_CLASS_PTR(SCMessageMatcher)
         
-        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const std::function<bool (const SCMessage::Ptr mi)>&)
-        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessage::Ptr mi)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const std::function<bool (const SCMessage::Ptr ptrMsg)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessage::Ptr ptrMsg)>&)
         
-        bool isMatch(const SCMessage::Ptr mi) const;
+        bool isMatch(const SCMessage::Ptr ptrMsg) const;
         
         inline SCString getCommand() const { return _strCommand; }
         inline int getMessageID() const { return _nMsgID; }
         
     protected:
-        SCMessageMatcher(const int nMsgID,const std::function<bool (SCMessage::Ptr mi)>& func);
-        SCMessageMatcher(const SCString& strCommand,const std::function<bool (SCMessage::Ptr mi)>& func);
+        SCMessageMatcher(const int nMsgID,const std::function<bool (SCMessage::Ptr ptrMsg)>& func);
+        SCMessageMatcher(const SCString& strCommand,const std::function<bool (SCMessage::Ptr ptrMsg)>& func);
         
     private:
         SCString                                        _strCommand;
         int                                             _nMsgID;
-        std::function<bool (SCMessage::Ptr mi)>         _func;
+        std::function<bool (SCMessage::Ptr ptrMsg)>         _func;
     };
 
 }

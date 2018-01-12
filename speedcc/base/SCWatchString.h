@@ -78,7 +78,7 @@ namespace SpeedCC
         //    const SCString& operator=(const float fNumber);
         const SCString& operator=(const unsigned uNumber);
         
-        int addUpdateFun(const std::function<void(Ptr watchPtr,
+        int addUpdateFun(const std::function<void(Ptr ptrWatch,
                                                      const SCString& strNew,
                                                      const SCString& strOld)>& fun);
         
@@ -94,7 +94,7 @@ namespace SpeedCC
         
     private:
         int                 _nIDCounter;
-        std::map<int,std::function<void(Ptr watchPtr,
+        std::map<int,std::function<void(Ptr ptrWatch,
                                         const SCString& strNew,
                                         const SCString& strOld)> >    _postUpdateFunMap;
         SCString        _strLast;

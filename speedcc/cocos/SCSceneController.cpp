@@ -44,36 +44,36 @@ namespace SpeedCC
         this->setAllTouchEnabled(false);
         
         // generate modal mssage
-        SCMessage::Ptr mi = SCMessage::create();
+        SCMessage::Ptr ptrMsg = SCMessage::create();
         
-        mi->nMsgID = SCID::Msg::kSCMsgModalSceneLostFocus;
-        mi->paramters.setValue(MSG_KEY_CONTROLLER,this);
-        SCMessageDispatch::getInstance()->postMessage(mi);
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneLostFocus;
+        ptrMsg->paramters.setValue(MSG_KEY_CONTROLLER,this);
+        SCMessageDispatch::getInstance()->postMessage(ptrMsg);
         
-        mi->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
-        mi->paramters.setValue(MSG_KEY_CONTROLLER,controllerPtr.getRawPointer());
-        SCMessageDispatch::getInstance()->postMessage(mi);
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
+        ptrMsg->paramters.setValue(MSG_KEY_CONTROLLER,controllerPtr.getRawPointer());
+        SCMessageDispatch::getInstance()->postMessage(ptrMsg);
     }
     
     SCSceneController::Ptr SCSceneController::popModalFromParent()
     {
-        SCASSERT(_parentModalControllerPtr!=NULL);
-        auto ret = _parentModalControllerPtr->makeObjPtr<SCSceneController>();
+        SCASSERT(_ptrParentModalController!=NULL);
+        auto ret = _ptrParentModalController->makeObjPtr<SCSceneController>();
         
-        _parentModalControllerPtr->setAllTouchEnabled(true);
-        if(_parentModalControllerPtr->isBlackMaskForModal())
+        _ptrParentModalController->setAllTouchEnabled(true);
+        if(_ptrParentModalController->isBlackMaskForModal())
         {
-            _parentModalControllerPtr->showBlackMask(false);
+            _ptrParentModalController->showBlackMask(false);
         }
         
-        _parentModalControllerPtr = NULL;
+        _ptrParentModalController = NULL;
         _pBedNode->removeFromParent();
         
         // generate modal mssage
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
-        mi->paramters.setValue(MSG_KEY_CONTROLLER,ret.getRawPointer());
-        SCMessageDispatch::getInstance()->postMessage(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
+        ptrMsg->paramters.setValue(MSG_KEY_CONTROLLER,ret.getRawPointer());
+        SCMessageDispatch::getInstance()->postMessage(ptrMsg);
         
         return ret;
     }
@@ -183,16 +183,16 @@ namespace SpeedCC
         _id2NodeMap[nID] = pNode;
     }
     
-    void SCSceneController::onSCMessageProcess(SCMessage::Ptr msgPtr)
+    void SCSceneController::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
-        auto it = _msg2FuncMap.find(msgPtr->nMsgID);
+        auto it = _msg2FuncMap.find(ptrMsg->nMsgID);
         
         if(it!=_msg2FuncMap.end() && (*it).second!=NULL)
         {
-            (this->*(*it).second)(msgPtr);
+            (this->*(*it).second)(ptrMsg);
         }
         
-        SCStage::onSCMessageProcess(msgPtr);
+        SCStage::onSCMessageProcess(ptrMsg);
     }
     
 }

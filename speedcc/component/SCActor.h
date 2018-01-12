@@ -33,7 +33,7 @@ namespace SpeedCC
         
         inline SCRole* getRole() {return _pOwnerRole;}
         
-        virtual void update(SCMessage::Ptr mi);
+        virtual void update(SCMessage::Ptr ptrMsg);
         
     protected:
         SCActor(const int nID);

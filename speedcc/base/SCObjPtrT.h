@@ -107,14 +107,14 @@ namespace SpeedCC
             SC_RETURN_IF(this->_pObjData==NULL,NULL);
             
             TargetT* p1 = (TargetT*)this->_pObjData;
-            SCObjPtrT<T2> retPtr;
+            SCObjPtrT<T2> ptrRet;
             if(dynamic_cast<T2*>(p1))
             {
                 this->increaseRef();
-                retPtr._pObjData = this->_pObjData;
+                ptrRet._pObjData = this->_pObjData;
             }
             
-            return retPtr;
+            return ptrRet;
         }
         
         inline bool isWeak() const { return false;}
@@ -221,14 +221,14 @@ namespace SpeedCC
             SC_RETURN_IF(_pObjData==NULL || (*(this->getStub()))==NULL,NULL);
             
             TargetT* p1 = (TargetT*)(*(this->getStub()));
-            SCObjPtrT<T2,false> retPtr;
+            SCObjPtrT<T2,false> ptrRet;
             if(dynamic_cast<T2*>(p1))
             {
                 this->increaseRef();
-                retPtr._pObjData = this->_pObjData;
+                ptrRet._pObjData = this->_pObjData;
             }
             
-            return retPtr;
+            return ptrRet;
         }
         
         inline bool isWeak() const { return true;}

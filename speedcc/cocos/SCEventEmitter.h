@@ -68,17 +68,17 @@ namespace SpeedCC
             
             SCDictionary dic(pair);
             
-            SCMessage::Ptr mi = SCMessage::create();
-            mi->nMsgID = nMsg;
-            mi->paramters = dic;
+            SCMessage::Ptr ptrMsg = SCMessage::create();
+            ptrMsg->nMsgID = nMsg;
+            ptrMsg->paramters = dic;
             
             if(_pMsgListener==NULL)
             {
-                SCMsgDisp()->sendMessage(mi);
+                SCMsgDisp()->sendMessage(ptrMsg);
             }
             else
             {
-                _pMsgListener->onSCMessageProcess(mi);
+                _pMsgListener->onSCMessageProcess(ptrMsg);
             }
         }
         

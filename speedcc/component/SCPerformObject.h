@@ -59,11 +59,11 @@ namespace SpeedCC
         template<typename T>
         void addProperty(const T& property)
         {
-            SCObjPtrT<T> cmpPtr;
-            cmpPtr.createInstance();
-            *cmpPtr = property;
+            SCObjPtrT<T> ptrCmd;
+            ptrCmd.createInstance();
+            *ptrCmd = property;
             
-            _id2PropertyMap[std::type_index(typeid(T))] = SCValue::create(cmpPtr);
+            _id2PropertyMap[std::type_index(typeid(T))] = SCValue::create(ptrCmd);
         }
         
         template<typename T1,typename T2,typename ...Ts>
@@ -76,11 +76,11 @@ namespace SpeedCC
         template<typename T>
         void addProperty()
         {
-            SCObjPtrT<T> cmpPtr;
-            cmpPtr.createInstance();
-            *cmpPtr = T();
+            SCObjPtrT<T> ptrCmd;
+            ptrCmd.createInstance();
+            *ptrCmd = T();
             
-            _id2PropertyMap[std::type_index(typeid(T))] = SCValue::create(cmpPtr);
+            _id2PropertyMap[std::type_index(typeid(T))] = SCValue::create(ptrCmd);
         }
         
         template<typename T1,typename T2,typename ...Ts>

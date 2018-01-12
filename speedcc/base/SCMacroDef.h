@@ -149,15 +149,6 @@
 #define SC_MAKE_FUNC(_func_,_p_) \
 SpeedCC::SCBindFuncUtilsT<SpeedCC::SCTraitMemberFuncT<decltype((&std::remove_pointer<decltype((_p_))>::type::_func_))>::ArgCount>::makeFunc(&std::remove_pointer<decltype((_p_))>::type::_func_,(_p_))
 
-//#define SC_DECLEAR_COMPONENT_ID \
-//    public: \
-//    static const char* CMP_ID; \
-//    virtual SCString getID() const {return CMP_ID;}
-//
-//#define SC_DEFINE_COMPONENT_ID(_class_) \
-//    const char* _class_::CMP_ID = #_class_
-
-
 //#define SC_TRAIT_PTR_CLASS(_ptr_) \
 //    decltype(_ptr_)::type
 

@@ -28,13 +28,13 @@ namespace SpeedCC
         
         virtual ~SCStage();
         
-        void addRole(SCRole::Ptr rolePtr);
+        void addRole(SCRole::Ptr ptrRole);
         void removeRole(const int nID);
         SCRole::Ptr getRole(const int nID);
         
         virtual void setUp(){}
         virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
-        virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) override;
+        virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
         template<typename T1,typename T2,typename ...Ts>
         void createActorToRole(const int nRoleID,const int nActorID=SCActor::kDefaultID)
@@ -75,7 +75,7 @@ namespace SpeedCC
     private:
         struct SFlowInfo
         {
-            SCRole::Ptr                 rolePtr;
+            SCRole::Ptr                 ptrRole;
             std::list<SCStrategy::Ptr>  strategyPtrList;
         };
         

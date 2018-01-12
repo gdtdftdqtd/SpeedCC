@@ -47,11 +47,11 @@ namespace SpeedCC
         _pOwnerRole->removeActor(this->getID());
     }
     
-    void SCActor::update(SCMessage::Ptr mi)
+    void SCActor::update(SCMessage::Ptr ptrMsg)
     {
         SC_RETURN_IF_V(_pCurStrategy==NULL);
         SC_RETURN_IF_V(!this->getActive());
-        _pCurStrategy->update(this,mi);
+        _pCurStrategy->update(this,ptrMsg);
     }
 }
 

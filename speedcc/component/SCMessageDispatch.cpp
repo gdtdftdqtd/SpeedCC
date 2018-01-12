@@ -79,7 +79,7 @@ namespace SpeedCC
         }
     }
     
-    void SCMessageDispatch::sendMessage(SCMessage::Ptr msgPtr)
+    void SCMessageDispatch::sendMessage(SCMessage::Ptr ptrMsg)
     {
         if(_nPostMsgCallStackCounter==0 && _nSendMsgCallStackCounter==0)
         {
@@ -89,16 +89,16 @@ namespace SpeedCC
         ++_nSendMsgCallStackCounter;
         
         auto it = _listenerList.begin();
-        for(;it!=_listenerList.end() && msgPtr->bContinue;++it)
+        for(;it!=_listenerList.end() && ptrMsg->bContinue;++it)
         {
             SCASSERT((*it).pListener!=NULL);
             
             if((*it).pListener!=NULL)
             {
-                (*it).pListener->onSCMessageProcess(msgPtr);
+                (*it).pListener->onSCMessageProcess(ptrMsg);
             }
             
-            _defaultProc.processMessage(msgPtr);
+            _defaultProc.processMessage(ptrMsg);
         }
         
         --_nSendMsgCallStackCounter;
@@ -106,37 +106,37 @@ namespace SpeedCC
     
     void SCMessageDispatch::sendMessage(const int nMsgID)
     {
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = nMsgID;
-        this->sendMessage(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = nMsgID;
+        this->sendMessage(ptrMsg);
     }
     
     void SCMessageDispatch::sendMessage(const int nMsgID,const SCDictionary& dic)
     {
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = nMsgID;
-        mi->paramters = dic;
-        this->sendMessage(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = nMsgID;
+        ptrMsg->paramters = dic;
+        this->sendMessage(ptrMsg);
     }
     
-    void SCMessageDispatch::postMessage(SCMessage::Ptr msgPtr)
+    void SCMessageDispatch::postMessage(SCMessage::Ptr ptrMsg)
     {
-        this->getMsgQueRecive().push_back(msgPtr);
+        this->getMsgQueRecive().push_back(ptrMsg);
     }
     
     void SCMessageDispatch::postMessage(const int nMsgID)
     {
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = nMsgID;
-        this->postMessage(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = nMsgID;
+        this->postMessage(ptrMsg);
     }
     
     void SCMessageDispatch::postMessage(const int nMsgID,const SCDictionary& dic)
     {
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = nMsgID;
-        mi->paramters = dic;
-        this->postMessage(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = nMsgID;
+        ptrMsg->paramters = dic;
+        this->postMessage(ptrMsg);
     }
     
     void SCMessageDispatch::updateMutableListener()

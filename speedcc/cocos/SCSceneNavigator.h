@@ -81,7 +81,7 @@ namespace SpeedCC
 			return SCSceneNavigator::getInstance()->switchScene(switchInfo);
 		}
 
-        SCSceneController::Ptr getCurrentController() {return s_currentSceneControllerPtr;}
+        SCSceneController::Ptr getCurrentController() {return s_ptrCurrentSceneController;}
         void back(int nNumber = 1);
         void reset();
         void setSceneParameter(const SCDictionary& dic);
@@ -130,7 +130,7 @@ namespace SpeedCC
         }
 
 	private:
-        SCSceneController::Ptr           s_currentSceneControllerPtr;
+        SCSceneController::Ptr           s_ptrCurrentSceneController;
         SCDictionary                     s_SceneParameterDic;
         std::list<SStackSceneInfo>       s_sceneStack;
         static SCSceneNavigator*         s_pInstance;

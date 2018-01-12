@@ -18,7 +18,7 @@ namespace SpeedCC
 #define kSCPositionIgnore       999
     
     ///------- define function type
-    typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessage::Ptr mi);
+    typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessage::Ptr ptrMsg);
     typedef void (cocos2d::Ref::*FUN_SCDelayExecute_t)(const SCDictionary& dic);
     
     ///------- trait function

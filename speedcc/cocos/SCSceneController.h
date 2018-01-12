@@ -56,7 +56,7 @@ namespace SpeedCC
         
         cocos2d::Node* getLayoutNode(const int nID);
         
-        virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) override;
+        virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
     protected:
         SCSceneController();
@@ -66,7 +66,7 @@ namespace SpeedCC
     private:
         inline void setBedNode(SCBedNode* pLayer) { _pBedNode = pLayer;}
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
-        inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _parentModalControllerPtr = controllerPtr;}
+        inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _ptrParentModalController = controllerPtr;}
         
     protected:
         std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
@@ -74,7 +74,7 @@ namespace SpeedCC
     private:
         SCBedNode*			                    _pBedNode;
         SCScene*                                _pScene;
-        SCSceneController::WeakPtr              _parentModalControllerPtr;
+        SCSceneController::WeakPtr              _ptrParentModalController;
         SCLayerDisableTouch*                    _pDisableTouchLayer;
         cocos2d::Layer*                         _pBlackMaskLayer;
         bool                                    _bBlackMaskForModal;

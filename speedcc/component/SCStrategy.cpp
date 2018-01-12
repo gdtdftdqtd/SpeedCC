@@ -54,8 +54,8 @@ namespace SpeedCC
         SC_RETURN_IF(nMsgID<=0 || bvrPtr==NULL,false);
         
         SBehaviorInfo bi;
-        bi.behaviorPtr = bvrPtr;
-        bi.matcherPtr = matcherPtr;
+        bi.ptrBehavior = bvrPtr;
+        bi.ptrMatcher = matcherPtr;
         
         _msgID2BehaviorMap[nMsgID] = bi;
         
@@ -69,8 +69,8 @@ namespace SpeedCC
         SC_RETURN_IF(strCommand.isEmpty(),false);
         
         SBehaviorInfo bi;
-        bi.behaviorPtr = bvrPtr;
-        bi.matcherPtr = matcherPtr;
+        bi.ptrBehavior = bvrPtr;
+        bi.ptrMatcher = matcherPtr;
         
         _command2BehaviorMap[strCommand] = bi;
         
@@ -108,17 +108,17 @@ namespace SpeedCC
         _exitBehaviorPtrList.push_back(bvrPtr);
     }
     
-    void SCStrategy::update(SCActor* pActor,SCMessage::Ptr mi)
+    void SCStrategy::update(SCActor* pActor,SCMessage::Ptr ptrMsg)
     {
         SC_RETURN_IF_V(!this->getActive());
         SBehaviorInfo* pBehaviorInfo = NULL;
         
-        if(mi->nMsgID==SCID::Msg::kSCMsgCommand)
+        if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
         {
             SC_RETURN_IF_V(_command2BehaviorMap.empty());
             
             bool bResult = false;
-            auto strCommand = mi->paramters.getValue(MSG_KEY_COMMAND).getString(&bResult);
+            auto strCommand = ptrMsg->paramters.getValue(MSG_KEY_COMMAND).getString(&bResult);
             if(bResult && !strCommand.isEmpty())
             {
                 auto it = _command2BehaviorMap.find(strCommand);
@@ -130,7 +130,7 @@ namespace SpeedCC
         }
         else
         {
-            auto it = _msgID2BehaviorMap.find(mi->nMsgID);
+            auto it = _msgID2BehaviorMap.find(ptrMsg->nMsgID);
             if(it!=_msgID2BehaviorMap.end())
             {
                 pBehaviorInfo = &(*it).second;
@@ -139,30 +139,30 @@ namespace SpeedCC
         
         if(pBehaviorInfo!=NULL)
         {
-            if(pBehaviorInfo->matcherPtr!=NULL)
+            if(pBehaviorInfo->ptrMatcher!=NULL)
             {
-                SC_RETURN_IF_V(!pBehaviorInfo->matcherPtr->isMatch(mi));
+                SC_RETURN_IF_V(!pBehaviorInfo->ptrMatcher->isMatch(ptrMsg));
             }
-            SCASSERT(pBehaviorInfo->behaviorPtr!=NULL);
+            SCASSERT(pBehaviorInfo->ptrBehavior!=NULL);
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
-            dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(mi));
-            pBehaviorInfo->behaviorPtr->execute(dic);
+            dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(ptrMsg));
+            pBehaviorInfo->ptrBehavior->execute(dic);
         }
     }
     
     
     ///------------------ SCStrategyFunc
     
-    void SCStrategyFunc::update(SCActor* pActor,SCMessage::Ptr msgPtr)
+    void SCStrategyFunc::update(SCActor* pActor,SCMessage::Ptr ptrMsg)
     {
         if(_func!=NULL)
         {
-            _func(pActor,msgPtr);
+            _func(pActor,ptrMsg);
         }
         
-        SCStrategy::update(pActor,msgPtr);
+        SCStrategy::update(pActor,ptrMsg);
     }
     
 }

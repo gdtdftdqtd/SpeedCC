@@ -16,9 +16,9 @@
 
 namespace SpeedCC
 {
-    void SCMessageDefaultProc::processMessage(SCMessage::Ptr mi)
+    void SCMessageDefaultProc::processMessage(SCMessage::Ptr ptrMsg)
     {
-        switch(mi->nMsgID)
+        switch(ptrMsg->nMsgID)
         {
             case SCID::Msg::kSCMsgAppEnterBackground:
             {
@@ -38,7 +38,7 @@ namespace SpeedCC
             {
                 SCLog("IAP Purchase success.");
                 bool bResult = false;
-                auto strIAP = mi->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 
                 if(bResult)
@@ -61,7 +61,7 @@ namespace SpeedCC
             {
                 SCLog("Restored IAP success.");
                 bool bResult = false;
-                auto strIAP = mi->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 
                 if(bResult)
@@ -84,12 +84,12 @@ namespace SpeedCC
             {
                 SCLog("Request IAP info success.");
                 bool bResult = false;
-                auto strIAP = mi->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 bResult = false;
-                auto strCurrency = mi->paramters.getValue("currency").getObject<SCString>(&bResult);
+                auto strCurrency = ptrMsg->paramters.getValue("currency").getObject<SCString>(&bResult);
                 SCASSERT(bResult);
-                float fPrice = mi->paramters.getValue("price").getFloat();
+                float fPrice = ptrMsg->paramters.getValue("price").getFloat();
                 if(bResult)
                 {
                     SCStore::getInstance()->setIAPInfo(strIAP, fPrice, strCurrency);
@@ -106,22 +106,22 @@ namespace SpeedCC
             case SCID::Msg::kSCMsgShowAlertBox:
             {
                 bool bResult = false;
-                auto strTitle = mi->paramters.getValue("title").getObject<SCString>(&bResult);
+                auto strTitle = ptrMsg->paramters.getValue("title").getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 bResult = false;
-                auto strMessage = mi->paramters.getValue("message").getObject<SCString>(&bResult);
+                auto strMessage = ptrMsg->paramters.getValue("message").getObject<SCString>(&bResult);
                 SCASSERT(bResult);
-                auto nAlertBoxID = mi->paramters.getValue("id").getInt();
+                auto nAlertBoxID = ptrMsg->paramters.getValue("id").getInt();
                 bResult = false;
-                auto strButton1 = mi->paramters.getValue("button0").getObject<SCString>(&bResult);
+                auto strButton1 = ptrMsg->paramters.getValue("button0").getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 bResult = false;
-                auto strButton2 = mi->paramters.getValue("button1").getObject<SCString>(&bResult);
+                auto strButton2 = ptrMsg->paramters.getValue("button1").getObject<SCString>(&bResult);
                 SCString strButton3;
                 if(bResult)
                 {
                     bResult = false;
-                    strButton3 = mi->paramters.getValue("button2").getObject<SCString>(&bResult);
+                    strButton3 = ptrMsg->paramters.getValue("button2").getObject<SCString>(&bResult);
                 }
                 
                 ::scShowSystemAlertBox(strTitle,

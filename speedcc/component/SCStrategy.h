@@ -30,7 +30,7 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_1(SCStrategy,const int)
         
-        virtual void update(SCActor* pActor,SCMessage::Ptr mi);
+        virtual void update(SCActor* pActor,SCMessage::Ptr ptrMsg);
         void enter(SCActor* pActor);
         void exit(SCActor* pActor);
         
@@ -49,8 +49,8 @@ namespace SpeedCC
     private:
         struct SBehaviorInfo
         {
-            SCMessageMatcher::Ptr   matcherPtr;
-            SCBehavior::Ptr         behaviorPtr;
+            SCMessageMatcher::Ptr   ptrMatcher;
+            SCBehavior::Ptr         ptrBehavior;
         };
         
     private:
@@ -85,17 +85,17 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCStrategyFunc)
         SC_DEFINE_CLASS_PTR(SCStrategyFunc)
         
-        SC_DEFINE_CREATE_FUNC_2(SCStrategyFunc,const int,const std::function<void(SCActor* pActor, SCMessage::Ptr msgPtr)>&)
+        SC_DEFINE_CREATE_FUNC_2(SCStrategyFunc,const int,const std::function<void(SCActor* pActor, SCMessage::Ptr ptrMsg)>&)
         
-        virtual void update(SCActor* pActor,SCMessage::Ptr msgPtr) override;
+        virtual void update(SCActor* pActor,SCMessage::Ptr ptrMsg) override;
     protected:
-        SCStrategyFunc(const int nID,const std::function<void(SCActor* pActor,SCMessage::Ptr msgPtr)>& func):
+        SCStrategyFunc(const int nID,const std::function<void(SCActor* pActor,SCMessage::Ptr ptrMsg)>& func):
         SCStrategy(nID),
         _func(func)
         {}
         
     private:
-        std::function<void(SCActor* pActor,SCMessage::Ptr msgPtr)>  _func;
+        std::function<void(SCActor* pActor,SCMessage::Ptr ptrMsg)>  _func;
     };
 }
 

@@ -26,36 +26,36 @@ namespace SpeedCC
     {
         cocos2d::Node::onEnter();
         
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = SCID::Msg::kSCMsgSceneEnter;
-        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneEnter;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(ptrMsg);
     }
     
     void SCBedNode::onEnterTransitionDidFinish()
     {
         cocos2d::Node::onEnterTransitionDidFinish();
         
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = SCID::Msg::kSCMsgSceneEnterTransitionDidFinish;
-        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneEnterTransitionDidFinish;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(ptrMsg);
     }
     
     void SCBedNode::onExit()
     {
         cocos2d::Node::onExit();
         
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = SCID::Msg::kSCMsgSceneExit;
-        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneExit;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(ptrMsg);
     }
     
     void SCBedNode::onExitTransitionDidStart()
     {
         cocos2d::Node::onExitTransitionDidStart();
         
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = SCID::Msg::kSCMsgSceneExitTransitionDidStart;
-        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(mi);
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneExitTransitionDidStart;
+        _sceneControllerPtr.cast<SCSceneController>()->onSCMessageProcess(ptrMsg);
     }
 
     ///-------------- SCScene

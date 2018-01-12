@@ -62,7 +62,7 @@ namespace SpeedCC
         return ret;
     }
     */
-    int SCWatchString::addUpdateFun(const std::function<void(Ptr watchPtr,
+    int SCWatchString::addUpdateFun(const std::function<void(Ptr ptrWatch,
                                                                 const SCString& strNew,
                                                                 const SCString& strOld)>& fun)
     {

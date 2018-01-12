@@ -20,11 +20,11 @@ namespace SpeedCC
     {
     }
     
-    bool SCRole::addActor(SCActor::Ptr actorPtr)
+    bool SCRole::addActor(SCActor::Ptr ptrActor)
     {
-        SCASSERT(actorPtr!=NULL);
-        SC_RETURN_IF(actorPtr==NULL,false);
-        const int nID = actorPtr->getID();
+        SCASSERT(ptrActor!=NULL);
+        SC_RETURN_IF(ptrActor==NULL,false);
+        const int nID = ptrActor->getID();
         
         if(this->isActorInRemovedList(nID))
         {
@@ -33,9 +33,9 @@ namespace SpeedCC
                                            return (nID==id);
                                        });
             
-            _actorList.remove_if([nID](SCActor::Ptr actorPtr)
+            _actorList.remove_if([nID](SCActor::Ptr ptrActor)
                                  {
-                                     return (actorPtr->getID()==nID);
+                                     return (ptrActor->getID()==nID);
                                  });
         }
         else
@@ -43,17 +43,17 @@ namespace SpeedCC
             SC_RETURN_IF(this->hasActor(nID), false);
         }
         
-        actorPtr->setRole(this);
+        ptrActor->setRole(this);
         auto strategy = this->getStrategy(_nInitStrategyID);
-        actorPtr->applyStrategy(strategy.getRawPointer());
+        ptrActor->applyStrategy(strategy.getRawPointer());
         
         if(_bUpdating)
         {
-            _addActorList.push_back(actorPtr);
+            _addActorList.push_back(ptrActor);
         }
         else
         {
-            _actorList.push_back(actorPtr);
+            _actorList.push_back(ptrActor);
         }
         
         return true;
@@ -63,19 +63,19 @@ namespace SpeedCC
     {
         SC_RETURN_IF_V(nID<=0);
         
-        auto actorPtr = this->getActor(nID);
-        if(actorPtr!=NULL)
+        auto ptrActor = this->getActor(nID);
+        if(ptrActor!=NULL)
         {
             if(_bUpdating)
             {
-                actorPtr->setActive(false);
+                ptrActor->setActive(false);
                 _removeActorList.push_back(nID);
             }
             else
             {
-                _actorList.remove_if([nID](SCActor::Ptr actorPtr)
+                _actorList.remove_if([nID](SCActor::Ptr ptrActor)
                                      {
-                                         return (actorPtr->getID()==nID);
+                                         return (ptrActor->getID()==nID);
                                      });
             }
         }
@@ -156,7 +156,7 @@ namespace SpeedCC
         return (_id2StrategyMap.find(nID)!=_id2StrategyMap.end());
     }
     
-    void SCRole::forEach(const std::function<bool(const SCActor::Ptr& actorPtr)>& func) const
+    void SCRole::forEach(const std::function<bool(const SCActor::Ptr& ptrActor)>& func) const
     {
         for(const auto& it : _actorList)
         {
@@ -164,7 +164,7 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::forEach(const std::function<bool(SCActor::Ptr& actorPtr)>& func)
+    void SCRole::forEach(const std::function<bool(SCActor::Ptr& ptrActor)>& func)
     {
         for(auto& it : _actorList)
         {
@@ -226,16 +226,16 @@ namespace SpeedCC
         }
     }
     
-    bool SCRole::filterMsg(SCMessage::Ptr msgPtr)
+    bool SCRole::filterMsg(SCMessage::Ptr ptrMsg)
     {
         SC_RETURN_IF(!_bFilterMsg, true);
         SC_RETURN_IF(_msgID2FilterCounterMap.empty(), false);
         
-        if(msgPtr->nMsgID==SCID::Msg::kSCMsgCommand)
+        if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
         {
             SC_RETURN_IF(_cmd2FilterCounterMap.empty(), false);
             bool bResult = false;
-            auto strCommand = msgPtr->paramters.getValue(MSG_KEY_COMMAND).getString(&bResult);
+            auto strCommand = ptrMsg->paramters.getValue(MSG_KEY_COMMAND).getString(&bResult);
             if(bResult && !strCommand.isEmpty())
             {
                 return (_cmd2FilterCounterMap.find(strCommand)!=_cmd2FilterCounterMap.end());
@@ -243,7 +243,7 @@ namespace SpeedCC
         }
         else
         {
-            auto it = _msgID2FilterCounterMap.find(msgPtr->nMsgID);
+            auto it = _msgID2FilterCounterMap.find(ptrMsg->nMsgID);
             return (_msgID2FilterCounterMap.end()!=it);
         }
         
@@ -256,9 +256,9 @@ namespace SpeedCC
         {
             for(auto it : _removeActorList)
             {
-                _actorList.remove_if([it](const SCActor::Ptr actorPtr) -> bool
+                _actorList.remove_if([it](const SCActor::Ptr ptrActor) -> bool
                                      {
-                                         return (actorPtr->getID()==it);
+                                         return (ptrActor->getID()==it);
                                      });
             }
             _removeActorList.clear();
@@ -275,7 +275,7 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::update(SCMessage::Ptr msgPtr)
+    void SCRole::update(SCMessage::Ptr ptrMsg)
     {
         _bUpdating = true;
         
@@ -284,13 +284,13 @@ namespace SpeedCC
             SC_BREAK_IF(_actorList.empty());
             SC_BREAK_IF(!this->getActive());
             SC_BREAK_IF(!_pOwnerStage->getActive());
-            SC_BREAK_IF(!this->filterMsg(msgPtr));
+            SC_BREAK_IF(!this->filterMsg(ptrMsg));
             
             for(auto it : _actorList)
             {
                 SC_BREAK_IF(!this->getActive());
                 SC_BREAK_IF(!_pOwnerStage->getActive());
-                it->update(msgPtr);
+                it->update(ptrMsg);
             }
         }while(0);
         

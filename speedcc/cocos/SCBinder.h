@@ -76,7 +76,7 @@ namespace SpeedCC
                 _strLast = num->getString();
             }
             
-            _watchSourcePtr = num;
+            _ptrWatchSource = num;
         }
         
         void setWatchSource(SCWatchString::Ptr watchStr);
@@ -95,7 +95,7 @@ namespace SpeedCC
         
     private:
         cocos2d::Label*     _pLabel;
-        SCObject::Ptr       _watchSourcePtr;
+        SCObject::Ptr       _ptrWatchSource;
         SCString            _strLast;
     };
     

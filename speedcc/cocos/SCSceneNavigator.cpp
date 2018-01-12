@@ -38,14 +38,14 @@ namespace SpeedCC
         {
             case kSceneModal: // modal
             {
-                SC_RETURN_IF(s_currentSceneControllerPtr==NULL, false);
+                SC_RETURN_IF(s_ptrCurrentSceneController==NULL, false);
                 
-                auto controllerPtr = (info.pfunCurrentLayerCreator)(s_SceneParameterDic);
+                auto ptrController = (info.pfunCurrentLayerCreator)(s_SceneParameterDic);
                 s_SceneParameterDic.removeAllKeys();
                 
-                s_currentSceneControllerPtr->pushModalController(controllerPtr);
+                s_ptrCurrentSceneController->pushModalController(ptrController);
                 s_sceneStack.push_front(navigateInfo);
-                s_currentSceneControllerPtr = controllerPtr;
+                s_ptrCurrentSceneController = ptrController;
             }
                 break;
                 
@@ -89,7 +89,7 @@ namespace SpeedCC
                 }
                 
                 s_sceneStack.push_front(navigateInfo);
-                s_currentSceneControllerPtr = controllerPtr;
+                s_ptrCurrentSceneController = controllerPtr;
             }
                 break;
                 
@@ -133,7 +133,7 @@ namespace SpeedCC
         {
             case kSceneModal: // modal
             {
-                s_currentSceneControllerPtr = s_currentSceneControllerPtr->popModalFromParent();
+                s_ptrCurrentSceneController = s_ptrCurrentSceneController->popModalFromParent();
             }
                 break;
                 
@@ -143,8 +143,8 @@ namespace SpeedCC
                 SCScene* pScene = (SCScene*)SCCCDirector()->getRunningScene();
                 auto rootLayer = pScene->getBedNode();
                 SCASSERT(rootLayer!=NULL);
-                s_currentSceneControllerPtr = rootLayer->getController().cast<SCSceneController>();
-                SCASSERT(s_currentSceneControllerPtr!=NULL);
+                s_ptrCurrentSceneController = rootLayer->getController().cast<SCSceneController>();
+                SCASSERT(s_ptrCurrentSceneController!=NULL);
             }
                 break;
                 
@@ -172,7 +172,7 @@ namespace SpeedCC
                 
                 SCCCDirector()->replaceScene(pScene);
                 
-                s_currentSceneControllerPtr = controllerPtr;
+                s_ptrCurrentSceneController = controllerPtr;
             }
                 break;
                 

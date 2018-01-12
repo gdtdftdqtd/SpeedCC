@@ -16,7 +16,7 @@ namespace SpeedCC
     struct SCMessageListener
     {
         virtual ~SCMessageListener() {}
-        virtual void onSCMessageProcess(SCMessage::Ptr msgPtr) {}
+        virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) {}
     };
     
     
@@ -29,10 +29,10 @@ namespace SpeedCC
         void addListener(SCMessageListener* pListener,const unsigned char nPriority=128);
         void removeListener(SCMessageListener* pListener);
         
-        void sendMessage(SCMessage::Ptr msgPtr);
+        void sendMessage(SCMessage::Ptr ptrMsg);
         void sendMessage(const int nMsgID);
         void sendMessage(const int nMsgID,const SCDictionary& dic);
-        void postMessage(SCMessage::Ptr msgPtr);
+        void postMessage(SCMessage::Ptr ptrMsg);
         void postMessage(const int nMsgID);
         void postMessage(const int nMsgID,const SCDictionary& dic);
         

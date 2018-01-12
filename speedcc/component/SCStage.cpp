@@ -21,12 +21,12 @@ namespace SpeedCC
         SCMessageDispatch::getInstance()->removeListener(this);
     }
     
-    void SCStage::addRole(SCRole::Ptr rolePtr)
+    void SCStage::addRole(SCRole::Ptr ptrRole)
     {
-        SCASSERT(rolePtr!=NULL);
-        SCASSERT(rolePtr->getID()>0);
+        SCASSERT(ptrRole!=NULL);
+        SCASSERT(ptrRole->getID()>0);
         
-        _id2RoleMap[rolePtr->getID()] = rolePtr;
+        _id2RoleMap[ptrRole->getID()] = ptrRole;
     }
     
     void SCStage::removeRole(const int nID)
@@ -43,7 +43,7 @@ namespace SpeedCC
         return (*it).second;
     }
     
-    void SCStage::onSCMessageProcess(SCMessage::Ptr msgPtr)
+    void SCStage::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
         SC_RETURN_IF_V(_id2RoleMap.empty());
         SC_RETURN_IF_V(!this->getActive());
@@ -51,8 +51,8 @@ namespace SpeedCC
         for(auto it : _id2RoleMap)
         {
             SC_RETURN_IF_V(!this->getActive());
-            SC_BREAK_IF(!msgPtr->bContinue);
-            it.second->update(msgPtr);
+            SC_BREAK_IF(!ptrMsg->bContinue);
+            it.second->update(ptrMsg);
         }
     }
     

@@ -84,13 +84,13 @@ namespace SpeedCC
         virtual void execute(const SCDictionary& par) override;
         
     protected:
-        SCBehaviorStrategySwitch(SCActor::Ptr actorPtr,const int nStragtegyID):
-        _actorPtr(actorPtr),
+        SCBehaviorStrategySwitch(SCActor::Ptr ptrActor,const int nStragtegyID):
+        _ptrActor(ptrActor),
         _nStragtegyID(nStragtegyID)
         {}
         
     private:
-        SCActor::Ptr            _actorPtr;
+        SCActor::Ptr                _ptrActor;
         int                         _nStragtegyID;
     };
     

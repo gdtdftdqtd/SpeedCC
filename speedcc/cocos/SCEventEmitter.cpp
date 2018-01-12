@@ -78,20 +78,20 @@ namespace SpeedCC
         
         SCDictionary dic(pair,SC_ARRAY_LENGTH(pair));
         
-        SCMessage::Ptr mi = SCMessage::create();
-        mi->nMsgID = SCID::Msg::kSCMsgTouchBegan;
-        mi->paramters = dic;
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = SCID::Msg::kSCMsgTouchBegan;
+        ptrMsg->paramters = dic;
         
         if(_pMsgListener==NULL)
         {
-            SCMsgDisp()->sendMessage(mi);
+            SCMsgDisp()->sendMessage(ptrMsg);
         }
         else
         {
-            _pMsgListener->onSCMessageProcess(mi);
+            _pMsgListener->onSCMessageProcess(ptrMsg);
         }
         
-        return mi->paramters.getValue("result").getBool();
+        return ptrMsg->paramters.getValue("result").getBool();
     }
     
     void SCEventEmitter::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)

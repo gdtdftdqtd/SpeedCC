@@ -69,11 +69,11 @@ namespace SpeedCC
     void SCBehaviorStrategySwitch::execute(const SCDictionary& par)
     {
         SC_RETURN_IF_V(!this->getActive());
-        SC_RETURN_IF_V(_actorPtr==NULL || _nStragtegyID==0);
+        SC_RETURN_IF_V(_ptrActor==NULL || _nStragtegyID==0);
         
-        auto stragtegy = _actorPtr->getRole()->getStrategy(_nStragtegyID);
+        auto stragtegy = _ptrActor->getRole()->getStrategy(_nStragtegyID);
         SC_RETURN_IF_V(stragtegy==NULL);
-        _actorPtr->applyStrategy(stragtegy.getRawPointer());
+        _ptrActor->applyStrategy(stragtegy.getRawPointer());
     }
     
     ///--------------- SCBehaviorRemoveActor
