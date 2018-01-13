@@ -9,6 +9,7 @@
 
 namespace SpeedCC
 {
+    ///------------ SCMessage
     struct SCMessage : public SCObject
     {
     protected:
@@ -41,6 +42,7 @@ namespace SpeedCC
         bool                bContinue;
     };
     
+    ///------------ SCMessageMatcher
     class SCMessageMatcher : public SCObject
     {
     public:

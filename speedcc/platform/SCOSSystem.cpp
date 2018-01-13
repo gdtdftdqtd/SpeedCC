@@ -75,17 +75,17 @@ namespace SpeedCC
         ///------------- app
         void scbAppEnterBackground()
         {
-            SCMsgDisp()->postMessage(SCID::Msg::kSCMsgAppEnterBackground);
+            SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppEnterBackground);
         }
         
         void scbAppEnterForeground()
         {
-            SCMsgDisp()->postMessage(SCID::Msg::kSCMsgAppEnterForeground);
+            SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppEnterForeground);
         }
         
         void scbAppLaunched()
         {
-            SCMsgDisp()->postMessage(SCID::Msg::kSCMsgAppLaunch);
+            SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppLaunch);
         }
         
         ///------------- network

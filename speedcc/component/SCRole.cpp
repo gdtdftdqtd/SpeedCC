@@ -126,16 +126,16 @@ namespace SpeedCC
         return false;
     }
     
-    void SCRole::addStrategy(SCStrategy::Ptr strategyPtr,const bool bInit)
+    void SCRole::addStrategy(SCStrategy::Ptr ptrStrategy,const bool bInit)
     {
-        SCASSERT(strategyPtr!=NULL);
-        SCASSERT(strategyPtr->getID()>0);
+        SCASSERT(ptrStrategy!=NULL);
+        SCASSERT(ptrStrategy->getID()>0);
         
-        _id2StrategyMap[strategyPtr->getID()] = strategyPtr;
+        _id2StrategyMap[ptrStrategy->getID()] = ptrStrategy;
         
         if(bInit)
         {
-            _nInitStrategyID = strategyPtr->getID();
+            _nInitStrategyID = ptrStrategy->getID();
         }
     }
     

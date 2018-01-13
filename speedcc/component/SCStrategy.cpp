@@ -16,16 +16,13 @@ namespace SpeedCC
         SCASSERT(pActor!=NULL);
         SC_RETURN_IF_V(!this->getActive());
         
-        if(!_enterBehaviorPtrList.empty())
+        if(_ptrEnterBehavior!=NULL)
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
-
-            for(auto it : _enterBehaviorPtrList)
-            {
-                it->execute(dic);
-            }
+            
+            _ptrEnterBehavior->execute(dic);
         }
     }
     
@@ -34,16 +31,13 @@ namespace SpeedCC
         SCASSERT(pActor!=NULL);
         SC_RETURN_IF_V(!this->getActive());
         
-        if(!_exitBehaviorPtrList.empty())
+        if(_ptrExitBehavior!=NULL)
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
             
-            for(auto it : _exitBehaviorPtrList)
-            {
-                it->execute(dic);
-            }
+            _ptrExitBehavior->execute(dic);
         }
     }
     
@@ -53,11 +47,20 @@ namespace SpeedCC
         SCASSERT(nMsgID>0);
         SC_RETURN_IF(nMsgID<=0 || bvrPtr==NULL,false);
         
-        SBehaviorInfo bi;
-        bi.ptrBehavior = bvrPtr;
-        bi.ptrMatcher = matcherPtr;
-        
-        _msgID2BehaviorMap[nMsgID] = bi;
+        auto it = _msgID2BehaviorMap.find(nMsgID);
+        if(it==_msgID2BehaviorMap.end())
+        {
+            SBehaviorInfo bi;
+            bi.ptrBehaviorGroup = SCBehaviorGroup::create();
+            bi.ptrBehaviorGroup->addBehavior(bvrPtr);
+            bi.ptrMatcher = matcherPtr;
+            
+            _msgID2BehaviorMap[nMsgID] = bi;
+        }
+        else
+        {
+            (*it).second.ptrBehaviorGroup->addBehavior(bvrPtr);
+        }
         
         return true;
     }
@@ -68,11 +71,20 @@ namespace SpeedCC
         SCASSERT(!strCommand.isEmpty());
         SC_RETURN_IF(strCommand.isEmpty(),false);
         
-        SBehaviorInfo bi;
-        bi.ptrBehavior = bvrPtr;
-        bi.ptrMatcher = matcherPtr;
-        
-        _command2BehaviorMap[strCommand] = bi;
+        auto it = _command2BehaviorMap.find(strCommand);
+        if(it==_command2BehaviorMap.end())
+        {
+            SBehaviorInfo bi;
+            bi.ptrBehaviorGroup = SCBehaviorGroup::create();
+            bi.ptrBehaviorGroup->addBehavior(bvrPtr);
+            bi.ptrMatcher = matcherPtr;
+            
+            _command2BehaviorMap[strCommand] = bi;
+        }
+        else
+        {
+            (*it).second.ptrBehaviorGroup->addBehavior(bvrPtr);
+        }
         
         return true;
     }
@@ -99,13 +111,23 @@ namespace SpeedCC
     void SCStrategy::addEnterBehavior(SCBehavior::Ptr bvrPtr)
     {
         SC_RETURN_IF_V(bvrPtr==NULL);
-        _enterBehaviorPtrList.push_back(bvrPtr);
+        if(_ptrEnterBehavior==NULL)
+        {
+            _ptrEnterBehavior = SCBehaviorGroup::create();
+        }
+        
+        _ptrEnterBehavior->addBehavior(bvrPtr);
     }
     
     void SCStrategy::addExitBehavior(SCBehavior::Ptr bvrPtr)
     {
         SC_RETURN_IF_V(bvrPtr==NULL);
-        _exitBehaviorPtrList.push_back(bvrPtr);
+        if(_ptrExitBehavior==NULL)
+        {
+            _ptrExitBehavior = SCBehaviorGroup::create();
+        }
+        
+        _ptrExitBehavior->addBehavior(bvrPtr);
     }
     
     void SCStrategy::update(SCActor* pActor,SCMessage::Ptr ptrMsg)
@@ -143,12 +165,12 @@ namespace SpeedCC
             {
                 SC_RETURN_IF_V(!pBehaviorInfo->ptrMatcher->isMatch(ptrMsg));
             }
-            SCASSERT(pBehaviorInfo->ptrBehavior!=NULL);
+            SCASSERT(pBehaviorInfo->ptrBehaviorGroup!=NULL);
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
             dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(ptrMsg));
-            pBehaviorInfo->ptrBehavior->execute(dic);
+            pBehaviorInfo->ptrBehaviorGroup->execute(dic);
         }
     }
     

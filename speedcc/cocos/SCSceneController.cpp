@@ -142,13 +142,11 @@ namespace SpeedCC
         this->getBedNode()->runAction(pSeqAction);
     }
     
-    void SCSceneController::delayExecute(float fDelay,FUN_SCDelayExecute_t pfnFunc,const SCDictionary& dic)
+    void SCSceneController::delayExecute(float fDelay,const std::function<void(SCDictionary::Ptr ptrDic)>& func,SCDictionary::Ptr ptrDic)
     {
-        SC_RETURN_IF_V(pfnFunc==NULL);
-        
-        this->delayExecute(fDelay,[this,dic,pfnFunc]()
+        this->delayExecute(fDelay,[func,ptrDic]()
                            {
-                               (this->*(pfnFunc))(dic);
+                               func(ptrDic);
                            });
     }
     

@@ -6,7 +6,8 @@
 #include <time.h>
 #include <limits>
 #include "SCMacroDef.h"
-#include "SCObjRefT.h"
+#include "SCObjPtrT.h"
+#include "SCObject.h"
 
 namespace SpeedCC
 {
@@ -21,9 +22,13 @@ namespace SpeedCC
         int             dstStatus;
     };
     
-    class SCDateTime : public SCObjRefT<SCDateTimeStub>
+    class SCDateTime :
+    public SCObjRefT<SCDateTimeStub>,
+    public SCObject
     {
     public:
+        SC_DEFINE_CLASS_PTR(SCDateTime)
+        
         enum {NullTime = -1};
         enum DSTStatus
         {

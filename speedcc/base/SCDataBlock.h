@@ -8,9 +8,12 @@
 
 namespace SpeedCC
 {
-    class SCDataBlock : public SCBufferRefT<SCBufferRefCookie>
+    class SCDataBlock :
+    public SCBufferRefT<SCBufferRefCookie>,
+    public SCObject
     {
     public:
+        SC_DEFINE_CLASS_PTR(SCDataBlock)
         SCDataBlock();
         SCDataBlock(const SCString& str);
         SCDataBlock(const SCDataBlock& data);

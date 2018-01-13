@@ -9,7 +9,7 @@
 #ifndef __SPEEDCC__SCBEHAVIORCOMMON_H__
 #define __SPEEDCC__SCBEHAVIORCOMMON_H__
 
-#include "SCRole.h"
+#include "SCPerformObject.h"
 
 namespace SpeedCC
 {
@@ -62,6 +62,26 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorGroup)
         
+        template<typename ...Ts>
+        static Ptr create(SCBehavior::Ptr ptrBvr1,SCBehavior::Ptr ptrBvr2,Ts... ts)
+        {
+            SCASSERT(ptrBvr1!=NULL);
+            SCASSERT(ptrBvr2!=NULL);
+            auto ptr2 = create(ptrBvr2,ts...);
+            
+            auto ptrRet = SCBehaviorGroup::create();
+            
+            ptrRet->_behaviorList.push_back(ptrBvr1);
+            for(auto it : ptr2->_behaviorList)
+            {
+                ptrRet->_behaviorList.push_back(it);
+            }
+            
+            return ptrRet;
+        }
+        
+        static Ptr create(SCBehavior::Ptr ptrBvr);
+        
         virtual void execute(const SCDictionary& par) override;
         
         void addBehavior(const SCBehavior::Ptr& ptrBvr);
@@ -71,78 +91,6 @@ namespace SpeedCC
         std::list<SCBehavior::Ptr> _behaviorList;
     };
     
-    
-    ///---------------- SCBehaviorStrategySwitch
-    class SCBehaviorStrategySwitch : public SCBehavior
-    {
-    public:
-        SC_AVOID_CLASS_COPY(SCBehaviorStrategySwitch)
-        SC_DEFINE_CLASS_PTR(SCBehaviorStrategySwitch)
-        
-        SC_DEFINE_CREATE_FUNC_2(SCBehaviorStrategySwitch,SCActor::Ptr,const int)
-        
-        virtual void execute(const SCDictionary& par) override;
-        
-    protected:
-        SCBehaviorStrategySwitch(SCActor::Ptr ptrActor,const int nStragtegyID):
-        _ptrActor(ptrActor),
-        _nStragtegyID(nStragtegyID)
-        {}
-        
-    private:
-        SCActor::Ptr                _ptrActor;
-        int                         _nStragtegyID;
-    };
-    
-    ///----------- SCBehaviorRemoveActor
-    class SCBehaviorRemoveActor : public SCBehavior
-    {
-    public:
-        SC_AVOID_CLASS_COPY(SCBehaviorRemoveActor)
-        SC_DEFINE_CLASS_PTR(SCBehaviorRemoveActor)
-        
-        SC_DEFINE_CREATE_FUNC_0(SCBehaviorRemoveActor)
-        SC_DEFINE_CREATE_FUNC_1(SCBehaviorRemoveActor,const int)
-        
-        virtual void execute(const SCDictionary& par) override;
-        
-    protected:
-        // by default, remove all actors from role
-        SCBehaviorRemoveActor():
-        _nActorID(0)
-        {}
-        
-        SCBehaviorRemoveActor(const int nActorID):
-        _nActorID(nActorID)
-        {}
-        
-    private:
-        int     _nActorID;
-    };
-    
-    ///----------- SCBehaviorRoleActive
-    class SCBehaviorRoleActive : public SCBehavior
-    {
-    public:
-        SC_AVOID_CLASS_COPY(SCBehaviorRoleActive)
-        SC_DEFINE_CLASS_PTR(SCBehaviorRoleActive)
-        
-        SC_DEFINE_CREATE_FUNC_1(SCBehaviorRoleActive,bool)
-        
-        virtual void execute(const SCDictionary& par) override;
-        
-    protected:
-        SCBehaviorRoleActive()
-        {}
-        
-        SCBehaviorRoleActive(const bool bActive):
-        _bActive(bActive)
-        {
-        }
-        
-    private:
-        bool        _bActive;
-    };
 }
 
 #endif // __SPEEDCC__SCBEHAVIORCOMMON_H__

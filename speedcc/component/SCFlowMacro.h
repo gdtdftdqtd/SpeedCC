@@ -42,8 +42,9 @@ namespace SpeedCC
 #define SC_BEGIN_ROLE(_role_id_,_strategy_id_) \
 do{\
     SCStrategy::Ptr sc_flow_in_strategy;\
-    auto sc_flow_role = SpeedCC::SCRole::create((_role_id_), this);\
-    sc_flow_role->setID((_role_id_));\
+    const int sc_current_role_id = (_role_id_);\
+    auto sc_flow_role = SpeedCC::SCRole::create(sc_current_role_id, this);\
+    sc_flow_role->setID(sc_current_role_id);\
     ___SC_FLOW_CREATE_STRATEGY(sc_flow_in_strategy,(_strategy_id_))\
     sc_flow_role->addStrategy(sc_flow_in_strategy,true);\
 
@@ -97,15 +98,17 @@ do{\
 }while(0);
 
 
-#define ON_MSG_ACTIVE(_msg_,_active_) \
+#define ON_MSG_ACTIVE(_msg_,_role_id_,_active_) \
 do{\
-    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_active_)); \
+    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_role_id_),(_active_)); \
     ON_MSG_BEHAVIOR((_msg_),activeRoleBvrPtr)\
 }while(0);
 
-#define ON_CMD_ACTIVE(_command_,_active_) \
+
+
+#define ON_CMD_ACTIVE(_command_,_role_id_,_active_) \
 do{\
-    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_active_)); \
+    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_role_id_),(_active_)); \
     ON_CMD_BEHAVIOR((_command_),activeRoleBvrPtr)\
 }while(0);
 

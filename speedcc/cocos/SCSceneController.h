@@ -51,7 +51,7 @@ namespace SpeedCC
         void ownLifecycle(cocos2d::Ref* pObject);
         
         void delayExecute(float fDelay,const std::function<void ()>& fun);
-        void delayExecute(float fDelay,FUN_SCDelayExecute_t pfnFunc,const SCDictionary& dic=SCDictionary());
+        void delayExecute(float fDelay,const std::function<void(SCDictionary::Ptr ptrDic)>& func,SCDictionary::Ptr ptrDic);
         void listenMessage(const int nMsg,FUN_SCMapMessage_t pfnFunc);
         
         cocos2d::Node* getLayoutNode(const int nID);

@@ -7,7 +7,9 @@
 #include <vector>
 #include <functional>
 #include "SCMacroDef.h"
-#include "SCBufferRefT.h"
+#include "SCObjPtrT.h"
+#include "SCObject.h"
+//#include "SCBufferRefT.h"
 
 namespace SpeedCC
 {
@@ -62,7 +64,7 @@ namespace SpeedCC
     SCString operator+(const SCEncodingChar& encodingChar,const SCString& str2);
     SCString operator+(const SCString& str2,const SCEncodingChar& encodingChar);
     
-    class SCString //: public SCBufferRefT<SCString>
+    class SCString : public SCObject
     {
     private:
         struct SStringDesc
@@ -85,7 +87,7 @@ namespace SpeedCC
         };
         
     public:
-        
+        SC_DEFINE_CLASS_PTR(SCString)
         SCString();
         SCString(const SCString& strSring);
         

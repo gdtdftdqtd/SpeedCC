@@ -10,7 +10,8 @@
 #define __SPEEDCC__SCSTRATEGY_H__
 
 #include "SCMessage.h"
-#include "SCPerformObject.h"
+//#include "SCPerformObject.h"
+#include "SCBehaviorCommon.h"
 
 #define SC_BVR_ARG_ACTOR            "actor" // SCActor::Ptr
 #define SC_BVR_ARG_STRATEGY         "strategy" // SCStrategy::Ptr
@@ -50,13 +51,14 @@ namespace SpeedCC
         struct SBehaviorInfo
         {
             SCMessageMatcher::Ptr   ptrMatcher;
-            SCBehavior::Ptr         ptrBehavior;
+            SCBehaviorGroup::Ptr    ptrBehaviorGroup;
         };
         
     private:
         SCStrategy*                             _pParentStrategy;
-        std::list<SCBehavior::Ptr>              _enterBehaviorPtrList;
-        std::list<SCBehavior::Ptr>              _exitBehaviorPtrList;
+        
+        SCBehaviorGroup::Ptr                    _ptrEnterBehavior;
+        SCBehaviorGroup::Ptr                    _ptrExitBehavior;
         
         std::map<int,SBehaviorInfo>             _msgID2BehaviorMap;
         std::map<SCString,SBehaviorInfo>        _command2BehaviorMap;

@@ -33,7 +33,7 @@ namespace SpeedCC
         void forEach(const std::function<bool(const SCActor::Ptr& ptrActor)>& func) const;
         void forEach(const std::function<bool(SCActor::Ptr& ptrActor)>& func);
         
-        void addStrategy(SCStrategy::Ptr strategyPtr,const bool bInit=false);
+        void addStrategy(SCStrategy::Ptr ptrStrategy,const bool bInit=false);
         SCStrategy::Ptr getStrategy(const int nID) const;
         bool hasStrategy(const int nID) const;
         

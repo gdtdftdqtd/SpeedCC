@@ -21,8 +21,6 @@ namespace SpeedCC
     {
         friend class SCRole;
     public:
-        enum {kDefaultID = 1};
-    public:
         SC_AVOID_CLASS_COPY(SCActor)
         SC_DEFINE_CLASS_PTR(SCActor)
         

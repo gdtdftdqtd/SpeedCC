@@ -87,6 +87,7 @@ extern "C" {
     void scInitSpeedCC(void* pController)
     {
         s_rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [SCiOSSystem sharedSystem];
     }
     
     void scSetMultipleTouch(const bool bEnable)
@@ -455,12 +456,12 @@ SCiOSSystem* s_shareSystem = nil;
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {
-    scbAppLaunched();
+    ::scbAppLaunched();
 }
   
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {   
-    scbAppEnterBackground();
+    ::scbAppEnterBackground();
 }
 
 //- (void)applicationDidBecomeActive:(UIApplication *)application
@@ -470,7 +471,7 @@ SCiOSSystem* s_shareSystem = nil;
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-    scbAppEnterForeground();
+    ::scbAppEnterForeground();
 }
 
 @end

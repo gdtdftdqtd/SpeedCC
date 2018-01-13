@@ -3,7 +3,8 @@
 #ifndef __SPEEDCC__SCVALUE_H__
 #define __SPEEDCC__SCVALUE_H__
 
-#include "SCObjRefT.h"
+//#include "SCObjRefT.h"
+#include "SCObjPtrT.h"
 #include "SCString.h"
 
 namespace SpeedCC
@@ -46,9 +47,12 @@ namespace SpeedCC
         }
     };
     
-    class SCValue : public SCObjRefT<SCValueStub,int>
+    class SCValue :
+    public SCObjRefT<SCValueStub,int>,
+    public SCObject
     {
     public:
+        SC_DEFINE_CLASS_PTR(SCValue)
         enum EType
         {
             UNKNOWN_TYPE = 0,

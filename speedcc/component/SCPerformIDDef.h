@@ -169,7 +169,7 @@ namespace SpeedCC
         enum Act
         {
             kSCActNull = 0,
-            kSCActEmpty,
+            kSCActDefault,
             
             kSCActUser = 65535
         };

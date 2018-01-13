@@ -24,6 +24,7 @@
 		0A41B3A51FEBEE93003945EB /* SCSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3A31FEBEE93003945EB /* SCSetting.cpp */; };
 		0A41B3CF1FEE1886003945EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A41B3CE1FEE1886003945EB /* StoreKit.framework */; };
 		0A41B3E91FEF7693003945EB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3E31FEF7693003945EB /* Reachability.m */; };
+		0A60F8502009AC5500B6B5A3 /* SCBehaviorStage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A60F84E2009AC5500B6B5A3 /* SCBehaviorStage.cpp */; };
 		0A6218DE2003998B00459055 /* SCMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6218DD2003998A00459055 /* SCMessage.cpp */; };
 		0A6218E12004C6F600459055 /* SCEventEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6218DF2004C6F600459055 /* SCEventEmitter.cpp */; };
 		0A67CAC91F80E7DE00FED9A5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAC41F80E7C600FED9A5 /* libcocos2d iOS.a */; };
@@ -124,6 +125,8 @@
 		0A41B3CE1FEE1886003945EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0A41B3E31FEF7693003945EB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		0A41B3E61FEF7693003945EB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		0A60F84E2009AC5500B6B5A3 /* SCBehaviorStage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCBehaviorStage.cpp; sourceTree = "<group>"; };
+		0A60F84F2009AC5500B6B5A3 /* SCBehaviorStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBehaviorStage.h; sourceTree = "<group>"; };
 		0A6218C91FFE68F600459055 /* SCCocosDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCCocosDef.h; sourceTree = "<group>"; };
 		0A6218DA20038D4E00459055 /* SCPerformIDDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCPerformIDDef.h; sourceTree = "<group>"; };
 		0A6218DD2003998A00459055 /* SCMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCMessage.cpp; sourceTree = "<group>"; };
@@ -337,6 +340,8 @@
 				0A6879C71FFB720E004DCED6 /* SCBehaviorCommon.cpp */,
 				0A6879C81FFB720E004DCED6 /* SCBehaviorCommon.h */,
 				0A6218DA20038D4E00459055 /* SCPerformIDDef.h */,
+				0A60F84E2009AC5500B6B5A3 /* SCBehaviorStage.cpp */,
+				0A60F84F2009AC5500B6B5A3 /* SCBehaviorStage.h */,
 			);
 			name = component;
 			path = ../../component;
@@ -485,6 +490,7 @@
 				0A41B3651FE946B8003945EB /* SCString.cpp in Sources */,
 				0A6879A21FF25A64004DCED6 /* SCMessageDefaultProc.cpp in Sources */,
 				0A67CB091F81DF7100FED9A5 /* SCValue.cpp in Sources */,
+				0A60F8502009AC5500B6B5A3 /* SCBehaviorStage.cpp in Sources */,
 				0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */,
 				0A41B3471FE7D9FC003945EB /* SCWatchString.cpp in Sources */,
 				0A6218E12004C6F600459055 /* SCEventEmitter.cpp in Sources */,
