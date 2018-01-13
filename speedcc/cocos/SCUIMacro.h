@@ -86,7 +86,7 @@ namespace SpeedCC
         }
         
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,SCBehavior::Ptr bvr,cocos2d::Ref* pSender){ return bvr; }
-        static SCBehavior::Ptr purifyBehavior(...){ return NULL;}
+        static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,...){ return NULL;}
     };
     
     
@@ -179,78 +179,78 @@ SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_pParentNod
 
 ///-------------- button related
 // insert image button
-#define SC_INSERT_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_fun_)\
+#define SC_INSERT_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_func_)\
     do{\
-        ___SC_INSIDE_ADD_BUTTON_IMAGE((_node_),(_x_),(_y_),(_property_),(_image_normal_),(_image_select_),(_image_disable_),_fun_) \
+        ___SC_INSIDE_ADD_BUTTON_IMAGE((_node_),(_x_),(_y_),(_property_),(_image_normal_),(_image_select_),(_image_disable_),_func_) \
     }while(0);
 
 // container image button
-#define SC_BEGIN_CONTAINER_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_fun_) \
+#define SC_BEGIN_CONTAINER_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_func_) \
 {\
     cocos2d::MenuItem* pSCContainerMenuItem = NULL;\
-    ___SC_INSIDE_ADD_BUTTON_IMAGE(pSCContainerMenuItem,(_x_),(_y_),(_property_),(_image_normal_),(_image_select_),(_image_disable_),_fun_) \
+    ___SC_INSIDE_ADD_BUTTON_IMAGE(pSCContainerMenuItem,(_x_),(_y_),(_property_),(_image_normal_),(_image_select_),(_image_disable_),_func_) \
     ___SC_INSIDE_ASSIGN_NODE(pSCContainerMenuItem,(_node_)); \
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCContainerMenuItem)
 
 
 // insert ttf label button
-#define SC_INSERT_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+#define SC_INSERT_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 do{\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
     SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
-    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
 }while(0);
 
 // container ttf label button
-#define SC_BEGIN_CONTAINER_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+#define SC_BEGIN_CONTAINER_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 {\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
     SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
-    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
 // insert system label button
-#define SC_INSERT_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+#define SC_INSERT_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 do{\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),SCUISetup::purifyString((_font_)).c_str(),(_size_));\
     SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
-    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
 }while(0);
 
 // container system label button
-#define SC_BEGIN_CONTAINER_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+#define SC_BEGIN_CONTAINER_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 {\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),(_font_),(_size_));\
     SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
-    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
 // insert bmfont label button
-#define SC_INSERT_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_fun_) \
+#define SC_INSERT_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_func_) \
 do{\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
     SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
-    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
 }while(0);
 
 // container bmfont label button
-#define SC_BEGIN_CONTAINER_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_fun_) \
+#define SC_BEGIN_CONTAINER_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 {\
     SCString strSCTemText = SCUISetup::purifyLabelString((_string_));\
     auto scTemLabelBinderPtr = SCUISetup::createLabelBinder(this,(_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
     SCUISetup::bindLabel(pSCTemLabel,(scTemLabelBinderPtr));\
-    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_fun_))\
+    ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
 
@@ -431,7 +431,7 @@ do{\
 
 
 // button
-#define ___SC_INSIDE_ADD_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_fun_) \
+#define ___SC_INSIDE_ADD_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_func_) \
     cocos2d::Sprite* pSCTemSprite[3] = {NULL};\
     pSCTemSprite[0] = cocos2d::Sprite::create(SCFileUtils::getFullPathFile(_image_normal_).c_str());\
     pSCTemSprite[1] = cocos2d::Sprite::create(SCFileUtils::getFullPathFile(_image_select_).c_str());\
@@ -448,7 +448,7 @@ do{\
         ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pMenu,(_x_),(_y_));\
         SpeedCC::SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,SCUISetup::purifyString((_property_)));\
     }\
-    _buttonItem2InfoMap[pSCItemImage] = SCUISetup::purifyBehavior(this,(_fun_),pSCItemImage);\
+    _buttonItem2InfoMap[pSCItemImage] = SCUISetup::purifyBehavior(this,(_func_),pSCItemImage);\
     ___SC_INSIDE_ASSIGN_NODE(pSCItemImage,(_node_));\
     SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;\
     scTemFilterConfig.bExclude = false;\
@@ -457,7 +457,7 @@ do{\
     sc_container_LayoutObjectList.push_back(pSCItemImage);
 
 // button label
-#define ___SC_INSIDE_ADD_BUTTON_LABEL(_node_,_x_,_y_,_property_,_label_,_fun_)\
+#define ___SC_INSIDE_ADD_BUTTON_LABEL(_node_,_x_,_y_,_property_,_label_,_func_)\
     cocos2d::MenuItemLabel* pSCTemItemLabel = cocos2d::MenuItemLabel::create((_label_),\
     [this](cocos2d::Ref* pSender) { this->onSCMenuItemPressed(pSender);}); \
     if(!sc_container_MenuItemArray.empty()){\
@@ -469,7 +469,7 @@ do{\
         ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pMenu,(_x_),(_y_));\
         SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,SCUISetup::purifyString((_property_)));\
     }\
-    _buttonItem2InfoMap[pSCTemItemLabel] = SCUISetup::purifyBehavior(this,(_fun_),pSCTemItemLabel);\
+    _buttonItem2InfoMap[pSCTemItemLabel] = SCUISetup::purifyBehavior(this,(_func_),pSCTemItemLabel);\
     ___SC_INSIDE_ASSIGN_NODE(pSCTemItemLabel,(_node_));\
     SpeedCC::SCNodeProperty::setProperty<cocos2d::MenuItemLabel>(pSCTemItemLabel,SCUISetup::purifyString((_property_)));\
     SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;\

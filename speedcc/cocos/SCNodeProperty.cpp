@@ -748,6 +748,19 @@ namespace SpeedCC
             {
                 try
                 {
+                    sl[0].trimLeft(' ');
+                    sl[0].trimRight(' ');
+                    sl[1].trimLeft(' ');
+                    sl[1].trimRight(' ');
+                    sl[2].trimLeft(' ');
+                    sl[2].trimRight(' ');
+                    
+                    if(sl.size()==4)
+                    {
+                        sl[3].trimLeft(' ');
+                        sl[3].trimRight(' ');
+                    }
+                    
                     val.r = sl[0].asInt();
                     val.g = sl[1].asInt();
                     val.b = sl[2].asInt();

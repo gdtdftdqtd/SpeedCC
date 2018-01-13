@@ -701,6 +701,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.fValue = fValue;
+        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
         this->getCookieDesc()->cookie = FLOAT_TYPE;
     }
     
