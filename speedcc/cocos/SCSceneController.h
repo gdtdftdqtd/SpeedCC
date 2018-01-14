@@ -32,7 +32,7 @@ namespace SpeedCC
         
         virtual ~SCSceneController();
         
-        virtual void onCreate(SCDictionary parameters){}
+        virtual void onCreate(const SCDictionary& parameters){}
         
         inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}

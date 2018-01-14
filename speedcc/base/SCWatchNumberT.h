@@ -112,14 +112,14 @@ namespace SpeedCC
     public:
         typedef T  type;
         
-        SC_DEFINE_CLASS_PTR(SCWatchNumberT<T>)
-        
         SCWatchNumberT(const SCWatchNumberT& num):
         _number(num._number),
         _nIDCounter(0),
         _funGetString(NULL)
         {
         }
+
+        SC_DEFINE_CLASS_PTR(SCWatchNumberT<T>)
         
         SC_DEFINE_CREATE_FUNC_0(SCWatchNumberT)
         SC_DEFINE_CREATE_FUNC_1(SCWatchNumberT,const T)
@@ -153,6 +153,13 @@ namespace SpeedCC
         inline bool operator==(const T num) { return _number==num; }
         inline bool operator!=(const T num) { return _number!=num; }
         
+        inline bool operator<(const SCWatchNumberT num) { return _number<num._number; }
+        inline bool operator<=(const SCWatchNumberT num) { return _number<=num._number; }
+        inline bool operator>(const SCWatchNumberT num) { return _number>num._number; }
+        inline bool operator>=(const SCWatchNumberT num) { return _number>=num._number; }
+        inline bool operator==(const SCWatchNumberT num) { return _number==num._number; }
+        inline bool operator!=(const SCWatchNumberT num) { return _number!=num._number; }
+        
         SC_DEFINE_NUMBER_OPERATOR(+)
         SC_DEFINE_NUMBER_OPERATOR(-)
         SC_DEFINE_NUMBER_OPERATOR(*)
@@ -172,21 +179,38 @@ namespace SpeedCC
         SC_DEFINE_NUMBER_OPERATOR2(<<=,<<)
         SC_DEFINE_NUMBER_OPERATOR2(>>=,>>)
         
-        template<typename T2>
+        
+        template<typename T2,
+        typename = typename std::enable_if<std::is_arithmetic<T2>::value && !std::is_same<T2,T>::value,T>::type>
         SCWatchNumberT& operator=(const SCWatchNumberT<T2>& num)
         {
             const T oldNum = _number;
-            bool bDiff = (oldNum!=(T)num._number);
+            const bool bDiff = (oldNum!=(T)num._number);
             
             if(!bDiff) {return *this;}
             
             _number = (T)num._number;
-            this->firePostUpdateFun(num,oldNum);
+            this->firePostUpdateFun(_number,oldNum);
             
             return *this;
         }
         
-        template<typename T2>
+        
+        SCWatchNumberT& operator=(const SCWatchNumberT& num)
+        {
+            const T oldNum = _number;
+            const bool bDiff = (oldNum!=(T)num._number);
+            
+            if(!bDiff) {return *this;}
+            
+            _number = num._number;
+            this->firePostUpdateFun(_number,oldNum);
+            
+            return *this;
+        }
+        
+        template<typename T2,
+        typename = typename std::enable_if<std::is_arithmetic<T2>::value,T>::type>
         SCWatchNumberT& operator=(const T2 num)
         {
             const T oldNum = _number;
@@ -304,14 +328,15 @@ namespace SpeedCC
     class SCWatchNumberT<bool> : public SCObject
     {
     public:
-        SC_DEFINE_CLASS_PTR(SCWatchNumberT<bool>)
-        typedef bool  type;
-        
         SCWatchNumberT(const SCWatchNumberT& num):
         _number(num._number),
         _nIDCounter(0)
         {
         }
+
+        
+        SC_DEFINE_CLASS_PTR(SCWatchNumberT<bool>)
+        typedef bool  type;
         
         SC_DEFINE_CREATE_FUNC_0(SCWatchNumberT<bool>)
         SC_DEFINE_CREATE_FUNC_1(SCWatchNumberT<bool>,const bool)
@@ -319,6 +344,21 @@ namespace SpeedCC
         inline operator bool() const {return _number;}
         inline bool operator==(const bool num) { return _number==num; }
         inline bool operator!=(const bool num) { return _number!=num; }
+        
+        template<typename T2,
+        typename = typename std::enable_if<std::is_arithmetic<T2>::value && !std::is_same<T2,bool>::value,bool>::type>
+        SCWatchNumberT& operator=(const SCWatchNumberT<T2>& num)
+        {
+            const bool oldNum = _number;
+            const bool bDiff = (oldNum!=(num._number==0 ? false : true));
+            
+            if(!bDiff) {return *this;}
+            
+            _number = (num._number==0 ? false : true);
+            this->firePostUpdateFun(_number,oldNum);
+            
+            return *this;
+        }
         
         SCWatchNumberT& operator=(const bool num)
         {

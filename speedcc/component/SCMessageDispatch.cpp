@@ -17,7 +17,7 @@ namespace SpeedCC
         if(_pInstance==NULL)
         {
             _pInstance = new SCMessageDispatch();
-            SCSchedule(SC_FUNC(SCMessageDispatch::onTimerMessagePump),_pInstance,0,false);
+            SCSchedule(SC_FUNC(SCMessageDispatch::onFrameMessagePump),_pInstance,0,false);
         }
         
         return _pInstance;
@@ -26,7 +26,8 @@ namespace SpeedCC
     SCMessageDispatch::SCMessageDispatch():
     _nPostMsgCallStackCounter(0),
     _nSendMsgCallStackCounter(0),
-    _bMessageQueFlag(true)
+    _bMessageQueFlag(true),
+    _bFrameMessageEnabled(false)
     {
     }
     
@@ -37,8 +38,8 @@ namespace SpeedCC
         SMutabelListenerInfo info;
         
         info.bAdd = true;
-        info.pListener = pListener;
-        info.byPriority = nPriority;
+        info.listener.pListener = pListener;
+        info.listener.byPriority = nPriority;
         
         auto it = std::find(_mutableListenerList.begin(),_mutableListenerList.end(),info);
         
@@ -49,6 +50,7 @@ namespace SpeedCC
         
         _mutableListenerList.push_back(info);
         
+        // if no message dispatch in call stack, then updating mutable listener immediately
         if(_nPostMsgCallStackCounter==0 && _nSendMsgCallStackCounter==0)
         {
             this->updateMutableListener();
@@ -62,7 +64,7 @@ namespace SpeedCC
         SMutabelListenerInfo info;
         
         info.bAdd = false;
-        info.pListener = pListener;
+        info.listener.pListener = pListener;
         
         auto it = std::find(_mutableListenerList.begin(),_mutableListenerList.end(),info);
         
@@ -144,54 +146,41 @@ namespace SpeedCC
         SCASSERT(_nSendMsgCallStackCounter==0);
         SCASSERT(_nPostMsgCallStackCounter==0);
         
-        if(!_mutableListenerList.empty())
-        {
-            // add listener first
-            std::for_each(_mutableListenerList.begin(),_mutableListenerList.end(),
-                          [this](const SMutabelListenerInfo& info)-> void
-                          {
-                              if(info.bAdd)
-                              {
-                                  auto it1 = std::remove_if(_listenerList.begin(),_listenerList.end(),
-                                                            [&info](const SListenerInfo& it) -> bool
-                                                            {
-                                                                return (info.pListener!=NULL && it.pListener==info.pListener);
-                                                            });
-                                  
-                                  _listenerList.erase(it1,_listenerList.end());
-                                  
-                                  SListenerInfo listenerInfo;
-                                  listenerInfo.pListener = info.pListener;
-                                  
-                                  _listenerList.push_back(listenerInfo);
-                              }
-                          });
-            
-            // remove listener
-            std::for_each(_mutableListenerList.begin(),_mutableListenerList.end(),
-                          [this](const SMutabelListenerInfo& info) -> void
-                          {
-                              if(!info.bAdd)
-                              {
-                                  auto it1 = std::remove_if(_listenerList.begin(),_listenerList.end(),
-                                                            [&info](const SListenerInfo& it) -> bool
-                                                            {
-                                                                return (info.pListener!=NULL && it.pListener==info.pListener);
-                                                            });
-                                  
-                                  _listenerList.erase(it1,_listenerList.end());
-                              }
-                              
-                          });
-            
-            _listenerList.sort(std::greater<SListenerInfo>());
-        }
+        SC_RETURN_IF_V(_mutableListenerList.empty());
         
+        std::for_each(_mutableListenerList.begin(),_mutableListenerList.end(),
+                      [this](const SMutabelListenerInfo& info)-> void
+                      {
+                          SC_RETURN_IF_V(info.listener.pListener==NULL);
+                          
+                          if(info.bAdd)
+                          {// add listener
+                              auto it1 = std::remove_if(_listenerList.begin(),_listenerList.end(),
+                                                        [&info](const SListenerInfo& it) -> bool
+                                                        {
+                                                            return (it.pListener==info.listener.pListener);
+                                                        });
+                              
+                              _listenerList.erase(it1,_listenerList.end());
+                              
+                              SListenerInfo listenerInfo = info.listener;
+                              _listenerList.push_back(listenerInfo);
+                          }
+                          else
+                          {// remove listener
+                              _listenerList.remove_if([&info](const SListenerInfo& it) -> bool
+                                                      {
+                                                          return (it.pListener==info.listener.pListener);
+                                                      });
+                          }
+                      });
+        
+        _listenerList.sort(std::greater<SListenerInfo>());
         _mutableListenerList.clear();
     }
     
     
-    void SCMessageDispatch::onTimerMessagePump(float fDelta)
+    void SCMessageDispatch::onFrameMessagePump(float fDelta)
     {
         std::list<SCMessage::Ptr>& workingQue = this->getMsgQueRecive();
         this->swapMsgQue();
@@ -200,6 +189,15 @@ namespace SpeedCC
         this->updateMutableListener();
         
         ++_nPostMsgCallStackCounter;
+        
+        // send frame message
+        if(_bFrameMessageEnabled)
+        {
+            SCMessage::Ptr ptrMsg = SCMessage::create();
+            ptrMsg->nMsgID = SCID::Msg::kSCMsgFrame;
+            ptrMsg->paramters.setValue(MSG_KEY_DELTA, SCValue(fDelta));
+            SCMsgDisp()->sendMessage(ptrMsg);
+        }
         
         while(!workingQue.empty())
         {

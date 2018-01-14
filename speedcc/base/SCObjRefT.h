@@ -140,45 +140,6 @@ namespace SpeedCC
         this->onInstanceCreated(_pObjData);
     }
     
-//    template<typename StubT,typename CookieT>
-//    template<class ..._Args>
-//    void SCObjRefT<StubT,CookieT>::createInstance(_Args&& ...__args)
-//    {
-//        this->decreaseRef();
-//        this->allocBuf();
-//        SCDataTypeLifeCycleT<StubT>::construct(_pObjData, _VSTD::forward<_Args>(__args)...);
-//        this->onInstanceCreated(_pObjData);
-//    }
-    
-    /*
-    template<typename StubT,typename CookieT>
-    template<typename A1>
-    void SCObjRefT<StubT,CookieT>::createInstance(A1 arg1)
-    {
-        this->decreaseRef();
-        this->allocBuf();
-        SCDataTypeLifeCycleT<StubT>::construct(_pObjData,arg1);
-    }
-    
-    template<typename StubT,typename CookieT>
-    template<typename A1,typename A2>
-    void SCObjRefT<StubT,CookieT>::createInstance(A1 arg1,A2 arg2)
-    {
-        this->decreaseRef();
-        this->allocBuf();
-        SCDataTypeLifeCycleT<StubT>::construct(_pObjData,arg1,arg2);
-    }
-    
-    
-    template<typename StubT,typename CookieT>
-    template<typename A1,typename A2,typename A3>
-    void SCObjRefT<StubT,CookieT>::createInstance(A1 arg1,A2 arg2,A3 arg3)
-    {
-        this->decreaseRef();
-        this->allocBuf();
-        SCDataTypeLifeCycleT<StubT>::construct(_pObjData,arg1,arg2,arg3);
-    }
-     */
     
     template<typename StubT,typename CookieT>
     void SCObjRefT<StubT,CookieT>::allocBuf(int nSize)

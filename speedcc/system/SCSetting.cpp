@@ -16,7 +16,7 @@ namespace SpeedCC
     
     SCSetting* SCSetting::getInstance()
     {
-        if(s_pInstance!=NULL)
+        if(s_pInstance==NULL)
         {
             s_pInstance = new SCSetting();
         }

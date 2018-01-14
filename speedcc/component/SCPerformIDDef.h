@@ -19,6 +19,7 @@ namespace SpeedCC
 #define MSG_KEY_IAP            "iap"           // SCString
 #define MSG_KEY_TOUCH          "touch"           // cocos2d::Touch*
 #define MSG_KEY_TOUCHES        "touches"        // std::vector<cocos2d::Touch*>
+#define MSG_KEY_DELTA           "delta"         // float
     
     struct SCID
     {
@@ -138,6 +139,7 @@ namespace SpeedCC
             
             // send this message every frame
             // delivery: send
+            // key: MSG_KEY_DELTA
             kSCMsgFrame,
             
             // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
