@@ -267,14 +267,14 @@ namespace SpeedCC
             return result;
         }
         
-        int addUpdateFun(const std::function<void(Ptr pNum,T newNumber,T oldNumber)>& fun)
+        int addUpdateFunc(const std::function<void(Ptr pNum,T newNumber,T oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
             return _nIDCounter;
         }
         
-        void removeUpdateFun(const int nID)
+        void removeUpdateFunc(const int nID)
         {
             if(_postUpdateFunMap.find(nID)!=_postUpdateFunMap.end())
             {
@@ -373,14 +373,14 @@ namespace SpeedCC
             return *this;
         }
         
-        int addUpdateFun(const std::function<void(Ptr numPtr,bool newNumber,bool oldNumber)>& fun)
+        int addUpdateFunc(const std::function<void(Ptr numPtr,bool newNumber,bool oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
             return _nIDCounter;
         }
         
-        void removeUpdateFun(const int nID)
+        void removeUpdateFunc(const int nID)
         {
             if(_postUpdateFunMap.find(nID)!=_postUpdateFunMap.end())
             {
@@ -447,6 +447,8 @@ namespace SpeedCC
     SC_DEFINE_NUMBER_GLOBAL2(>>=,>>)
     
 
+//    using SCWatchShort = SCWatchNumberT<short>;
+//    using SCWatchInt = SCWatchNumberT<int>;
     typedef SCWatchNumberT<short>                        SCWatchShort;
     typedef SCWatchNumberT<unsigned short>               SCWatchUnsignedShort;
     typedef SCWatchNumberT<char>                         SCWatchChar;

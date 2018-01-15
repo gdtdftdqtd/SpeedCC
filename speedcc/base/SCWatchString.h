@@ -77,11 +77,11 @@ namespace SpeedCC
         //    const SCString& operator=(const float fNumber);
         const SCString& operator=(const unsigned uNumber);
         
-        int addUpdateFun(const std::function<void(Ptr ptrWatch,
+        int addUpdateFunc(const std::function<void(Ptr ptrWatch,
                                                      const SCString& strNew,
                                                      const SCString& strOld)>& fun);
         
-        void removeUpdateFun(const int nID);
+        void removeUpdateFunc(const int nID);
         inline SCString getValue() const {return *this;}
         
     protected:

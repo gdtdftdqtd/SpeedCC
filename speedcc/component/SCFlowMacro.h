@@ -41,7 +41,7 @@ namespace SpeedCC
 // _strategy_id_ for initial strategy
 #define SC_BEGIN_ROLE(_role_id_,_strategy_id_) \
 do{\
-    SCStrategy::Ptr sc_flow_in_strategy;\
+    SpeedCC::SCStrategy::Ptr sc_flow_in_strategy;\
     const int sc_current_role_id = (_role_id_);\
     auto sc_flow_role = SpeedCC::SCRole::create(sc_current_role_id, this);\
     sc_flow_role->setID(sc_current_role_id);\
@@ -58,7 +58,7 @@ do{\
 // strategy block
 #define IN_STRATEGY(_strategy_id_) \
 {\
-    SCStrategy::Ptr sc_flow_in_strategy;\
+    SpeedCC::SCStrategy::Ptr sc_flow_in_strategy;\
     ___SC_FLOW_CREATE_STRATEGY(sc_flow_in_strategy,_strategy_id_)\
     sc_flow_role->addStrategy(sc_flow_in_strategy);\
 
@@ -69,54 +69,71 @@ do{\
 //
 #define ON_ENTER_STRATEGE(_behavior_) \
 do{\
-    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
+    SpeedCC::SCBehavior::Ptr temBehavior = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
     sc_flow_in_strategy->addEnterBehavior(temBehavior);\
 }while(0);
     
 
 #define ON_EXIT_STRATEGE(_behavior_) \
 do{\
-    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
+    SpeedCC::SCBehavior::Ptr temBehavior = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
     sc_flow_in_strategy->addExitBehavior(temBehavior);\
 }while(0);
 
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
 do{\
     auto temMsg = (_msg_);\
-    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
-    const int nMsg = SCFlowSetup::extractMsgID(temMsg);\
-    auto matchPtr = SCFlowSetup::extractMsgMatcher(temMsg);\
+    SpeedCC::SCBehavior::Ptr temBehavior = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
+    const int nMsg = SpeedCC::SCFlowSetup::extractMsgID(temMsg);\
+    auto matchPtr = SpeedCC::SCFlowSetup::extractMsgMatcher(temMsg);\
     sc_flow_role->increaseMsgFilter(nMsg);\
     sc_flow_in_strategy->addBehavior(nMsg,temBehavior,matchPtr);\
 }while(0);
 
-#define ON_CMD_BEHAVIOR(_command_,_behavior_) \
+#define ON_CMD_BEHAVIOR(_cmd_,_behavior_) \
 do{\
-    SCBehavior::Ptr temBehavior = SCFlowSetup::extractBehavior((_behavior_));\
-    sc_flow_role->increaseCmdFilter(_command_);\
-    sc_flow_in_strategy->addBehavior((_command_),temBehavior);\
+    SpeedCC::SCBehavior::Ptr ptrBvr = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
+    sc_flow_role->increaseCmdFilter(_cmd_);\
+    sc_flow_in_strategy->addBehavior((_cmd_),ptrBvr);\
 }while(0);
 
-
+///--------- active role
 #define ON_MSG_ACTIVE(_msg_,_role_id_,_active_) \
 do{\
-    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_role_id_),(_active_)); \
-    ON_MSG_BEHAVIOR((_msg_),activeRoleBvrPtr)\
+    auto ptrBvr = SpeedCC::SCBehaviorRoleActive::create((_role_id_),(_active_)); \
+    ON_MSG_BEHAVIOR((_msg_),ptrBvr)\
 }while(0);
 
 
 
-#define ON_CMD_ACTIVE(_command_,_role_id_,_active_) \
+#define ON_CMD_ACTIVE(_cmd_,_role_id_,_active_) \
 do{\
-    auto activeRoleBvrPtr = SCBehaviorRoleActive::create((_role_id_),(_active_)); \
-    ON_CMD_BEHAVIOR((_command_),activeRoleBvrPtr)\
+    auto ptrBvr = SpeedCC::SCBehaviorRoleActive::create((_role_id_),(_active_)); \
+    ON_CMD_BEHAVIOR((_cmd_),ptrBvr)\
 }while(0);
+
+///--------- scene
+#define ON_MSG_SCENE(_msg_,_scene_class_,_switch_type_,_trans_class_) \
+do{\
+    auto ptrBvr = SpeedCC::SCBehaviorSceneSwitch::create<_scene_class_,_trans_class_>((_switch_type_));\
+    ON_MSG_BEHAVIOR((_msg_),ptrBvr)\
+}while(0);
+
+#define ON_CMD_SCENE(_cmd_,_scene_class_,_switch_type_,_trans_class_) \
+do{\
+    auto ptrBvr = SpeedCC::SCBehaviorSceneSwitch::create<_scene_class_,_trans_class_>((_switch_type_));\
+    ON_CMD_BEHAVIOR((_cmd_),ptrBvr)\
+}while(0);
+
+
+
 
 //#define ON_FRAME_BEHAVIOR(_behavior_) \
 //do{\
 //    sc_flow_in_strategy->addBehavior(kSCMsgFrame,(_behavior_));\
 //}while(0);
 
+// when message come, don't call any behavior except current strategy
 #define ON_MSG(_msg_) \
     ON_MSG_BEHAVIOR((_msg_),NULL)
 

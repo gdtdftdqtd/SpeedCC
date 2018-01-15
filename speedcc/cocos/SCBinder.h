@@ -42,15 +42,17 @@ namespace SpeedCC
     };
     
     
-    ///-------------- SCBinderLabel
-    class SCBinderLabel : public SCBinder
+    ///-------------- SCBinderUILabel
+    class SCBinderUILabel : public SCBinder
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBinderLabel)
-        SC_DEFINE_CLASS_PTR(SCBinderLabel)
+        SC_AVOID_CLASS_COPY(SCBinderUILabel)
+        SC_DEFINE_CLASS_PTR(SCBinderUILabel)
         
-        SC_DEFINE_CREATE_FUNC_0(SCBinderLabel)
-        SC_DEFINE_CREATE_FUNC_1(SCBinderLabel,cocos2d::Label*)
+        SC_DEFINE_CREATE_FUNC_0(SCBinderUILabel)
+        SC_DEFINE_CREATE_FUNC_1(SCBinderUILabel,cocos2d::Label*)
+        
+        virtual ~SCBinderUILabel();
         
         inline cocos2d::Label* getLabel() const { return _pLabel; }
         void setLabel(cocos2d::Label* pLabel);
@@ -58,14 +60,16 @@ namespace SpeedCC
         template<typename T>
         void setWatchSource(T num)
         {
-            num->addUpdateFun([this](T numPtr,typename T::type newNum,typename T::type oldNum)
-                                {
-                                    if(_pLabel!=NULL && _bActive)
-                                    {
-                                        _pLabel->setString(numPtr->getString().c_str());
-                                    }
-                                    _strLast = numPtr->getString();
-                                });
+            this->reset();
+            
+            const int nID = num->addUpdateFunc([this](T numPtr,typename T::type newNum,typename T::type oldNum)
+                                               {
+                                                   if(_pLabel!=NULL && _bActive)
+                                                   {
+                                                       _pLabel->setString(numPtr->getString().c_str());
+                                                   }
+                                                   _strLast = numPtr->getString();
+                                               });
             
             if(_pLabel!=NULL && _bActive)
             {
@@ -76,27 +80,66 @@ namespace SpeedCC
                 _strLast = num->getString();
             }
             
+            _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
+            {
+                SC_RETURN_IF_V(ptr==NULL || nID<=0);
+                
+                auto p = ptr.cast<typename T::type>();
+                p->removeUpdateFunc(nID);
+            };
+            
             _ptrWatchSource = num;
+            _nFuncID = nID;
         }
         
         void setWatchSource(SCWatchString::Ptr watchStr);
         virtual void reset() override;
         
     protected:
-        SCBinderLabel():
-        _pLabel(NULL)
+        SCBinderUILabel():
+        _pLabel(NULL),
+        _removeUpdateFunc(NULL)
         {}
         
-        SCBinderLabel(cocos2d::Label* pLabel):
-        _pLabel(pLabel)
+        SCBinderUILabel(cocos2d::Label* pLabel):
+        _pLabel(pLabel),
+        _removeUpdateFunc(NULL)
         {}
         
         virtual void onActiveChanged(const bool bNewActive) override;
-        
+
     private:
         cocos2d::Label*     _pLabel;
         SCObject::Ptr       _ptrWatchSource;
         SCString            _strLast;
+        std::function<void(SCObject::Ptr ptr,const int nID)>   _removeUpdateFunc;
+        int                     _nFuncID;
+    };
+    
+    
+    ///--------------- SCBinderToggle
+    class SCBinderToggle : public SCBinder
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBinderToggle)
+        SC_DEFINE_CLASS_PTR(SCBinderToggle)
+        
+        void setWatchSource(SCWatchBool::Ptr ptrWatch);
+        
+        inline cocos2d::MenuItemToggle* getToggle() const { return _pToggleMenuItem; }
+        inline void setToggle(cocos2d::MenuItemToggle* pToggle) { _pToggleMenuItem = pToggle; }
+        
+        SCWatchBool::Ptr getWatch() const { return _ptrWatch; }
+        
+    protected:
+        SCBinderToggle():
+        _pToggleMenuItem(NULL)
+        {
+        }
+        
+    private:
+        SCWatchBool::Ptr                _ptrWatch;
+        cocos2d::MenuItemToggle*        _pToggleMenuItem;
     };
     
     /*

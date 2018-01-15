@@ -16,6 +16,8 @@
 #include "../component/SCMessageDispatch.h"
 #include "../component/SCStage.h"
 
+#include "../base/SCWatchNumberT.h"
+
 
 namespace SpeedCC
 {
@@ -63,6 +65,7 @@ namespace SpeedCC
         
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
         void storeLayoutNode(...){}
+        
     private:
         inline void setBedNode(SCBedNode* pLayer) { _pBedNode = pLayer;}
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
@@ -72,15 +75,16 @@ namespace SpeedCC
         std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
         
     private:
-        SCBedNode*			                    _pBedNode;
-        SCScene*                                _pScene;
-        SCSceneController::WeakPtr              _ptrParentModalController;
-        SCLayerDisableTouch*                    _pDisableTouchLayer;
-        cocos2d::Layer*                         _pBlackMaskLayer;
-        bool                                    _bBlackMaskForModal;
-        std::list<SCObject::Ptr>                _ownLifecycleList;
-        std::map<int,FUN_SCMapMessage_t>        _msg2FuncMap;
-        std::map<int,cocos2d::Node*>            _id2NodeMap;
+        SCBedNode*			                        _pBedNode;
+        SCScene*                                    _pScene;
+        SCSceneController::WeakPtr                  _ptrParentModalController;
+        SCLayerDisableTouch*                        _pDisableTouchLayer;
+        cocos2d::Layer*                             _pBlackMaskLayer;
+        bool                                        _bBlackMaskForModal;
+        std::list<SCObject::Ptr>                    _ownLifecycleList;
+        std::map<int,FUN_SCMapMessage_t>            _msg2FuncMap;
+        std::map<int,cocos2d::Node*>                _id2NodeMap;
+        std::map<cocos2d::Ref*,SCWatchBool::Ptr>    _toggleItem2WatchMap;
     };
     
     

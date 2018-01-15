@@ -39,7 +39,7 @@ namespace SpeedCC
         
         SCWatchInt::Ptr ret = SCWatchInt::create();
         
-        ret->addUpdateFun([strKey](SCWatchInt::Ptr watchPtr,const int nNew,const int nOld)
+        ret->addUpdateFunc([strKey](SCWatchInt::Ptr watchPtr,const int nNew,const int nOld)
                                {
                                    SCCCUserDefault()->setIntegerForKey(strKey, nNew);
                                });
@@ -65,7 +65,7 @@ namespace SpeedCC
         
         auto ret = SCWatchBool::create();
         
-        ret->addUpdateFun([strKey](SCWatchBool::Ptr watchPtr,const bool bNew,const bool bOld)
+        ret->addUpdateFunc([strKey](SCWatchBool::Ptr watchPtr,const bool bNew,const bool bOld)
                           {
                               SCCCUserDefault()->setBoolForKey(strKey, bNew);
                           });
@@ -91,7 +91,7 @@ namespace SpeedCC
         
         auto ret = SCWatchFloat::create();
         
-        ret->addUpdateFun([strKey](SCWatchFloat::Ptr watchPtr,const float fNew,const float fOld)
+        ret->addUpdateFunc([strKey](SCWatchFloat::Ptr watchPtr,const float fNew,const float fOld)
                           {
                               SCCCUserDefault()->setFloatForKey(strKey, fNew);
                           });
@@ -116,7 +116,7 @@ namespace SpeedCC
         
         auto ret = SCWatchDouble::create();
         
-        ret->addUpdateFun([strKey](SCWatchDouble::Ptr watchPtr,const double dNew,const double dOld)
+        ret->addUpdateFunc([strKey](SCWatchDouble::Ptr watchPtr,const double dNew,const double dOld)
                           {
                               SCCCUserDefault()->setDoubleForKey(strKey, dNew);
                           });
@@ -141,7 +141,7 @@ namespace SpeedCC
         
         auto ret = SCWatchString::create();
         
-        ret->addUpdateFun([strKey](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
+        ret->addUpdateFunc([strKey](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
                           {
                               SCCCUserDefault()->setStringForKey(strKey, strNew.c_str());
                           });

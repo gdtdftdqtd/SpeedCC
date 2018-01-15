@@ -40,9 +40,10 @@
 #include "component/SCRole.h"
 #include "component/SCStrategy.h"
 #include "component/SCBehaviorCommon.h"
-#include "component/SCBehaviorStage.h"
 #include "component/SCActor.h"
 #include "component/SCMessageDispatch.h"
+#include "component/SCBehaviorStage.h"
+#include "component/SCBehaviorCocos.h"
 
 
 

@@ -62,7 +62,7 @@ namespace SpeedCC
         return ret;
     }
     */
-    int SCWatchString::addUpdateFun(const std::function<void(Ptr ptrWatch,
+    int SCWatchString::addUpdateFunc(const std::function<void(Ptr ptrWatch,
                                                                 const SCString& strNew,
                                                                 const SCString& strOld)>& fun)
     {
@@ -71,7 +71,7 @@ namespace SpeedCC
         return _nIDCounter;
     }
     
-    void SCWatchString::removeUpdateFun(const int nID)
+    void SCWatchString::removeUpdateFunc(const int nID)
     {
         if(_postUpdateFunMap.find(nID)!=_postUpdateFunMap.end())
         {

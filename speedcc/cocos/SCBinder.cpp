@@ -19,9 +19,14 @@ namespace SpeedCC
         this->onActiveChanged(_bActive);
     }
     
-///------------- SCBinderLabel
+///------------- SCBinderUILabel
 
-    void SCBinderLabel::setLabel(cocos2d::Label* pLabel)
+    SCBinderUILabel::~SCBinderUILabel()
+    {
+        this->reset();
+    }
+    
+    void SCBinderUILabel::setLabel(cocos2d::Label* pLabel)
     {
         _pLabel = pLabel;
         if(_bActive)
@@ -30,7 +35,7 @@ namespace SpeedCC
         }
     }
     
-    void SCBinderLabel::onActiveChanged(const bool bNewActive)
+    void SCBinderUILabel::onActiveChanged(const bool bNewActive)
     {
         if(bNewActive && _pLabel!=NULL)
         {
@@ -38,10 +43,10 @@ namespace SpeedCC
         }
     }
     
-    void SCBinderLabel::setWatchSource(SCWatchString::Ptr watchStr)
+    void SCBinderUILabel::setWatchSource(SCWatchString::Ptr watchStr)
     {
         SCASSERT(watchStr!=NULL);
-        watchStr->addUpdateFun([this](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
+        watchStr->addUpdateFunc([this](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
                              {
                                  if(_pLabel!=NULL && _bActive)
                                  {
@@ -62,19 +67,26 @@ namespace SpeedCC
         _ptrWatchSource = watchStr;
     }
     
-    void SCBinderLabel::reset()
+    void SCBinderUILabel::reset()
     {
+        if(_removeUpdateFunc!=NULL)
+        {
+            _removeUpdateFunc(_ptrWatchSource,_nFuncID);
+        }
+        
         _bActive = true;
         _pLabel = NULL;
         _ptrWatchSource = NULL;
     }
+    
+    ///---------------
     
     /*
     ///-------------- SCBinderSetting
     void SCBinderSetting::setWatchSource(SCWatchString::Ptr watchStr)
     {
         SCASSERT(watchStr!=NULL);
-        watchStr->addUpdateFun([this](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
+        watchStr->addUpdateFunc([this](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
                                {
                                    if(_bActive)
                                    {
@@ -88,7 +100,7 @@ namespace SpeedCC
     void SCBinderSetting::setWatchSource(SCWatchInt::Ptr watchInt,const int nDefault)
     {
         SCASSERT(watchInt!=NULL);
-        watchInt->addUpdateFun([this](SCWatchInt::Ptr watchPtr,const int nNew,const int nOld)
+        watchInt->addUpdateFunc([this](SCWatchInt::Ptr watchPtr,const int nNew,const int nOld)
                                {
                                    if(_bActive)
                                    {
@@ -102,7 +114,7 @@ namespace SpeedCC
     void SCBinderSetting::setWatchSource(SCWatchFloat::Ptr watchFloat,const float fDefault)
     {
         SCASSERT(watchFloat!=NULL);
-        watchFloat->addUpdateFun([this](SCWatchFloat::Ptr watchPtr,const float fNew,const float fOld)
+        watchFloat->addUpdateFunc([this](SCWatchFloat::Ptr watchPtr,const float fNew,const float fOld)
                                {
                                    if(_bActive)
                                    {
@@ -116,7 +128,7 @@ namespace SpeedCC
     void SCBinderSetting::setWatchSource(SCWatchDouble::Ptr watchDoube,const double dDefault)
     {
         SCASSERT(watchDoube!=NULL);
-        watchDoube->addUpdateFun([this](SCWatchDouble::Ptr watchPtr,const double dNew,const double dOld)
+        watchDoube->addUpdateFunc([this](SCWatchDouble::Ptr watchPtr,const double dNew,const double dOld)
                                  {
                                      if(_bActive)
                                      {
@@ -130,7 +142,7 @@ namespace SpeedCC
     void SCBinderSetting::setWatchSource(SCWatchBool::Ptr watchBool,const bool bDefault)
     {
         SCASSERT(watchBool!=NULL);
-        watchBool->addUpdateFun([this](SCWatchDouble::Ptr watchPtr,const bool bNew,const bool bOld)
+        watchBool->addUpdateFunc([this](SCWatchDouble::Ptr watchPtr,const bool bNew,const bool bOld)
                                  {
                                      if(_bActive)
                                      {

@@ -10,4 +10,21 @@
 
 namespace SpeedCC
 {
+    ///--------------- SCBehaviorSceneSwitch
+    void SCBehaviorSceneSwitch::execute(const SCDictionary& par)
+    {
+        SCSceneNavigator::getInstance()->setSceneParameter(_parameterDic);
+        SCSceneNavigator::getInstance()->switchScene(_switch);
+    }
+    
+    void SCBehaviorSceneSwitch::setSceneParameter(const SCDictionary& dic)
+    {
+        _parameterDic = dic;
+    }
+    
+    ///--------------- SCBehaviorSceneBack
+    void SCBehaviorSceneBack::execute(const SCDictionary& par)
+    {
+        SCSceneNavigator::getInstance()->back(_nSceneNum);
+    }
 }

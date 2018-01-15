@@ -34,7 +34,7 @@ namespace SpeedCC
         
         static inline void bindLabel(...) {}
         static inline void bindLabel(cocos2d::Label* pLabel,...) {}
-        static inline void bindLabel(cocos2d::Label* pLabel,SCBinderLabel::Ptr binderPtr)
+        static inline void bindLabel(cocos2d::Label* pLabel,SCBinderUILabel::Ptr binderPtr)
         {
             if(binderPtr!=NULL && pLabel!=NULL)
             {
@@ -44,11 +44,11 @@ namespace SpeedCC
         
         template<typename T,
         typename = typename std::enable_if<SCIsWatchClass<typename T::type>::value==1,T>::type >
-        static inline SCBinderLabel::Ptr createLabelBinder(SCSceneController* pControllerPtr, T watchPtr)
+        static inline SCBinderUILabel::Ptr createLabelBinder(SCSceneController* pControllerPtr, T watchPtr)
         {
             if(watchPtr!=NULL)
             {
-                auto labelBinderPtr = SCBinderLabel::create();
+                auto labelBinderPtr = SCBinderUILabel::create();
 
                 labelBinderPtr->setWatchSource(watchPtr);
                 pControllerPtr->ownLifecycle(labelBinderPtr);
@@ -58,7 +58,7 @@ namespace SpeedCC
             return NULL;
         }
         
-        static inline SCBinderLabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,SCBinderLabel::Ptr binderPtr)
+        static inline SCBinderUILabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,SCBinderUILabel::Ptr binderPtr)
         {
             if(binderPtr!=NULL)
             {
@@ -67,7 +67,7 @@ namespace SpeedCC
             return binderPtr;
         }
         
-        static inline SCBinderLabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,...) { return NULL; }
+        static inline SCBinderUILabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,...) { return NULL; }
         
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_CallFunc fun,cocos2d::Ref* pSender)
         {
@@ -87,6 +87,10 @@ namespace SpeedCC
         
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,SCBehavior::Ptr bvr,cocos2d::Ref* pSender){ return bvr; }
         static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,...){ return NULL;}
+        
+        static bool purifyBool(const bool bValue) {return bValue;}
+        static bool purifyBool(SCWatchBool::Ptr ptrBool) { return (ptrBool==NULL ? false : (bool)(*ptrBool));}
+        
     };
     
     
@@ -181,7 +185,7 @@ SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_p
 // insert image button
 #define SC_INSERT_BUTTON_IMAGE(_node_,_x_,_y_,_property_,_image_normal_,_image_select_,_image_disable_,_func_)\
     do{\
-        ___SC_INSIDE_ADD_BUTTON_IMAGE((_node_),(_x_),(_y_),(_property_),(_image_normal_),(_image_select_),(_image_disable_),_func_) \
+        ___SC_INSIDE_ADD_BUTTON_IMAGE((_node_),(_x_),(_y_),(_property_),(_image_normal_),(_image_select_),(_image_disable_),(_func_)) \
     }while(0);
 
 // container image button
@@ -253,6 +257,29 @@ do{\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
+
+// insert toggle button
+#define SC_INSERT_BUTTON_TOGGLE(_node_,_x_,_y_,_property_,_true_item_,_false_item_,_value_,_func_) \
+do{\
+    const bool bSCValue = SpeedCC::SCUISetup::purifyBool((_value_));\
+    SpeedCC::SCString strSCToggleImage1 = bSCValue?(_true_item_):(_false_item_);\
+    SpeedCC::SCString strSCToggleImage2 = bSCValue?(_false_item_):(_true_item_);\
+    std::vector<cocos2d::MenuItem*> sc_container_MenuItemArray;\
+    sc_container_MenuItemArray.push_back(NULL);/* the first element is NULL, in order to cause ___SC_INSIDE_ADD_BUTTON_IMAGE adds menu item to array, but not add to container node*/\
+    {___SC_INSIDE_ADD_BUTTON_IMAGE(NULL,0,0,NULL,strSCToggleImage1,strSCToggleImage1,strSCToggleImage1,NULL)}\
+    {___SC_INSIDE_ADD_BUTTON_IMAGE(NULL,0,0,NULL,strSCToggleImage2,strSCToggleImage2,strSCToggleImage2,NULL)}\
+    cocos2d::MenuItemToggle* pSCToggleItem = cocos2d::MenuItemToggle::createWithCallback(\
+            [this](cocos2d::Ref* pSender) { this->onSCMenuItemPressed(pSender);}, \
+            (cocos2d::MenuItem*)sc_container_MenuItemArray[1],\
+            (cocos2d::MenuItem*)sc_container_MenuItemArray[2],NULL);\
+    cocos2d::Menu* pMenu = cocos2d::Menu::create(pSCToggleItem,NULL);\
+    pMenu->setContentSize(sc_container_MenuItemArray[1]->getContentSize());\
+    ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pMenu,(_x_),(_y_));\
+    SpeedCC::SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,SpeedCC::SCUISetup::purifyString((_property_)));\
+    auto pSCBvrFunc = (_func_); \
+    _buttonItem2InfoMap[pSCToggleItem] = SpeedCC::SCUISetup::purifyBehavior(this,pSCBvrFunc,pSCToggleItem);\
+    ___SC_INSIDE_ASSIGN_NODE(pSCToggleItem,(_node_)); \
+}while(0);
 
 ///-------------- user node related
 // insert customize Node that user created
@@ -381,7 +408,7 @@ do{\
 #define ___SC_INSIDE_DEFINE_CONTAINER_VAR(_parent_) \
     SpeedCC::SCContainerEndFunctor* sc_container_pEndFunctor = NULL; \
     cocos2d::Node* sc_container_pParentNode = (_parent_); \
-    cocos2d::Vector<cocos2d::MenuItem*> sc_container_MenuItemArray;\
+    std::vector<cocos2d::MenuItem*> sc_container_MenuItemArray;\
     cocos2d::Vector<cocos2d::Layer*> sc_container_MultiplexLayerArray;\
     std::list<cocos2d::Ref*>    sc_container_LayoutObjectList;\
     cocos2d::Menu* sc_container_pButtonListMenu = NULL; \
@@ -439,7 +466,7 @@ do{\
     cocos2d::MenuItemSprite* pSCItemImage = cocos2d::MenuItemSprite::create(pSCTemSprite[0],pSCTemSprite[1],pSCTemSprite[2],\
 [this](cocos2d::Ref* pSender) { this->onSCMenuItemPressed(pSender);}); \
     if(!sc_container_MenuItemArray.empty()){\
-        sc_container_MenuItemArray.pushBack(pSCItemImage);\
+        sc_container_MenuItemArray.push_back(pSCItemImage);\
     }else if(sc_container_pButtonListMenu!=NULL){\
         sc_container_pButtonListMenu->addChild(pSCItemImage);\
     }else{\
@@ -448,7 +475,8 @@ do{\
         ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pMenu,(_x_),(_y_));\
         SpeedCC::SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,SpeedCC::SCUISetup::purifyString((_property_)));\
     }\
-    _buttonItem2InfoMap[pSCItemImage] = SpeedCC::SCUISetup::purifyBehavior(this,(_func_),pSCItemImage);\
+    auto pSCBvrFunc = (_func_); \
+    _buttonItem2InfoMap[pSCItemImage] = SpeedCC::SCUISetup::purifyBehavior(this,pSCBvrFunc,pSCItemImage);\
     ___SC_INSIDE_ASSIGN_NODE(pSCItemImage,(_node_));\
     SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;\
     scTemFilterConfig.bExclude = true;\
@@ -464,7 +492,7 @@ do{\
     cocos2d::MenuItemLabel* pSCTemItemLabel = cocos2d::MenuItemLabel::create((_label_),\
     [this](cocos2d::Ref* pSender) { this->onSCMenuItemPressed(pSender);}); \
     if(!sc_container_MenuItemArray.empty()){\
-        sc_container_MenuItemArray.pushBack(pSCTemItemLabel);\
+        sc_container_MenuItemArray.push_back(pSCTemItemLabel);\
     }else if(sc_container_pButtonListMenu!=NULL){\
         sc_container_pButtonListMenu->addChild(pSCTemItemLabel);\
     }else{\
@@ -472,7 +500,8 @@ do{\
         ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pMenu,(_x_),(_y_));\
         SpeedCC::SCNodeProperty::setProperty<cocos2d::Menu>(pMenu,SpeedCC::SCUISetup::purifyString((_property_)));\
     }\
-    _buttonItem2InfoMap[pSCTemItemLabel] = SpeedCC::SCUISetup::purifyBehavior(this,(_func_),pSCTemItemLabel);\
+    auto pSCBvrFunc = (_func_); \
+    _buttonItem2InfoMap[pSCTemItemLabel] = SpeedCC::SCUISetup::purifyBehavior(this,pSCBvrFunc,pSCTemItemLabel);\
     ___SC_INSIDE_ASSIGN_NODE(pSCTemItemLabel,(_node_));\
     SpeedCC::SCNodeProperty::setProperty<cocos2d::MenuItemLabel>(pSCTemItemLabel,SpeedCC::SCUISetup::purifyString((_property_)));\
     SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;\
