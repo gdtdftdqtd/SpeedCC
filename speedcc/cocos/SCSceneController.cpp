@@ -31,7 +31,7 @@ namespace SpeedCC
     
     void SCSceneController::pushModalController(SCSceneController::Ptr controllerPtr)
     {
-        SCSceneController::WeakPtr controllerPtr2 = this->makeObjPtr<SCSceneController>();
+        SCSceneController::WeakPtr controllerPtr2 = this->makeObjPtr<SCSceneController::WeakPtr>();
         controllerPtr->setModalParentController(controllerPtr2);
         controllerPtr->setScene(_pScene);
         
@@ -58,7 +58,7 @@ namespace SpeedCC
     SCSceneController::Ptr SCSceneController::popModalFromParent()
     {
         SCASSERT(_ptrParentModalController!=NULL);
-        auto ret = _ptrParentModalController->makeObjPtr<SCSceneController>();
+        auto ret = _ptrParentModalController->makeObjPtr<SCSceneController::Ptr>();
         
         _ptrParentModalController->setAllTouchEnabled(true);
         if(_ptrParentModalController->isBlackMaskForModal())

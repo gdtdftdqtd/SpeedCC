@@ -19,8 +19,8 @@ namespace SpeedCC
         if(_ptrEnterBehavior!=NULL)
         {
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
-            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
+            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
+            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
             
             _ptrEnterBehavior->execute(dic);
         }
@@ -34,8 +34,8 @@ namespace SpeedCC
         if(_ptrExitBehavior!=NULL)
         {
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
-            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
+            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
+            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
             
             _ptrExitBehavior->execute(dic);
         }
@@ -167,8 +167,8 @@ namespace SpeedCC
             }
             SCASSERT(pBehaviorInfo->ptrBehaviorGroup!=NULL);
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor>()));
-            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy>()));
+            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
+            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
             dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(ptrMsg));
             pBehaviorInfo->ptrBehaviorGroup->execute(dic);
         }

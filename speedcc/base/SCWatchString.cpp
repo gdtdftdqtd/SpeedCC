@@ -85,7 +85,7 @@ namespace SpeedCC
         {
             for(const auto& it : _postUpdateFunMap)
             {
-                it.second(this->makeObjPtr<SCWatchString>(),*this,_strLast);
+                it.second(this->makeObjPtr<SCWatchString::Ptr>(),*this,_strLast);
             }
             
             _strLast = (*this);

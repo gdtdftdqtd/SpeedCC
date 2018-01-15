@@ -17,9 +17,9 @@ namespace SpeedCC
         virtual ~SCObject();
         
         template<typename T>
-        SCObjPtrT<T> makeObjPtr()
+        T makeObjPtr()
         {
-            return _pObjPtrData==NULL ? NULL : SCObjPtrT<T>(_pObjPtrData);
+            return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename T::type>(_pObjPtrData);
         }
         
     private:

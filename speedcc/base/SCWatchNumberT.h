@@ -310,7 +310,7 @@ namespace SpeedCC
         {
             for(const auto& it : _postUpdateFunMap)
             {
-                it.second(this->makeObjPtr<SCWatchNumberT>(),newNumber,oldNumber);
+                it.second(this->makeObjPtr<SCWatchNumberT::Ptr>(),newNumber,oldNumber);
             }
         }
         
@@ -408,7 +408,7 @@ namespace SpeedCC
         {
             for(const auto& it : _postUpdateFunMap)
             {
-                it.second(this->makeObjPtr<SCWatchNumberT<bool> >(), newNumber,oldNumber);
+                it.second(this->makeObjPtr<SCWatchNumberT<bool>::Ptr>(), newNumber,oldNumber);
             }
         }
         
