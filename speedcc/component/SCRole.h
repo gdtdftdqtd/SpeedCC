@@ -40,10 +40,10 @@ namespace SpeedCC
         inline SCStage* getStage() const { return _pOwnerStage;}
         virtual void update(SCMessage::Ptr ptrMsg);
         
-        void increaseMsgFilter(const int nMsgID);
-        void increaseCmdFilter(const SCString& strCmd);
-        void decreaseMsgFilter(const int nMsgID);
-        void decreaseCmdFilter(const SCString& strCmd);
+        void markMsgFilter(const int nMsgID);
+        void markCmdFilter(const SCString& strCmd);
+        void unmarkMsgFilter(const int nMsgID);
+        void unmarkCmdFilter(const SCString& strCmd);
         
         inline bool getMsgFilterEnabled() const {return _bFilterMsg;}
         inline void setMsgFilterEnabled(const bool bEnable) {_bFilterMsg = bEnable;}

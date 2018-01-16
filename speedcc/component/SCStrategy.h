@@ -10,7 +10,6 @@
 #define __SPEEDCC__SCSTRATEGY_H__
 
 #include "SCMessage.h"
-//#include "SCPerformObject.h"
 #include "SCBehaviorCommon.h"
 
 #define SC_BVR_ARG_ACTOR            "actor" // SCActor::Ptr

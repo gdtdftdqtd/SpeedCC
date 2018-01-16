@@ -67,13 +67,13 @@ namespace SpeedCC
         }
     }
     
-    
+    // by default, it will consume touch
     bool SCEventEmitter::onSingleTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         SCDictionary::SPair pair[] =
         {
             {MSG_KEY_TOUCH,pTouch},
-            {"result",true},
+            {MSG_KEY_RESULT,true},
         };
         
         SCDictionary dic(pair,SC_ARRAY_LENGTH(pair));

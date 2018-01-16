@@ -323,8 +323,6 @@
 		0A67CB4E1F891DDF00FED9A5 /* component */ = {
 			isa = PBXGroup;
 			children = (
-				0A60F85D200B8CCC00B6B5A3 /* SCBehaviorCocos.cpp */,
-				0A60F85C200B8CCC00B6B5A3 /* SCBehaviorCocos.h */,
 				0A6879CA1FFC3F7C004DCED6 /* SCStrategy.cpp */,
 				0A6879CB1FFC3F7C004DCED6 /* SCStrategy.h */,
 				0A6879B31FF50130004DCED6 /* SCFlowMacro.h */,
@@ -342,6 +340,8 @@
 				0A2803561FA8ACDD00E0174C /* SCMessageDispatch.h */,
 				0A6879A01FF25A64004DCED6 /* SCMessageDefaultProc.cpp */,
 				0A6879A11FF25A64004DCED6 /* SCMessageDefaultProc.h */,
+				0A60F85D200B8CCC00B6B5A3 /* SCBehaviorCocos.cpp */,
+				0A60F85C200B8CCC00B6B5A3 /* SCBehaviorCocos.h */,
 				0A6879C71FFB720E004DCED6 /* SCBehaviorCommon.cpp */,
 				0A6879C81FFB720E004DCED6 /* SCBehaviorCommon.h */,
 				0A6218DA20038D4E00459055 /* SCPerformIDDef.h */,

@@ -20,6 +20,7 @@ namespace SpeedCC
 #define MSG_KEY_TOUCH          "touch"           // cocos2d::Touch*
 #define MSG_KEY_TOUCHES        "touches"        // std::vector<cocos2d::Touch*>
 #define MSG_KEY_DELTA           "delta"         // float
+#define MSG_KEY_RESULT          "result"        // rely on specific message definition
     
     struct SCID
     {

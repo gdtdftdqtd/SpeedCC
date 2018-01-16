@@ -8,6 +8,7 @@
 #include "SCScene.h"
 #include "SCRefHolder.h"
 #include "SCCocosDef.h"
+#include "SCBinder.h"
 
 #include "../base/SCBaseDef.h"
 #include "../base/SCObjPtrT.h"
@@ -84,7 +85,7 @@ namespace SpeedCC
         std::list<SCObject::Ptr>                    _ownLifecycleList;
         std::map<int,FUN_SCMapMessage_t>            _msg2FuncMap;
         std::map<int,cocos2d::Node*>                _id2NodeMap;
-        std::map<cocos2d::Ref*,SCWatchBool::Ptr>    _toggleItem2WatchMap;
+        std::map<cocos2d::Ref*,SCBinder::Ptr>       _node2BinderMap;
     };
     
     

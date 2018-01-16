@@ -9,6 +9,10 @@
 
 ////------------------
 
+#ifdef COCOS2D_DEBUG
+#define SPEEDCC_DEBUG
+#endif
+
 #ifndef MIN
 #define MIN(x,y) (((x) > (y)) ? (y) : (x))
 #endif  // MIN

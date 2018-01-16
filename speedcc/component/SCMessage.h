@@ -29,6 +29,21 @@ namespace SpeedCC
         bContinue(true)
         {}
         
+        SCMessage(const SCString& strCmd):
+        nMsgID(SCID::Msg::kSCMsgCommand),
+        bContinue(true)
+        {
+            paramters.setValue(MSG_KEY_COMMAND,strCmd);
+        }
+        
+        SCMessage(const SCString& strCmd,const SCDictionary& par):
+        nMsgID(SCID::Msg::kSCMsgCommand),
+        bContinue(true)
+        {
+            paramters = par;
+            paramters.setValue(MSG_KEY_COMMAND,strCmd);
+        }
+        
     public:
         SC_AVOID_CLASS_COPY(SCMessage)
         SC_DEFINE_CLASS_PTR(SCMessage)
@@ -36,6 +51,8 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_0(SCMessage)
         SC_DEFINE_CREATE_FUNC_1(SCMessage,const int)
         SC_DEFINE_CREATE_FUNC_2(SCMessage,const int,const SCDictionary&)
+        SC_DEFINE_CREATE_FUNC_1(SCMessage,const SCString&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessage,const SCString&,const SCDictionary&)
         
         int                 nMsgID;
         SCDictionary        paramters;
@@ -62,9 +79,46 @@ namespace SpeedCC
         SCMessageMatcher(const SCString& strCommand,const std::function<bool (SCMessage::Ptr ptrMsg)>& func);
         
     private:
-        SCString                                        _strCommand;
-        int                                             _nMsgID;
+        SCString                                            _strCommand;
+        int                                                 _nMsgID;
         std::function<bool (SCMessage::Ptr ptrMsg)>         _func;
+    };
+    
+    ///-------------- SCMessageGroup
+    class SCMessageGroup : public SCObject
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCMessageGroup)
+        SC_DEFINE_CLASS_PTR(SCMessageGroup)
+        
+//        SC_DEFINE_CREATE_FUNC_0(SCMessageGroup)
+        SC_DEFINE_CREATE_FUNC_1(SCMessageGroup,const int)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageGroup,const int,const SCDictionary&)
+        SC_DEFINE_CREATE_FUNC_1(SCMessageGroup,const SCString&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageGroup,const SCString&,const SCDictionary&)
+        
+        template<typename T1, typename T2, typename ...Ts>
+        static Ptr create(T1 t1, T2 t2, Ts... ts)
+        {
+            auto ptrGroup1 = create(t1);
+            auto ptrGroup2 = create(t2,ts...);
+            return create(ptrGroup1,ptrGroup2);
+        }
+        
+        inline std::list<SCMessage::Ptr> getMessageList() const { return _msgList; }
+        
+    protected:
+        SC_DEFINE_CREATE_FUNC_2(SCMessageGroup,Ptr,Ptr)
+        
+        SCMessageGroup(const int nMsgID);
+        SCMessageGroup(const int nMsgID,const SCDictionary& dic);
+        SCMessageGroup(const SCString& strCmd);
+        SCMessageGroup(const SCString& strCmd,const SCDictionary& dic);
+        SCMessageGroup(Ptr ptr1, Ptr ptr2);
+        
+        
+    private:
+        std::list<SCMessage::Ptr>       _msgList;
     };
 
 }

@@ -124,6 +124,7 @@ namespace SpeedCC
         SCASSERT(it!=_buttonItem2InfoMap.end());
         if(it!=_buttonItem2InfoMap.end())
         {
+            /*
             auto it2 = _toggleItem2WatchMap.find(pSender);
             if(it2!=_toggleItem2WatchMap.end())
             {
@@ -132,6 +133,7 @@ namespace SpeedCC
                     *((*it2).second) = !(*((*it2).second));
                 }
             }
+            */
             
             if((*it).second!=NULL)
             {

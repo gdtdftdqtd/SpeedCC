@@ -172,7 +172,7 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::increaseMsgFilter(const int nMsgID)
+    void SCRole::markMsgFilter(const int nMsgID)
     {
         auto it = _msgID2FilterCounterMap.find(nMsgID);
         if(it!=_msgID2FilterCounterMap.end())
@@ -185,9 +185,9 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::increaseCmdFilter(const SCString& strCmd)
+    void SCRole::markCmdFilter(const SCString& strCmd)
     {
-        this->increaseMsgFilter(SCID::Msg::kSCMsgCommand);
+        this->markMsgFilter(SCID::Msg::kSCMsgCommand);
         
         auto it = _cmd2FilterCounterMap.find(strCmd);
         if(it!=_cmd2FilterCounterMap.end())
@@ -200,7 +200,7 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::decreaseMsgFilter(const int nMsgID)
+    void SCRole::unmarkMsgFilter(const int nMsgID)
     {
         auto it = _msgID2FilterCounterMap.find(nMsgID);
         if(it!=_msgID2FilterCounterMap.end())
@@ -212,9 +212,9 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::decreaseCmdFilter(const SCString& strCmd)
+    void SCRole::unmarkCmdFilter(const SCString& strCmd)
     {
-        this->decreaseMsgFilter(SCID::Msg::kSCMsgCommand);
+        this->unmarkMsgFilter(SCID::Msg::kSCMsgCommand);
         
         auto it = _cmd2FilterCounterMap.find(strCmd);
         if(it!=_cmd2FilterCounterMap.end())

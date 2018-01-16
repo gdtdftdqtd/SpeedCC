@@ -35,5 +35,43 @@ namespace SpeedCC
         
         return _func(ptrMsg);
     }
+    
+    ///----------------- SCMessageGroup
+    SCMessageGroup::SCMessageGroup(const int nMsgID)
+    {
+        auto ptrMsg = SCMessage::create(nMsgID);
+        _msgList.push_back(ptrMsg);
+    }
+    
+    SCMessageGroup::SCMessageGroup(const SCString& strCmd)
+    {
+        auto ptrMsg = SCMessage::create(strCmd);
+        _msgList.push_back(ptrMsg);
+    }
+    
+    SCMessageGroup::SCMessageGroup(const int nMsgID,const SCDictionary& dic)
+    {
+        auto ptrMsg = SCMessage::create(nMsgID,dic);
+        _msgList.push_back(ptrMsg);
+    }
+    
+    SCMessageGroup::SCMessageGroup(const SCString& strCmd,const SCDictionary& dic)
+    {
+        auto ptrMsg = SCMessage::create(strCmd,dic);
+        _msgList.push_back(ptrMsg);
+    }
+    
+    SCMessageGroup::SCMessageGroup(SCMessageGroup::Ptr ptr1, SCMessageGroup::Ptr ptr2)
+    {
+        SCASSERT(ptr1!=NULL);
+        SCASSERT(ptr2!=NULL);
+        
+        auto list1 = ptr1->getMessageList();
+        auto list2 = ptr2->getMessageList();
+        
+        _msgList.assign(list1.begin(), list1.end());
+        _msgList.insert(_msgList.end(), list2.begin(),list2.end());
+    }
+    
 }
 

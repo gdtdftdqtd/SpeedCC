@@ -14,13 +14,22 @@ namespace SpeedCC
     class SCFlowSetup
     {
     public:
+        struct SMsgListInfo
+        {
+            int                     nMsg;
+            SCString                strCmd;
+            SCMessageMatcher::Ptr   ptrMatcher;
+        };
+        
+        static int extractMsgID(SCMessage::Ptr ptrMsg) { return ptrMsg->nMsgID;}
         static int extractMsgID(const int nMsgID) { return nMsgID;}
-        static int extractMsgID(SCMessageMatcher::Ptr matcherPtr) { return matcherPtr->getMessageID();}
+        static int extractMsgID(SCMessageMatcher::Ptr ptrMatcher) { return ptrMatcher->getMessageID();}
         
+        static SCMessageMatcher::Ptr extractMsgMatcher(SCMessage::Ptr ptrMsg) { return NULL;}
         static SCMessageMatcher::Ptr extractMsgMatcher(const int nMsgID) { return NULL;}
-        static SCMessageMatcher::Ptr extractMsgMatcher(SCMessageMatcher::Ptr matcherPtr) { return matcherPtr;}
+        static SCMessageMatcher::Ptr extractMsgMatcher(SCMessageMatcher::Ptr ptrMatcher) { return ptrMatcher;}
         
-        static SCBehavior::Ptr extractBehavior(SCBehavior::Ptr bvrPtr) {return bvrPtr;}
+        static SCBehavior::Ptr extractBehavior(SCBehavior::Ptr ptrBvr) {return ptrBvr;}
         static SCBehavior::Ptr extractBehavior(const std::function<void(const SCDictionary& par)>& func)
         {
             return SCBehaviorCallFunc::create(func);
@@ -34,6 +43,46 @@ namespace SpeedCC
         }
         static SCBehavior::Ptr extractBehavior(void*) {return NULL;}
         static SCBehavior::Ptr extractBehavior(...) {return NULL;}
+        
+        static std::list<SMsgListInfo> extractMsgList(...) { return std::list<SMsgListInfo>();}
+        
+        static std::list<SMsgListInfo> extractMsgList(const int nMsgID)
+        {
+            std::list<SMsgListInfo> retList;
+            SMsgListInfo mli;
+            mli.nMsg = nMsgID;
+            mli.ptrMatcher = NULL;
+            
+            retList.push_back(mli);
+            return retList;
+        }
+        
+        static std::list<SMsgListInfo> extractMsgList(SCMessageMatcher::Ptr ptrMatcher)
+        {
+            std::list<SMsgListInfo> retList;
+            SMsgListInfo mli;
+            mli.nMsg = ptrMatcher->getMessageID();
+            mli.ptrMatcher = ptrMatcher;
+            
+            retList.push_back(mli);
+            return retList;
+        }
+        
+        static std::list<SMsgListInfo> extractMsgList(SCMessageGroup::Ptr ptrGroup)
+        {
+            std::list<SMsgListInfo> retList;
+            auto ls = ptrGroup->getMessageList();
+            for(auto it : ls)
+            {
+                SMsgListInfo mli;
+                
+                mli.nMsg = it->nMsgID;
+                mli.ptrMatcher = NULL;
+                
+                retList.push_back(mli);
+            }
+            return retList;
+        }
     };
 }
 
@@ -80,25 +129,40 @@ do{\
     sc_flow_in_strategy->addExitBehavior(temBehavior);\
 }while(0);
 
+/*
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
 do{\
     auto temMsg = (_msg_);\
     SpeedCC::SCBehavior::Ptr temBehavior = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
     const int nMsg = SpeedCC::SCFlowSetup::extractMsgID(temMsg);\
     auto matchPtr = SpeedCC::SCFlowSetup::extractMsgMatcher(temMsg);\
-    sc_flow_role->increaseMsgFilter(nMsg);\
+    sc_flow_role->markMsgFilter(nMsg);\
     sc_flow_in_strategy->addBehavior(nMsg,temBehavior,matchPtr);\
 }while(0);
+*/
+
+#define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
+do{\
+    auto temMsgList = SpeedCC::SCFlowSetup::extractMsgList((_msg_));\
+    for(auto it : temMsgList){\
+        SpeedCC::SCBehavior::Ptr temBehavior = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
+        const int nMsg = it.nMsg;\
+        auto matchPtr = it.ptrMatcher;\
+        sc_flow_role->markMsgFilter(nMsg);\
+        sc_flow_in_strategy->addBehavior(nMsg,temBehavior,matchPtr);\
+    }\
+}while(0);
+
 
 #define ON_CMD_BEHAVIOR(_cmd_,_behavior_) \
 do{\
     SpeedCC::SCBehavior::Ptr ptrBvr = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
-    sc_flow_role->increaseCmdFilter(_cmd_);\
+    sc_flow_role->markCmdFilter(_cmd_);\
     sc_flow_in_strategy->addBehavior((_cmd_),ptrBvr);\
 }while(0);
 
 ///--------- active role
-#define ON_MSG_ACTIVE(_msg_,_role_id_,_active_) \
+#define ON_MSG_ROLE_ACTIVE(_msg_,_role_id_,_active_) \
 do{\
     auto ptrBvr = SpeedCC::SCBehaviorRoleActive::create((_role_id_),(_active_)); \
     ON_MSG_BEHAVIOR((_msg_),ptrBvr)\
@@ -158,5 +222,13 @@ do{\
     }\
     (_strategy_ptr_)->setID((_strategy_id_));\
 }
+
+
+///----------------------
+#define SC_BVR_GROUP(_bvr_,...) \
+    SpeedCC::SCBehaviorGroup::create((_bvr_),##__VA_ARGS__)
+
+#define SC_MSG_GROUP(_msg_,...) \
+    SpeedCC::SCMessageGroup::create((_msg_),##__VA_ARGS__)
 
 #endif // __SPEEDCC__SCFLOWMACRO_H__
