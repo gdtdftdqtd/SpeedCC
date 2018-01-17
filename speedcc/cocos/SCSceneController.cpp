@@ -192,6 +192,19 @@ namespace SpeedCC
         _id2NodeMap[nID] = pNode;
     }
     
+    void SCSceneController::storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder)
+    {
+        SC_RETURN_IF_V(pObj==NULL || ptrBinder==NULL);
+        
+        _ref2BinderMap[pObj] = ptrBinder;
+    }
+    
+    SCBinder::Ptr SCSceneController::getBinder(cocos2d::Ref* pObj) const
+    {
+        auto it = _ref2BinderMap.find(pObj);
+        return ((it==_ref2BinderMap.end()) ? NULL : (*it).second);
+    }
+    
     void SCSceneController::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
         auto it = _msg2FuncMap.find(ptrMsg->nMsgID);

@@ -102,13 +102,13 @@ namespace SpeedCC
         }
         
         template<typename T2>
-        SCObjPtrT<T2> cast() const
+        T2 cast() const
         {
             SC_RETURN_IF(this->_pObjData==NULL,NULL);
             
             TargetT* p1 = (TargetT*)this->_pObjData;
-            SCObjPtrT<T2> ptrRet;
-            if(dynamic_cast<T2*>(p1))
+            SCObjPtrT<typename T2::type> ptrRet;
+            if(dynamic_cast<typename T2::type *>(p1))
             {
                 this->increaseRef();
                 ptrRet._pObjData = this->_pObjData;

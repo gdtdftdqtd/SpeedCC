@@ -34,7 +34,7 @@ namespace SpeedCC
         if(it!=_key2WatchNumMap.end())
         {
             SCASSERT((*it).second!=NULL);
-            return (*it).second.cast<SCWatchInt>();
+            return (*it).second.cast<SCWatchInt::Ptr>();
         }
         
         SCWatchInt::Ptr ret = SCWatchInt::create();
@@ -60,7 +60,7 @@ namespace SpeedCC
         if(it!=_key2WatchNumMap.end())
         {
             SCASSERT((*it).second!=NULL);
-            return (*it).second.cast<SCWatchBool>();
+            return (*it).second.cast<SCWatchBool::Ptr>();
         }
         
         auto ret = SCWatchBool::create();
@@ -86,7 +86,7 @@ namespace SpeedCC
         if(it!=_key2WatchNumMap.end())
         {
             SCASSERT((*it).second!=NULL);
-            return (*it).second.cast<SCWatchFloat>();
+            return (*it).second.cast<SCWatchFloat::Ptr>();
         }
         
         auto ret = SCWatchFloat::create();
@@ -111,7 +111,7 @@ namespace SpeedCC
         if(it!=_key2WatchNumMap.end())
         {
             SCASSERT((*it).second!=NULL);
-            return (*it).second.cast<SCWatchDouble>();
+            return (*it).second.cast<SCWatchDouble::Ptr>();
         }
         
         auto ret = SCWatchDouble::create();
@@ -136,7 +136,7 @@ namespace SpeedCC
         if(it!=_key2WatchNumMap.end())
         {
             SCASSERT((*it).second!=NULL);
-            return (*it).second.cast<SCWatchString>();
+            return (*it).second.cast<SCWatchString::Ptr>();
         }
         
         auto ret = SCWatchString::create();
@@ -172,35 +172,35 @@ namespace SpeedCC
         
         for(auto it : _key2WatchNumMap)
         {
-            auto v1 = it.second.cast<SCWatchInt>();
+            auto v1 = it.second.cast<SCWatchInt::Ptr>();
             if(v1!=NULL)
             {
                 ret.setValue(it.first,v1->getValue());
                 continue;
             }
             
-            auto v2 = it.second.cast<SCWatchString>();
+            auto v2 = it.second.cast<SCWatchString::Ptr>();
             if(v2!=NULL)
             {
                 ret.setValue(it.first,v2->getValue());
                 continue;
             }
             
-            auto v3 = it.second.cast<SCWatchBool>();
+            auto v3 = it.second.cast<SCWatchBool::Ptr>();
             if(v3!=NULL)
             {
                 ret.setValue(it.first,v3->getValue());
                 continue;
             }
             
-            auto v4 = it.second.cast<SCWatchFloat>();
+            auto v4 = it.second.cast<SCWatchFloat::Ptr>();
             if(v4!=NULL)
             {
                 ret.setValue(it.first,v4->getValue());
                 continue;
             }
             
-            auto v5 = it.second.cast<SCWatchDouble>();
+            auto v5 = it.second.cast<SCWatchDouble::Ptr>();
             if(v5!=NULL)
             {
                 ret.setValue(it.first,v5->getValue());

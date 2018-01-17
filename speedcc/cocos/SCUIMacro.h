@@ -32,56 +32,79 @@ namespace SpeedCC
 //        static inline cocos2d::Rect purifyRect(int) { return cocos2d::Rec::ZERO;}
 //        static inline cocos2d::Rect purifyRect(const cocos2d::Rect& rect) { return rect;}
         
+        // label binder
         static inline void bindLabel(...) {}
         static inline void bindLabel(cocos2d::Label* pLabel,...) {}
-        static inline void bindLabel(cocos2d::Label* pLabel,SCBinderUILabel::Ptr binderPtr)
+        static inline void bindLabel(cocos2d::Label* pLabel,SCBinderUILabel::Ptr ptrBinder,SCSceneController* pController)
         {
-            if(binderPtr!=NULL && pLabel!=NULL)
+            if(ptrBinder!=NULL && pLabel!=NULL)
             {
-                binderPtr->setLabel(pLabel);
+                ptrBinder->setLabel(pLabel);
+                pController->storeBinder(pLabel,ptrBinder);
             }
         }
         
         template<typename T,
         typename = typename std::enable_if<SCIsWatchClass<typename T::type>::value==1,T>::type >
-        static inline SCBinderUILabel::Ptr createLabelBinder(SCSceneController* pControllerPtr, T watchPtr)
+        static inline SCBinderUILabel::Ptr createLabelBinder(T ptrWatch)
         {
-            if(watchPtr!=NULL)
+            if(ptrWatch!=NULL)
             {
-                auto labelBinderPtr = SCBinderUILabel::create();
+                auto ptrLabelBinder = SCBinderUILabel::create();
 
-                labelBinderPtr->setWatchSource(watchPtr);
-                pControllerPtr->ownLifecycle(labelBinderPtr);
-                return labelBinderPtr;
+                ptrLabelBinder->setWatchSource(ptrWatch);
+                return ptrLabelBinder;
             }
             
             return NULL;
         }
         
-        static inline SCBinderUILabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,SCBinderUILabel::Ptr binderPtr)
+        static inline SCBinderUILabel::Ptr createLabelBinder(SCBinderUILabel::Ptr ptrBinder)
         {
-            if(binderPtr!=NULL)
-            {
-                pControllerPtr->ownLifecycle(binderPtr);
-            }
-            return binderPtr;
+            return ptrBinder;
         }
         
-        static inline SCBinderUILabel::Ptr createLabelBinder(SCSceneController* pControllerPtr,...) { return NULL; }
+        static inline SCBinderUILabel::Ptr createLabelBinder(...) { return NULL; }
         
-        static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_CallFunc fun,cocos2d::Ref* pSender)
+        // toggle binder
+        static inline SCBinderUIToggle::Ptr createToggleBinder(SCBinderUIToggle::Ptr ptrBinder)
         {
-            return SCBehaviorCallFunc::create([pCall,fun](const SCDictionary& par)
+            return ptrBinder;
+        }
+        
+        static inline SCBinderUIToggle::Ptr createToggleBinder(SCWatchBool::Ptr ptrWatch)
+        {
+            return (ptrWatch==NULL) ? NULL : SCBinderUIToggle::create(ptrWatch);
+        }
+        
+        static inline SCBinderUIToggle::Ptr createToggleBinder(...)
+        {
+            return NULL;
+        }
+        
+        static inline void bindToggle(cocos2d::MenuItemToggle* pToggle,SCBinderUILabel::Ptr ptrBinder,SCSceneController* pController)
+        {
+            if(ptrBinder!=NULL && pToggle!=NULL)
+            {
+//                ptrBinder->setLabel(pLabel);
+                pController->storeBinder(pToggle,ptrBinder);
+            }
+        }
+        
+        // behavior
+        static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_CallFunc func,cocos2d::Ref* pSender)
+        {
+            return SCBehaviorCallFunc::create([pCall,func](const SCDictionary& par)
                                                   {
-                                                      (pCall->*fun)();
+                                                      (pCall->*func)();
                                                   });
         }
         
-        static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_MenuHandler fun,cocos2d::Ref* pSender)
+        static SCBehavior::Ptr purifyBehavior(cocos2d::Ref* pCall,cocos2d::SEL_MenuHandler func,cocos2d::Ref* pSender)
         {
-            return SCBehaviorCallFunc::create([pCall,fun,pSender](const SCDictionary& par)
+            return SCBehaviorCallFunc::create([pCall,func,pSender](const SCDictionary& par)
                                                   {
-                                                      (pCall->*fun)(pSender);
+                                                      (pCall->*func)(pSender);
                                                   });
         }
         
@@ -123,11 +146,12 @@ namespace SpeedCC
 ///-------------- root container
 
 #define SC_BEGIN_CONTAINER_ROOT(_node_,_x_,_y_,_property_,_size_) \
-    SC_BEGIN_CONTAINER_ROOT_EX((_node_),(_x_),(_y_),(_property_),(_size_),getBedNode())
+    SC_BEGIN_CONTAINER_ROOT_EX((_node_),(_x_),(_y_),(_property_),(_size_),getBedNode(),this)
 
-#define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_)\
+#define SC_BEGIN_CONTAINER_ROOT_EX(_node_,_x_,_y_,_property_,_size_,_parent_,_controller_)\
 {\
     int sc_root_nSCContainerStackCounter = 0;\
+    SpeedCC::SCSceneController* pSCBelongController = (_controller_);\
     cocos2d::Size temSize = (_size_);\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(_parent_) \
     sc_container_pParentNode->setContentSize(temSize);\
@@ -201,9 +225,9 @@ SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(sc_container_p
 #define SC_INSERT_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 do{\
     SCString strSCTemText = SpeedCC::SCUISetup::purifyLabelString((_string_));\
-    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder(this,(_string_));\
+    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
-    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
+    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr,pSCBelongController);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
 }while(0);
 
@@ -211,9 +235,9 @@ do{\
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL_TTF(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 {\
     SCString strSCTemText = SpeedCC::SCUISetup::purifyLabelString((_string_));\
-    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder(this,(_string_));\
+    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithTTF(strSCTemText.c_str(),(_font_),(_size_));\
-    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
+    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr,pSCBelongController);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
@@ -221,9 +245,9 @@ do{\
 #define SC_INSERT_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 do{\
     SpeedCC::SCString strSCTemText = SpeedCC::SCUISetup::purifyLabelString((_string_));\
-    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder(this,(_string_));\
+    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),SpeedCC::SCUISetup::purifyString((_font_)).c_str(),(_size_));\
-    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
+    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr,pSCBelongController);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
 }while(0);
 
@@ -231,9 +255,9 @@ do{\
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 {\
     SCString strSCTemText = SpeedCC::SCUISetup::purifyLabelString((_string_));\
-    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder(this,(_string_));\
+    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),(_font_),(_size_));\
-    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
+    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr,pSCBelongController);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
@@ -241,9 +265,9 @@ do{\
 #define SC_INSERT_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_func_) \
 do{\
     SCString strSCTemText = SpeedCC::SCUISetup::purifyLabelString((_string_));\
-    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder(this,(_string_));\
+    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
-    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
+    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr,pSCBelongController);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
 }while(0);
 
@@ -251,9 +275,9 @@ do{\
 #define SC_BEGIN_CONTAINER_BUTTON_LABEL_BMFONT(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_func_) \
 {\
     SCString strSCTemText = SpeedCC::SCUISetup::purifyLabelString((_string_));\
-    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder(this,(_string_));\
+    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder((_string_));\
     auto pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
-    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,(scTemLabelBinderPtr));\
+    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,(scTemLabelBinderPtr),pSCBelongController);\
     ___SC_INSIDE_ADD_BUTTON_LABEL((_node_),(_x_),(_y_),(_property_),pSCTemLabel,(_func_))\
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCTemLabel)
 
@@ -441,7 +465,7 @@ do{\
 // _type_ (1:system; 2:ttf; 3:bmfont)
 #define ___SC_INSIDE_ADD_LABEL(_node_,_x_,_y_,_property_,_string_,_font_,_size_,_type_) \
     SpeedCC::SCString strSCTemText = SpeedCC::SCUISetup::purifyLabelString((_string_));\
-    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder(this,(_string_));\
+    auto scTemLabelBinderPtr = SpeedCC::SCUISetup::createLabelBinder((_string_));\
     cocos2d::Label* pSCTemLabel;\
     if((_type_)==1){\
         pSCTemLabel = cocos2d::Label::createWithSystemFont(strSCTemText.c_str(),SpeedCC::SCUISetup::purifyString((_font_)).c_str(),(_size_));\
@@ -450,7 +474,7 @@ do{\
     }else if((_type_)==3){\
         pSCTemLabel = cocos2d::Label::createWithBMFont((_font_),strSCTemText.c_str());\
     }\
-    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr);\
+    SpeedCC::SCUISetup::bindLabel(pSCTemLabel,scTemLabelBinderPtr,pSCBelongController);\
     ___SC_INSIDE_ADD_LAYOUT_NODE(sc_container_pParentNode,pSCTemLabel,(_x_),(_y_));\
     ___SC_INSIDE_ASSIGN_NODE(pSCTemLabel,(_node_));\
     SpeedCC::SCNodeProperty::setProperty<std::remove_pointer<decltype(pSCTemLabel)>::type>(pSCTemLabel,SpeedCC::SCUISetup::purifyString((_property_)));\

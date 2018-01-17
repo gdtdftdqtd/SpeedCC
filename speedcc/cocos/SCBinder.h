@@ -60,7 +60,7 @@ namespace SpeedCC
         template<typename T>
         void setWatchSource(T num)
         {
-            this->reset();
+            this->removeUpdateFunc();
             
             const int nID = num->addUpdateFunc([this](T numPtr,typename T::type newNum,typename T::type oldNum)
                                                {
@@ -84,7 +84,7 @@ namespace SpeedCC
             {
                 SC_RETURN_IF_V(ptr==NULL || nID<=0);
                 
-                auto p = ptr.cast<typename T::type>();
+                auto p = ptr.cast<T>();
                 p->removeUpdateFunc(nID);
             };
             
@@ -107,6 +107,7 @@ namespace SpeedCC
         {}
         
         virtual void onActiveChanged(const bool bNewActive) override;
+        void removeUpdateFunc();
 
     private:
         cocos2d::Label*     _pLabel;
@@ -117,22 +118,32 @@ namespace SpeedCC
     };
     
     
-    ///--------------- SCBinderToggle
-    class SCBinderToggle : public SCBinder
+    ///--------------- SCBinderUIToggle
+    class SCBinderUIToggle : public SCBinder
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBinderToggle)
-        SC_DEFINE_CLASS_PTR(SCBinderToggle)
+        SC_AVOID_CLASS_COPY(SCBinderUIToggle)
+        SC_DEFINE_CLASS_PTR(SCBinderUIToggle)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBinderUIToggle)
+        SC_DEFINE_CREATE_FUNC_1(SCBinderUIToggle,SCWatchBool::Ptr)
         
         void setWatchSource(SCWatchBool::Ptr ptrWatch);
         
         inline cocos2d::MenuItemToggle* getToggle() const { return _pToggleMenuItem; }
-        inline void setToggle(cocos2d::MenuItemToggle* pToggle) { _pToggleMenuItem = pToggle; }
+        void setToggle(cocos2d::MenuItemToggle* pToggle);
         
         SCWatchBool::Ptr getWatch() const { return _ptrWatch; }
+        virtual void reset() override;
         
     protected:
-        SCBinderToggle():
+        SCBinderUIToggle():
+        _pToggleMenuItem(NULL)
+        {
+        }
+        
+        SCBinderUIToggle(SCWatchBool::Ptr ptrWatch):
+        _ptrWatch(ptrWatch),
         _pToggleMenuItem(NULL)
         {
         }
@@ -140,6 +151,8 @@ namespace SpeedCC
     private:
         SCWatchBool::Ptr                _ptrWatch;
         cocos2d::MenuItemToggle*        _pToggleMenuItem;
+        std::function<void(SCObject::Ptr ptr,const int nID)>   _removeUpdateFunc;
+        int                             _nFuncID;
     };
     
     /*

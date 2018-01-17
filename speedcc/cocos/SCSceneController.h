@@ -35,8 +35,6 @@ namespace SpeedCC
         
         virtual ~SCSceneController();
         
-        virtual void onCreate(const SCDictionary& parameters){}
-        
         inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==NULL);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
         inline cocos2d::Node* getBedNode()  {return _pBedNode;}
@@ -59,10 +57,15 @@ namespace SpeedCC
         
         cocos2d::Node* getLayoutNode(const int nID);
         
+        void storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr);
+        SCBinder::Ptr getBinder(cocos2d::Ref* pObj) const;
+        
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
     protected:
         SCSceneController();
+        
+        virtual void onCreate(const SCDictionary& parameters){}
         
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
         void storeLayoutNode(...){}
@@ -85,7 +88,7 @@ namespace SpeedCC
         std::list<SCObject::Ptr>                    _ownLifecycleList;
         std::map<int,FUN_SCMapMessage_t>            _msg2FuncMap;
         std::map<int,cocos2d::Node*>                _id2NodeMap;
-        std::map<cocos2d::Ref*,SCBinder::Ptr>       _node2BinderMap;
+        std::map<cocos2d::Ref*,SCBinder::Ptr>       _ref2BinderMap;
     };
     
     
