@@ -355,7 +355,7 @@ namespace SpeedCC
             if(!bDiff) {return *this;}
             
             _number = (num._number==0 ? false : true);
-            this->firePostUpdateFun(_number,oldNum);
+            this->firePostUpdateFun(_number);
             
             return *this;
         }
@@ -368,12 +368,12 @@ namespace SpeedCC
             if(!bDiff) {return *this;}
             
             _number = num;
-            this->firePostUpdateFun(num,oldNum);
+            this->firePostUpdateFun(num);
             
             return *this;
         }
         
-        int addUpdateFunc(const std::function<void(Ptr numPtr,bool newNumber,bool oldNumber)>& fun)
+        int addUpdateFunc(const std::function<void(Ptr numPtr,const bool bNew)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
@@ -404,11 +404,11 @@ namespace SpeedCC
         {
         }
         
-        void firePostUpdateFun(const bool newNumber,const bool oldNumber)
+        void firePostUpdateFun(const bool newNumber)
         {
             for(const auto& it : _postUpdateFunMap)
             {
-                it.second(this->makeObjPtr<SCWatchNumberT<bool>::Ptr>(), newNumber,oldNumber);
+                it.second(this->makeObjPtr<SCWatchNumberT<bool>::Ptr>(), newNumber);
             }
         }
         
@@ -416,8 +416,7 @@ namespace SpeedCC
         bool                   _number;
         int                 _nIDCounter;
         std::map<int,std::function<void(Ptr numPtr,
-                                        const bool newNumber,
-                                        const bool oldNumber)> >    _postUpdateFunMap;
+                                        const bool newNumber)> >    _postUpdateFunMap;
     };
     
     SC_DEFINE_NUMBER_GLOBAL1(+,SCWatchNumberT<T>)

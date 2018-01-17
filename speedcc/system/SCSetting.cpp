@@ -65,7 +65,7 @@ namespace SpeedCC
         
         auto ret = SCWatchBool::create();
         
-        ret->addUpdateFunc([strKey](SCWatchBool::Ptr watchPtr,const bool bNew,const bool bOld)
+        ret->addUpdateFunc([strKey](SCWatchBool::Ptr watchPtr,const bool bNew)
                           {
                               SCCCUserDefault()->setBoolForKey(strKey, bNew);
                           });

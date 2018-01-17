@@ -91,7 +91,6 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCMessageGroup)
         SC_DEFINE_CLASS_PTR(SCMessageGroup)
         
-//        SC_DEFINE_CREATE_FUNC_0(SCMessageGroup)
         SC_DEFINE_CREATE_FUNC_1(SCMessageGroup,const int)
         SC_DEFINE_CREATE_FUNC_2(SCMessageGroup,const int,const SCDictionary&)
         SC_DEFINE_CREATE_FUNC_1(SCMessageGroup,const SCString&)
@@ -100,9 +99,9 @@ namespace SpeedCC
         template<typename T1, typename T2, typename ...Ts>
         static Ptr create(T1 t1, T2 t2, Ts... ts)
         {
-            auto ptrGroup1 = create(t1);
-            auto ptrGroup2 = create(t2,ts...);
-            return create(ptrGroup1,ptrGroup2);
+            auto ptrGroup1 = SCMessageGroup::create(t1);
+            auto ptrGroup2 = SCMessageGroup::create(t2,ts...);
+            return SCMessageGroup::create(ptrGroup1,ptrGroup2);
         }
         
         inline std::list<SCMessage::Ptr> getMessageList() const { return _msgList; }
@@ -115,7 +114,6 @@ namespace SpeedCC
         SCMessageGroup(const SCString& strCmd);
         SCMessageGroup(const SCString& strCmd,const SCDictionary& dic);
         SCMessageGroup(Ptr ptr1, Ptr ptr2);
-        
         
     private:
         std::list<SCMessage::Ptr>       _msgList;
