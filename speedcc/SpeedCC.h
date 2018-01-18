@@ -25,6 +25,7 @@
 #include "system/SCSystem.h"
 #include "system/SCFileUtils.h"
 #include "system/SCSetting.h"
+#include "system/SCAudioManager.h"
 
 #include "cocos/SCRefHolder.h"
 #include "cocos/SCSceneNavigator.h"

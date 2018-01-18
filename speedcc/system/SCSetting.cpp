@@ -8,7 +8,11 @@
 
 #include "cocos2d.h"
 #include "SCSetting.h"
+
+#include "SCConfig.h"
 #include "../cocos/SCCocosDef.h"
+#include "../component/SCMessageDispatch.h"
+
 
 namespace SpeedCC
 {
@@ -22,6 +26,10 @@ namespace SpeedCC
         }
         
         return s_pInstance;
+    }
+    
+    SCSetting::SCSetting()
+    {
     }
     
     SCWatchInt::Ptr SCSetting::getWatchInt(const SCString& strKey,const int nDefault)
@@ -63,14 +71,22 @@ namespace SpeedCC
             return (*it).second.cast<SCWatchBool::Ptr>();
         }
         
-        auto ret = SCWatchBool::create();
+        bool bValue = SCCCUserDefault()->getBoolForKey(strKey,bDefault);
+        auto ret = SCWatchBool::create(bValue);
         
         ret->addUpdateFunc([strKey](SCWatchBool::Ptr watchPtr,const bool bNew)
                           {
                               SCCCUserDefault()->setBoolForKey(strKey, bNew);
+                              if(strKey==kSCSettingKeySound)
+                              {
+                                  SCMsgDisp()->postMessage(SCID::Msg::kSCMsgSettingSoundChanged);
+                              }
+                              else if(strKey==kSCSettingKeyMusic)
+                              {
+                                  SCMsgDisp()->postMessage(SCID::Msg::kSCMsgSettingMusicChanged);
+                              }
                           });
         
-        (*ret) = SCCCUserDefault()->getBoolForKey(strKey,bDefault);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -151,14 +167,14 @@ namespace SpeedCC
         return ret;
     }
     
-    SCWatchBool::Ptr SCSetting::getSoundBool(const bool bDefault)
+    SCWatchBool::Ptr SCSetting::getSoundWatch(const bool bDefault)
     {
-        return this->getWatchBool("__speedcc_sound__",bDefault);
+        return this->getWatchBool(kSCSettingKeySound,bDefault);
     }
     
-    SCWatchBool::Ptr SCSetting::getMusicBool(const bool bDefault)
+    SCWatchBool::Ptr SCSetting::getMusicWatch(const bool bDefault)
     {
-        return this->getWatchBool("__speedcc_music__",bDefault);
+        return this->getWatchBool(kSCSettingKeyMusic,bDefault);
     }
     
     void SCSetting::flush()

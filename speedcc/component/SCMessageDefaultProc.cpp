@@ -18,6 +18,8 @@ namespace SpeedCC
 {
     void SCMessageDefaultProc::processMessage(SCMessage::Ptr ptrMsg)
     {
+        SCASSERT(ptrMsg!=NULL);
+        
         switch(ptrMsg->nMsgID)
         {
             case SCID::Msg::kSCMsgAppEnterBackground:
@@ -133,6 +135,9 @@ namespace SpeedCC
             }
                 break;
                 
+            case SCID::Msg::kSCMsgQuit:
+                exit(0);
+                break;
         }
     }
 }

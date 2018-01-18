@@ -103,8 +103,12 @@ namespace SpeedCC
 #define SCCCTouchDispatch()\
     (SCCCDirector()->getEventDispatcher())
     
+    
 #define SCCCSoundEngine()\
     (CocosDenshion::SimpleAudioEngine::getInstance())
+//    (cocos2d::experimental::AudioEngine::getInstance())
+
+
     
 #define SCSchedule(_selector_,_target_,_interval_,_pause_)\
     (SCCCDirector()->getScheduler()->schedule((_selector_),(_target_),(_interval_),(_pause_)))

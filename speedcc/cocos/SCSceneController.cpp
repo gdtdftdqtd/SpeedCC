@@ -196,6 +196,8 @@ namespace SpeedCC
     
     void SCSceneController::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
+        SCASSERT(ptrMsg!=NULL);
+        
         auto it = _msg2FuncMap.find(ptrMsg->nMsgID);
         
         if(it!=_msg2FuncMap.end() && (*it).second!=NULL)

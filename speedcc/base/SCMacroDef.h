@@ -88,15 +88,19 @@
 
 
 ///----- bit test
+// match any one of bit
 #define SC_BIT_HAS_OR(_set_,_bit_)\
     (((_set_)&(_bit_)) ? true : false)
 
+// match all bits
 #define SC_BIT_HAS_AND(_set_,_bit_)\
     ((((_set_)&(_bit_))==(_bit_)) ? true : false)
 
+// add bits
 #define SC_BIT_ADD(_set_,_bit_)\
     ((_set_)|=(_bit_))
 
+// remove bits
 #define SC_BIT_REMOVE(_set_,_bit_)\
     ((_set_)&=(~(_bit_)))
 

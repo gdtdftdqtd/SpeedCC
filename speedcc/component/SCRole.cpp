@@ -277,6 +277,7 @@ namespace SpeedCC
     
     void SCRole::update(SCMessage::Ptr ptrMsg)
     {
+        SCASSERT(ptrMsg!=NULL);
         _bUpdating = true;
         
         do

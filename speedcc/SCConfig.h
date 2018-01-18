@@ -38,6 +38,14 @@
 #define kSCFolderOfLanguage                                       "lang"
 #endif
 
+#ifndef kSCSettingKeySound
+#define kSCSettingKeySound                                          "__speedcc_sound__"
+#endif
+
+#ifndef kSCSettingKeyMusic
+#define kSCSettingKeyMusic                                          "__speedcc_music__"
+#endif
+
 #ifndef kSCDefaultResolutionAsset
 #define kSCDefaultResolutionAsset                                   SCSystem::kAssetBitMaskMedium
 #endif

@@ -49,6 +49,7 @@ namespace SpeedCC
     
     void SCActor::update(SCMessage::Ptr ptrMsg)
     {
+        SCASSERT(ptrMsg!=NULL);
         SC_RETURN_IF_V(_pCurStrategy==NULL);
         SC_RETURN_IF_V(!this->getActive());
         _pCurStrategy->update(this,ptrMsg);

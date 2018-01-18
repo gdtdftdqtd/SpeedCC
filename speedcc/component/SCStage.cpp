@@ -45,6 +45,7 @@ namespace SpeedCC
     
     void SCStage::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
+        SCASSERT(ptrMsg!=NULL);
         SC_RETURN_IF_V(_id2RoleMap.empty());
         SC_RETURN_IF_V(!this->getActive());
         

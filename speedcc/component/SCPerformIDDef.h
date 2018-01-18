@@ -89,6 +89,8 @@ namespace SpeedCC
             // lisenter: owner scene controller
             kSCMsgTouchCancelled,
             
+            kSCMsgSettingMusicChanged,
+            kSCMsgSettingSoundChanged,
             // show alert box,
             // must block it if want to show customize alert box
             // otherwise will show with system alert box
