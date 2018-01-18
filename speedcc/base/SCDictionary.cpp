@@ -149,7 +149,7 @@ namespace SpeedCC
         this->getStub()->clear();
     }
     
-    bool SCDictionary::isEmpty()
+    bool SCDictionary::isEmpty() const
     {
         return this->getStub()->empty();
     }
@@ -157,7 +157,7 @@ namespace SpeedCC
     void SCDictionary::forEach(const std::function<bool(const SCString& strKey,const SCValue& value)>& func) const
     {
         const auto& map = *(this->getStub());
-        for(const auto& it : map)
+        for(auto& it : map)
         {
             SC_RETURN_IF_V(!func(it.first,it.second));
         }

@@ -198,7 +198,7 @@ namespace SpeedCC
         
         for(int i=0; i<nSize; ++i)
         {
-            if(pInfo[i].ptrOffMsgGroup!=NULL && pInfo[i].ptrOnMsgGroup!=NULL)
+            if(pInfo[i].ptrOffMsgGroup!=NULL || pInfo[i].ptrOnMsgGroup!=NULL)
             {
                 SAudioInfo ai = {pInfo[i].pszAudioFile, pInfo[i].byAudioFlag,0};
                 _audioInfoVtr[i] = ai;

@@ -135,6 +135,26 @@ namespace SpeedCC
         }
     }
     
+    bool SCValue::isNumberType() const
+    {
+        switch(this->getType())
+        {
+            case BYTE_TYPE:
+            case CHAR_TYPE:
+            case INT_TYPE:
+            case UINT_TYPE:
+            case LONG_TYPE:
+            case INT64_TYPE:
+            case FLOAT_TYPE:
+            case DOUBLE_TYPE:
+                return true;
+                
+            default: break;
+        }
+        
+        return false;
+    }
+    
     char SCValue::getChar(bool* pResult,const bool bExactMatch) const
     {
         const auto& type = this->getType();

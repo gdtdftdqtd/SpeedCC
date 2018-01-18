@@ -231,4 +231,7 @@ do{\
 #define SC_MSG_GROUP(_msg_,...) \
     SpeedCC::SCMessageGroup::create((_msg_),##__VA_ARGS__)
 
+#define SC_MATCHER_GROUP(_mat_,...) \
+    SpeedCC::SCMessageMatcherGroup::create((_mat_),##__VA_ARGS__)
+
 #endif // __SPEEDCC__SCFLOWMACRO_H__

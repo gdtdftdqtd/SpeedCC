@@ -59,31 +59,6 @@ namespace SpeedCC
         bool                bContinue;
     };
     
-    ///------------ SCMessageMatcher
-    class SCMessageMatcher : public SCObject
-    {
-    public:
-        SC_AVOID_CLASS_COPY(SCMessageMatcher)
-        SC_DEFINE_CLASS_PTR(SCMessageMatcher)
-        
-        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const std::function<bool (const SCMessage::Ptr ptrMsg)>&)
-        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const std::function<bool (const SCMessage::Ptr ptrMsg)>&)
-        
-        bool isMatch(const SCMessage::Ptr ptrMsg) const;
-        
-        inline SCString getCommand() const { return _strCommand; }
-        inline int getMessageID() const { return _nMsgID; }
-        
-    protected:
-        SCMessageMatcher(const int nMsgID,const std::function<bool (SCMessage::Ptr ptrMsg)>& func);
-        SCMessageMatcher(const SCString& strCommand,const std::function<bool (SCMessage::Ptr ptrMsg)>& func);
-        
-    private:
-        SCString                                            _strCommand;
-        int                                                 _nMsgID;
-        std::function<bool (SCMessage::Ptr ptrMsg)>         _func;
-    };
-    
     ///-------------- SCMessageGroup
     class SCMessageGroup : public SCObject
     {
@@ -118,7 +93,78 @@ namespace SpeedCC
     private:
         std::list<SCMessage::Ptr>       _msgList;
     };
+    
+    ///------------ SCMessageMatcher
+    class SCMessageMatcher : public SCObject
+    {
+    public:
+        using MatchFunc_t = std::function<bool (const SCMessage::Ptr ptrMsg)>;
+        
+    public:
+        SC_AVOID_CLASS_COPY(SCMessageMatcher)
+        SC_DEFINE_CLASS_PTR(SCMessageMatcher)
+        
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const MatchFunc_t&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const int,const SCDictionary&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const MatchFunc_t&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcher,const SCString&,const SCDictionary&)
+        
+        bool isMatch(const SCMessage::Ptr ptrMsg) const;
+        
+        inline SCString getCommand() const { return _strCommand; }
+        inline int getMessageID() const { return _nMsgID; }
+        inline SCDictionary getParameter() const { return _paraDic; }
+        inline MatchFunc_t getFunc() const { return _func; }
+        inline bool isCommand() const { return (_nMsgID==SCID::Msg::kSCMsgCommand);}
+        
+    protected:
+        SCMessageMatcher(const int nMsgID,const MatchFunc_t& func);
+        SCMessageMatcher(const SCString& strCommand,const MatchFunc_t& func);
+        SCMessageMatcher(const int nMsgID,const SCDictionary& dic);
+        SCMessageMatcher(const SCString& strCommand,const SCDictionary& dic);
+        
+    private:
+        SCString            _strCommand;
+        int                 _nMsgID;
+        SCDictionary        _paraDic;
+        MatchFunc_t         _func;
+    };
 
+    ///-------------- SCMessageMatcherGroup
+    class SCMessageMatcherGroup : public SCObject
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCMessageMatcherGroup)
+        SC_DEFINE_CLASS_PTR(SCMessageMatcherGroup)
+        
+        SC_DEFINE_CREATE_FUNC_1(SCMessageMatcherGroup,const int)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcherGroup,const int,const SCDictionary&)
+        SC_DEFINE_CREATE_FUNC_1(SCMessageMatcherGroup,const SCString&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcherGroup,const SCString&,const SCDictionary&)
+        SC_DEFINE_CREATE_FUNC_2(SCMessageMatcherGroup,Ptr,Ptr)
+        SC_DEFINE_CREATE_FUNC_1(SCMessageMatcherGroup,SCMessageMatcher::Ptr)
+        
+        template<typename T1, typename T2, typename ...Ts>
+        static Ptr create(T1 t1, T2 t2, Ts... ts)
+        {
+            auto ptrGroup1 = SCMessageMatcherGroup::create(t1);
+            auto ptrGroup2 = SCMessageMatcherGroup::create(t2,ts...);
+            return SCMessageMatcherGroup::create(ptrGroup1,ptrGroup2);
+        }
+        
+        inline std::list<SCMessageMatcher::Ptr> getMsgMatcherList() const { return _msgMatcherList; }
+        
+    protected:
+        SCMessageMatcherGroup(const int nMsgID);
+        SCMessageMatcherGroup(const int nMsgID,const SCDictionary& dic);
+        SCMessageMatcherGroup(const SCString& strCmd);
+        SCMessageMatcherGroup(const SCString& strCmd,const SCDictionary& dic);
+        SCMessageMatcherGroup(SCMessageMatcher::Ptr ptrMatcher);
+        SCMessageMatcherGroup(Ptr ptr1, Ptr ptr2);
+        
+    private:
+        std::list<SCMessageMatcher::Ptr>       _msgMatcherList;
+    };
 }
 
 #endif // __SPEEDCC__SCMESSAGEDEF_H__

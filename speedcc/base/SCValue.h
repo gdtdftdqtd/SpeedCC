@@ -99,6 +99,7 @@ namespace SpeedCC
         
         virtual ~SCValue();
         
+        bool isNumberType() const;
         inline EType getType() const {return (EType)*this->getCookie();}
         inline bool isUnknown() const {return (getType()==UNKNOWN_TYPE);}
         
