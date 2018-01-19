@@ -44,7 +44,6 @@ namespace SpeedCC
         {
             pScene->removeChildByTag(SCLayerDisableTouch::kTAG);
         }
-        
     }
     
     bool SCSystem::getGlobalDisableTouch()
@@ -145,40 +144,39 @@ namespace SpeedCC
     {
         static EScreenSizeType      _screenSizeType = kScreenSizeUnkown;
         
-        if(_screenSizeType==kScreenSizeUnkown)
+        SC_RETURN_IF(_screenSizeType!=kScreenSizeUnkown,_screenSizeType);
+        
+        const cocos2d::Size& screenSize = SCCCDirector()->getWinSize();
+        
+        const int nScreenSquare = screenSize.width * screenSize.height*CC_CONTENT_SCALE_FACTOR()*CC_CONTENT_SCALE_FACTOR();
+        
+        const int nDiffOfXLarge = abs(nScreenSquare - kSCWidthOfAssetDesignXLarge*kSCHeightOfAssetDesignXLarge);
+        const int nDiffOfLarge = abs(nScreenSquare - kSCWidthOfAssetDesignLarge*kSCHeightOfAssetDesignLarge);
+        const int nDiffOfMedium = abs(nScreenSquare - kSCWidthOfAssetDesignMedium*kSCHeightOfAssetDesignMedium);
+        const int nDiffOfSmall = abs(nScreenSquare - kSCWidthOfAssetDesignSmall*kSCHeightOfAssetDesignSmall);
+        
+        int nMinimum = std::min(nDiffOfXLarge,std::min(nDiffOfLarge,std::min(nDiffOfMedium,nDiffOfSmall)));
+        
+        if(nMinimum==nDiffOfXLarge)
         {
-            const cocos2d::Size& screenSize = SCCCDirector()->getWinSize();
-            
-            const int squareOfScreen = screenSize.width * screenSize.height*CC_CONTENT_SCALE_FACTOR()*CC_CONTENT_SCALE_FACTOR();
-            
-            const int diffOfXLarge = abs(squareOfScreen - kSCWidthOfAssetDesignLarge*kSCHeightOfAssetDesignLarge);
-            const int diffOfLarge = abs(squareOfScreen - kSCWidthOfAssetDesignLarge*kSCHeightOfAssetDesignLarge);
-            const int diffOfMedium = abs(squareOfScreen - kSCWidthOfAssetDesignMedium*kSCHeightOfAssetDesignMedium);
-            const int diffOfSmall = abs(squareOfScreen - kSCWidthOfAssetDesignSmall*kSCHeightOfAssetDesignSmall);
-            
-            int nMinimum = std::min(diffOfXLarge,std::min(diffOfLarge,std::min(diffOfMedium,diffOfSmall)));
-            
-            if(nMinimum==diffOfXLarge)
-            {
-                SCLog("detected screen size is 'XLarge'");
-                _screenSizeType = kScreenSizeXLarge;
-            }
-            else if(nMinimum==diffOfLarge)
-            {
-                SCLog("detected screen size is 'Large'");
-                _screenSizeType = kScreenSizeLarge;
-            }
-            else if(nMinimum==diffOfMedium)
-            {
-                SCLog("detected screen size is 'Medium'");
-                _screenSizeType = kScreenSizeMedium;
-            }
-            else
-            {
-                SCASSERT(nMinimum==diffOfSmall);
-                SCLog("detected screen size is 'Small'");
-                _screenSizeType = kScreenSizeSmall;
-            }
+            SCLog("detected screen size is 'XLarge'");
+            _screenSizeType = kScreenSizeXLarge;
+        }
+        else if(nMinimum==nDiffOfLarge)
+        {
+            SCLog("detected screen size is 'Large'");
+            _screenSizeType = kScreenSizeLarge;
+        }
+        else if(nMinimum==nDiffOfMedium)
+        {
+            SCLog("detected screen size is 'Medium'");
+            _screenSizeType = kScreenSizeMedium;
+        }
+        else
+        {
+            SCASSERT(nMinimum==nDiffOfSmall);
+            SCLog("detected screen size is 'Small'");
+            _screenSizeType = kScreenSizeSmall;
         }
         
         return _screenSizeType;
@@ -188,121 +186,119 @@ namespace SpeedCC
     {
         static EScreenSizeType      _resourceSizeType = kScreenSizeUnkown;
         
-        if(_resourceSizeType==kScreenSizeUnkown || !bCache)
+        SC_RETURN_IF(_resourceSizeType!=kScreenSizeUnkown && bCache,_resourceSizeType);
+        
+        const EScreenSizeType screenSize = SCSystem::getScreenSizeType();
+        
+        switch(screenSize)
         {
-            const EScreenSizeType screenSize = SCSystem::getScreenSizeType();
-            
-            switch(screenSize)
+            case kScreenSizeXLarge:
             {
-                case kScreenSizeXLarge:
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
                 {
-                    if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
-                    {
-                        SCLog("use 'XLarge' resolution images");
-                        _resourceSizeType = kScreenSizeXLarge;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
-                    {
-                        SCLog("use 'Large' resolution images");
-                        _resourceSizeType = kScreenSizeLarge;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
-                    {
-                        SCLog("use 'Medium' resolution images");
-                        _resourceSizeType = kScreenSizeMedium;
-                    }
-                    else
-                    {
-                        SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
-                        SCLog("use 'Small' resolution images");
-                        _resourceSizeType = kScreenSizeSmall;
-                    }
+                    SCLog("use 'XLarge' resolution images");
+                    _resourceSizeType = kScreenSizeXLarge;
                 }
-                    break;
-                    
-                case kScreenSizeLarge:
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
                 {
-                    if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
-                    {
-                        SCLog("use 'Large' resolution images");
-                        _resourceSizeType = kScreenSizeLarge;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
-                    {
-                        SCLog("use 'Medium' resolution images");
-                        _resourceSizeType = kScreenSizeMedium;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
-                    {
-                        SCLog("use 'XLarge' resolution images");
-                        _resourceSizeType = kScreenSizeXLarge;
-                    }
-                    else
-                    {
-                        SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
-                        SCLog("use 'Small' resolution images");
-                        _resourceSizeType = kScreenSizeSmall;
-                    }
+                    SCLog("use 'Large' resolution images");
+                    _resourceSizeType = kScreenSizeLarge;
                 }
-                    break;
-                    
-                case kScreenSizeMedium:
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
                 {
-                    if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
-                    {
-                        SCLog("use 'Medium' resolution images");
-                        _resourceSizeType = kScreenSizeMedium;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
-                    {
-                        SCLog("use 'Small' resolution images");
-                        _resourceSizeType = kScreenSizeSmall;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
-                    {
-                        SCLog("use 'Large' resolution images");
-                        _resourceSizeType = kScreenSizeLarge;
-                    }
-                    else
-                    {
-                        SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
-                        SCLog("use 'XLarge' resolution images");
-                        _resourceSizeType = kScreenSizeXLarge;
-                    }
+                    SCLog("use 'Medium' resolution images");
+                    _resourceSizeType = kScreenSizeMedium;
                 }
-                    break;
-                    
-                case kScreenSizeSmall:
+                else
                 {
-                    if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
-                    {
-                        SCLog("use 'Small' resolution images");
-                        _resourceSizeType = kScreenSizeSmall;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
-                    {
-                        SCLog("use 'Medium' resolution images");
-                        _resourceSizeType = kScreenSizeMedium;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
-                    {
-                        SCLog("use 'Large' resolution images");
-                        _resourceSizeType = kScreenSizeLarge;
-                    }
-                    else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
-                    {
-                        SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
-                        SCLog("use 'XLarge' resolution images");
-                        _resourceSizeType = kScreenSizeXLarge;
-                    }
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
+                    SCLog("use 'Small' resolution images");
+                    _resourceSizeType = kScreenSizeSmall;
                 }
-                    break;
-                    
-                default:
-                    SCASSERT(false);
-                    break;
             }
-            
+                break;
+                
+            case kScreenSizeLarge:
+            {
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
+                {
+                    SCLog("use 'Large' resolution images");
+                    _resourceSizeType = kScreenSizeLarge;
+                }
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
+                {
+                    SCLog("use 'Medium' resolution images");
+                    _resourceSizeType = kScreenSizeMedium;
+                }
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
+                {
+                    SCLog("use 'XLarge' resolution images");
+                    _resourceSizeType = kScreenSizeXLarge;
+                }
+                else
+                {
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
+                    SCLog("use 'Small' resolution images");
+                    _resourceSizeType = kScreenSizeSmall;
+                }
+            }
+                break;
+                
+            case kScreenSizeMedium:
+            {
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
+                {
+                    SCLog("use 'Medium' resolution images");
+                    _resourceSizeType = kScreenSizeMedium;
+                }
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
+                {
+                    SCLog("use 'Small' resolution images");
+                    _resourceSizeType = kScreenSizeSmall;
+                }
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
+                {
+                    SCLog("use 'Large' resolution images");
+                    _resourceSizeType = kScreenSizeLarge;
+                }
+                else
+                {
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
+                    SCLog("use 'XLarge' resolution images");
+                    _resourceSizeType = kScreenSizeXLarge;
+                }
+            }
+                break;
+                
+            case kScreenSizeSmall:
+            {
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
+                {
+                    SCLog("use 'Small' resolution images");
+                    _resourceSizeType = kScreenSizeSmall;
+                }
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
+                {
+                    SCLog("use 'Medium' resolution images");
+                    _resourceSizeType = kScreenSizeMedium;
+                }
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
+                {
+                    SCLog("use 'Large' resolution images");
+                    _resourceSizeType = kScreenSizeLarge;
+                }
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
+                {
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
+                    SCLog("use 'XLarge' resolution images");
+                    _resourceSizeType = kScreenSizeXLarge;
+                }
+            }
+                break;
+                
+            default:
+                SCASSERT(false);
+                break;
         }
         
         return _resourceSizeType;
