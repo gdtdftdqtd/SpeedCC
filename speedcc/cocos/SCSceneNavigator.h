@@ -12,7 +12,7 @@ namespace SpeedCC
 {
     class SCSceneNavigator final
     {
-        friend class SCBehaviorSceneSwitch;
+        friend class SCBehaviorSceneNavigate;
 	public:
 		enum ESceneSwitchType
 		{
@@ -102,40 +102,40 @@ namespace SpeedCC
         template<typename TargetCtlrT>
         static SCSceneController::Ptr createScene(const SCDictionary& parameterDic)
         {
-            SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
+            SCObjPtrT<TargetCtlrT> ptrSceneCtlr;
             
             do
             {
-                sceneCtlrPtr.createInstance();
+                ptrSceneCtlr.createInstance();
                 
-                SC_BREAK_IF(sceneCtlrPtr.isNull());
+                SC_BREAK_IF(ptrSceneCtlr.isNull());
                 
                 auto scene = SCScene::create();
                 auto pRootLayer = scene->getBedNode();
-                pRootLayer->setController(sceneCtlrPtr);
-                sceneCtlrPtr->setScene(scene);
-                sceneCtlrPtr->setBedNode(pRootLayer);
-                sceneCtlrPtr->onCreate(parameterDic);
+                pRootLayer->setController(ptrSceneCtlr);
+                ptrSceneCtlr->setScene(scene);
+                ptrSceneCtlr->setBedNode(pRootLayer);
+                ptrSceneCtlr->onCreate(parameterDic);
                 
             } while (0);
             
-            return sceneCtlrPtr;
+            return ptrSceneCtlr;
         }
         
         template<typename TargetCtlrT>
         static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic)
         {
-            SCObjPtrT<TargetCtlrT> sceneCtlrPtr;
-            sceneCtlrPtr.createInstance();
+            SCObjPtrT<TargetCtlrT> ptrSceneCtlr;
+            ptrSceneCtlr.createInstance();
             
             auto rootLayer = SCBedNode::create();
-            rootLayer->setController(sceneCtlrPtr);
-            sceneCtlrPtr->setBedNode(rootLayer);
+            rootLayer->setController(ptrSceneCtlr);
+            ptrSceneCtlr->setBedNode(rootLayer);
             
-            sceneCtlrPtr->setScene(NULL);
-            sceneCtlrPtr->onCreate(parameterDic);
+            ptrSceneCtlr->setScene(NULL);
+            ptrSceneCtlr->onCreate(parameterDic);
             
-            return sceneCtlrPtr;
+            return ptrSceneCtlr;
         }
 
 	private:

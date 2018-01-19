@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "../base/SCObject.h"
 #include "../component/SCMessageDispatch.h"
+#include "../component/SCComponentMacroDef.h"
 #include "SCCocosDef.h"
 
 namespace SpeedCC

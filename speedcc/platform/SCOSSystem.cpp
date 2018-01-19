@@ -1,6 +1,7 @@
 
 
 #include "../component/SCMessageDispatch.h"
+#include "../component/SCComponentMacroDef.h"
 #include "../base/SCMacroDef.h"
 #include "../cocos/SCCocosDef.h"
 

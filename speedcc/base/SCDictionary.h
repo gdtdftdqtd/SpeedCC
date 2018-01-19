@@ -9,8 +9,7 @@
 namespace SpeedCC
 {
     class SCDictionary :
-    public SCObjRefT<std::map<SCString,SCValue> >,
-    public SCObject
+    public SCObjRefT<std::map<SCString,SCValue> >
     {
     public:
         struct SPair
@@ -20,7 +19,6 @@ namespace SpeedCC
         };
         
     public:
-        SC_DEFINE_CLASS_PTR(SCDictionary)
         
         SCDictionary();
         SCDictionary(const SCString& strKey,const SCValue& value);

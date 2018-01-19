@@ -91,7 +91,7 @@ namespace SpeedCC
             _pMsgListener->onSCMessageProcess(ptrMsg);
         }
         
-        return ptrMsg->paramters.getValue("result").getBool();
+        return ptrMsg->paramters.getValue(MSG_KEY_RESULT).getBool();
     }
     
     void SCEventEmitter::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)

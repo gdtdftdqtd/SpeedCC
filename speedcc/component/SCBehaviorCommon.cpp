@@ -7,6 +7,8 @@
 //
 
 #include "SCBehaviorCommon.h"
+#include "../cocos/SCCocosDef.h"
+#include "../system/SCSystem.h"
 
 namespace SpeedCC
 {
@@ -40,18 +42,16 @@ namespace SpeedCC
     
     ///----------- SCBehaviorGroup
     
-    SCBehaviorGroup::Ptr SCBehaviorGroup::create(SCBehavior::Ptr ptrBvr)
+    SCBehaviorGroup::SCBehaviorGroup(SCBehavior::Ptr ptrBvr)
     {
         SCASSERT(ptrBvr!=NULL);
-        auto ptrRet = SCBehaviorGroup::create();
-        ptrRet->addBehavior(ptrBvr);
-        return ptrRet;
+        this->addBehavior(ptrBvr);
     }
     
     void SCBehaviorGroup::execute(const SCDictionary& par)
     {
         SC_RETURN_IF_V(!this->getActive());
-        for(auto& it : _behaviorList)
+        for(auto it : _behaviorList)
         {
             it->execute(par);
         }
@@ -72,7 +72,46 @@ namespace SpeedCC
                                 });
     }
     
+    ///------------- SCBehaviorDelayExecute
+    SCBehaviorDelayExecute::~SCBehaviorDelayExecute()
+    {
+        SCCCScheduler()->unschedule(SCF(onDelayExecute),this);
+    }
     
+    void SCBehaviorDelayExecute::execute(const SCDictionary& par)
+    {
+        if(!_bPost && _ptrBvr!=NULL)
+        {
+            _bPost = true;
+            
+            SCCCScheduler()->schedule(SCF(onDelayExecute),this,_fDelay,false);
+        }
+    }
+    
+    void SCBehaviorDelayExecute::onDelayExecute(float fDelta)
+    {
+        SCCCScheduler()->unschedule(SCF(onDelayExecute),this);
+        _bPost = false;
+        if(_ptrBvr!=NULL)
+        {
+            _ptrBvr->execute();
+        }
+    }
+    
+    bool SCBehaviorDelayExecute::setBehavior(SCBehavior::Ptr ptrBvr)
+    {
+        SC_RETURN_IF(_bPost, false);
+        _ptrBvr = ptrBvr;
+        return true;
+    }
+    
+    bool SCBehaviorDelayExecute::setDelayTime(const float fDelay)
+    {
+        SC_RETURN_IF(_bPost, false);
+        _fDelay = fDelay;
+        _fDelay = _fDelay<0 ? 0 : _fDelay;
+        return true;
+    }
 }
 
 

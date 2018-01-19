@@ -11,6 +11,7 @@
 		0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803551FA8ACDD00E0174C /* SCMessageDispatch.cpp */; };
 		0A28035A1FAB073B00E0174C /* SCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803581FAB073A00E0174C /* SCDictionary.cpp */; };
 		0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */; };
+		0A3486832011A399002B779E /* SCBehaviorComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3486812011A399002B779E /* SCBehaviorComponent.cpp */; };
 		0A41B3361FE679E3003945EB /* SCBinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3341FE679E3003945EB /* SCBinder.cpp */; };
 		0A41B3441FE7C5F0003945EB /* SCRefHolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3421FE7C5F0003945EB /* SCRefHolder.cpp */; };
 		0A41B3471FE7D9FC003945EB /* SCWatchString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3461FE7D9FC003945EB /* SCWatchString.cpp */; };
@@ -101,6 +102,9 @@
 		0A2803591FAB073A00E0174C /* SCDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCDictionary.h; sourceTree = "<group>"; };
 		0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCVersion.cpp; sourceTree = "<group>"; };
 		0A28035C1FAB0A6B00E0174C /* SCVersion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCVersion.h; sourceTree = "<group>"; };
+		0A3486812011A399002B779E /* SCBehaviorComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCBehaviorComponent.cpp; sourceTree = "<group>"; };
+		0A3486822011A399002B779E /* SCBehaviorComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBehaviorComponent.h; sourceTree = "<group>"; };
+		0A3486842011AA5C002B779E /* SCComponentMacroDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCComponentMacroDef.h; sourceTree = "<group>"; };
 		0A41B3291FE113F1003945EB /* SCWatchNumberT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCWatchNumberT.h; sourceTree = "<group>"; };
 		0A41B3341FE679E3003945EB /* SCBinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCBinder.cpp; sourceTree = "<group>"; };
 		0A41B3351FE679E3003945EB /* SCBinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBinder.h; sourceTree = "<group>"; };
@@ -161,7 +165,7 @@
 		0A67CB6A1F8A338500FED9A5 /* SCConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SCConfig.h; path = ../../SCConfig.h; sourceTree = "<group>"; };
 		0A6879A01FF25A64004DCED6 /* SCMessageDefaultProc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMessageDefaultProc.cpp; sourceTree = "<group>"; };
 		0A6879A11FF25A64004DCED6 /* SCMessageDefaultProc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMessageDefaultProc.h; sourceTree = "<group>"; };
-		0A6879B31FF50130004DCED6 /* SCFlowMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFlowMacro.h; sourceTree = "<group>"; };
+		0A6879B31FF50130004DCED6 /* SCFlowMacroDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFlowMacroDef.h; sourceTree = "<group>"; };
 		0A6879B41FF50131004DCED6 /* SCStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCStage.cpp; sourceTree = "<group>"; };
 		0A6879B51FF50131004DCED6 /* SCRole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRole.h; sourceTree = "<group>"; };
 		0A6879B71FF50131004DCED6 /* SCActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCActor.cpp; sourceTree = "<group>"; };
@@ -330,7 +334,7 @@
 			children = (
 				0A6879CA1FFC3F7C004DCED6 /* SCStrategy.cpp */,
 				0A6879CB1FFC3F7C004DCED6 /* SCStrategy.h */,
-				0A6879B31FF50130004DCED6 /* SCFlowMacro.h */,
+				0A6879B31FF50130004DCED6 /* SCFlowMacroDef.h */,
 				0A6879B71FF50131004DCED6 /* SCActor.cpp */,
 				0A6879B81FF50131004DCED6 /* SCActor.h */,
 				0A6879B91FF50132004DCED6 /* SCRole.cpp */,
@@ -352,6 +356,9 @@
 				0A6218DA20038D4E00459055 /* SCPerformIDDef.h */,
 				0A60F84E2009AC5500B6B5A3 /* SCBehaviorStage.cpp */,
 				0A60F84F2009AC5500B6B5A3 /* SCBehaviorStage.h */,
+				0A3486812011A399002B779E /* SCBehaviorComponent.cpp */,
+				0A3486822011A399002B779E /* SCBehaviorComponent.h */,
+				0A3486842011AA5C002B779E /* SCComponentMacroDef.h */,
 			);
 			name = component;
 			path = ../../component;
@@ -508,6 +515,7 @@
 				0A60F85E200B8CCC00B6B5A3 /* SCBehaviorCocos.cpp in Sources */,
 				0A41B3441FE7C5F0003945EB /* SCRefHolder.cpp in Sources */,
 				0A41B39F1FEB8C60003945EB /* SCFileUtils.cpp in Sources */,
+				0A3486832011A399002B779E /* SCBehaviorComponent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

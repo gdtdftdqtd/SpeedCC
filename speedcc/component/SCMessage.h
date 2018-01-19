@@ -54,6 +54,8 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_1(SCMessage,const SCString&)
         SC_DEFINE_CREATE_FUNC_2(SCMessage,const SCString&,const SCDictionary&)
         
+        Ptr clone();
+        
         int                 nMsgID;
         SCDictionary        paramters;
         bool                bContinue;

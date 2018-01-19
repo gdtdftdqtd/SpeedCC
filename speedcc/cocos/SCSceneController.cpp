@@ -4,6 +4,7 @@
 
 #include "SCSceneController.h"
 #include "../base/SCTemplateUtils.h"
+#include "../component/SCComponentMacroDef.h"
 
 namespace SpeedCC
 {
@@ -146,11 +147,11 @@ namespace SpeedCC
         this->getBedNode()->runAction(pSeqAction);
     }
     
-    void SCSceneController::delayExecute(float fDelay,const std::function<void(SCDictionary::Ptr ptrDic)>& func,SCDictionary::Ptr ptrDic)
+    void SCSceneController::delayExecute(float fDelay,const std::function<void(SCDictionary dic)>& func,SCDictionary dic)
     {
-        this->delayExecute(fDelay,[func,ptrDic]()
+        this->delayExecute(fDelay,[func,dic]()
                            {
-                               func(ptrDic);
+                               func(dic);
                            });
     }
     

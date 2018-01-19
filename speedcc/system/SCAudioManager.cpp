@@ -8,6 +8,7 @@
 
 #include "SCAudioManager.h"
 #include "../cocos/SCCocosDef.h"
+#include "../component/SCComponentMacroDef.h"
 #include "SimpleAudioEngine.h"
 #include "SCSetting.h"
 

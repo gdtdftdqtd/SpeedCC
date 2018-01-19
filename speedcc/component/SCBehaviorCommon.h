@@ -52,22 +52,19 @@ namespace SpeedCC
     ///-------------- SCBehaviorGroup
     class SCBehaviorGroup : public SCBehavior
     {
-    protected:
-        SCBehaviorGroup()
-        {}
-        
     public:
         SC_AVOID_CLASS_COPY(SCBehaviorGroup)
         SC_DEFINE_CLASS_PTR(SCBehaviorGroup)
         
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorGroup)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorGroup,SCBehavior::Ptr)
         
         template<typename ...Ts>
         static Ptr create(SCBehavior::Ptr ptrBvr1,SCBehavior::Ptr ptrBvr2,Ts... ts)
         {
             SCASSERT(ptrBvr1!=NULL);
             SCASSERT(ptrBvr2!=NULL);
-            auto ptr2 = create(ptrBvr2,ts...);
+            auto ptr2 = SCBehaviorGroup::create(ptrBvr2,ts...);
             
             auto ptrRet = SCBehaviorGroup::create();
             
@@ -80,17 +77,59 @@ namespace SpeedCC
             return ptrRet;
         }
         
-        static Ptr create(SCBehavior::Ptr ptrBvr);
-        
         virtual void execute(const SCDictionary& par) override;
         
         void addBehavior(const SCBehavior::Ptr& ptrBvr);
         void removeBehavior(const int nID);
         
+    protected:
+        SCBehaviorGroup()
+        {}
+        
+        SCBehaviorGroup(SCBehavior::Ptr ptrBvr);
+        
     private:
         std::list<SCBehavior::Ptr> _behaviorList;
     };
     
+    ///------------- SCBehaviorDelayExecute
+    class SCBehaviorDelayExecute :
+    public SCBehavior,
+    public cocos2d::Ref
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorDelayExecute)
+        SC_DEFINE_CLASS_PTR(SCBehaviorDelayExecute)
+        
+        virtual ~SCBehaviorDelayExecute();
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorDelayExecute)
+        SC_DEFINE_CREATE_FUNC_2(SCBehaviorDelayExecute,const float,SCBehavior::Ptr)
+        
+        virtual void execute(const SCDictionary& par) override;
+        bool setBehavior(SCBehavior::Ptr ptrBvr);
+        bool setDelayTime(const float fDelay);
+        inline bool isRunning() const { return _bPost; }
+        
+    protected:
+        SCBehaviorDelayExecute():
+        _fDelay(0),
+        _bPost(false)
+        {}
+        
+        SCBehaviorDelayExecute(const float fDelay,SCBehavior::Ptr ptrBvr):
+        _fDelay(fDelay),
+        _ptrBvr(ptrBvr),
+        _bPost(false)
+        {}
+        
+        void onDelayExecute(float fDelta);
+        
+    private:
+        bool                _bPost;
+        float               _fDelay;
+        SCBehavior::Ptr     _ptrBvr;
+    };
 }
 
 #endif // __SPEEDCC__SCBEHAVIORCOMMON_H__

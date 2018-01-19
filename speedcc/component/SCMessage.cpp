@@ -5,6 +5,14 @@
 
 namespace SpeedCC
 {
+    SCMessage::Ptr SCMessage::clone()
+    {
+        auto ptrRet = SCMessage::create(nMsgID,paramters);
+        ptrRet->bContinue = bContinue;
+        
+        return ptrRet;
+    }
+    
     ///----------------- SCMessageGroup
     SCMessageGroup::SCMessageGroup(const int nMsgID)
     {

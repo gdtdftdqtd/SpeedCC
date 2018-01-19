@@ -28,40 +28,6 @@ namespace SpeedCC
         
     }
     
-    /*
-    SCWatchString::Ptr SCWatchString::create()
-    {
-        Ptr ret;
-        ret.createInstanceWithCon([](void* pData)
-                                  {
-                                      new(pData)SCWatchString();
-                                  });
-        
-        return ret;
-    }
-    
-    SCWatchString::Ptr SCWatchString::create(const SCString& str)
-    {
-        Ptr ret;
-        ret.createInstanceWithCon([str](void* pData)
-                                  {
-                                      new(pData)SCWatchString(str);
-                                  });
-        
-        return ret;
-    }
-    
-    SCWatchString::Ptr SCWatchString::create(const char* pszStr)
-    {
-        Ptr ret;
-        ret.createInstanceWithCon([pszStr](void* pData)
-                                  {
-                                      new(pData)SCWatchString(pszStr);
-                                  });
-        
-        return ret;
-    }
-    */
     int SCWatchString::addUpdateFunc(const std::function<void(Ptr ptrWatch,
                                                                 const SCString& strNew,
                                                                 const SCString& strOld)>& fun)
@@ -85,7 +51,7 @@ namespace SpeedCC
         {
             for(const auto& it : _postUpdateFunMap)
             {
-                it.second(this->makeObjPtr<SCWatchString::Ptr>(),*this,_strLast);
+                it.second(this->makeObjPtr(this),*this,_strLast);
             }
             
             _strLast = (*this);

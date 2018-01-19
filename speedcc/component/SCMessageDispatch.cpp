@@ -3,6 +3,7 @@
 #include "SCMessageDispatch.h"
 #include "../base/SCTemplateDef.h"
 #include "../cocos/SCCocosDef.h"
+#include "../component/SCComponentMacroDef.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ namespace SpeedCC
         if(_pInstance==NULL)
         {
             _pInstance = new SCMessageDispatch();
-            SCSchedule(SC_FUNC(SCMessageDispatch::onFrameMessagePump),_pInstance,0,false);
+            SCCCScheduler()->schedule(SC_FUNC(SCMessageDispatch::onFrameMessagePump),_pInstance,0,false);
         }
         
         return _pInstance;

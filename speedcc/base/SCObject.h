@@ -22,6 +22,11 @@ namespace SpeedCC
             return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename T::type>(_pObjPtrData);
         }
         
+        template<typename T>
+        SCObjPtrT<typename std::remove_reference<typename std::remove_pointer<T>::type>::type> makeObjPtr(T)
+        {
+            return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename std::remove_reference<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
+        }
     private:
         void setObjPtrData(void* pData);
         

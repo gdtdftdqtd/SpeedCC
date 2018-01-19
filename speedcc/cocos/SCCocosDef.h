@@ -106,16 +106,8 @@ namespace SpeedCC
     
 #define SCCCSoundEngine()\
     (CocosDenshion::SimpleAudioEngine::getInstance())
-//    (cocos2d::experimental::AudioEngine::getInstance())
 
 
-    
-#define SCSchedule(_selector_,_target_,_interval_,_pause_)\
-    (SCCCDirector()->getScheduler()->schedule((_selector_),(_target_),(_interval_),(_pause_)))
-    
-#define SCUnschedule(_selector_,_target_) \
-    (SCCCDirector()->getScheduler()->unschedule((_selector_),(_target_)))
-    
 #define SCWinSize() \
     (SCCCDirector()->getWinSize())
     
@@ -130,9 +122,6 @@ namespace SpeedCC
     
 #define SCSceneNav() \
     (SpeedCC::SCSceneNavigator::getInstance())
-    
-#define SCMsgDisp() \
-    (SpeedCC::SCMessageDispatch::getInstance())
 
     
     ////---------------------- Actions

@@ -11,15 +11,16 @@
 
 #include "SCPerformObject.h"
 #include "../cocos/SCSceneNavigator.h"
+#include "SCBehaviorCommon.h"
 
 namespace SpeedCC
 {
-    ///----------- SCBehaviorSceneSwitch
-    class SCBehaviorSceneSwitch : public SCBehavior
+    ///----------- SCBehaviorSceneNavigate
+    class SCBehaviorSceneNavigate : public SCBehavior
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBehaviorSceneSwitch)
-        SC_DEFINE_CLASS_PTR(SCBehaviorSceneSwitch)
+        SC_AVOID_CLASS_COPY(SCBehaviorSceneNavigate)
+        SC_DEFINE_CLASS_PTR(SCBehaviorSceneNavigate)
         
         template<typename SceneT, typename TransT = SCClassNull>
         static Ptr create(const SCSceneNavigator::ESceneSwitchType place = SCSceneNavigator::kSceneReplace,
@@ -28,10 +29,10 @@ namespace SpeedCC
             SCSceneNavigator::SSceneSwitchInfo swi;
             swi.setUp<SceneT,TransT>(place);
             
-            SCBehaviorSceneSwitch::Ptr ptrRet;
+            SCBehaviorSceneNavigate::Ptr ptrRet;
             ptrRet.createInstanceWithCon([swi,dic](void* pData)
                                          {
-                                             new(pData)SCBehaviorSceneSwitch(swi,dic);
+                                             new(pData)SCBehaviorSceneNavigate(swi,dic);
                                          });
             
             return ptrRet;
@@ -42,12 +43,14 @@ namespace SpeedCC
         void setSceneParameter(const SCDictionary& dic);
         
     protected:
-        SCBehaviorSceneSwitch(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic):
+        SCBehaviorSceneNavigate(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic):
         _switch(swi),
         _parameterDic(dic)
         {}
         
+        void onBvrFunc();
     private:
+        SCBehaviorDelayExecute::Ptr             _ptrDelayBvr;
         SCSceneNavigator::SSceneSwitchInfo      _switch;
         SCDictionary                            _parameterDic;
     };
@@ -75,7 +78,9 @@ namespace SpeedCC
         {
         }
         
+        void onBvrFunc();
     private:
+        SCBehaviorDelayExecute::Ptr     _ptrDelayBvr;
         int         _nSceneNum;
     };
 }

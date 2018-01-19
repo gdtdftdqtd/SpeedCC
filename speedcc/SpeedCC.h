@@ -36,15 +36,17 @@
 #include "cocos/SCUIMacro.h"
 #include "cocos/SCEventEmitter.h"
 
-#include "component/SCFlowMacro.h"
-#include "component/SCStage.h"
-#include "component/SCRole.h"
-#include "component/SCStrategy.h"
-#include "component/SCBehaviorCommon.h"
-#include "component/SCActor.h"
+#include "component/SCFlowMacroDef.h"
+#include "component/SCComponentMacroDef.h"
 #include "component/SCMessageDispatch.h"
 #include "component/SCBehaviorStage.h"
 #include "component/SCBehaviorCocos.h"
+#include "component/SCBehaviorCommon.h"
+#include "component/SCBehaviorComponent.cpp"
+#include "component/SCStage.h"
+#include "component/SCRole.h"
+#include "component/SCStrategy.h"
+#include "component/SCActor.h"
 
 
 
