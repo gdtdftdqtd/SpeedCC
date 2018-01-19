@@ -11,16 +11,17 @@
 
 namespace SpeedCC
 {
-#define MSG_KEY_CONTROLLER     "controller"     // SCController*
-#define MSG_KEY_NUMBER         "number"         // int
-#define MSG_KEY_NAME           "name"           // SCString
-#define MSG_KEY_COMMAND        "command"        // SCString
-#define MSG_KEY_STATE          "state"          // ESCState
-#define MSG_KEY_IAP            "iap"           // SCString
-#define MSG_KEY_TOUCH          "touch"           // cocos2d::Touch*
-#define MSG_KEY_TOUCHES        "touches"        // std::vector<cocos2d::Touch*>
-#define MSG_KEY_DELTA           "delta"         // float
-#define MSG_KEY_RESULT          "result"        // rely on specific message definition
+#define MSG_KEY_CONTROLLER     "sc-controller"     // SCController*
+#define MSG_KEY_NUMBER         "sc-number"         // int
+#define MSG_KEY_NAME           "sc-name"           // SCString
+#define MSG_KEY_COMMAND        "sc-command"        // SCString
+#define MSG_KEY_STATE          "sc-state"          // ESCState
+#define MSG_KEY_IAP            "sc-iap"           // SCString
+#define MSG_KEY_CCREF           "sc-cc-ref"        // cocos2d::Ref*
+#define MSG_KEY_TOUCH          "sc-touch"           // cocos2d::Touch*
+#define MSG_KEY_TOUCHES        "sc-touches"        // std::vector<cocos2d::Touch*>
+#define MSG_KEY_DELTA           "sc-delta"         // float
+#define MSG_KEY_RESULT          "sc-result"        // for sendMessage() result, relying on specific message definition
     
     struct SCID
     {
@@ -85,9 +86,13 @@ namespace SpeedCC
             kSCMsgTouchEnded,
             
             // key: MSG_KEY_TOUCH       (if single touch)
-            // key: MSG_KEY_TOUCHES     (if multiple touch)
+            // key: MSG_KEY_TOUCHES     (if multiple touches)
             // lisenter: owner scene controller
             kSCMsgTouchCancelled,
+            
+            // key: MSG_KEY_CONTROLLER
+            // key: MSG_KEY_CCREF
+            kSCMsgButtonClicked,
             
             kSCMsgSettingMusicChanged,
             kSCMsgSettingSoundChanged,

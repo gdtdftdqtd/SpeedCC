@@ -12,10 +12,10 @@
 #include "SCMessage.h"
 #include "SCBehaviorCommon.h"
 
-#define SC_BVR_ARG_ACTOR            "actor" // SCActor::Ptr
-#define SC_BVR_ARG_STRATEGY         "strategy" // SCStrategy::Ptr
-#define SC_BVR_ARG_ROLE             "role" // SCRole::Ptr
-#define SC_BVR_ARG_MESSAGE          "message"   // SCMessage::Ptr
+#define SC_BVR_ARG_ACTOR            "sc-actor" // SCActor::Ptr
+#define SC_BVR_ARG_STRATEGY         "sc-strategy" // SCStrategy::Ptr
+#define SC_BVR_ARG_ROLE             "sc-role" // SCRole::Ptr
+#define SC_BVR_ARG_MESSAGE          "sc-message"   // SCMessage::Ptr
 
 
 namespace SpeedCC

@@ -67,23 +67,23 @@ namespace SpeedCC
         static inline SCBinderUILabel::Ptr createLabelBinder(...) { return NULL; }
         
         // toggle binder
-        static inline SCBinderUIToggle::Ptr createToggleBinder(SCBinderUIToggle::Ptr ptrBinder)
+        static inline SCBinderUISwitch::Ptr createToggleBinder(SCBinderUISwitch::Ptr ptrBinder)
         {
             return ptrBinder;
         }
         
-        static inline SCBinderUIToggle::Ptr createToggleBinder(SCWatchBool::Ptr ptrWatch)
+        static inline SCBinderUISwitch::Ptr createToggleBinder(SCWatchBool::Ptr ptrWatch)
         {
-            return (ptrWatch==NULL) ? NULL : SCBinderUIToggle::create(ptrWatch);
+            return (ptrWatch==NULL) ? NULL : SCBinderUISwitch::create(ptrWatch);
         }
         
-        static inline SCBinderUIToggle::Ptr createToggleBinder(...)
+        static inline SCBinderUISwitch::Ptr createToggleBinder(...)
         {
             return NULL;
         }
         
         static inline void bindToggle(cocos2d::MenuItemToggle* pToggle,
-                                      SCBinderUIToggle::Ptr ptrBinder,
+                                      SCBinderUISwitch::Ptr ptrBinder,
                                       SCSceneController* pController,
                                       const std::function<void(cocos2d::Ref*)>& func)
         {
@@ -287,29 +287,29 @@ do{\
 
 
 // toggle button
-#define SC_INSERT_BUTTON_TOGGLE(_node_,_x_,_y_,_property_,_true_item_,_false_item_,_value_,_func_) \
+#define SC_INSERT_BUTTON_SWITCH(_node_,_x_,_y_,_property_,_true_item_,_false_item_,_value_,_func_) \
 do{\
-    ___SC_INSIDE_ADD_BUTTON_TOGGLE((_node_),(_x_),(_y_),(_property_),(_true_item_),(_false_item_),(_value_),(_func_))\
+    ___SC_INSIDE_ADD_BUTTON_SWITCH((_node_),(_x_),(_y_),(_property_),(_true_item_),(_false_item_),(_value_),(_func_))\
 }while(0);
 
 
-#define SC_BEGIN_CONTAINER_BUTTON_TOGGLE(_node_,_x_,_y_,_property_,_true_item_,_false_item_,_value_,_func_) \
+#define SC_BEGIN_CONTAINER_BUTTON_SWITCH(_node_,_x_,_y_,_property_,_true_item_,_false_item_,_value_,_func_) \
 {\
     cocos2d::MenuItemToggle* pSCMenuItemToggle = NULL;\
-    ___SC_INSIDE_ADD_BUTTON_TOGGLE(pSCMenuItemToggle,(_x_),(_y_),(_property_),(_true_item_),(_false_item_),(_value_),(_func_)) \
+    ___SC_INSIDE_ADD_BUTTON_SWITCH(pSCMenuItemToggle,(_x_),(_y_),(_property_),(_true_item_),(_false_item_),(_value_),(_func_)) \
     ___SC_INSIDE_DEFINE_CONTAINER_VAR(pSCMenuItemToggle)
 
 
 #define SC_INSERT_OPTION_MUSIC(_node_,_x_,_y_,_property_,_true_item_,_false_item_) \
 do{\
     auto ptrMusic = SpeedCC::SCSetting::getInstance()->getMusicWatch();\
-    SC_INSERT_BUTTON_TOGGLE((_node_),(_x_),(_y_),(_property_),(_true_item_),(_false_item_),ptrMusic,NULL) \
+    SC_INSERT_BUTTON_SWITCH((_node_),(_x_),(_y_),(_property_),(_true_item_),(_false_item_),ptrMusic,NULL) \
 }while(0);
 
 #define SC_INSERT_OPTION_SOUND(_node_,_x_,_y_,_property_,_true_item_,_false_item_) \
 do{\
     auto ptrSound = SpeedCC::SCSetting::getInstance()->getSoundWatch();\
-    SC_INSERT_BUTTON_TOGGLE((_node_),(_x_),(_y_),(_property_),(_true_item_),(_false_item_),ptrSound,NULL) \
+    SC_INSERT_BUTTON_SWITCH((_node_),(_x_),(_y_),(_property_),(_true_item_),(_false_item_),ptrSound,NULL) \
 }while(0);
 
 ///-------------- user node related
@@ -554,7 +554,7 @@ do{\
     sc_container_LayoutObjectList.push_back(pSCTemItemLabel); \
 }while(0);
 
-#define ___SC_INSIDE_ADD_BUTTON_TOGGLE(_node_,_x_,_y_,_property_,_true_item_,_false_item_,_value_,_func_) \
+#define ___SC_INSIDE_ADD_BUTTON_SWITCH(_node_,_x_,_y_,_property_,_true_item_,_false_item_,_value_,_func_) \
 do{\
     auto ptrSCToggleBinder = SpeedCC::SCUISetup::createToggleBinder((_value_));\
     auto scCallbackFunc = [pSCBelongController](cocos2d::Ref* pSender) { pSCBelongController->onSCMenuItemPressed(pSender);};\

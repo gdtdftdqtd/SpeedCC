@@ -122,12 +122,16 @@ namespace SpeedCC
         auto it = _buttonItem2InfoMap.find(pSender);
         
         SCASSERT(it!=_buttonItem2InfoMap.end());
-        if(it!=_buttonItem2InfoMap.end())
+        if(it!=_buttonItem2InfoMap.end() && (*it).second!=NULL)
         {
-            if((*it).second!=NULL)
+            (*it).second->execute();
+            
+            SCDictionary::SPair pairArray[] =
             {
-                (*it).second->execute();
-            }
+                {MSG_KEY_CONTROLLER,this},
+                {MSG_KEY_CCREF,pSender}
+            };
+            SCMsgDisp()->postMessage(SCID::Msg::kSCMsgButtonClicked, SCDictionary(pairArray,SC_ARRAY_LENGTH(pairArray)));
         }
     }
     

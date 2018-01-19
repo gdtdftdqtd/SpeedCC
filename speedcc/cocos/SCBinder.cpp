@@ -100,7 +100,12 @@ namespace SpeedCC
     }
     
     ///-----------------
-    void SCBinderUIToggle::setWatch(SCWatchBool::Ptr ptrWatch)
+    SCBinderUISwitch::~SCBinderUISwitch()
+    {
+        this->removeUpdateFunc();
+    }
+    
+    void SCBinderUISwitch::setWatch(SCWatchBool::Ptr ptrWatch)
     {
         SCASSERT(ptrWatch!=NULL);
         
@@ -121,6 +126,7 @@ namespace SpeedCC
             SC_RETURN_IF_V(ptr==NULL || nID<=0);
             
             auto p = ptr.cast<SCWatchBool::Ptr>();
+            SCASSERT(p!=NULL);
             p->removeUpdateFunc(nID);
         };
         
@@ -128,7 +134,7 @@ namespace SpeedCC
         _nFuncID = nID;
     }
     
-    void SCBinderUIToggle::setToggle(cocos2d::MenuItemToggle* pToggle)
+    void SCBinderUISwitch::setToggle(cocos2d::MenuItemToggle* pToggle)
     {
         SC_RETURN_IF_V(pToggle==NULL);
         
@@ -141,7 +147,7 @@ namespace SpeedCC
         this->updateValue2Toggle();
     }
     
-    void SCBinderUIToggle::reset()
+    void SCBinderUISwitch::reset()
     {
         SCBinder::reset();
         
@@ -152,7 +158,7 @@ namespace SpeedCC
         _callbackFunc = NULL;
     }
     
-    void SCBinderUIToggle::removeUpdateFunc()
+    void SCBinderUISwitch::removeUpdateFunc()
     {
         if(_removeUpdateFunc!=NULL && _nFuncID>0)
         {
@@ -164,12 +170,12 @@ namespace SpeedCC
     }
     
     
-    void SCBinderUIToggle::onActiveChanged(const bool bNewActive)
+    void SCBinderUISwitch::onActiveChanged(const bool bNewActive)
     {
         this->updateValue2Toggle();
     }
     
-    void SCBinderUIToggle::updateValue2Toggle()
+    void SCBinderUISwitch::updateValue2Toggle()
     {
         if(_ptrWatch!=NULL && _pToggleMenuItem!=NULL && this->getActive())
         {
@@ -182,7 +188,7 @@ namespace SpeedCC
         }
     }
     
-    void SCBinderUIToggle::onMenuItemClicked(cocos2d::Ref* pSender)
+    void SCBinderUISwitch::onMenuItemClicked(cocos2d::Ref* pSender)
     {
         SC_RETURN_IF_V(_ptrWatch==NULL);
         auto pToggle = dynamic_cast<cocos2d::MenuItemToggle*>(pSender);
@@ -197,76 +203,4 @@ namespace SpeedCC
         }
     }
     
-    /*
-    ///-------------- SCBinderSetting
-    void SCBinderSetting::setWatch(SCWatchString::Ptr watchStr)
-    {
-        SCASSERT(watchStr!=NULL);
-        watchStr->addUpdateFunc([this](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
-                               {
-                                   if(_bActive)
-                                   {
-                                       cocos2d::UserDefault::getInstance()->setStringForKey(_strSettingKey, strNew.c_str());
-                                   }
-                               });
-        
-        *watchStr = cocos2d::UserDefault::getInstance()->getStringForKey(_strSettingKey);
-    }
-    
-    void SCBinderSetting::setWatch(SCWatchInt::Ptr watchInt,const int nDefault)
-    {
-        SCASSERT(watchInt!=NULL);
-        watchInt->addUpdateFunc([this](SCWatchInt::Ptr watchPtr,const int nNew,const int nOld)
-                               {
-                                   if(_bActive)
-                                   {
-                                       cocos2d::UserDefault::getInstance()->setIntegerForKey(_strSettingKey, nNew);
-                                   }
-                               });
-        
-        *watchInt = cocos2d::UserDefault::getInstance()->getIntegerForKey(_strSettingKey,nDefault);
-    }
-    
-    void SCBinderSetting::setWatch(SCWatchFloat::Ptr watchFloat,const float fDefault)
-    {
-        SCASSERT(watchFloat!=NULL);
-        watchFloat->addUpdateFunc([this](SCWatchFloat::Ptr watchPtr,const float fNew,const float fOld)
-                               {
-                                   if(_bActive)
-                                   {
-                                       cocos2d::UserDefault::getInstance()->setFloatForKey(_strSettingKey, fNew);
-                                   }
-                               });
-        
-        *watchFloat = cocos2d::UserDefault::getInstance()->getFloatForKey(_strSettingKey,fDefault);
-    }
-    
-    void SCBinderSetting::setWatch(SCWatchDouble::Ptr watchDoube,const double dDefault)
-    {
-        SCASSERT(watchDoube!=NULL);
-        watchDoube->addUpdateFunc([this](SCWatchDouble::Ptr watchPtr,const double dNew,const double dOld)
-                                 {
-                                     if(_bActive)
-                                     {
-                                         cocos2d::UserDefault::getInstance()->setDoubleForKey(_strSettingKey, dNew);
-                                     }
-                                 });
-        
-        *watchDoube = cocos2d::UserDefault::getInstance()->getDoubleForKey(_strSettingKey,dDefault);
-    }
-    
-    void SCBinderSetting::setWatch(SCWatchBool::Ptr watchBool,const bool bDefault)
-    {
-        SCASSERT(watchBool!=NULL);
-        watchBool->addUpdateFunc([this](SCWatchDouble::Ptr watchPtr,const bool bNew,const bool bOld)
-                                 {
-                                     if(_bActive)
-                                     {
-                                         cocos2d::UserDefault::getInstance()->setBoolForKey(_strSettingKey, bNew);
-                                     }
-                                 });
-        
-        *watchBool = cocos2d::UserDefault::getInstance()->getBoolForKey(_strSettingKey,bDefault);
-    }
-     */
 }

@@ -30,6 +30,7 @@ namespace SpeedCC
         inline bool getActive() const {return _bActive;}
         
         virtual void reset(){ _bActive = true; }
+        
     protected:
         SCBinder():
         _bActive(true)
@@ -119,16 +120,18 @@ namespace SpeedCC
     
     
     ///--------------- SCBinderUIToggle
-    class SCBinderUIToggle : public SCBinder
+    class SCBinderUISwitch : public SCBinder
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBinderUIToggle)
-        SC_DEFINE_CLASS_PTR(SCBinderUIToggle)
+        virtual ~SCBinderUISwitch();
         
-        SC_DEFINE_CREATE_FUNC_0(SCBinderUIToggle)
-        SC_DEFINE_CREATE_FUNC_1(SCBinderUIToggle,SCWatchBool::Ptr)
-        SC_DEFINE_CREATE_FUNC_1(SCBinderUIToggle,cocos2d::MenuItemToggle*)
-        SC_DEFINE_CREATE_FUNC_2(SCBinderUIToggle,SCWatchBool::Ptr,cocos2d::MenuItemToggle*)
+        SC_AVOID_CLASS_COPY(SCBinderUISwitch)
+        SC_DEFINE_CLASS_PTR(SCBinderUISwitch)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBinderUISwitch)
+        SC_DEFINE_CREATE_FUNC_1(SCBinderUISwitch,SCWatchBool::Ptr)
+        SC_DEFINE_CREATE_FUNC_1(SCBinderUISwitch,cocos2d::MenuItemToggle*)
+        SC_DEFINE_CREATE_FUNC_2(SCBinderUISwitch,SCWatchBool::Ptr,cocos2d::MenuItemToggle*)
         
         void setWatch(SCWatchBool::Ptr ptrWatch);
         void setCallback(const std::function<void(cocos2d::Ref*)>& func) { _callbackFunc = func;}
@@ -140,7 +143,7 @@ namespace SpeedCC
         virtual void reset() override;
         
     protected:
-        SCBinderUIToggle():
+        SCBinderUISwitch():
         _pToggleMenuItem(NULL),
         _callbackFunc(NULL),
         _removeUpdateFunc(NULL),
@@ -148,7 +151,7 @@ namespace SpeedCC
         {
         }
         
-        SCBinderUIToggle(SCWatchBool::Ptr ptrWatch):
+        SCBinderUISwitch(SCWatchBool::Ptr ptrWatch):
         _pToggleMenuItem(NULL),
         _callbackFunc(NULL),
         _removeUpdateFunc(NULL),
@@ -157,7 +160,7 @@ namespace SpeedCC
             this->setWatch(ptrWatch);
         }
         
-        SCBinderUIToggle(SCWatchBool::Ptr ptrWatch,cocos2d::MenuItemToggle* pToggle):
+        SCBinderUISwitch(SCWatchBool::Ptr ptrWatch,cocos2d::MenuItemToggle* pToggle):
         _callbackFunc(NULL),
         _removeUpdateFunc(NULL),
         _nFuncID(0)
@@ -166,7 +169,7 @@ namespace SpeedCC
             this->setToggle(pToggle);
         }
         
-        SCBinderUIToggle(cocos2d::MenuItemToggle* pToggle):
+        SCBinderUISwitch(cocos2d::MenuItemToggle* pToggle):
         _callbackFunc(NULL),
         _removeUpdateFunc(NULL),
         _nFuncID(0)
@@ -189,35 +192,6 @@ namespace SpeedCC
         std::function<void(cocos2d::Ref*)>      _callbackFunc;
     };
     
-    /*
-    ///-------------- SCBinderSetting
-    class SCSetting;
-    class SCBinderSetting : public SCBinder
-    {
-        friend class SCSetting;
-    public:
-        SC_AVOID_CLASS_COPY(SCBinderSetting)
-        SC_DEFINE_CLASS_PTR(SCBinderSetting)
-        
-        static Ptr create(const SCString& strSettingKey);
-        
-        void setWatch(SCWatchFloat::Ptr watchFloat,const float fDefault=0.0f);
-        void setWatch(SCWatchDouble::Ptr watchDoube,const double dDefault=0.0);
-        void setWatch(SCWatchBool::Ptr watchBool,const bool bDefault=false);
-        void setWatch(SCWatchInt::Ptr watchInt,const int nDefault=0);
-        void setWatch(SCWatchString::Ptr watchStr);
-        
-    protected:
-        SCBinderSetting()
-        {}
-        
-        SCBinderSetting(const SCString& strSettingKey)
-        {}
-        
-    private:
-        SCString        _strSettingKey;
-    };
-     */
 }
 
 #endif //__SPEEDCC__SCBINDER_H__

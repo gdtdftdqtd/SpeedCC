@@ -129,17 +129,6 @@ do{\
     sc_flow_in_strategy->addExitBehavior(temBehavior);\
 }while(0);
 
-/*
-#define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
-do{\
-    auto temMsg = (_msg_);\
-    SpeedCC::SCBehavior::Ptr temBehavior = SpeedCC::SCFlowSetup::extractBehavior((_behavior_));\
-    const int nMsg = SpeedCC::SCFlowSetup::extractMsgID(temMsg);\
-    auto matchPtr = SpeedCC::SCFlowSetup::extractMsgMatcher(temMsg);\
-    sc_flow_role->markMsgFilter(nMsg);\
-    sc_flow_in_strategy->addBehavior(nMsg,temBehavior,matchPtr);\
-}while(0);
-*/
 
 #define ON_MSG_BEHAVIOR(_msg_,_behavior_) \
 do{\
