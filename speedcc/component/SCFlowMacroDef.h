@@ -91,11 +91,10 @@ namespace SpeedCC
 #define SC_BEGIN_ROLE(_role_id_,_strategy_id_) \
 do{\
     SpeedCC::SCStrategy::Ptr sc_flow_in_strategy;\
-    const int sc_current_role_id = (_role_id_);\
-    auto sc_flow_role = SpeedCC::SCRole::create(sc_current_role_id, this);\
-    sc_flow_role->setID(sc_current_role_id);\
     ___SC_FLOW_CREATE_STRATEGY(sc_flow_in_strategy,(_strategy_id_))\
-    sc_flow_role->addStrategy(sc_flow_in_strategy,true);\
+    const int sc_current_role_id = (_role_id_);\
+    auto sc_flow_role = SpeedCC::SCRole::create(sc_current_role_id, this,sc_flow_in_strategy);\
+    sc_flow_role->setID(sc_current_role_id);
 
 
 
@@ -107,9 +106,10 @@ do{\
 // strategy block
 #define IN_STRATEGY(_strategy_id_) \
 {\
-    SpeedCC::SCStrategy::Ptr sc_flow_in_strategy;\
-    ___SC_FLOW_CREATE_STRATEGY(sc_flow_in_strategy,_strategy_id_)\
-    sc_flow_role->addStrategy(sc_flow_in_strategy);\
+    SpeedCC::SCStrategy::Ptr scTemInStrategy;\
+    ___SC_FLOW_CREATE_STRATEGY(scTemInStrategy,_strategy_id_)\
+    sc_flow_in_strategy->addStrategy(scTemInStrategy);\
+    SpeedCC::SCStrategy::Ptr sc_flow_in_strategy = scTemInStrategy;\
 
 
 #define ENDIN_STRATEGY \
@@ -193,7 +193,25 @@ do{\
 #define ON_MSG_NEXT_STRATEGY(_msg_,_stragegy_id_) \
 do{\
     auto bvrPtr = SCBehaviorStrategySwitch::create(sc_flow_role,(_stragegy_id_));\
-    ON_MSG_BEHAVIOR(_msg_,bvrPtr)\
+    ON_MSG_BEHAVIOR((_msg_),bvrPtr)\
+}while(0);
+
+#define ON_CMD_NEXT_STRATEGY(_cmd_,_stragegy_id_) \
+do{\
+    auto bvrPtr = SCBehaviorStrategySwitch::create(sc_flow_role,(_stragegy_id_));\
+    ON_CMD_BEHAVIOR((_msg_),bvrPtr)\
+}while(0);
+
+#define ON_MSG_PARENT(_msg_) \
+do{\
+    auto bvrPtr = SCBehaviorStrategyParent::create();\
+    ON_MSG_BEHAVIOR((_msg_),bvrPtr)\
+}while(0);
+
+#define ON_CMD_PARENT(_cmd_) \
+do{\
+    auto bvrPtr = SCBehaviorStrategyParent::create();\
+    ON_CMD_BEHAVIOR((_cmd_),bvrPtr)\
 }while(0);
 
 //#define ON_MSG_SEND_MSG(_msg_,_send_) \

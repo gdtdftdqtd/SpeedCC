@@ -130,6 +130,50 @@ namespace SpeedCC
         _ptrExitBehavior->addBehavior(bvrPtr);
     }
     
+    void SCStrategy::addChild(SCStrategy::Ptr ptrStrategy)
+    {
+        SCASSERT(ptrStrategy!=NULL);
+        _childrenStrategyList.push_back(ptrStrategy);
+    }
+    
+    SCStrategy::Ptr SCStrategy::getStrategy(const int nStrategyID)
+    {
+        SCASSERT(nStrategyID>0);
+        
+        for(auto it : _childrenStrategyList)
+        {
+            SC_RETURN_IF(it->getID()==nStrategyID,it);
+            auto result = it->getStrategy(nStrategyID);
+            SC_RETURN_IF(result!=NULL,result);
+        }
+        
+        if(_pParentStrategy!=NULL)
+        {
+            return _pParentStrategy->onChildGetStrategy(nStrategyID);
+        }
+        
+        return NULL;
+    }
+    
+    SCStrategy::Ptr SCStrategy::onChildGetStrategy(const int nStrategyID)
+    {
+        SCASSERT(nStrategyID>0);
+        
+        SC_RETURN_IF(this->getID()==nStrategyID,this->makeObjPtr(this));
+        
+        for(auto it : _childrenStrategyList)
+        {
+            SC_RETURN_IF(it->getID()==nStrategyID,it);
+        }
+        
+        if(_pParentStrategy!=NULL)
+        {
+            return _pParentStrategy->onChildGetStrategy(nStrategyID);
+        }
+        
+        return NULL;
+    }
+    
     void SCStrategy::update(SCActor* pActor,SCMessage::Ptr ptrMsg)
     {
         SC_RETURN_IF_V(!this->getActive());

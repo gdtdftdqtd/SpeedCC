@@ -23,7 +23,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCRole)
         SC_DEFINE_CLASS_PTR(SCRole)
         
-        SC_DEFINE_CREATE_FUNC_2(SCRole, const int,SCStage*);
+        SC_DEFINE_CREATE_FUNC_3(SCRole, const int,SCStage*,SCStrategy::Ptr);
         
         bool addActor(SCActor::Ptr ptrActor);
         void removeActor(const int nID);
@@ -32,10 +32,6 @@ namespace SpeedCC
         
         void forEach(const std::function<bool(const SCActor::Ptr& ptrActor)>& func) const;
         void forEach(const std::function<bool(SCActor::Ptr& ptrActor)>& func);
-        
-        void addStrategy(SCStrategy::Ptr ptrStrategy,const bool bInit=false);
-        SCStrategy::Ptr getStrategy(const int nID) const;
-        bool hasStrategy(const int nID) const;
         
         inline SCStage* getStage() const { return _pOwnerStage;}
         virtual void update(SCMessage::Ptr ptrMsg);
@@ -49,7 +45,7 @@ namespace SpeedCC
         inline void setMsgFilterEnabled(const bool bEnable) {_bFilterMsg = bEnable;}
         
     protected:
-        SCRole(const int nID,SCStage* pStage);
+        SCRole(const int nID,SCStage* pStage,SCStrategy::Ptr ptrStrategy);
         
     private:
         bool filterMsg(SCMessage::Ptr ptrMsg);
@@ -58,9 +54,8 @@ namespace SpeedCC
         
     private:
         bool                                    _bUpdating;
-        int                                     _nInitStrategyID;
+        SCStrategy::Ptr                         _ptrRootStrategy;
         std::list<SCActor::Ptr>                 _actorList;
-        std::map<int,SCStrategy::Ptr>           _id2StrategyMap;
         SCStage*                                _pOwnerStage;
         bool                                    _bFilterMsg;
         

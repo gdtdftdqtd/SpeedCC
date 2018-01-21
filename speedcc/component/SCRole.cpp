@@ -11,13 +11,16 @@
 
 namespace SpeedCC
 {
-    SCRole::SCRole(const int nID,SCStage* pStage):
+    SCRole::SCRole(const int nID,SCStage* pStage,SCStrategy::Ptr ptrStrategy):
     SCPropertyHolder(nID),
     _pOwnerStage(pStage),
-    _nInitStrategyID(0),
     _bFilterMsg(true),
-    _bUpdating(false)
+    _bUpdating(false),
+    _ptrRootStrategy(ptrStrategy)
     {
+        SCASSERT(nID>0);
+        SCASSERT(pStage!=NULL);
+        SCASSERT(_ptrRootStrategy!=NULL);
     }
     
     bool SCRole::addActor(SCActor::Ptr ptrActor)
@@ -44,8 +47,7 @@ namespace SpeedCC
         }
         
         ptrActor->setRole(this);
-        auto strategy = this->getStrategy(_nInitStrategyID);
-        ptrActor->applyStrategy(strategy.getRawPointer());
+        ptrActor->applyStrategy(_ptrRootStrategy.getRawPointer());
         
         if(_bUpdating)
         {
@@ -124,36 +126,6 @@ namespace SpeedCC
         }
         
         return false;
-    }
-    
-    void SCRole::addStrategy(SCStrategy::Ptr ptrStrategy,const bool bInit)
-    {
-        SCASSERT(ptrStrategy!=NULL);
-        SCASSERT(ptrStrategy->getID()>0);
-        
-        _id2StrategyMap[ptrStrategy->getID()] = ptrStrategy;
-        
-        if(bInit)
-        {
-            _nInitStrategyID = ptrStrategy->getID();
-        }
-    }
-    
-    SCStrategy::Ptr SCRole::getStrategy(const int nID) const
-    {
-        SC_RETURN_IF(_id2StrategyMap.empty() || nID<=0, NULL);
-        
-        auto it = _id2StrategyMap.find(nID);
-        SC_RETURN_IF(it==_id2StrategyMap.end(), NULL);
-        
-        return (*it).second;
-    }
-    
-    bool SCRole::hasStrategy(const int nID) const
-    {
-        SC_RETURN_IF(nID<=0, false);
-        
-        return (_id2StrategyMap.find(nID)!=_id2StrategyMap.end());
     }
     
     void SCRole::forEach(const std::function<bool(const SCActor::Ptr& ptrActor)>& func) const

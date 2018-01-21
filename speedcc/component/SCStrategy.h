@@ -41,11 +41,22 @@ namespace SpeedCC
         void addEnterBehavior(SCBehavior::Ptr bvrPtr);
         void addExitBehavior(SCBehavior::Ptr bvrPtr);
         
+        void addChild(SCStrategy::Ptr ptrStrategy);
+        SCStrategy::Ptr getStrategy(const int nStrategyID);
+        inline SCStrategy::Ptr getParent() { return _pParentStrategy->makeObjPtr<>(_pParentStrategy);}
+        
     protected:
+        SCStrategy():
+        _pParentStrategy(NULL)
+        {
+        }
+        
         SCStrategy(const int nID):
-        SCPerformObject(nID)
+        SCPerformObject(nID),
+        _pParentStrategy(NULL)
         {}
         
+        SCStrategy::Ptr onChildGetStrategy(const int nStrategyID);
     private:
         struct SBehaviorInfo
         {
@@ -61,6 +72,7 @@ namespace SpeedCC
         
         std::map<int,SBehaviorInfo>             _msgID2BehaviorMap;
         std::map<SCString,SBehaviorInfo>        _command2BehaviorMap;
+        std::list<SCStrategy::Ptr>              _childrenStrategyList;
     };
     
     ///------------- SCStrategyEmpty
