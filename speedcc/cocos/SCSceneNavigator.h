@@ -63,7 +63,7 @@ namespace SpeedCC
                 TransT* pTrans = NULL;
                 switchType = place;
                 pfunSelfTransCreator = &SCTransitionCreator<TransT>::create;
-                pfunOppositeTransCreator = &SCTransitionCreator< decltype(SCTraitTransitionSceneOpposite(pTrans)) >::create;
+                pfunOppositeTransCreator = &SCTransitionCreator< decltype(SCTraitsTransitionSceneOpposite(pTrans)) >::create;
                 pfunCurrentSceneCreator = (FUN_SCSceneCreateFunctor_t)(&SCSceneNavigator::createScene<SceneT>);
                 pfunCurrentLayerCreator = (FUN_SCLayerCreateFunctor_t)(&SCSceneNavigator::createLayer<SceneT>);
             }

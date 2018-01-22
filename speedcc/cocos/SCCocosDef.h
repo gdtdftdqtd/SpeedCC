@@ -20,24 +20,24 @@ namespace SpeedCC
     ///------- define function type
     typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessage::Ptr ptrMsg);
     
-    ///------- trait function
+    ///------- traits function
     template<typename T>
-    cocos2d::SEL_MenuHandler SCTraitFunctionPointerType(void (T::*)(cocos2d::Ref*));
+    cocos2d::SEL_MenuHandler SCTraitsFunctionPointerType(void (T::*)(cocos2d::Ref*));
     
     template<typename T>
-    cocos2d::SEL_SCHEDULE SCTraitFunctionPointerType(void (T::*)(float));
+    cocos2d::SEL_SCHEDULE SCTraitsFunctionPointerType(void (T::*)(float));
     
     template<typename T>
-    cocos2d::SEL_CallFunc SCTraitFunctionPointerType(void (T::*)());
+    cocos2d::SEL_CallFunc SCTraitsFunctionPointerType(void (T::*)());
     
     template<typename T>
-    cocos2d::SEL_CallFuncN SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*));
+    cocos2d::SEL_CallFuncN SCTraitsFunctionPointerType(void (T::*)(cocos2d::Node*));
     
     template<typename T>
-    cocos2d::SEL_CallFuncND SCTraitFunctionPointerType(void (T::*)(cocos2d::Node*,void*));
+    cocos2d::SEL_CallFuncND SCTraitsFunctionPointerType(void (T::*)(cocos2d::Node*,void*));
     
     template<typename T>
-    FUN_SCMapMessage_t SCTraitFunctionPointerType(void (T::*)(SCMessage::Ptr ptrMsg));
+    FUN_SCMapMessage_t SCTraitsFunctionPointerType(void (T::*)(SCMessage::Ptr ptrMsg));
     
     ///--------------------- cocos2d transition template
     
@@ -57,38 +57,38 @@ namespace SpeedCC
         {return pScene;}
     };
     
-    SCClassNull SCTraitTransitionSceneOpposite(SCClassNull*);
-    cocos2d::TransitionRotoZoom SCTraitTransitionSceneOpposite(cocos2d::TransitionRotoZoom*);
-    cocos2d::TransitionJumpZoom SCTraitTransitionSceneOpposite(cocos2d::TransitionJumpZoom*);
-    cocos2d::TransitionShrinkGrow SCTraitTransitionSceneOpposite(cocos2d::TransitionShrinkGrow*);
-    cocos2d::TransitionFlipX SCTraitTransitionSceneOpposite(cocos2d::TransitionFlipX*);
-    cocos2d::TransitionFlipY SCTraitTransitionSceneOpposite(cocos2d::TransitionFlipY*);
-    cocos2d::TransitionFlipAngular SCTraitTransitionSceneOpposite(cocos2d::TransitionFlipAngular*);
-    cocos2d::TransitionZoomFlipX SCTraitTransitionSceneOpposite(cocos2d::TransitionZoomFlipX*);
-    cocos2d::TransitionZoomFlipY SCTraitTransitionSceneOpposite(cocos2d::TransitionZoomFlipY*);
-    cocos2d::TransitionZoomFlipAngular SCTraitTransitionSceneOpposite(cocos2d::TransitionZoomFlipAngular*);
-    cocos2d::TransitionFade SCTraitTransitionSceneOpposite(cocos2d::TransitionFade*);
-    cocos2d::TransitionTurnOffTiles SCTraitTransitionSceneOpposite(cocos2d::TransitionTurnOffTiles*);
-    cocos2d::TransitionSplitCols SCTraitTransitionSceneOpposite(cocos2d::TransitionSplitCols*);
-    cocos2d::TransitionSplitRows SCTraitTransitionSceneOpposite(cocos2d::TransitionSplitRows*);
-    cocos2d::TransitionFadeTR SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeTR*);
-    cocos2d::TransitionFadeBL SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeBL*);
-    cocos2d::TransitionProgressRadialCCW SCTraitTransitionSceneOpposite(cocos2d::TransitionProgressRadialCCW*);
+    SCClassNull SCTraitsTransitionSceneOpposite(SCClassNull*);
+    cocos2d::TransitionRotoZoom SCTraitsTransitionSceneOpposite(cocos2d::TransitionRotoZoom*);
+    cocos2d::TransitionJumpZoom SCTraitsTransitionSceneOpposite(cocos2d::TransitionJumpZoom*);
+    cocos2d::TransitionShrinkGrow SCTraitsTransitionSceneOpposite(cocos2d::TransitionShrinkGrow*);
+    cocos2d::TransitionFlipX SCTraitsTransitionSceneOpposite(cocos2d::TransitionFlipX*);
+    cocos2d::TransitionFlipY SCTraitsTransitionSceneOpposite(cocos2d::TransitionFlipY*);
+    cocos2d::TransitionFlipAngular SCTraitsTransitionSceneOpposite(cocos2d::TransitionFlipAngular*);
+    cocos2d::TransitionZoomFlipX SCTraitsTransitionSceneOpposite(cocos2d::TransitionZoomFlipX*);
+    cocos2d::TransitionZoomFlipY SCTraitsTransitionSceneOpposite(cocos2d::TransitionZoomFlipY*);
+    cocos2d::TransitionZoomFlipAngular SCTraitsTransitionSceneOpposite(cocos2d::TransitionZoomFlipAngular*);
+    cocos2d::TransitionFade SCTraitsTransitionSceneOpposite(cocos2d::TransitionFade*);
+    cocos2d::TransitionTurnOffTiles SCTraitsTransitionSceneOpposite(cocos2d::TransitionTurnOffTiles*);
+    cocos2d::TransitionSplitCols SCTraitsTransitionSceneOpposite(cocos2d::TransitionSplitCols*);
+    cocos2d::TransitionSplitRows SCTraitsTransitionSceneOpposite(cocos2d::TransitionSplitRows*);
+    cocos2d::TransitionFadeTR SCTraitsTransitionSceneOpposite(cocos2d::TransitionFadeTR*);
+    cocos2d::TransitionFadeBL SCTraitsTransitionSceneOpposite(cocos2d::TransitionFadeBL*);
+    cocos2d::TransitionProgressRadialCCW SCTraitsTransitionSceneOpposite(cocos2d::TransitionProgressRadialCCW*);
     
-    cocos2d::TransitionMoveInL SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInR*);
-    cocos2d::TransitionMoveInR SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInL*);
+    cocos2d::TransitionMoveInL SCTraitsTransitionSceneOpposite(cocos2d::TransitionMoveInR*);
+    cocos2d::TransitionMoveInR SCTraitsTransitionSceneOpposite(cocos2d::TransitionMoveInL*);
     
-    cocos2d::TransitionMoveInT SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInB*);
-    cocos2d::TransitionMoveInB SCTraitTransitionSceneOpposite(cocos2d::TransitionMoveInT*);
+    cocos2d::TransitionMoveInT SCTraitsTransitionSceneOpposite(cocos2d::TransitionMoveInB*);
+    cocos2d::TransitionMoveInB SCTraitsTransitionSceneOpposite(cocos2d::TransitionMoveInT*);
     
-    cocos2d::TransitionSlideInL SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInR*);
-    cocos2d::TransitionSlideInR SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInL*);
+    cocos2d::TransitionSlideInL SCTraitsTransitionSceneOpposite(cocos2d::TransitionSlideInR*);
+    cocos2d::TransitionSlideInR SCTraitsTransitionSceneOpposite(cocos2d::TransitionSlideInL*);
     
-    cocos2d::TransitionSlideInB SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInT*);
-    cocos2d::TransitionSlideInT SCTraitTransitionSceneOpposite(cocos2d::TransitionSlideInB*);
+    cocos2d::TransitionSlideInB SCTraitsTransitionSceneOpposite(cocos2d::TransitionSlideInT*);
+    cocos2d::TransitionSlideInT SCTraitsTransitionSceneOpposite(cocos2d::TransitionSlideInB*);
     
-    cocos2d::TransitionFadeUp SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeDown*);
-    cocos2d::TransitionFadeDown SCTraitTransitionSceneOpposite(cocos2d::TransitionFadeUp*);
+    cocos2d::TransitionFadeUp SCTraitsTransitionSceneOpposite(cocos2d::TransitionFadeDown*);
+    cocos2d::TransitionFadeDown SCTraitsTransitionSceneOpposite(cocos2d::TransitionFadeUp*);
     
     ///-------- cocos2d efficiency macro
 #define SCCCFileUtils() \
@@ -115,10 +115,10 @@ namespace SpeedCC
     (SCCCDirector()->getScheduler())
     
 #define SC_FUNC(_fun_)\
-    (decltype(SpeedCC::SCTraitFunctionPointerType(&_fun_))(&_fun_))
+    (decltype(SpeedCC::SCTraitsFunctionPointerType(&_fun_))(&_fun_))
     
 #define SCF(_fun_)\
-    ((decltype(SpeedCC::SCTraitFunctionPointerType(&std::remove_pointer<decltype(this)>::type::_fun_)))(&std::remove_pointer<decltype(this)>::type::_fun_))
+    ((decltype(SpeedCC::SCTraitsFunctionPointerType(&std::remove_pointer<decltype(this)>::type::_fun_)))(&std::remove_pointer<decltype(this)>::type::_fun_))
     
 #define SCSceneNav() \
     (SpeedCC::SCSceneNavigator::getInstance())

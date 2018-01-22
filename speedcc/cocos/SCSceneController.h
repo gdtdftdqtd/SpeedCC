@@ -9,6 +9,7 @@
 #include "SCRefHolder.h"
 #include "SCCocosDef.h"
 #include "SCBinder.h"
+#include "SCUIBuilder.h"
 
 #include "../base/SCBaseDef.h"
 #include "../base/SCObjPtrT.h"
@@ -71,12 +72,13 @@ namespace SpeedCC
         void storeLayoutNode(...){}
         
     private:
-        inline void setBedNode(SCBedNode* pLayer) { _pBedNode = pLayer;}
+        void setBedNode(SCBedNode* pLayer);
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _ptrParentModalController = controllerPtr;}
         
     protected:
         std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
+        SCUIBuilder::Ptr                            _ptrUI;
         
     private:
         SCBedNode*			                        _pBedNode;

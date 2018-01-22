@@ -12,7 +12,7 @@ namespace SpeedCC
     public:
         static cocos2d::Vec2 posA2P(const cocos2d::Vec2& ptA,const cocos2d::Size& frameSize);
         static cocos2d::Vec2 posP2A(const cocos2d::Vec2& ptP,const cocos2d::Size& frameSize);
-        static bool setRelPosition(cocos2d::Node* pNode,const cocos2d::Vec2& ptPer);
+        static bool setPerPosition(cocos2d::Node* pNode,const cocos2d::Vec2& ptPer);
     };
 }
 

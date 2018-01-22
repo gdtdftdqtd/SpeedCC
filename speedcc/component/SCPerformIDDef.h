@@ -90,7 +90,6 @@ namespace SpeedCC
             // lisenter: owner scene controller
             kSCMsgTouchCancelled,
             
-            // key: MSG_KEY_CONTROLLER
             // key: MSG_KEY_CCREF
             kSCMsgButtonClicked,
             
