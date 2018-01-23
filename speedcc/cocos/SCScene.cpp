@@ -18,7 +18,7 @@ namespace SpeedCC
     
     void SCBedNode::setController(SCObject::Ptr controllerPtr)
     {
-        _sceneControllerPtr = controllerPtr;
+        _ptrController = controllerPtr;
     }
     
     
@@ -28,7 +28,7 @@ namespace SpeedCC
         
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneEnter;
-        _sceneControllerPtr.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
+        _ptrController.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
     }
     
     void SCBedNode::onEnterTransitionDidFinish()
@@ -37,7 +37,7 @@ namespace SpeedCC
         
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneEnterTransitionDidFinish;
-        _sceneControllerPtr.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
+        _ptrController.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
     }
     
     void SCBedNode::onExit()
@@ -46,7 +46,7 @@ namespace SpeedCC
         
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneExit;
-        _sceneControllerPtr.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
+        _ptrController.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
     }
     
     void SCBedNode::onExitTransitionDidStart()
@@ -55,7 +55,7 @@ namespace SpeedCC
         
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = SCID::Msg::kSCMsgSceneExitTransitionDidStart;
-        _sceneControllerPtr.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
+        _ptrController.cast<SCSceneController::Ptr>()->onSCMessageProcess(ptrMsg);
     }
 
     ///-------------- SCScene

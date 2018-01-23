@@ -37,18 +37,18 @@ namespace SpeedCC
         this->ownLifecycle(ptr);
     }
     
-    void SCSceneController::pushModalController(SCSceneController::Ptr controllerPtr)
+    void SCSceneController::pushModalController(SCSceneController::Ptr ptrController)
     {
         SCSceneController::WeakPtr controllerPtr2 = this->makeObjPtr<SCSceneController::WeakPtr>();
-        controllerPtr->setModalParentController(controllerPtr2);
-        controllerPtr->setScene(_pScene);
+        ptrController->setModalParentController(controllerPtr2);
+        ptrController->setScene(_pScene);
         
         if(_bBlackMaskForModal)
         {
             this->showBlackMask(true);
         }
         
-        _pScene->addChild(controllerPtr->getBedNode());
+        _pScene->addChild(ptrController->getBedNode());
         this->setAllTouchEnabled(false);
         
         // generate modal mssage
@@ -59,7 +59,7 @@ namespace SpeedCC
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
         
         ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
-        ptrMsg->paramters.setValue(MSG_KEY_CONTROLLER,controllerPtr.getRawPointer());
+        ptrMsg->paramters.setValue(MSG_KEY_CONTROLLER,ptrController.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
     }
     

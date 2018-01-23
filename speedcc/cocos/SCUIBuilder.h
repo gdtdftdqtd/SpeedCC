@@ -22,158 +22,120 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCUIBuilder)
         SC_DEFINE_CLASS_PTR(SCUIBuilder)
         
+        SC_DEFINE_CREATE_FUNC_0(SCUIBuilder)
         SC_DEFINE_CREATE_FUNC_1(SCUIBuilder,cocos2d::Node*)
         SC_DEFINE_CREATE_FUNC_2(SCUIBuilder,cocos2d::Node*,cocos2d::Ref*)
         
         ///------------- root container
         void beginContainerRoot(const float fPosX,
-                                const float fPosY,
-                                const SCUIArg::PurifyString& property,
-                                const cocos2d::Size& size);
-        
-        void beginContainerRootEx(const float fPosX,
                                      const float fPosY,
-                                     const SCUIArg::PurifyString& property,
+                                     const SCUIArg::StringPurifier& property,
                                      const cocos2d::Size& size,
-                                     const SCUIArg::PurifyNode& parentNode,
+                                     const SCUIArg::NodePurifier& parentNode,
                                     cocos2d::Ref* pRef);
-        void endContainer();
+        
+        void pushContainerStack(cocos2d::Node* pNode);
+        void popContainerStack();
         
         ///------------ layer
-        void beginContainerLayerColor(cocos2d::LayerColor** ppLayer,
-                                      const float fPosX,
-                                      const float fPosY,
-                                      const SCUIArg::PurifyString& property,
-                                      const cocos2d::Size& size,
-                                      const cocos2d::Color4B& crBackground);
         
         cocos2d::LayerColor* insertLayerColor(cocos2d::LayerColor** ppLayer,
                                               const float fPosX,
                                               const float fPosY,
-                                              const SCUIArg::PurifyString& property,
+                                              const SCUIArg::StringPurifier& property,
                                               const cocos2d::Size& size,
                                               const cocos2d::Color4B& crBackground);
-        
-        void beginContainerLayer(cocos2d::Layer** ppLayer,
-                         const float fPosX,
-                         const float fPosY,
-                         const SCUIArg::PurifyString& property,
-                         const cocos2d::Size& size);
         
         cocos2d::Layer* insertLayer(cocos2d::Layer** ppLayer,
                                   const float fPosX,
                                   const float fPosY,
-                                  const SCUIArg::PurifyString& property,
+                                  const SCUIArg::StringPurifier& property,
                                   const cocos2d::Size& size);
         
         ///-------------- user node
-        void insertUsertNode(const SCUIArg::PurifyNode& userNode,
+        void insertUsertNode(const SCUIArg::NodePurifier& userNode,
                              const float fPosX,
                              const float fPosY,
-                             const SCUIArg::PurifyString& property);
-        
-        void beginContainerUsertNode(const SCUIArg::PurifyNode& userNode,
-                                     const float fPosX,
-                                     const float fPosY,
-                                     const SCUIArg::PurifyString& property);
+                             const SCUIArg::StringPurifier& property);
         
         ///-------------- sprite
         cocos2d::Sprite* insertSprite(cocos2d::Sprite** ppSprite,
                                       const float fPosX,
                                       const float fPosY,
-                                      const SCUIArg::PurifyString& property,
+                                      const SCUIArg::StringPurifier& property,
                                       const SCString& strImage);
-        
-        void beginContainerSprite(cocos2d::Sprite** ppSprite,
-                                     const float fPosX,
-                                     const float fPosY,
-                                     const SCUIArg::PurifyString& property,
-                                     const SCString& strImage);
         
         ///--------------- label
         
         cocos2d::Label* insertLabel(cocos2d::Label** ppLabel,
                                     const float fPosX,
                                     const float fPosY,
-                                    const SCUIArg::PurifyString& property,
-                                    const SCUIArg::PurifyLabelString& labelString,
+                                    const SCUIArg::StringPurifier& property,
+                                    const SCUIArg::LabelStringPurifier& labelString,
                                     const SCString& strFont,
                                     const float fFontSize);
-        
-        void beginContainerLabel(cocos2d::Label** ppLabel,
-                                     const float fPosX,
-                                     const float fPosY,
-                                     const SCUIArg::PurifyString& property,
-                                     const SCUIArg::PurifyLabelString& labelString,
-                                     const SCString& strFont,
-                                     const float fFontSize);
         
         cocos2d::Label* insertLabelTTF(cocos2d::Label** ppLabel,
                                        const float fPosX,
                                        const float fPosY,
-                                       const SCUIArg::PurifyString& property,
-                                       const SCUIArg::PurifyLabelString& labelString,
+                                       const SCUIArg::StringPurifier& property,
+                                       const SCUIArg::LabelStringPurifier& labelString,
                                        const SCString& strFont,
                                        const float fFontSize);
-        
-        void beginContainerLabelTTF(cocos2d::Label** ppLabel,
-                                 const float fPosX,
-                                 const float fPosY,
-                                 const SCUIArg::PurifyString& property,
-                                 const SCUIArg::PurifyLabelString& labelString,
-                                 const SCString& strFont,
-                                 const float fFontSize);
         
         cocos2d::Label* insertLabelBMFont(cocos2d::Label** ppLabel,
                                        const float fPosX,
                                        const float fPosY,
-                                       const SCUIArg::PurifyString& property,
-                                       const SCUIArg::PurifyLabelString& labelString,
+                                       const SCUIArg::StringPurifier& property,
+                                       const SCUIArg::LabelStringPurifier& labelString,
                                        const SCString& strFile);
         
-        void beginContainerLabelBMFont(cocos2d::Label** ppLabel,
-                                          const float fPosX,
-                                          const float fPosY,
-                                          const SCUIArg::PurifyString& property,
-                                          const SCUIArg::PurifyLabelString& labelString,
-                                          const SCString& strFile);
         
         ///-------------- button
         cocos2d::MenuItemSprite* insertButton(cocos2d::MenuItemSprite** ppMenuItemSprite,
                                               const float fPosX,
                                               const float fPosY,
-                                              const SCUIArg::PurifyString& property,
+                                              const SCUIArg::StringPurifier& property,
                                               const SCString& strImageNormal,
                                               const SCString& strSelect,
                                               const SCString& strDisable,
-                                            SCUIArg::PurifyBehavior bvrPurfier);
-        
-        void beginContainerButton(cocos2d::MenuItemSprite** ppMenuItemSprite,
-                                  const float fPosX,
-                                  const float fPosY,
-                                  const SCUIArg::PurifyString& property,
-                                  const SCString& strImageNormal,
-                                  const SCString& strSelect,
-                                  const SCString& strDisable,
-                                  SCUIArg::PurifyBehavior bvrPurfier);
+                                            SCUIArg::BehaviorPurifier bvrPurifier);
         
         cocos2d::MenuItemLabel* insertButtonLabel(cocos2d::MenuItemLabel** ppMenuItemLabel,
                                           const float fPosX,
                                           const float fPosY,
-                                          const SCUIArg::PurifyString& property,
-                                          const SCUIArg::PurifyLabelString& labelString,
+                                          const SCUIArg::StringPurifier& property,
+                                          const SCUIArg::LabelStringPurifier& labelString,
                                           const SCString& strFont,
                                           const float fFontSize,
-                                          SCUIArg::PurifyBehavior bvrPurfier);
+                                          SCUIArg::BehaviorPurifier bvrPurifier);
         
-        void beginContainerButtonLabel(cocos2d::MenuItemLabel** ppMenuItemLabel,
+        cocos2d::MenuItemLabel* insertButtonLabelTTF(cocos2d::MenuItemLabel** ppMenuItemLabel,
                                                   const float fPosX,
                                                   const float fPosY,
-                                                  const SCUIArg::PurifyString& property,
-                                                  const SCUIArg::PurifyLabelString& labelString,
+                                                  const SCUIArg::StringPurifier& property,
+                                                  const SCUIArg::LabelStringPurifier& labelString,
                                                   const SCString& strFont,
                                                   const float fFontSize,
-                                                  SCUIArg::PurifyBehavior bvrPurfier);
+                                                  SCUIArg::BehaviorPurifier bvrPurifier);
+        
+        
+        cocos2d::MenuItemLabel* insertButtonLabelBMFont(cocos2d::MenuItemLabel** ppMenuItemLabel,
+                                                     const float fPosX,
+                                                     const float fPosY,
+                                                     const SCUIArg::StringPurifier& property,
+                                                     const SCUIArg::LabelStringPurifier& labelString,
+                                                     const SCString& strFile,
+                                                     SCUIArg::BehaviorPurifier bvrPurifier);
+        
+        cocos2d::MenuItemToggle* insertButtonSwitch(cocos2d::MenuItemToggle** ppMenuItemToggle,
+                                                    const float fPosX,
+                                                    const float fPosY,
+                                                    const SCUIArg::StringPurifier& property,
+                                                    const SCString& strImageOn,
+                                                    const SCString& strImageOff,
+                                                    const SCUIArg::BoolPurifier& value,
+                                                    SCUIArg::BehaviorPurifier bvrPurifier);
         
         cocos2d::Node* getLayoutNode(const int nID);
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
@@ -181,53 +143,67 @@ namespace SpeedCC
         SCBinder::Ptr getBinder(cocos2d::Ref* pObj) const;
         
     protected:
+        SCUIBuilder():
+        _pCurrentBedNode(NULL),
+        _pCurrentRefCaller(NULL),
+        _pDefaultBedNode(NULL),
+        _pDefaultRefCaller(NULL)
+        {
+        }
+        
         SCUIBuilder(cocos2d::Node* pBedNode,cocos2d::Ref* pRef):
-        _pBedNode(pBedNode),
-        _pRefCaller(pRef)
+        _pCurrentBedNode(NULL),
+        _pCurrentRefCaller(NULL),
+        _pDefaultBedNode(pBedNode),
+        _pDefaultRefCaller(pRef)
         {
         }
         
         SCUIBuilder(cocos2d::Node* pBedNode):
-        _pBedNode(pBedNode),
-        _pRefCaller(NULL)
+        _pCurrentBedNode(NULL),
+        _pCurrentRefCaller(NULL),
+        _pDefaultBedNode(pBedNode),
+        _pDefaultRefCaller(NULL)
         {
         }
         
         void onSCMenuItemPressed(cocos2d::Ref* pSender);
         
     private:
-        void addLayer(const SCUIArg::PurifyNode& layerNode,
+        void addLayer(const SCUIArg::NodePurifier& layerNode,
                       const float fPosX,
                       const float fPosY,
-                      const SCUIArg::PurifyString& property,
+                      const SCUIArg::StringPurifier& property,
                       const cocos2d::Size& size);
         
-        void addLabel(const SCUIArg::PurifyNode& labelNode,
+        void addLabel(const SCUIArg::NodePurifier& labelNode,
                       const float fPosX,
                       const float fPosY,
-                      const SCUIArg::PurifyString& property,
-                      const SCUIArg::PurifyLabelString& labelString);
+                      const SCUIArg::StringPurifier& property,
+                      const SCUIArg::LabelStringPurifier& labelString);
         
-        void addButton(const SCUIArg::PurifyNode& itemNode,
+        void addButton(const SCUIArg::NodePurifier& itemNode,
                       const float fPosX,
                       const float fPosY,
-                      const SCUIArg::PurifyString& property,
-                      SCUIArg::PurifyBehavior bvrPurifier);
+                      const SCUIArg::StringPurifier& property,
+                      SCUIArg::BehaviorPurifier bvrPurifier);
         
         cocos2d::MenuItemLabel* addButtonLabel(cocos2d::Label* pLabel,
                             const float fPosX,
                             const float fPosY,
-                            const SCUIArg::PurifyString& property,
-                                               const SCUIArg::PurifyLabelString& labelString,
-                            SCUIArg::PurifyBehavior bvrPurifier);
+                            const SCUIArg::StringPurifier& property,
+                                               const SCUIArg::LabelStringPurifier& labelString,
+                            SCUIArg::BehaviorPurifier bvrPurifier);
         
-        void bindLabel(const SCUIArg::PurifyNode& labelNode,
-                       const SCUIArg::PurifyLabelString& labelString);
-        void pushContainerStack(cocos2d::Node* pNode);
+        void bindLabel(const SCUIArg::NodePurifier& labelNode,
+                       const SCUIArg::LabelStringPurifier& labelString);
         
     private:
-        cocos2d::Node*                          _pBedNode;
-        cocos2d::Ref*                           _pRefCaller;
+        cocos2d::Node*                          _pCurrentBedNode;
+        cocos2d::Ref*                           _pCurrentRefCaller;
+        
+        cocos2d::Node*                          _pDefaultBedNode;
+        cocos2d::Ref*                           _pDefaultRefCaller;
         std::stack<SCUITypeDef::SUIContext>          _contextStack;
         
         std::map<int,cocos2d::Node*>                _id2NodeMap;

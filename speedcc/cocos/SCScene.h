@@ -15,7 +15,7 @@ namespace SpeedCC
     public:
         CREATE_FUNC(SCBedNode);
         void setController(SCObject::Ptr controllerPtr);
-        inline SCObject::Ptr getController() {return _sceneControllerPtr;}
+        inline SCObject::Ptr getController() {return _ptrController;}
         
         virtual bool init() override;
         
@@ -37,7 +37,7 @@ namespace SpeedCC
 //        virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags);
         
     private:
-        SCObject::Ptr               _sceneControllerPtr;
+        SCObject::Ptr               _ptrController;
         cocos2d::EventListener*     _accListener;
     };
     

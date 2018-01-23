@@ -25,35 +25,35 @@ namespace SpeedCC
     class SCSceneController;
     class SCUIBuilder;
     
-    typedef void (*FUN_SCSetProperty2_t)(cocos2d::Node* pNode,const SCString& strProperty,SCNodeProperty::SFilterConfig* pFilterConfig);
+    typedef void (*FUN_SCSetProperty_t)(cocos2d::Node* pNode,const SCString& strProperty,SCNodeProperty::SFilterConfig* pFilterConfig);
     
     struct SCUIArg
     {
-        struct PurifyString
+        struct StringPurifier
         {
-            PurifyString(void*){}
-            PurifyString(long){}
-            PurifyString(int){}
-            PurifyString(const char* psz):strResult(psz){}
-            PurifyString(const SCString& str):strResult(str){}
+            StringPurifier(void*){}
+            StringPurifier(long){}
+            StringPurifier(int){}
+            StringPurifier(const char* psz):strResult(psz){}
+            StringPurifier(const SCString& str):strResult(str){}
             
             SCString strResult;
         };
         
-        struct PurifyLabelString
+        struct LabelStringPurifier
         {
-            PurifyLabelString(...) {}
-            PurifyLabelString(void*) {}
-            PurifyLabelString(const char* psz):strResult(psz){}
-            PurifyLabelString(const SCString& str):strResult(str) {}
-            PurifyLabelString(long n):strResult(n){}
-            PurifyLabelString(int n):strResult(n) {}
-            PurifyLabelString(float n):strResult(n) {}
-            PurifyLabelString(double n):strResult(n) {}
+            LabelStringPurifier(...) {}
+            LabelStringPurifier(void*) {}
+            LabelStringPurifier(const char* psz):strResult(psz){}
+            LabelStringPurifier(const SCString& str):strResult(str) {}
+            LabelStringPurifier(long n):strResult(n){}
+            LabelStringPurifier(int n):strResult(n) {}
+            LabelStringPurifier(float n):strResult(n) {}
+            LabelStringPurifier(double n):strResult(n) {}
             
             template<typename T,
             typename = typename std::enable_if<SCIsWatchClass<typename T::type>::value==1,T>::type >
-            PurifyLabelString(T ptrWatch)
+            LabelStringPurifier(T ptrWatch)
             {
                 if(ptrWatch!=NULL)
                 {
@@ -62,37 +62,37 @@ namespace SpeedCC
                 }
             }
             
-            PurifyLabelString(SCBinderUILabel::Ptr binderPtr): ptrLabelBinder(binderPtr) {}
+            LabelStringPurifier(SCBinderUILabel::Ptr ptrBinder): ptrLabelBinder(ptrBinder) {}
             
             SCString strResult;
             SCBinderUILabel::Ptr    ptrLabelBinder;
         };
         
-        struct PurifyBehavior
+        struct BehaviorPurifier
         {
-            PurifyBehavior(cocos2d::SEL_CallFunc func):
+            BehaviorPurifier(cocos2d::SEL_CallFunc func):
             callFunc(func),
             menuFunc(NULL)
             {
             }
             
-            PurifyBehavior(cocos2d::SEL_MenuHandler func):
+            BehaviorPurifier(cocos2d::SEL_MenuHandler func):
             menuFunc(func),
             callFunc(NULL)
             {
             }
             
-            PurifyBehavior(SCBehavior::Ptr bvr):
+            template<typename T,
+            typename = typename std::enable_if<std::is_convertible<T,SCBehavior::Ptr>::value,T>::type >
+            BehaviorPurifier(T bvr):
             callFunc(NULL),
-            menuFunc(NULL)
-            { ptrResultBvr = bvr; }
+            menuFunc(NULL),
+            ptrResultBvr(bvr)
+            {
+                
+            }
             
-            PurifyBehavior(decltype(NULL)):
-            callFunc(NULL),
-            menuFunc(NULL)
-            {}
-            
-            PurifyBehavior(...):
+            BehaviorPurifier(decltype(NULL)):
             callFunc(NULL),
             menuFunc(NULL)
             {}
@@ -128,90 +128,49 @@ namespace SpeedCC
             cocos2d::SEL_MenuHandler menuFunc;
         };
         
-        struct PurifyBool
+        struct BoolPurifier
         {
-            PurifyBool(const bool bValue):bResult(bValue) {}
-            PurifyBool(SCWatchBool::Ptr ptrBool) { bResult = (ptrBool==NULL ? false : (bool)(*ptrBool)); }
+            BoolPurifier(const bool bValue):
+            bResult(bValue)
+            {}
+            
+            BoolPurifier(SCWatchBool::Ptr ptrBool):
+            ptrWatch(ptrBool)
+            {
+                SCASSERT(ptrBool!=NULL);
+                bResult = (ptrBool==NULL ? false : (bool)(*ptrBool));
+            }
             
             bool bResult;
+            SCWatchBool::Ptr    ptrWatch;
         };
         
-        struct PurifyNode
+        struct NodePurifier
         {
             template<typename T>
-            PurifyNode(T* node):
+            NodePurifier(T* node):
             pNode(node),
             pfunSetProperty(&SCNodeProperty::setProperty<T>)
             {
             }
             
             cocos2d::Node*          pNode;
-            FUN_SCSetProperty2_t     pfunSetProperty;
+            FUN_SCSetProperty_t     pfunSetProperty;
         };
  
-    };
-    
-    class SCUIMethod
-    {
-        friend class SCUIBuilder;
-        
-        static inline void assignNode(...){}
-        
-        template<typename T1,typename T2>
-        static inline void assignNode(T1* pNodeFrom,T2 *&pNodeTo) {pNodeTo = pNodeFrom;}
-        
-        // label binder
-//        static inline void bindLabel(...) {}
-//        static inline void bindLabel(cocos2d::Label* pLabel,...) {}
-//        static void bindLabel(cocos2d::Label* pLabel,SCBinderUILabel::Ptr ptrBinder,SCSceneController* pController);
-        
-        /*
-        template<typename T,
-        typename = typename std::enable_if<SCIsWatchClass<typename T::type>::value==1,T>::type >
-        static inline SCBinderUILabel::Ptr createLabelBinder(T ptrWatch)
-        {
-            if(ptrWatch!=NULL)
-            {
-                auto ptrLabelBinder = SCBinderUILabel::create();
-                
-                ptrLabelBinder->setWatch(ptrWatch);
-                return ptrLabelBinder;
-            }
-            
-            return NULL;
-        }
-        
-        static inline SCBinderUILabel::Ptr createLabelBinder(SCBinderUILabel::Ptr ptrBinder) { return ptrBinder; }
-        
-        static inline SCBinderUILabel::Ptr createLabelBinder(...) { return NULL; }
-        */
-        // toggle binder
-        static inline SCBinderUISwitch::Ptr createToggleBinder(SCBinderUISwitch::Ptr ptrBinder) { return ptrBinder; }
-        
-        static inline SCBinderUISwitch::Ptr createToggleBinder(SCWatchBool::Ptr ptrWatch)
-        {
-            return (ptrWatch==NULL) ? NULL : SCBinderUISwitch::create(ptrWatch);
-        }
-        
-        static inline SCBinderUISwitch::Ptr createToggleBinder(...) { return NULL;}
-        
-        static void bindToggle(cocos2d::MenuItemToggle* pToggle,
-                                      SCBinderUISwitch::Ptr ptrBinder,
-                                      SCSceneController* pController,
-                                      const std::function<void(cocos2d::Ref*)>& func);
     };
     
     class SCUITypeDef
     {
         friend class SCUIBuilder;
         
-        typedef void (*FUN_SCSetProperty2_t)(cocos2d::Node* pNode,const SCString& strProperty);
+        typedef void (*FUN_SCSetProperty_t)(cocos2d::Node* pNode,const SCString& strProperty);
         
         struct ContainerEndFunctor
         {
             cocos2d::Node*              pNode;
             SCString                    strProperty;
-            FUN_SCSetProperty2_t         pfunSetProperty;
+            FUN_SCSetProperty_t         pfunSetProperty;
             
             ContainerEndFunctor():
             pfunSetProperty(NULL),
@@ -232,13 +191,6 @@ namespace SpeedCC
             kNormal,
             kButtonList,
             kMultiplexLayer
-        };
-        
-        enum class ELabelType
-        {
-            kSystem,
-            kTTF,
-            kBMFont,
         };
         
         struct SUIContext
