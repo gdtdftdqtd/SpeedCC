@@ -88,7 +88,7 @@ namespace SpeedCC
         static void setProperty(cocos2d::Node* pNode,const SCString& strProperty,SFilterConfig* pFilterConfig=NULL)
         {
             SCASSERT(pNode!=NULL);
-            SC_RETURN_IF_V(pNode==NULL);
+            SC_RETURN_V_IF(pNode==NULL);
             
             SCDictionary dic;
             if(SCNodeProperty::convertString2Dic(strProperty,dic))

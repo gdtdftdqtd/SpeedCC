@@ -11,16 +11,13 @@
 
 namespace SpeedCC
 {
-    SCRole::SCRole(const int nID,SCStage* pStage,SCStrategy::Ptr ptrStrategy):
+    SCRole::SCRole(const int nID,SCStage* pStage):
     SCPropertyHolder(nID),
     _pOwnerStage(pStage),
+    _nInitStrategyID(0),
     _bFilterMsg(true),
-    _bUpdating(false),
-    _ptrRootStrategy(ptrStrategy)
+    _bUpdating(false)
     {
-        SCASSERT(nID>0);
-        SCASSERT(pStage!=NULL);
-        SCASSERT(_ptrRootStrategy!=NULL);
     }
     
     bool SCRole::addActor(SCActor::Ptr ptrActor)
@@ -47,7 +44,8 @@ namespace SpeedCC
         }
         
         ptrActor->setRole(this);
-        ptrActor->applyStrategy(_ptrRootStrategy.getRawPointer());
+        auto strategy = this->getStrategy(_nInitStrategyID);
+        ptrActor->applyStrategy(strategy.getRawPointer());
         
         if(_bUpdating)
         {
@@ -63,7 +61,7 @@ namespace SpeedCC
     
     void SCRole::removeActor(const int nID)
     {
-        SC_RETURN_IF_V(nID<=0);
+        SC_RETURN_V_IF(nID<=0);
         
         auto ptrActor = this->getActor(nID);
         if(ptrActor!=NULL)
@@ -128,11 +126,60 @@ namespace SpeedCC
         return false;
     }
     
+    bool SCRole::setInitStrategyID(const int nID)
+    {
+        auto it = _id2StrategyInfoMap.find(nID);
+        SC_RETURN_IF(it==_id2StrategyInfoMap.end(), false);
+        SC_RETURN_IF((*it).second->nParentStrategyID>0, false);
+        _nInitStrategyID = nID;
+        return true;
+    }
+    
+    void SCRole::addStrategy(SCStrategy::Ptr ptrStrategy,const int nParentID)
+    {
+        SCASSERT(ptrStrategy!=NULL);
+        SCASSERT(ptrStrategy->getID()>0);
+        
+        SCStrategyInfo::Ptr ptrSI = SCStrategyInfo::create();
+        ptrSI->ptrStrategy = ptrStrategy;
+        ptrSI->nParentStrategyID = nParentID;
+        _id2StrategyInfoMap[ptrStrategy->getID()] = ptrSI;
+    }
+    
+    SCStrategy::Ptr SCRole::getStrategy(const int nID) const
+    {
+        SC_RETURN_IF(_id2StrategyInfoMap.empty() || nID<=0, NULL);
+        
+        auto it = _id2StrategyInfoMap.find(nID);
+        SC_RETURN_IF(it==_id2StrategyInfoMap.end(), NULL);
+
+        
+        return (*it).second->ptrStrategy;
+    }
+    
+    SCStrategyInfo::Ptr SCRole::getStrategyInfo(const int nID) const
+    {
+        SC_RETURN_IF(_id2StrategyInfoMap.empty() || nID<=0, NULL);
+        
+        auto it = _id2StrategyInfoMap.find(nID);
+        SC_RETURN_IF(it==_id2StrategyInfoMap.end(), NULL);
+        
+        
+        return (*it).second;
+    }
+    
+    bool SCRole::hasStrategy(const int nID) const
+    {
+        SC_RETURN_IF(nID<=0, false);
+
+        return (_id2StrategyInfoMap.find(nID)!=_id2StrategyInfoMap.end());
+    }
+    
     void SCRole::forEach(const std::function<bool(const SCActor::Ptr& ptrActor)>& func) const
     {
         for(const auto& it : _actorList)
         {
-            SC_RETURN_IF_V(!func(it));
+            SC_RETURN_V_IF(!func(it));
         }
     }
     
@@ -140,11 +187,11 @@ namespace SpeedCC
     {
         for(auto& it : _actorList)
         {
-            SC_RETURN_IF_V(!func(it));
+            SC_RETURN_V_IF(!func(it));
         }
     }
     
-    void SCRole::markMsgFilter(const int nMsgID)
+    void SCRole::markMsgUnfilter(const int nMsgID)
     {
         auto it = _msgID2FilterCounterMap.find(nMsgID);
         if(it!=_msgID2FilterCounterMap.end())
@@ -157,9 +204,9 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::markCmdFilter(const SCString& strCmd)
+    void SCRole::markCmdUnfilter(const SCString& strCmd)
     {
-        this->markMsgFilter(SCID::Msg::kSCMsgCommand);
+        this->markMsgUnfilter(SCID::Msg::kSCMsgCommand);
         
         auto it = _cmd2FilterCounterMap.find(strCmd);
         if(it!=_cmd2FilterCounterMap.end())
@@ -172,7 +219,7 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::unmarkMsgFilter(const int nMsgID)
+    void SCRole::unmarkMsgUnfilter(const int nMsgID)
     {
         auto it = _msgID2FilterCounterMap.find(nMsgID);
         if(it!=_msgID2FilterCounterMap.end())
@@ -184,9 +231,9 @@ namespace SpeedCC
         }
     }
     
-    void SCRole::unmarkCmdFilter(const SCString& strCmd)
+    void SCRole::unmarkCmdUnfilter(const SCString& strCmd)
     {
-        this->unmarkMsgFilter(SCID::Msg::kSCMsgCommand);
+        this->unmarkMsgUnfilter(SCID::Msg::kSCMsgCommand);
         
         auto it = _cmd2FilterCounterMap.find(strCmd);
         if(it!=_cmd2FilterCounterMap.end())
@@ -198,7 +245,7 @@ namespace SpeedCC
         }
     }
     
-    bool SCRole::filterMsg(SCMessage::Ptr ptrMsg)
+    bool SCRole::isFilterMsg(SCMessage::Ptr ptrMsg)
     {
         SC_RETURN_IF(!_bFilterMsg, true);
         SC_RETURN_IF(_msgID2FilterCounterMap.empty(), false);
@@ -218,6 +265,116 @@ namespace SpeedCC
             auto it = _msgID2FilterCounterMap.find(ptrMsg->nMsgID);
             return (_msgID2FilterCounterMap.end()!=it);
         }
+        
+        return true;
+    }
+    
+    bool SCRole::addBehavior2Strategy(const int nStrategyID,
+                              const int nMsgID,
+                              SCBehavior::Ptr bvrPtr,
+                              SCMessageMatcher::Ptr ptrMatcher)
+    {
+        SCASSERT(nMsgID>0);
+        
+        auto ptrSI =  this->getStrategyInfo(nStrategyID);
+        SC_RETURN_IF(ptrSI==NULL, false);
+        
+        auto it = ptrSI->msgID2BehaviorMap.find(nMsgID);
+        
+        if(it==ptrSI->msgID2BehaviorMap.end())
+        {
+            SCStrategyInfo::SBehaviorInfo bi;
+            bi.ptrBehaviorGroup = SCBehaviorGroup::create();
+            bi.ptrBehaviorGroup->addBehavior(bvrPtr);
+            bi.ptrMatcher = ptrMatcher;
+            
+            ptrSI->msgID2BehaviorMap[nMsgID] = bi;
+        }
+        else
+        {
+            (*it).second.ptrBehaviorGroup->addBehavior(bvrPtr);
+        }
+        
+        this->markMsgUnfilter(nMsgID);
+        
+        return true;
+    }
+    
+    bool SCRole::addBehavior2Strategy(const int nStrategyID,
+                              const SCString& strCommand,
+                              SCBehavior::Ptr bvrPtr,
+                              SCMessageMatcher::Ptr ptrMatcher)
+    {
+        SCASSERT(!strCommand.isEmpty());
+        
+        auto ptrSI =  this->getStrategyInfo(nStrategyID);
+        SC_RETURN_IF(ptrSI==NULL, false);
+        
+        auto it = ptrSI->command2BehaviorMap.find(strCommand);
+        if(it==ptrSI->command2BehaviorMap.end())
+        {
+            SCStrategyInfo::SBehaviorInfo bi;
+            bi.ptrBehaviorGroup = SCBehaviorGroup::create();
+            bi.ptrBehaviorGroup->addBehavior(bvrPtr);
+            bi.ptrMatcher = ptrMatcher;
+            
+            ptrSI->command2BehaviorMap[strCommand] = bi;
+        }
+        else
+        {
+            (*it).second.ptrBehaviorGroup->addBehavior(bvrPtr);
+        }
+        
+        this->markCmdUnfilter(strCommand);
+        
+        return true;
+    }
+    
+    bool SCRole::addBehavior2Strategy(const int nStrategyID,
+                              SCMessageMatcher::Ptr ptrMatcher,
+                              SCBehavior::Ptr bvrPtr)
+    {
+        SCASSERT(nStrategyID>0);
+        
+        bool bRet = false;
+        if(ptrMatcher->getMessageID()==SCID::Msg::kSCMsgCommand)
+        {
+            SC_RETURN_IF(ptrMatcher->getCommand()<=0,false);
+            bRet = this->addBehavior2Strategy(nStrategyID,ptrMatcher->getCommand(),bvrPtr,ptrMatcher);
+        }
+        else
+        {
+            bRet = this->addBehavior2Strategy(nStrategyID,ptrMatcher->getMessageID(),bvrPtr,ptrMatcher);
+        }
+        
+        return bRet;
+    }
+    
+    bool SCRole::addEnterBehavior2Strategy(const int nStrategyID,SCBehavior::Ptr bvrPtr)
+    {
+        auto ptrSI = this->getStrategyInfo(nStrategyID);
+        SC_RETURN_IF(ptrSI==NULL, false);
+        
+        if(ptrSI->ptrEnterBehavior==NULL)
+        {
+            ptrSI->ptrEnterBehavior = SCBehaviorGroup::create();
+        }
+        
+        ptrSI->ptrEnterBehavior->addBehavior(bvrPtr);
+        return true;
+    }
+    
+    bool SCRole::addExitBehavior2Strategy(const int nStrategyID,SCBehavior::Ptr bvrPtr)
+    {
+        auto ptrSI = this->getStrategyInfo(nStrategyID);
+        SC_RETURN_IF(ptrSI==NULL, false);
+        
+        if(ptrSI->ptrExitBehavior==NULL)
+        {
+            ptrSI->ptrExitBehavior = SCBehaviorGroup::create();
+        }
+        
+        ptrSI->ptrExitBehavior->addBehavior(bvrPtr);
         
         return true;
     }
@@ -252,12 +409,16 @@ namespace SpeedCC
         SCASSERT(ptrMsg!=NULL);
         _bUpdating = true;
         
+        if(ptrMsg->nMsgID==SpeedCC::SCID::Msg::kSCMsgSceneEnter)
+        {
+            int kkk = 0;
+        }
         do
         {
             SC_BREAK_IF(_actorList.empty());
             SC_BREAK_IF(!this->getActive());
             SC_BREAK_IF(!_pOwnerStage->getActive());
-            SC_BREAK_IF(!this->filterMsg(ptrMsg));
+            SC_BREAK_IF(!this->isFilterMsg(ptrMsg));
             
             for(auto it : _actorList)
             {

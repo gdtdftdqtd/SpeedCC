@@ -15,15 +15,42 @@
 
 namespace SpeedCC
 {
+    struct SCStrategyInfo : public SCObject
+    {
+        SC_AVOID_CLASS_COPY(SCStrategyInfo)
+        SC_DEFINE_CLASS_PTR(SCStrategyInfo)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCStrategyInfo);
+        
+        struct SBehaviorInfo
+        {
+            SCMessageMatcher::Ptr   ptrMatcher;
+            SCBehaviorGroup::Ptr    ptrBehaviorGroup;
+        };
+        
+        int                                     nParentStrategyID;
+        SCStrategy::Ptr                         ptrStrategy;
+        SCBehaviorGroup::Ptr                    ptrEnterBehavior;
+        SCBehaviorGroup::Ptr                    ptrExitBehavior;
+        
+        std::map<int,SBehaviorInfo>             msgID2BehaviorMap;
+        std::map<SCString,SBehaviorInfo>        command2BehaviorMap;
+        
+    protected:
+        SCStrategyInfo() {}
+    };
+    
     class SCStage;
+    class SCRoleBuilder;
     
     class SCRole : public SCPropertyHolder
-    {   
+    {
+        friend class SCRoleBuilder;
     public:
         SC_AVOID_CLASS_COPY(SCRole)
         SC_DEFINE_CLASS_PTR(SCRole)
         
-        SC_DEFINE_CREATE_FUNC_3(SCRole, const int,SCStage*,SCStrategy::Ptr);
+        SC_DEFINE_CREATE_FUNC_2(SCRole, const int,SCStage*);
         
         bool addActor(SCActor::Ptr ptrActor);
         void removeActor(const int nID);
@@ -33,29 +60,52 @@ namespace SpeedCC
         void forEach(const std::function<bool(const SCActor::Ptr& ptrActor)>& func) const;
         void forEach(const std::function<bool(SCActor::Ptr& ptrActor)>& func);
         
+        bool setInitStrategyID(const int nID);
+        void addStrategy(SCStrategy::Ptr ptrStrategy,const int nParentID=0);
+        SCStrategy::Ptr getStrategy(const int nID) const;
+        SCStrategyInfo::Ptr getStrategyInfo(const int nID) const;
+        bool hasStrategy(const int nID) const;
+        
+        bool addBehavior2Strategy(const int nStrategyID,
+                                  const int nMsgID,
+                                  SCBehavior::Ptr bvrPtr,
+                                  SCMessageMatcher::Ptr ptrMatcher=NULL);
+        bool addBehavior2Strategy(const int nStrategyID,
+                                  const SCString& strCommand,
+                                  SCBehavior::Ptr bvrPtr,
+                                  SCMessageMatcher::Ptr ptrMatcher=NULL);
+        bool addBehavior2Strategy(const int nStrategyID,
+                                  SCMessageMatcher::Ptr ptrMatcher,
+                                  SCBehavior::Ptr bvrPtr);
+        
+        bool addEnterBehavior2Strategy(const int nStrategyID,SCBehavior::Ptr bvrPtr);
+        bool addExitBehavior2Strategy(const int nStrategyID,SCBehavior::Ptr bvrPtr);
+    
         inline SCStage* getStage() const { return _pOwnerStage;}
         virtual void update(SCMessage::Ptr ptrMsg);
-        
-        void markMsgFilter(const int nMsgID);
-        void markCmdFilter(const SCString& strCmd);
-        void unmarkMsgFilter(const int nMsgID);
-        void unmarkCmdFilter(const SCString& strCmd);
         
         inline bool getMsgFilterEnabled() const {return _bFilterMsg;}
         inline void setMsgFilterEnabled(const bool bEnable) {_bFilterMsg = bEnable;}
         
     protected:
-        SCRole(const int nID,SCStage* pStage,SCStrategy::Ptr ptrStrategy);
+        SCRole(const int nID,SCStage* pStage);
         
     private:
-        bool filterMsg(SCMessage::Ptr ptrMsg);
+        void markMsgUnfilter(const int nMsgID);
+        void markCmdUnfilter(const SCString& strCmd);
+        void unmarkMsgUnfilter(const int nMsgID);
+        void unmarkCmdUnfilter(const SCString& strCmd);
+        
+        bool isFilterMsg(SCMessage::Ptr ptrMsg);
         void updateVariationActor();
         bool isActorInRemovedList(const int nID) const;
         
     private:
         bool                                    _bUpdating;
-        SCStrategy::Ptr                         _ptrRootStrategy;
+        int                                     _nInitStrategyID;
         std::list<SCActor::Ptr>                 _actorList;
+        
+        std::map<int,SCStrategyInfo::Ptr>           _id2StrategyInfoMap;
         SCStage*                                _pOwnerStage;
         bool                                    _bFilterMsg;
         

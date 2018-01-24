@@ -42,25 +42,25 @@ namespace SpeedCC
     
     void SCAudioManager::pauseMusic()
     {
-        SC_RETURN_IF_V(!this->getMusicEnabled());
+        SC_RETURN_V_IF(!this->getMusicEnabled());
         SCCCSoundEngine()->pauseBackgroundMusic();
     }
     
     void SCAudioManager::resumeMusic()
     {
-        SC_RETURN_IF_V(!this->getMusicEnabled());
+        SC_RETURN_V_IF(!this->getMusicEnabled());
         SCCCSoundEngine()->resumeBackgroundMusic();
     }
     
     void SCAudioManager::pauseSound(const int nID)
     {
-        SC_RETURN_IF_V(!this->getSoundEnabled());
+        SC_RETURN_V_IF(!this->getSoundEnabled());
         SCCCSoundEngine()->pauseEffect(nID);
     }
     
     void SCAudioManager::resumeSound(const int nID)
     {
-        SC_RETURN_IF_V(!this->getSoundEnabled());
+        SC_RETURN_V_IF(!this->getSoundEnabled());
         SCCCSoundEngine()->resumeEffect(nID);
     }
     
@@ -77,7 +77,7 @@ namespace SpeedCC
     
     void SCAudioManager::playMusic(const SCString& strFile,const bool bLoop)
     {
-        SC_RETURN_IF_V(!this->getMusicEnabled());
+        SC_RETURN_V_IF(!this->getMusicEnabled());
         SCCCSoundEngine()->playBackgroundMusic(strFile,bLoop);
     }
     
@@ -128,7 +128,7 @@ namespace SpeedCC
     
     void SCAudioManager::Unsetup()
     {
-        SC_RETURN_IF_V(_bMsgProcessing);
+        SC_RETURN_V_IF(_bMsgProcessing);
         
         for(auto it : _audioInfoVtr)
         {

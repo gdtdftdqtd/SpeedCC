@@ -526,7 +526,7 @@ namespace SpeedCC
     {
         SCASSERT(pszFormat!=NULL);
         
-        SC_RETURN_IF_V(pszFormat==NULL);
+        SC_RETURN_V_IF(pszFormat==NULL);
         
         //va_list argListSave = argList;
         va_list argListSave;
@@ -808,7 +808,7 @@ namespace SpeedCC
     
     void SCString::foreachEncodingChar(const std::function<bool(const SCEncodingChar& encodingChar)>& fun) const
     {
-        SC_RETURN_IF_V(this->isEmpty());
+        SC_RETURN_V_IF(this->isEmpty());
         
         SCEncodingChar encodingChar;
         encodingChar._encoding = this->getEncoding();
@@ -1902,7 +1902,7 @@ namespace SpeedCC
     
     void SCString::makeUpper()
     {
-        SC_RETURN_IF_V(this->getLength()==0);
+        SC_RETURN_V_IF(this->getLength()==0);
         
         this->cloneBeforeWrite();
         
@@ -1913,7 +1913,7 @@ namespace SpeedCC
     
     void SCString::makeLower()
     {
-        SC_RETURN_IF_V(this->getLength()==0);
+        SC_RETURN_V_IF(this->getLength()==0);
         
         this->cloneBeforeWrite();
         

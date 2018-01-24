@@ -80,7 +80,7 @@ namespace SpeedCC
         
         _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
         {
-            SC_RETURN_IF_V(ptr==NULL || nID<=0);
+            SC_RETURN_V_IF(ptr==NULL || nID<=0);
             
             auto p = ptr.cast<SCWatchString::Ptr>();
             p->removeUpdateFunc(nID);
@@ -123,7 +123,7 @@ namespace SpeedCC
         
         _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
         {
-            SC_RETURN_IF_V(ptr==NULL || nID<=0);
+            SC_RETURN_V_IF(ptr==NULL || nID<=0);
             
             auto p = ptr.cast<SCWatchBool::Ptr>();
             SCASSERT(p!=NULL);
@@ -136,7 +136,7 @@ namespace SpeedCC
     
     void SCBinderUISwitch::setToggle(cocos2d::MenuItemToggle* pToggle)
     {
-        SC_RETURN_IF_V(pToggle==NULL);
+        SC_RETURN_V_IF(pToggle==NULL);
         
         _pToggleMenuItem = pToggle;
         if(_pToggleMenuItem!=NULL)
@@ -190,10 +190,10 @@ namespace SpeedCC
     
     void SCBinderUISwitch::onMenuItemClicked(cocos2d::Ref* pSender)
     {
-        SC_RETURN_IF_V(_ptrWatch==NULL);
+        SC_RETURN_V_IF(_ptrWatch==NULL);
         auto pToggle = dynamic_cast<cocos2d::MenuItemToggle*>(pSender);
         SCASSERT(pToggle!=NULL);
-        SC_RETURN_IF_V(pToggle==NULL);
+        SC_RETURN_V_IF(pToggle==NULL);
         
         (*_ptrWatch) = (pToggle->getSelectedIndex()==0);
         

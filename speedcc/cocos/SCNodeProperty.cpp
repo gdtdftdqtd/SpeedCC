@@ -43,7 +43,7 @@ namespace SpeedCC
     void SCNodeProperty::setProperty(Node* pNode,const SCDictionary& dic)
     {
         SCASSERT(pNode!=NULL);
-        SC_RETURN_IF_V(pNode==NULL);
+        SC_RETURN_V_IF(pNode==NULL);
         
         int nValue;
         float fValue;
@@ -148,7 +148,7 @@ namespace SpeedCC
     void SCNodeProperty::setProperty(Layer* pNode,const SCDictionary& dic)
     {
         SCASSERT(pNode!=NULL);
-        SC_RETURN_IF_V(pNode==NULL);
+        SC_RETURN_V_IF(pNode==NULL);
         
         SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
     }

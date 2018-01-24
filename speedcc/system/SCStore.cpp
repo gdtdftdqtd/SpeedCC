@@ -277,7 +277,7 @@ namespace SpeedCC
     
     void SCStore::setIAPPurchsed(const SCString& strIAP)
     {
-        SC_RETURN_IF_V(strIAP.isEmpty());
+        SC_RETURN_V_IF(strIAP.isEmpty());
         
         for(auto& it : _feature2InfoMap)
         {
@@ -291,7 +291,7 @@ namespace SpeedCC
     
     void SCStore::setIAPInfo(const SCString& strIAP,const float fPrice,const SCString& strCurrency)
     {
-        SC_RETURN_IF_V(strIAP.isEmpty());
+        SC_RETURN_V_IF(strIAP.isEmpty());
         
         if(this->isIAPExist(strIAP))
         {

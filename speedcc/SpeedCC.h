@@ -47,6 +47,7 @@
 #include "component/SCRole.h"
 #include "component/SCStrategy.h"
 #include "component/SCActor.h"
+#include "component/SCRoleBuilder.h"
 
 
 

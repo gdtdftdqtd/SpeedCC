@@ -16,7 +16,7 @@ namespace SpeedCC
     
     void SCBehaviorCallFunc::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF_V(!this->getActive());
+        SC_RETURN_V_IF(!this->getActive());
         if(_startFunc!=NULL)
         {
             _startFunc(par);
@@ -50,7 +50,7 @@ namespace SpeedCC
     
     void SCBehaviorGroup::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF_V(!this->getActive());
+        SC_RETURN_V_IF(!this->getActive());
         for(auto it : _behaviorList)
         {
             it->execute(par);
@@ -59,13 +59,13 @@ namespace SpeedCC
     
     void SCBehaviorGroup::addBehavior(const SCBehavior::Ptr& ptrBvr)
     {
-        SC_RETURN_IF_V(ptrBvr==NULL);
+        SC_RETURN_V_IF(ptrBvr==NULL);
         _behaviorList.push_back(ptrBvr);
     }
     
     void SCBehaviorGroup::removeBehavior(const int nID)
     {
-        SC_RETURN_IF_V(nID==0);
+        SC_RETURN_V_IF(nID==0);
         _behaviorList.remove_if([nID](const SCBehavior::Ptr& ptrBvr)
                                 {
                                     return (ptrBvr->getID()==nID);

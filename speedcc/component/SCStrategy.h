@@ -25,6 +25,8 @@ namespace SpeedCC
     class SCStrategy : public SCPerformObject
     {
     public:
+        
+    public:
         SC_AVOID_CLASS_COPY(SCStrategy)
         SC_DEFINE_CLASS_PTR(SCStrategy)
         
@@ -34,29 +36,11 @@ namespace SpeedCC
         void enter(SCActor* pActor);
         void exit(SCActor* pActor);
         
-        bool addBehavior(const int nMsgID,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
-        bool addBehavior(const SCString& strCommand,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr=NULL);
-        bool addBehavior(SCMessageMatcher::Ptr matcherPtr,SCBehavior::Ptr bvrPtr);
-        
-        void addEnterBehavior(SCBehavior::Ptr bvrPtr);
-        void addExitBehavior(SCBehavior::Ptr bvrPtr);
-        
-        void addChild(SCStrategy::Ptr ptrStrategy);
-        SCStrategy::Ptr getStrategy(const int nStrategyID);
-        inline SCStrategy::Ptr getParent() { return _pParentStrategy->makeObjPtr<>(_pParentStrategy);}
-        
     protected:
-        SCStrategy():
-        _pParentStrategy(NULL)
-        {
-        }
-        
         SCStrategy(const int nID):
-        SCPerformObject(nID),
-        _pParentStrategy(NULL)
+        SCPerformObject(nID)
         {}
         
-        SCStrategy::Ptr onChildGetStrategy(const int nStrategyID);
     private:
         struct SBehaviorInfo
         {
@@ -65,14 +49,11 @@ namespace SpeedCC
         };
         
     private:
-        SCStrategy*                             _pParentStrategy;
-        
         SCBehaviorGroup::Ptr                    _ptrEnterBehavior;
         SCBehaviorGroup::Ptr                    _ptrExitBehavior;
         
         std::map<int,SBehaviorInfo>             _msgID2BehaviorMap;
         std::map<SCString,SBehaviorInfo>        _command2BehaviorMap;
-        std::list<SCStrategy::Ptr>              _childrenStrategyList;
     };
     
     ///------------- SCStrategyEmpty

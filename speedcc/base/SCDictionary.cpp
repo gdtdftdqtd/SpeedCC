@@ -76,7 +76,7 @@ namespace SpeedCC
     
     void SCDictionary::setValue(const SPair* pPairArray,const int nCount)
     {
-        SC_RETURN_IF_V(pPairArray==NULL || nCount<=0);
+        SC_RETURN_V_IF(pPairArray==NULL || nCount<=0);
         this->clone4Write();
         auto& map = (*this->getStub());
         
@@ -90,7 +90,7 @@ namespace SpeedCC
     
     void SCDictionary::setValue(const std::vector<SPair>& pairVct)
     {
-        SC_RETURN_IF_V(pairVct.empty());
+        SC_RETURN_V_IF(pairVct.empty());
         this->clone4Write();
         auto& map = (*this->getStub());
 
@@ -159,7 +159,7 @@ namespace SpeedCC
         const auto& map = *(this->getStub());
         for(auto& it : map)
         {
-            SC_RETURN_IF_V(!func(it.first,it.second));
+            SC_RETURN_V_IF(!func(it.first,it.second));
         }
     }
     
@@ -169,7 +169,7 @@ namespace SpeedCC
         auto& map = *(this->getStub());
         for(auto& it : map)
         {
-            SC_RETURN_IF_V(!func(it.first,it.second));
+            SC_RETURN_V_IF(!func(it.first,it.second));
         }
     }
     

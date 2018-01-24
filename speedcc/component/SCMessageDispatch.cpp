@@ -147,12 +147,12 @@ namespace SpeedCC
         SCASSERT(_nSendMsgCallStackCounter==0);
         SCASSERT(_nPostMsgCallStackCounter==0);
         
-        SC_RETURN_IF_V(_mutableListenerList.empty());
+        SC_RETURN_V_IF(_mutableListenerList.empty());
         
         std::for_each(_mutableListenerList.begin(),_mutableListenerList.end(),
                       [this](const SMutabelListenerInfo& info)-> void
                       {
-                          SC_RETURN_IF_V(info.listener.pListener==NULL);
+                          SC_RETURN_V_IF(info.listener.pListener==NULL);
                           
                           if(info.bAdd)
                           {// add listener

@@ -103,13 +103,13 @@ namespace SpeedCC
     
     void SCSceneNavigator::back(int nNumber)
     {
-        SC_RETURN_IF_V(s_sceneStack.empty());
+        SC_RETURN_V_IF(s_sceneStack.empty());
         if(nNumber<1)
         {
             nNumber = 1;
         }
         auto nSize = s_sceneStack.size();
-        SC_RETURN_IF_V(nSize<=nNumber);
+        SC_RETURN_V_IF(nSize<=nNumber);
         
         FUN_SCSceneTransitionCreateFunctor_t oppositeTrans = NULL;
         auto switchType = kSceneReplace;
@@ -184,7 +184,7 @@ namespace SpeedCC
     
     void SCSceneNavigator::reset()
     {
-        SC_RETURN_IF_V(s_sceneStack.empty());
+        SC_RETURN_V_IF(s_sceneStack.empty());
         auto info = s_sceneStack.front();
         s_sceneStack.clear();
         s_sceneStack.push_back(info);

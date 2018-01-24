@@ -45,6 +45,7 @@
 		0A6879CC1FFC3F7D004DCED6 /* SCStrategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879CA1FFC3F7C004DCED6 /* SCStrategy.cpp */; };
 		0A75E4382014DB5100918565 /* SCUIBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75E4362014DB5100918565 /* SCUIBuilder.cpp */; };
 		0A75E4402014E6B300918565 /* SCUIArg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75E43E2014E6B300918565 /* SCUIArg.cpp */; };
+		0A75E44320182A5C00918565 /* SCRoleBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75E44120182A5C00918565 /* SCRoleBuilder.cpp */; };
 		0A8868181FDA536F00866266 /* SCNodeProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */; };
 		0A8868191FDA536F00866266 /* SCSceneNavigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */; };
 		0A88681A1FDA536F00866266 /* SCScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCScene.cpp */; };
@@ -184,6 +185,8 @@
 		0A75E4372014DB5100918565 /* SCUIBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCUIBuilder.h; sourceTree = "<group>"; };
 		0A75E43E2014E6B300918565 /* SCUIArg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCUIArg.cpp; sourceTree = "<group>"; };
 		0A75E43F2014E6B300918565 /* SCUIArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCUIArg.h; sourceTree = "<group>"; };
+		0A75E44120182A5C00918565 /* SCRoleBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCRoleBuilder.cpp; sourceTree = "<group>"; };
+		0A75E444201878B900918565 /* SCRoleBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRoleBuilder.h; sourceTree = "<group>"; };
 		0A88680E1FDA536E00866266 /* SCNodeProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeProperty.h; sourceTree = "<group>"; };
 		0A88680F1FDA536E00866266 /* SCNodeProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeProperty.cpp; sourceTree = "<group>"; };
 		0A8868101FDA536E00866266 /* SCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCScene.h; sourceTree = "<group>"; };
@@ -365,6 +368,8 @@
 				0A3486812011A399002B779E /* SCBehaviorComponent.cpp */,
 				0A3486822011A399002B779E /* SCBehaviorComponent.h */,
 				0A3486842011AA5C002B779E /* SCComponentMacroDef.h */,
+				0A75E444201878B900918565 /* SCRoleBuilder.h */,
+				0A75E44120182A5C00918565 /* SCRoleBuilder.cpp */,
 			);
 			name = component;
 			path = ../../component;
@@ -498,6 +503,7 @@
 				0A6879C61FF9339C004DCED6 /* SCPerformObject.cpp in Sources */,
 				0A6879C91FFB720E004DCED6 /* SCBehaviorCommon.cpp in Sources */,
 				0A1556C71FD4F31600CF7420 /* SCObject.cpp in Sources */,
+				0A75E44320182A5C00918565 /* SCRoleBuilder.cpp in Sources */,
 				0A6879BE1FF50132004DCED6 /* SCActor.cpp in Sources */,
 				0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */,
 				0A41B3A51FEBEE93003945EB /* SCSetting.cpp in Sources */,

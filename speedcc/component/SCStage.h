@@ -32,12 +32,24 @@ namespace SpeedCC
         void removeRole(const int nID);
         SCRole::Ptr getRole(const int nID);
         
-        virtual void setUp(){}
+        /*
+        void beginRole(const int nRoleID,const int nInitStrategyID);
+        void endRole();
+        
+        void beginStragtegy(const int nStrategyID);
+        void endStrategy();
+        
+        void insertBehavior(const int nMsg,SCBehavior::Ptr ptrBvr);
+        void insertBehavior(const SCString& strCmd,SCBehavior::Ptr ptrBvr);
+        void insertEnterBehavior(SCBehavior::Ptr ptrBvr);
+        void insertExitBehavior(SCBehavior::Ptr ptrBvr);
+        */
+//        virtual void setUp(){}
         virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
         template<typename T1,typename T2,typename ...Ts>
-        void createActorToRole(const int nRoleID,const int nActorID=SCID::Act::kSCActDefault)
+        void createActor2Role(const int nRoleID,const int nActorID=SCID::Act::kSCActDefault)
         {
             auto actor = SCActor::create(nActorID);
             actor->addProperty<T1,T2,Ts...>();
@@ -46,7 +58,7 @@ namespace SpeedCC
         }
         
         template<typename T>
-        void createActorToRole(const int nRoleID,const int nActorID=SCID::Act::kSCActDefault)
+        void createActor2Role(const int nRoleID,const int nActorID=SCID::Act::kSCActDefault)
         {
             auto actor = SCActor::create(nActorID);
             actor->addProperty<T>();
@@ -55,7 +67,7 @@ namespace SpeedCC
         }
         
         template<typename T1,typename T2,typename ...Ts>
-        void createActorToRole(const int nRoleID,const int nActorID,const T1& t1,const T2& t2,Ts... ts)
+        void createActor2Role(const int nRoleID,const int nActorID,const T1& t1,const T2& t2,Ts... ts)
         {
             auto actor = SCActor::create(nActorID);
             actor->addProperty<T1,T2,Ts...>(t1,t2,ts...);
@@ -64,7 +76,7 @@ namespace SpeedCC
         }
         
         template<typename T>
-        void createActorToRole(const int nRoleID,const int nActorID,const T& t)
+        void createActor2Role(const int nRoleID,const int nActorID,const T& t)
         {
             auto actor = SCActor::create(nActorID);
             actor->addProperty<T>(t);

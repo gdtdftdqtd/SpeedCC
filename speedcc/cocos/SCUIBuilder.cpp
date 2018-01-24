@@ -424,14 +424,14 @@ namespace SpeedCC
     
     void SCUIBuilder::storeLayoutNode(const int nID,cocos2d::Node* pNode)
     {
-        SC_RETURN_IF_V(nID<=0 || pNode==NULL);
+        SC_RETURN_V_IF(nID<=0 || pNode==NULL);
         
         _id2NodeMap[nID] = pNode;
     }
     
     void SCUIBuilder::storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder)
     {
-        SC_RETURN_IF_V(pObj==NULL || ptrBinder==NULL);
+        SC_RETURN_V_IF(pObj==NULL || ptrBinder==NULL);
         
         _ref2BinderMap[pObj] = ptrBinder;
     }

@@ -26,7 +26,7 @@ namespace SpeedCC
     
     void SCEventEmitter::setTouchMode(const ETouchMode touch)
     {
-        SC_RETURN_IF_V(touch==_touchMode);
+        SC_RETURN_V_IF(touch==_touchMode);
         
         if(_pTouchListener!=NULL)
         {

@@ -46,12 +46,12 @@ namespace SpeedCC
     void SCStage::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
         SCASSERT(ptrMsg!=NULL);
-        SC_RETURN_IF_V(_id2RoleMap.empty());
-        SC_RETURN_IF_V(!this->getActive());
+        SC_RETURN_V_IF(_id2RoleMap.empty());
+        SC_RETURN_V_IF(!this->getActive());
         
         for(auto it : _id2RoleMap)
         {
-            SC_RETURN_IF_V(!this->getActive());
+            SC_RETURN_V_IF(!this->getActive());
             SC_BREAK_IF(!ptrMsg->bContinue);
             it.second->update(ptrMsg);
         }

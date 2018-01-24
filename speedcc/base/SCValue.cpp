@@ -116,7 +116,7 @@ namespace SpeedCC
     
     void SCValue::check4Write()
     {
-        SC_RETURN_IF_V(this->getRefCount()!=1);
+        SC_RETURN_V_IF(this->getRefCount()!=1);
         
         switch(this->getType())
         {

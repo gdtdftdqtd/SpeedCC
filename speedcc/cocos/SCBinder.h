@@ -83,7 +83,7 @@ namespace SpeedCC
             
             _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
             {
-                SC_RETURN_IF_V(ptr==NULL || nID<=0);
+                SC_RETURN_V_IF(ptr==NULL || nID<=0);
                 
                 auto p = ptr.cast<T>();
                 p->removeUpdateFunc(nID);

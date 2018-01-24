@@ -47,19 +47,12 @@ namespace SpeedCC
         void pushModalController(SCSceneController::Ptr controllerPtr);
         SCSceneController::Ptr popModalFromParent();
         
-        void onSCMenuItemPressed(cocos2d::Ref* pSender);
-        
         inline void ownLifecycle(SCObject::Ptr ptr) { _ownLifecycleList.push_back(ptr);}
         void ownLifecycle(cocos2d::Ref* pObject);
         
         void delayExecute(float fDelay,const std::function<void ()>& fun);
         void delayExecute(float fDelay,const std::function<void(SCDictionary dic)>& func,SCDictionary dic);
         void listenMessage(const int nMsg,FUN_SCMapMessage_t pfnFunc);
-        
-        cocos2d::Node* getLayoutNode(const int nID);
-        
-        void storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr);
-        SCBinder::Ptr getBinder(cocos2d::Ref* pObj) const;
         
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
@@ -68,16 +61,12 @@ namespace SpeedCC
         
         virtual void onCreate(const SCDictionary& parameters){}
         
-        void storeLayoutNode(const int nID,cocos2d::Node* pNode);
-        void storeLayoutNode(...){}
-        
     private:
         void setBedNode(SCBedNode* pLayer);
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _ptrParentModalController = controllerPtr;}
         
     protected:
-        std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
         SCUIBuilder::Ptr                            _ptrUI;
         
     private:
@@ -89,8 +78,6 @@ namespace SpeedCC
         bool                                        _bBlackMaskForModal;
         std::list<SCObject::Ptr>                    _ownLifecycleList;
         std::map<int,FUN_SCMapMessage_t>            _msg2FuncMap;
-        std::map<int,cocos2d::Node*>                _id2NodeMap;
-        std::map<cocos2d::Ref*,SCBinder::Ptr>       _ref2BinderMap;
     };
     
     

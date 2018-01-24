@@ -15,50 +15,33 @@ namespace SpeedCC
     
     void SCBehaviorStrategySwitch::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF_V(!this->getActive());
-        SC_RETURN_IF_V(_nStragtegyID==0);
+        SC_RETURN_V_IF(!this->getActive());
+        SC_RETURN_V_IF(_ptrActor==NULL || _nStragtegyID==0);
         
-        auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
-        SC_RETURN_IF_V(!actorValue.isValidObject<SCActor::Ptr>());
-        auto ptrActor = actorValue.getObject<SCActor::Ptr>();
-        
-        auto stragtegy = ptrActor->getCurrentStrategy()->getStrategy(_nStragtegyID);
-        SC_RETURN_IF_V(stragtegy==NULL);
-        ptrActor->applyStrategy(stragtegy.getRawPointer());
-    }
-    
-    ///--------------- SCBehaviorStrategyParent
-    
-    void SCBehaviorStrategyParent::execute(const SCDictionary& par)
-    {
-        SC_RETURN_IF_V(!this->getActive());
-        
-        auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
-        SC_RETURN_IF_V(!actorValue.isValidObject<SCActor::Ptr>());
-        auto ptrActor = actorValue.getObject<SCActor::Ptr>();
-        
-        auto stragtegy = ptrActor->getCurrentStrategy()->getParent();
-        SCASSERT(stragtegy!=NULL);
-        SC_RETURN_IF_V(stragtegy==NULL);
-        ptrActor->applyStrategy(stragtegy.getRawPointer());
+        auto stragtegy = _ptrActor->getRole()->getStrategy(_nStragtegyID);
+        SC_RETURN_V_IF(stragtegy==NULL);
+        _ptrActor->applyStrategy(stragtegy.getRawPointer());
     }
     
     ///--------------- SCBehaviorRemoveActor
     
     void SCBehaviorRemoveActor::execute(const SCDictionary& par)
     {
-        SC_RETURN_IF_V(!this->getActive());
+        SC_RETURN_V_IF(!this->getActive());
+        auto roleValue = par.getValue(SC_BVR_ARG_ROLE);
+        SC_RETURN_V_IF(!roleValue.isValidObject<SCRole::Ptr>());
         auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
-        SC_RETURN_IF_V(!actorValue.isValidObject<SCActor::Ptr>());
+        SC_RETURN_V_IF(!actorValue.isValidObject<SCActor::Ptr>());
         
-        auto ptrActor = actorValue.getObject<SCActor::Ptr>();
+        auto rolePtr = roleValue.getObject<SCRole::Ptr>();
+        auto actorPtr = actorValue.getObject<SCActor::Ptr>();
         if(_nActorID==0)
         {// remove all actors
-            ptrActor->removeFromRole();
+            actorPtr->removeFromRole();
         }
-        else if(_nActorID==ptrActor->getID())
-        {// remove specific actor
-            ptrActor->removeFromRole();
+        else if(_nActorID==actorPtr->getID())
+        {
+            actorPtr->removeFromRole();
         }
     }
     
@@ -66,16 +49,16 @@ namespace SpeedCC
     void SCBehaviorRoleActive::execute(const SCDictionary& par)
     {
         auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
-        SC_RETURN_IF_V(!actorValue.isValidObject<SCActor::Ptr>());
-        auto ptrActor = actorValue.getObject<SCActor::Ptr>();
+        SC_RETURN_V_IF(!actorValue.isValidObject<SCActor::Ptr>());
+        auto actorPtr = actorValue.getObject<SCActor::Ptr>();
         
-        if(_nRoleID==0 || _nRoleID==ptrActor->getRole()->getID())
+        if(_nRoleID==0 || _nRoleID==actorPtr->getRole()->getID())
         {
-            ptrActor->getRole()->setActive(_bActive);
+            actorPtr->getRole()->setActive(_bActive);
         }
         else
         {
-            ptrActor->getRole()->getStage()->getRole(_nRoleID)->setActive(_bActive);
+            actorPtr->getRole()->getStage()->getRole(_nRoleID)->setActive(_bActive);
         }
     }
 }

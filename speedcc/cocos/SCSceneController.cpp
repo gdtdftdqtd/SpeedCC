@@ -16,7 +16,6 @@ namespace SpeedCC
     _pBlackMaskLayer(NULL),
     _bBlackMaskForModal(true)
     {
-        
     }
     
     SCSceneController::~SCSceneController()
@@ -31,7 +30,7 @@ namespace SpeedCC
     
     void SCSceneController::ownLifecycle(cocos2d::Ref* pObject)
     {
-        SC_RETURN_IF_V(pObject==NULL);
+        SC_RETURN_V_IF(pObject==NULL);
         
         auto ptr = SCRefHolder::create(pObject);
         this->ownLifecycle(ptr);
@@ -124,25 +123,6 @@ namespace SpeedCC
         }
     }
     
-    
-    void SCSceneController::onSCMenuItemPressed(cocos2d::Ref* pSender)
-    {
-        auto it = _buttonItem2InfoMap.find(pSender);
-        
-        SCASSERT(it!=_buttonItem2InfoMap.end());
-        if(it!=_buttonItem2InfoMap.end() && (*it).second!=NULL)
-        {
-            (*it).second->execute();
-            
-            SCDictionary::SPair pairArray[] =
-            {
-                {MSG_KEY_CONTROLLER,this},
-                {MSG_KEY_CCREF,pSender}
-            };
-            SCMsgDisp()->postMessage(SCID::Msg::kSCMsgButtonClicked, SCDictionary(pairArray,SC_ARRAY_LENGTH(pairArray)));
-        }
-    }
-    
     void SCSceneController::delayExecute(float fDelay,const std::function<void ()>& fun)
     {
         fDelay = (fDelay<0) ? 0 : fDelay;
@@ -164,7 +144,7 @@ namespace SpeedCC
     
     void SCSceneController::listenMessage(const int nMsg,FUN_SCMapMessage_t pfnFunc)
     {
-        SC_RETURN_IF_V(nMsg<=0);
+        SC_RETURN_V_IF(nMsg<=0);
         
         if(pfnFunc==NULL)
         {// remove mapping
@@ -174,36 +154,6 @@ namespace SpeedCC
         {
             _msg2FuncMap[nMsg] = pfnFunc;
         }
-    }
-    
-    cocos2d::Node* SCSceneController::getLayoutNode(const int nID)
-    {
-        SC_RETURN_IF(nID<=0, NULL);
-        
-        auto it = _id2NodeMap.find(nID);
-        SC_RETURN_IF(it==_id2NodeMap.end(), NULL);
-        
-        return (*it).second;
-    }
-    
-    void SCSceneController::storeLayoutNode(const int nID,cocos2d::Node* pNode)
-    {
-        SC_RETURN_IF_V(nID<=0 || pNode==NULL);
-        
-        _id2NodeMap[nID] = pNode;
-    }
-    
-    void SCSceneController::storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder)
-    {
-        SC_RETURN_IF_V(pObj==NULL || ptrBinder==NULL);
-        
-        _ref2BinderMap[pObj] = ptrBinder;
-    }
-    
-    SCBinder::Ptr SCSceneController::getBinder(cocos2d::Ref* pObj) const
-    {
-        auto it = _ref2BinderMap.find(pObj);
-        return ((it==_ref2BinderMap.end()) ? NULL : (*it).second);
     }
     
     void SCSceneController::onSCMessageProcess(SCMessage::Ptr ptrMsg)

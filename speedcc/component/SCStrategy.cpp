@@ -8,187 +8,71 @@
 
 #include "SCStrategy.h"
 #include "SCActor.h"
+#include "SCRole.h"
 
 namespace SpeedCC
 {
     void SCStrategy::enter(SCActor* pActor)
     {
         SCASSERT(pActor!=NULL);
-        SC_RETURN_IF_V(!this->getActive());
+        SC_RETURN_V_IF(!this->getActive());
         
-        if(_ptrEnterBehavior!=NULL)
+        auto ptrSI = pActor->getRole()->getStrategyInfo(this->getID());
+        SCASSERT(ptrSI!=NULL);
+        
+        if(ptrSI->ptrEnterBehavior!=NULL)
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
             
-            _ptrEnterBehavior->execute(dic);
+            ptrSI->ptrEnterBehavior->execute(dic);
         }
     }
     
     void SCStrategy::exit(SCActor* pActor)
     {
         SCASSERT(pActor!=NULL);
-        SC_RETURN_IF_V(!this->getActive());
+        SC_RETURN_V_IF(!this->getActive());
         
-        if(_ptrExitBehavior!=NULL)
+        auto ptrSI = pActor->getRole()->getStrategyInfo(this->getID());
+        SCASSERT(ptrSI!=NULL);
+        
+        if(ptrSI->ptrExitBehavior!=NULL)
         {
             SCDictionary dic;
             dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
             dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
             
-            _ptrExitBehavior->execute(dic);
+            ptrSI->ptrExitBehavior->execute(dic);
         }
-    }
-    
-    // bvrPtr can be NULL
-    bool SCStrategy::addBehavior(const int nMsgID,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr)
-    {
-        SCASSERT(nMsgID>0);
-        SC_RETURN_IF(nMsgID<=0 || bvrPtr==NULL,false);
-        
-        auto it = _msgID2BehaviorMap.find(nMsgID);
-        if(it==_msgID2BehaviorMap.end())
-        {
-            SBehaviorInfo bi;
-            bi.ptrBehaviorGroup = SCBehaviorGroup::create();
-            bi.ptrBehaviorGroup->addBehavior(bvrPtr);
-            bi.ptrMatcher = matcherPtr;
-            
-            _msgID2BehaviorMap[nMsgID] = bi;
-        }
-        else
-        {
-            (*it).second.ptrBehaviorGroup->addBehavior(bvrPtr);
-        }
-        
-        return true;
-    }
-    
-    // bvrPtr can be NULL
-    bool SCStrategy::addBehavior(const SCString& strCommand,SCBehavior::Ptr bvrPtr,SCMessageMatcher::Ptr matcherPtr)
-    {
-        SCASSERT(!strCommand.isEmpty());
-        SC_RETURN_IF(strCommand.isEmpty(),false);
-        
-        auto it = _command2BehaviorMap.find(strCommand);
-        if(it==_command2BehaviorMap.end())
-        {
-            SBehaviorInfo bi;
-            bi.ptrBehaviorGroup = SCBehaviorGroup::create();
-            bi.ptrBehaviorGroup->addBehavior(bvrPtr);
-            bi.ptrMatcher = matcherPtr;
-            
-            _command2BehaviorMap[strCommand] = bi;
-        }
-        else
-        {
-            (*it).second.ptrBehaviorGroup->addBehavior(bvrPtr);
-        }
-        
-        return true;
-    }
-    
-    // bvrPtr can be NULL
-    bool SCStrategy::addBehavior(SCMessageMatcher::Ptr matcherPtr,SCBehavior::Ptr bvrPtr)
-    {
-        SCASSERT(matcherPtr!=NULL);
-        
-        bool bRet = false;
-        if(matcherPtr->getMessageID()==SCID::Msg::kSCMsgCommand)
-        {
-            SC_RETURN_IF(matcherPtr->getCommand()<=0,false);
-            bRet = this->addBehavior(matcherPtr->getCommand(),bvrPtr,matcherPtr);
-        }
-        else
-        {
-            bRet = this->addBehavior(matcherPtr->getMessageID(),bvrPtr,matcherPtr);
-        }
-        
-        return bRet;
-    }
-    
-    void SCStrategy::addEnterBehavior(SCBehavior::Ptr bvrPtr)
-    {
-        SC_RETURN_IF_V(bvrPtr==NULL);
-        if(_ptrEnterBehavior==NULL)
-        {
-            _ptrEnterBehavior = SCBehaviorGroup::create();
-        }
-        
-        _ptrEnterBehavior->addBehavior(bvrPtr);
-    }
-    
-    void SCStrategy::addExitBehavior(SCBehavior::Ptr bvrPtr)
-    {
-        SC_RETURN_IF_V(bvrPtr==NULL);
-        if(_ptrExitBehavior==NULL)
-        {
-            _ptrExitBehavior = SCBehaviorGroup::create();
-        }
-        
-        _ptrExitBehavior->addBehavior(bvrPtr);
-    }
-    
-    void SCStrategy::addChild(SCStrategy::Ptr ptrStrategy)
-    {
-        SCASSERT(ptrStrategy!=NULL);
-        _childrenStrategyList.push_back(ptrStrategy);
-    }
-    
-    SCStrategy::Ptr SCStrategy::getStrategy(const int nStrategyID)
-    {
-        SCASSERT(nStrategyID>0);
-        
-        for(auto it : _childrenStrategyList)
-        {
-            SC_RETURN_IF(it->getID()==nStrategyID,it);
-            auto result = it->getStrategy(nStrategyID);
-            SC_RETURN_IF(result!=NULL,result);
-        }
-        
-        if(_pParentStrategy!=NULL)
-        {
-            return _pParentStrategy->onChildGetStrategy(nStrategyID);
-        }
-        
-        return NULL;
-    }
-    
-    SCStrategy::Ptr SCStrategy::onChildGetStrategy(const int nStrategyID)
-    {
-        SCASSERT(nStrategyID>0);
-        
-        SC_RETURN_IF(this->getID()==nStrategyID,this->makeObjPtr(this));
-        
-        for(auto it : _childrenStrategyList)
-        {
-            SC_RETURN_IF(it->getID()==nStrategyID,it);
-        }
-        
-        if(_pParentStrategy!=NULL)
-        {
-            return _pParentStrategy->onChildGetStrategy(nStrategyID);
-        }
-        
-        return NULL;
     }
     
     void SCStrategy::update(SCActor* pActor,SCMessage::Ptr ptrMsg)
     {
-        SC_RETURN_IF_V(!this->getActive());
-        SBehaviorInfo* pBehaviorInfo = NULL;
+        SCASSERT(pActor!=NULL);
+        SCASSERT(ptrMsg!=NULL);
+        
+        SC_RETURN_V_IF(!this->getActive());
+        SC_RETURN_V_IF(ptrMsg==NULL);
+        SC_RETURN_V_IF(pActor==NULL);
+        SC_RETURN_V_IF(pActor->getRole()==NULL);
+        
+        auto ptrSI = pActor->getRole()->getStrategyInfo(this->getID());
+        SCASSERT(ptrSI!=NULL);
+        
+        SCStrategyInfo::SBehaviorInfo* pBehaviorInfo = NULL;
         
         if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
         {
-            SC_RETURN_IF_V(_command2BehaviorMap.empty());
+            SC_RETURN_V_IF(ptrSI->command2BehaviorMap.empty());
             
             bool bResult = false;
             auto strCommand = ptrMsg->paramters.getValue(MSG_KEY_COMMAND).getString(&bResult);
             if(bResult && !strCommand.isEmpty())
             {
-                auto it = _command2BehaviorMap.find(strCommand);
-                if(it!=_command2BehaviorMap.end())
+                auto it = ptrSI->command2BehaviorMap.find(strCommand);
+                if(it!=ptrSI->command2BehaviorMap.end())
                 {
                     pBehaviorInfo = &(*it).second;
                 }
@@ -196,8 +80,8 @@ namespace SpeedCC
         }
         else
         {
-            auto it = _msgID2BehaviorMap.find(ptrMsg->nMsgID);
-            if(it!=_msgID2BehaviorMap.end())
+            auto it = ptrSI->msgID2BehaviorMap.find(ptrMsg->nMsgID);
+            if(it!=ptrSI->msgID2BehaviorMap.end())
             {
                 pBehaviorInfo = &(*it).second;
             }
@@ -207,7 +91,7 @@ namespace SpeedCC
         {
             if(pBehaviorInfo->ptrMatcher!=NULL)
             {
-                SC_RETURN_IF_V(!pBehaviorInfo->ptrMatcher->isMatch(ptrMsg));
+                SC_RETURN_V_IF(!pBehaviorInfo->ptrMatcher->isMatch(ptrMsg));
             }
             SCASSERT(pBehaviorInfo->ptrBehaviorGroup!=NULL);
             SCDictionary dic;

@@ -390,8 +390,8 @@ namespace SpeedCC
     
     void SCSystem::log(const char* pszFormat,...)
     {
-        SC_RETURN_IF_V(pszFormat==NULL);
-        SC_RETURN_IF_V(*pszFormat==0);
+        SC_RETURN_V_IF(pszFormat==NULL);
+        SC_RETURN_V_IF(*pszFormat==0);
         
         char szMessage[1024+1] = {0};
         

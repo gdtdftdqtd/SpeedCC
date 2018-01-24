@@ -29,8 +29,6 @@ namespace SpeedCC
         bool applyStrategy(SCStrategy* pStrategy);
         void removeFromRole();
         
-        inline SCStrategy* getCurrentStrategy() const { return _pCurStrategy;}
-        
         inline SCRole* getRole() {return _pOwnerRole;}
         
         virtual void update(SCMessage::Ptr ptrMsg);
