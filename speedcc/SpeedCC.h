@@ -42,7 +42,7 @@
 #include "component/SCBehaviorStage.h"
 #include "component/SCBehaviorCocos.h"
 #include "component/SCBehaviorCommon.h"
-#include "component/SCBehaviorComponent.cpp"
+#include "component/SCBehaviorComponent.h"
 #include "component/SCStage.h"
 #include "component/SCRole.h"
 #include "component/SCStrategy.h"

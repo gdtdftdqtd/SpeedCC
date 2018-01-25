@@ -2,8 +2,8 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := speedcc_static
-LOCAL_MODULE_FILENAME := libspeedcc
+LOCAL_MODULE := SpeedCC_static
+LOCAL_MODULE_FILENAME := libSpeedCC
 
 #$(call import-add-path,$(LOCAL_PATH)/../../../../cocos2dx/v3)
 #$(call import-add-path,$(LOCAL_PATH)/../../../../cocos2dx/v3/external)
@@ -50,6 +50,8 @@ LOCAL_SRC_FILES := ../../../base/SCMemAllocator.cpp \
 					../../../system/SCStore.cpp \
 					../../../system/SCSystem.cpp \
 					../../../platform/SCOSSystem.cpp \
+					src/main/cpp/SCAndroidAppEnv.cpp \
+					src/main/cpp/SCAndroidSystem.cpp \
 
 
 

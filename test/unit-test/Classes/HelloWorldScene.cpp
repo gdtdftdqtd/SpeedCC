@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
-#include "SimpleAudioEngine.h"
+//#include "SimpleAudioEngine.h"
+#include "SpeedCC.h"
 
 USING_NS_CC;
 
@@ -17,6 +18,8 @@ bool HelloWorld::init()
     {
         return false;
     }
+
+    SpeedCC::SCString str = "";
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
