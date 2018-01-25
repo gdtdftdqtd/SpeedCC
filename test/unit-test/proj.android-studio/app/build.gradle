@@ -4,10 +4,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "io.speedcc.test"
+        applicationId "org.speedcc.unittest"
         minSdkVersion 10
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
@@ -23,7 +23,8 @@ android {
                     
                     def module_paths = [project.file("../../../../cocos2dx/v3").absolutePath,
                                         project.file("../../../../cocos2dx/v3/cocos").absolutePath,
-                                        project.file("../../../../cocos2dx/v3/external").absolutePath]
+                                        project.file("../../../../cocos2dx/v3/external").absolutePath,
+                                        project.file("../../../../speedcc/platform/android/speedcc").absolutePath]
                     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
                         // should use '/'
                         module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
@@ -95,5 +96,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':libcocos2dx')
+//    compile project(':libcocos2dx')
+    compile project(':libspeedcc')
 }
