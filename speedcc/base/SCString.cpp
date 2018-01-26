@@ -1700,6 +1700,13 @@ namespace SpeedCC
         return *this;
     }
     
+    const SCString& SCString::operator+=(const float fNumber)
+    {
+        SCString str(fNumber);
+        *this += str;
+        return *this;
+    }
+    
     const SCString& SCString::operator+=(const unsigned uNumber)
     {
         SCString str(uNumber);

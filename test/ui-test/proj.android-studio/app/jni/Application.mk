@@ -3,6 +3,7 @@ APP_STL := gnustl_static
 APP_CPPFLAGS := -frtti -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -std=c++11 -fsigned-char
 APP_LDFLAGS := -latomic
 
+#APP_ABI := arm64-v8a armeabi-v7a x86 x86_64
 APP_ABI := armeabi
 APP_SHORT_COMMANDS := true
 

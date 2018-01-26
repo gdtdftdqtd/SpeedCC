@@ -14,6 +14,7 @@ bool s_BFoo = false;
 class ObjPtrA : public SCObject
 {
 public:
+    typedef SCObjPtrT<ObjPtrA>  Ptr;
     ObjPtrA(){ s_ACounter++;std::cout << "A class constructor: " << this << std::endl; };
     virtual void foo() {s_AFoo = true;};
     virtual ~ObjPtrA(){ s_ACounter--;std::cout << "A class destructor: " << this << std::endl;};
@@ -22,6 +23,7 @@ public:
 class ObjPtrB : public ObjPtrA
 {
 public:
+    typedef SCObjPtrT<ObjPtrB>  Ptr;
     ObjPtrB(){ s_BCounter++;std::cout << "B class constructor: " << this << std::endl; };
     virtual void foo() {s_BFoo = true;};
     virtual ~ObjPtrB(){ s_BCounter--;std::cout << "B class destructor: " << this << std::endl;};
@@ -256,7 +258,7 @@ TEST(TestSCObjPtr, StrongCast)
         SCObjPtrT<ObjPtrA> APtr;
         APtr.createInstance();
         
-        SCObjPtrT<ObjPtrB> BPtr = APtr.cast<ObjPtrB>();
+        ObjPtrB::Ptr BPtr = APtr.cast<ObjPtrB::Ptr>();
         EXPECT_EQ(s_ACounter,1);
         EXPECT_EQ(s_BCounter,0);
         EXPECT_EQ(BPtr==NULL,true);
@@ -266,7 +268,7 @@ TEST(TestSCObjPtr, StrongCast)
     resetVar();
     {
         SCObjPtrT<ObjPtrA> APtr;
-        SCObjPtrT<ObjPtrB> BPtr = APtr.cast<ObjPtrB>();
+        SCObjPtrT<ObjPtrB> BPtr = APtr.cast<ObjPtrB::Ptr>();
         EXPECT_EQ(s_ACounter,0);
         EXPECT_EQ(s_BCounter,0);
         EXPECT_EQ(BPtr==NULL,true);
@@ -278,7 +280,7 @@ TEST(TestSCObjPtr, StrongCast)
         SCObjPtrT<ObjPtrB> BPtr;
         BPtr.createInstance();
         SCObjPtrT<ObjPtrA> APtr = BPtr;
-        SCObjPtrT<ObjPtrB> CPtr = APtr.cast<ObjPtrB>();
+        SCObjPtrT<ObjPtrB> CPtr = APtr.cast<ObjPtrB::Ptr>();
         
         EXPECT_EQ(s_ACounter,1);
         EXPECT_EQ(s_BCounter,1);
@@ -311,7 +313,7 @@ TEST(TestSCObjPtr, WeakCast)
     resetVar();
     {
         SCObjPtrT<ObjPtrA> APtr;
-        SCObjPtrT<ObjPtrB> BPtr = APtr.cast<ObjPtrB>();
+        SCObjPtrT<ObjPtrB> BPtr = APtr.cast<ObjPtrB::Ptr>();
         EXPECT_EQ(s_ACounter,0);
         EXPECT_EQ(s_BCounter,0);
         EXPECT_EQ(BPtr==NULL,true);
