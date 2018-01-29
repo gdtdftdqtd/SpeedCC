@@ -9,7 +9,7 @@ void TestStageController::onCreate(SCDictionary parameters)
 {
     SCSceneController::onCreate(parameters);
     
-    SC_BEGIN_CONTAINER_ROOT(NULL,0.5,0.5,NULL,SCWinSize())
+    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize())
 
         // title
         SC_INSERT_LABEL_BMFONT(NULL,0.5,0.95,"","Test Stage","blue_font.fnt")
@@ -25,7 +25,7 @@ void TestStageController::onCreate(SCDictionary parameters)
 
 void TestStageController::setUpStage()
 {
-    SC_BEGIN_ROLE(123,0)
+    SC_BEGIN_ROLE(123,0,this)
         IN_STRATEGY(22)
             ON_ENTER_STRATEGE(SCBehaviorCallFunc::create())
             ON_EXIT_STRATEGE(SCBehaviorCallFunc::create())
@@ -38,7 +38,6 @@ void TestStageController::setUpStage()
             ON_EXIT_STRATEGE(SCBehaviorCallFunc::create())
             ON_MSG_BEHAVIOR(11,SCBehaviorCallFunc::create())
             ON_CMD_BEHAVIOR("eee",SCBehaviorCallFunc::create())
-            ON_FRAME(SCBehaviorCallFunc::create())
         ENDIN_STRATEGY
     
         ON_MSG_BEHAVIOR(11,SCBehaviorCallFunc::create())

@@ -64,7 +64,8 @@ namespace SpeedCC
     private:
         void setBedNode(SCBedNode* pLayer);
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
-        inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)  { _ptrParentModalController = controllerPtr;}
+        inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)
+        { _ptrParentModalController = controllerPtr;}
         
     protected:
         SCUIBuilder::Ptr                            _ptrUI;

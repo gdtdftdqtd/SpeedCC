@@ -13,15 +13,15 @@ void TestLabelBinderController::onCreate(SCDictionary parameters)
     _watchStrPtr = SCWatchString::create();
     *_watchStrPtr = "test string";
     
-//    SCBinderLabel::Ptr binderNumPtr = SCBinderLabel::create();
+//    SCBinderUILabel::Ptr binderNumPtr = SCBinderUILabel::create();
 //    this->ownLifecycle(binderNumPtr);
 //    binderNumPtr->setWatchSource(_watchIntPtr);
     
-    SCBinderLabel::Ptr binderStrPtr = SCBinderLabel::create();
+    SCBinderUILabel::Ptr binderStrPtr = SCBinderUILabel::create();
 //    this->ownLifecycle(binderStrPtr);
-    binderStrPtr->setWatchSource(_watchStrPtr);
+    binderStrPtr->setWatch(_watchStrPtr);
 
-    SC_BEGIN_CONTAINER_ROOT(NULL,0.5,0.5,NULL,SCWinSize())
+    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize())
 
         // title
         SC_INSERT_LABEL_BMFONT(NULL,0.5,0.95,"","Label Binder","blue_font.fnt")

@@ -33,6 +33,11 @@ do{\
 #define ON_CMD_BEHAVIOR(_cmd_,_behavior_) \
     ptrSCRoleBuilder->insertBehaviorWithCmd((_cmd_),(_behavior_));
 
+#define ON_ENTER_STRATEGE(_behavior_) \
+    ptrSCRoleBuilder->insertEnterBehavior((_behavior_));
+
+#define ON_EXIT_STRATEGE(_behavior_) \
+    ptrSCRoleBuilder->insertExitBehavior((_behavior_));
 
 #define ON_MSG_ROLE_ACTIVE(_msg_,_role_id_,_active_) \
 do{\

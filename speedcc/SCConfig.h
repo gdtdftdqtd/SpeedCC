@@ -47,27 +47,47 @@
 #endif
 
 #ifndef kSCDefaultResolutionAsset
-#define kSCDefaultResolutionAsset                                   SCSystem::kAssetBitMaskMedium
+#define kSCDefaultResolutionAsset                                   SpeedCC::SCSystem::kAssetBitMaskMedium
 #endif
 
 #ifndef kSCWidthOfAssetDesignBaseline
-#define kSCWidthOfAssetDesignBaseline                             (320)
+#define kSCWidthOfAssetDesignBaseline                             (384)
 #endif
 
 #ifndef kSCHeightOfAssetDesignBaseline
-#define kSCHeightOfAssetDesignBaseline                            (480)
+#define kSCHeightOfAssetDesignBaseline                            (512)
 #endif
 
+#ifndef kSCWidthOfAssetDesignSmall
 #define kSCWidthOfAssetDesignSmall                                 kSCWidthOfAssetDesignBaseline
+#endif
+
+#ifndef kSCHeightOfAssetDesignSmall
 #define kSCHeightOfAssetDesignSmall                                kSCHeightOfAssetDesignBaseline
+#endif
 
+#ifndef kSCWidthOfAssetDesignMedium
 #define kSCWidthOfAssetDesignMedium                                (kSCWidthOfAssetDesignSmall*2)
+#endif
+
+#ifndef kSCHeightOfAssetDesignMedium
 #define kSCHeightOfAssetDesignMedium                               (kSCHeightOfAssetDesignSmall*2)
+#endif
 
+#ifndef kSCWidthOfAssetDesignLarge
 #define kSCWidthOfAssetDesignLarge                                 (kSCWidthOfAssetDesignSmall*4)
-#define kSCHeightOfAssetDesignLarge                                (kSCHeightOfAssetDesignSmall*4)
+#endif
 
+#ifndef kSCHeightOfAssetDesignLarge
+#define kSCHeightOfAssetDesignLarge                                (kSCHeightOfAssetDesignSmall*4)
+#endif
+
+#ifndef kSCWidthOfAssetDesignXLarge
 #define kSCWidthOfAssetDesignXLarge                                (kSCWidthOfAssetDesignSmall*8)
+#endif
+
+#ifndef kSCHeightOfAssetDesignXLarge
 #define kSCHeightOfAssetDesignXLarge                               (kSCHeightOfAssetDesignSmall*8)
+#endif
 
 #endif // __SPEEDCC__SCCONFIG_H__

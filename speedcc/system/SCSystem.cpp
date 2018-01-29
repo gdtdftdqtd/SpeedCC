@@ -90,6 +90,17 @@ namespace SpeedCC
         return s_nSupportAssetType;
     }
     
+    void SCSystem::setSupportAssetSizeType(int type)
+    {
+        const bool b = (s_nSupportAssetType==type);
+        s_nSupportAssetType = type;
+        
+        if(!b)
+        {
+            SCSystem::adapterScreenResolution(false);
+        }
+    }
+    
     bool SCSystem::getDeviceInfo(SDeviceInfo& di)
     {
         int nOS = 0;
@@ -140,13 +151,13 @@ namespace SpeedCC
         return size;
     }
     
-    SCSystem::EScreenSizeType SCSystem::getScreenSizeType()
+    SCSystem::ESizeType SCSystem::getScreenSizeType()
     {
-        static EScreenSizeType      _screenSizeType = kScreenSizeUnkown;
+        static ESizeType      _screenSizeType = kSizeUnkown;
         
-        SC_RETURN_IF(_screenSizeType!=kScreenSizeUnkown,_screenSizeType);
+        SC_RETURN_IF(_screenSizeType!=kSizeUnkown,_screenSizeType);
         
-        const cocos2d::Size& screenSize = SCCCDirector()->getWinSize();
+        const cocos2d::Size& screenSize = SCCCDirector()->getOpenGLView()->getFrameSize();
         
         const int nScreenSquare = screenSize.width * screenSize.height*CC_CONTENT_SCALE_FACTOR()*CC_CONTENT_SCALE_FACTOR();
         
@@ -157,141 +168,142 @@ namespace SpeedCC
         
         int nMinimum = std::min(nDiffOfXLarge,std::min(nDiffOfLarge,std::min(nDiffOfMedium,nDiffOfSmall)));
         
+        SCString strScreenSize(0,"%d x %d",(int)screenSize.width,(int)screenSize.height);
         if(nMinimum==nDiffOfXLarge)
         {
-            SCLog("detected screen size is 'XLarge'");
-            _screenSizeType = kScreenSizeXLarge;
+            SCLog("Detected screen size is 'XLarge'. %s",strScreenSize.c_str());
+            _screenSizeType = kSizeXLarge;
         }
         else if(nMinimum==nDiffOfLarge)
         {
-            SCLog("detected screen size is 'Large'");
-            _screenSizeType = kScreenSizeLarge;
+            SCLog("Detected screen size is 'Large'. %s",strScreenSize.c_str());
+            _screenSizeType = kSizeLarge;
         }
         else if(nMinimum==nDiffOfMedium)
         {
-            SCLog("detected screen size is 'Medium'");
-            _screenSizeType = kScreenSizeMedium;
+            SCLog("Detected screen size is 'Medium'. %s",strScreenSize.c_str());
+            _screenSizeType = kSizeMedium;
         }
         else
         {
             SCASSERT(nMinimum==nDiffOfSmall);
-            SCLog("detected screen size is 'Small'");
-            _screenSizeType = kScreenSizeSmall;
+            SCLog("Detected screen size is 'Small'. %s",strScreenSize.c_str());
+            _screenSizeType = kSizeSmall;
         }
         
         return _screenSizeType;
     }
     
-    SCSystem::EScreenSizeType SCSystem::getAssetSizeType(const bool bCache)
+    SCSystem::ESizeType SCSystem::getAssetSizeType(const bool bCache)
     {
-        static EScreenSizeType      _resourceSizeType = kScreenSizeUnkown;
+        static ESizeType      _resourceSizeType = kSizeUnkown;
         
-        SC_RETURN_IF(_resourceSizeType!=kScreenSizeUnkown && bCache,_resourceSizeType);
+        SC_RETURN_IF(_resourceSizeType!=kSizeUnkown && bCache,_resourceSizeType);
         
-        const EScreenSizeType screenSize = SCSystem::getScreenSizeType();
+        const ESizeType screenSize = SCSystem::getScreenSizeType();
         
         switch(screenSize)
         {
-            case kScreenSizeXLarge:
+            case kSizeXLarge:
             {
                 if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
                 {
-                    SCLog("use 'XLarge' resolution images");
-                    _resourceSizeType = kScreenSizeXLarge;
+                    SCLog("Using 'XLarge' resolution images");
+                    _resourceSizeType = kSizeXLarge;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
                 {
-                    SCLog("use 'Large' resolution images");
-                    _resourceSizeType = kScreenSizeLarge;
+                    SCLog("Using 'Large' resolution images");
+                    _resourceSizeType = kSizeLarge;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
                 {
-                    SCLog("use 'Medium' resolution images");
-                    _resourceSizeType = kScreenSizeMedium;
+                    SCLog("Using 'Medium' resolution images");
+                    _resourceSizeType = kSizeMedium;
                 }
                 else
                 {
                     SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
-                    SCLog("use 'Small' resolution images");
-                    _resourceSizeType = kScreenSizeSmall;
+                    SCLog("Using 'Small' resolution images");
+                    _resourceSizeType = kSizeSmall;
                 }
             }
                 break;
                 
-            case kScreenSizeLarge:
+            case kSizeLarge:
             {
                 if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
                 {
-                    SCLog("use 'Large' resolution images");
-                    _resourceSizeType = kScreenSizeLarge;
+                    SCLog("Using 'Large' resolution images");
+                    _resourceSizeType = kSizeLarge;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
                 {
-                    SCLog("use 'Medium' resolution images");
-                    _resourceSizeType = kScreenSizeMedium;
+                    SCLog("Using 'Medium' resolution images");
+                    _resourceSizeType = kSizeMedium;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
                 {
-                    SCLog("use 'XLarge' resolution images");
-                    _resourceSizeType = kScreenSizeXLarge;
+                    SCLog("Using 'XLarge' resolution images");
+                    _resourceSizeType = kSizeXLarge;
                 }
                 else
                 {
                     SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
-                    SCLog("use 'Small' resolution images");
-                    _resourceSizeType = kScreenSizeSmall;
+                    SCLog("Using 'Small' resolution images");
+                    _resourceSizeType = kSizeSmall;
                 }
             }
                 break;
                 
-            case kScreenSizeMedium:
+            case kSizeMedium:
             {
                 if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
                 {
-                    SCLog("use 'Medium' resolution images");
-                    _resourceSizeType = kScreenSizeMedium;
+                    SCLog("Using 'Medium' resolution images");
+                    _resourceSizeType = kSizeMedium;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
                 {
-                    SCLog("use 'Small' resolution images");
-                    _resourceSizeType = kScreenSizeSmall;
+                    SCLog("Using 'Small' resolution images");
+                    _resourceSizeType = kSizeSmall;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
                 {
-                    SCLog("use 'Large' resolution images");
-                    _resourceSizeType = kScreenSizeLarge;
+                    SCLog("Using 'Large' resolution images");
+                    _resourceSizeType = kSizeLarge;
                 }
                 else
                 {
                     SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
-                    SCLog("use 'XLarge' resolution images");
-                    _resourceSizeType = kScreenSizeXLarge;
+                    SCLog("Using 'XLarge' resolution images");
+                    _resourceSizeType = kSizeXLarge;
                 }
             }
                 break;
                 
-            case kScreenSizeSmall:
+            case kSizeSmall:
             {
                 if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
                 {
-                    SCLog("use 'Small' resolution images");
-                    _resourceSizeType = kScreenSizeSmall;
+                    SCLog("Using 'Small' resolution images");
+                    _resourceSizeType = kSizeSmall;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
                 {
-                    SCLog("use 'Medium' resolution images");
-                    _resourceSizeType = kScreenSizeMedium;
+                    SCLog("Using 'Medium' resolution images");
+                    _resourceSizeType = kSizeMedium;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
                 {
-                    SCLog("use 'Large' resolution images");
-                    _resourceSizeType = kScreenSizeLarge;
+                    SCLog("Using 'Large' resolution images");
+                    _resourceSizeType = kSizeLarge;
                 }
                 else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
                 {
                     SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
-                    SCLog("use 'XLarge' resolution images");
-                    _resourceSizeType = kScreenSizeXLarge;
+                    SCLog("Using 'XLarge' resolution images");
+                    _resourceSizeType = kSizeXLarge;
                 }
             }
                 break;
@@ -304,18 +316,19 @@ namespace SpeedCC
         return _resourceSizeType;
     }
     
-    void SCSystem::initSpeedCC(void* pController)
+    void SCSystem::initSpeedCC()
     {
         SCLog("SpeedCC v%d.%d.%d",(int)SPEEDCC_VERSION_MAJOR,(int)SPEEDCC_VERSION_MINOR,(int)SPEEDCC_VERSION_FIX);
-        ::scInitSpeedCC(pController);
+        ::scInitSpeedCC(NULL);
         SCSystem::adapterScreenResolution();
     }
     
     void SCSystem::adapterScreenResolution(const bool bCache)
     {
-        const bool bPortrait = ::scGetDeviceOrientation()<3;
+//        const bool bPortrait = ::scGetDeviceOrientation()<3;
         
         auto assetSizeType = SCSystem::getAssetSizeType(bCache);
+//        auto screenSizeType = SCSystem::getScreenSizeType();
         auto searchOrderVector = SCCCFileUtils()->getSearchResolutionsOrder();
         
         std::vector<std::string> newSearchVector;
@@ -332,19 +345,19 @@ namespace SpeedCC
         
         switch(assetSizeType)
         {
-            case kScreenSizeXLarge:
+            case kSizeXLarge:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetXLarge "/");
                 break;
                 
-            case kScreenSizeLarge:
+            case kSizeLarge:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetLarge "/");
                 break;
                 
-            case kScreenSizeMedium:
+            case kSizeMedium:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetMedium "/");
                 break;
                 
-            case kScreenSizeSmall:
+            case kSizeSmall:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetSmall "/");
                 break;
                 
@@ -353,38 +366,31 @@ namespace SpeedCC
         
         SCCCFileUtils()->setSearchResolutionsOrder(newSearchVector);
         
-        float fContentScale =  1.0f;
+        auto screenSize = SCCCDirector()->getOpenGLView()->getFrameSize();
+        SCCCDirector()->getOpenGLView()->setDesignResolutionSize(kSCWidthOfAssetDesignBaseline,
+                                                                 kSCHeightOfAssetDesignBaseline,
+                                                                 ResolutionPolicy::NO_BORDER);
+        
+        float fContentScale = 1.0f;
         
         switch(assetSizeType)
         {
-            case kScreenSizeXLarge:
-                fContentScale = (bPortrait ? kSCWidthOfAssetDesignXLarge/kSCWidthOfAssetDesignBaseline
-                                 : kSCHeightOfAssetDesignXLarge/kSCHeightOfAssetDesignBaseline);
+            case kSizeXLarge: fContentScale = MIN(kSCHeightOfAssetDesignXLarge/kSCHeightOfAssetDesignBaseline,
+                                                  kSCWidthOfAssetDesignXLarge/kSCWidthOfAssetDesignBaseline);
                 break;
-                
-            case kScreenSizeLarge:
-                fContentScale = (bPortrait ? kSCWidthOfAssetDesignLarge/kSCWidthOfAssetDesignBaseline
-                                 : kSCHeightOfAssetDesignLarge/kSCHeightOfAssetDesignBaseline);
+            case kSizeLarge: fContentScale = MIN(kSCHeightOfAssetDesignLarge/kSCHeightOfAssetDesignBaseline,
+                                                 kSCWidthOfAssetDesignLarge/kSCWidthOfAssetDesignBaseline);
                 break;
-                
-            case kScreenSizeMedium:
-                fContentScale = (bPortrait ? kSCWidthOfAssetDesignMedium/kSCWidthOfAssetDesignBaseline
-                                 : kSCHeightOfAssetDesignMedium/kSCHeightOfAssetDesignBaseline);
+            case kSizeMedium:fContentScale = MIN(kSCHeightOfAssetDesignMedium/kSCHeightOfAssetDesignBaseline,
+                                                 kSCWidthOfAssetDesignMedium/kSCWidthOfAssetDesignBaseline);
                 break;
-                
-            case kScreenSizeSmall:
-                fContentScale = (bPortrait ? kSCWidthOfAssetDesignSmall/kSCWidthOfAssetDesignBaseline
-                                 : kSCHeightOfAssetDesignSmall/kSCHeightOfAssetDesignBaseline);
+            case kSizeSmall: fContentScale = MIN(kSCHeightOfAssetDesignSmall/kSCHeightOfAssetDesignBaseline,
+                                                 kSCWidthOfAssetDesignSmall/kSCWidthOfAssetDesignBaseline);
                 break;
-                
             default: SCASSERT(false); break;
         }
         
-        ResolutionPolicy policy = bPortrait ? ResolutionPolicy::FIXED_WIDTH : ResolutionPolicy::FIXED_HEIGHT;
-        SCCCDirector()->getOpenGLView()->setDesignResolutionSize(bPortrait?kSCWidthOfAssetDesignBaseline:kSCHeightOfAssetDesignBaseline,
-                                                                  bPortrait?kSCHeightOfAssetDesignBaseline:kSCWidthOfAssetDesignBaseline,
-                                                                  policy);
-        
+        SCLog("Content Scale Factor: %.2f",fContentScale);
         SCCCDirector()->setContentScaleFactor(fContentScale);
     }
     
@@ -421,7 +427,7 @@ namespace SpeedCC
         SCAutoLock(*pLock);
         
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
-        __android_log_print(ANDROID_LOG_DEBUG, "SpeedCC DEBUG", "%s Foshan: %s", szBuf,szMessage);
+        __android_log_print(ANDROID_LOG_DEBUG, "SpeedCC DEBUG", "%s SpeedCC: %s", szBuf,szMessage);
 #else
         std::cout << szBuf << "SpeedCC: " <<szMessage<<std::endl;
 #endif

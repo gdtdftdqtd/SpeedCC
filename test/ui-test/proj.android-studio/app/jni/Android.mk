@@ -14,7 +14,12 @@ LOCAL_MODULE_FILENAME := libMyGame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/AppDelegate.cpp \
-                   ../../../Classes/HelloWorldScene.cpp
+                   ../../../Classes/TestHomeController.cpp \
+                   ../../../Classes/TestStageController.cpp \
+                   ../../../Classes/TestLabelBinderController.cpp \
+                   ../../../Classes/TestPage1Controller.cpp
+
+
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../../../speedcc \

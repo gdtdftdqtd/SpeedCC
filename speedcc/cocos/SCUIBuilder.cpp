@@ -61,14 +61,14 @@ namespace SpeedCC
     void SCUIBuilder::popContainerStack()
     {
         SCASSERT(!_contextStack.empty());
-        auto front = _contextStack.top();
+        auto& front = _contextStack.front();
         
         if(front.pfunEndFunctor!=NULL)
         {
             (*front.pfunEndFunctor)();
         }
         
-        _contextStack.pop();
+        _contextStack.pop_front();
         
         if(_contextStack.empty())
         {// build ui finished.
@@ -83,7 +83,7 @@ namespace SpeedCC
                                      const SCUIArg::StringPurifier& property)
     {
         SCASSERT(userNode.pNode!=NULL);
-        _contextStack.top().pContainerNode->addChild(userNode.pNode);
+        _contextStack.front().pContainerNode->addChild(userNode.pNode);
         SCNodeUtils::setPerPosition(userNode.pNode, Vec2(fPosX,fPosY));
         userNode.pfunSetProperty(userNode.pNode,property.strResult,NULL);
     }
@@ -257,7 +257,7 @@ namespace SpeedCC
                                                 const SCUIArg::BoolPurifier& value,
                                                 SCUIArg::BehaviorPurifier bvrPurifier)
     {
-        auto context = _contextStack.top();
+        auto& context = _contextStack.front();
         context.menuItemVtr.push_back(NULL);
         
         MenuItemImage* pItemSprite[2] = {NULL};
@@ -331,7 +331,7 @@ namespace SpeedCC
                    SCUIArg::BehaviorPurifier bvrPurifier)
     {
         auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.pNode);
-        auto context = _contextStack.top();
+        auto& context = _contextStack.front();
         
         if(!context.menuItemVtr.empty())
         {
@@ -408,7 +408,7 @@ namespace SpeedCC
         SCUITypeDef::SUIContext context;
         context.pContainerNode = pNode;
         context.containerType = SCUITypeDef::EContainerType::kNormal;
-        _contextStack.push(context);
+        _contextStack.push_front(context);
     }
     
     

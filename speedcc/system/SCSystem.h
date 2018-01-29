@@ -17,13 +17,13 @@ namespace SpeedCC
     class SCSystem final
     {
     public:
-        enum EScreenSizeType
+        enum ESizeType
         {
-            kScreenSizeUnkown               = 0,
-            kScreenSizeSmall                = 1,
-            kScreenSizeMedium               = 2,
-            kScreenSizeLarge                = 3,
-            kScreenSizeXLarge               = 4,
+            kSizeUnkown               = 0,
+            kSizeSmall                = 1,
+            kSizeMedium               = 2,
+            kSizeLarge                = 3,
+            kSizeXLarge               = 4,
         };
         
         enum EOSType
@@ -35,10 +35,10 @@ namespace SpeedCC
         
         enum EAssetSizeBitMaskType
         {
-            kAssetBitMaskSmall       = (1<<kScreenSizeSmall),
-            kAssetBitMaskMedium      = (1<<kScreenSizeMedium),
-            kAssetBitMaskLarge       = (1<<kScreenSizeLarge),
-            kAssetBitMaskXLarge      = (1<<kScreenSizeXLarge),
+            kAssetBitMaskSmall       = (1<<kSizeSmall),
+            kAssetBitMaskMedium      = (1<<kSizeMedium),
+            kAssetBitMaskLarge       = (1<<kSizeLarge),
+            kAssetBitMaskXLarge      = (1<<kSizeXLarge),
         };
         
         enum EDeviceType
@@ -48,6 +48,7 @@ namespace SpeedCC
             kDeviceTablet   = 2,
             kDeviceTV       = 3,
             kDeviceVehicle  = 4,
+            kDeviceDesktop  = 5,
         };
         
         enum EStoreType
@@ -76,6 +77,7 @@ namespace SpeedCC
         static bool getMultipleTouch();
         
         static int getSupportAssetSizeType();
+        static void setSupportAssetSizeType(int type);
         static void setGlobalDisableTouch(const bool bDisable);
         static bool getGlobalDisableTouch();
         
@@ -83,9 +85,9 @@ namespace SpeedCC
         static SCString getProductName();
         static SCString getBundleID();
         static cocos2d::Size getScreenSize();
-        static EScreenSizeType getScreenSizeType();
-        static void initSpeedCC(void* pController=NULL);
-        static EScreenSizeType getAssetSizeType(const bool bCache=true);
+        static ESizeType getScreenSizeType();
+        static void initSpeedCC();
+        static ESizeType getAssetSizeType(const bool bCache=true);
         static void adapterScreenResolution(const bool bCache=true);
         static void log(const char* pszFormat,...);
         

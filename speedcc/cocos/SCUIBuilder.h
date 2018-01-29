@@ -204,7 +204,7 @@ namespace SpeedCC
         
         cocos2d::Node*                          _pDefaultBedNode;
         cocos2d::Ref*                           _pDefaultRefCaller;
-        std::stack<SCUITypeDef::SUIContext>          _contextStack;
+        std::list<SCUITypeDef::SUIContext>          _contextStack;
         
         std::map<int,cocos2d::Node*>                _id2NodeMap;
         std::map<cocos2d::Ref*,SCBinder::Ptr>       _ref2BinderMap;
