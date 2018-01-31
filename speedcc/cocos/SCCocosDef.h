@@ -108,8 +108,11 @@ namespace SpeedCC
     (CocosDenshion::SimpleAudioEngine::getInstance())
 
 
-#define SCWinSize() \
+#define SCWinSize \
     (SCCCDirector()->getWinSize())
+    
+#define SCScreenSize \
+    (SCCCDirector()->getOpenGLView()->getFrameSize())
     
 #define SCCCScheduler()\
     (SCCCDirector()->getScheduler())

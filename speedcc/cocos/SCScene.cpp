@@ -12,7 +12,7 @@ namespace SpeedCC
     bool SCBedNode::init()
     {
         SC_RETURN_IF(!Node::init(),false);
-        this->setContentSize(SCWinSize());
+        this->setContentSize(SCWinSize);
         return true;
     }
     
@@ -71,8 +71,8 @@ namespace SpeedCC
         SC_RETURN_IF(!Scene::init(),false);
         
         _pSceneNode = SCBedNode::create();
-        _pSceneNode->setContentSize(SCWinSize());
-        _pSceneNode->setPosition(SCNodeUtils::posP2A(Vec2(0,0),SCWinSize()));
+        _pSceneNode->setContentSize(SCWinSize);
+        _pSceneNode->setPosition(SCNodeUtils::posP2A(Vec2(0,0),SCWinSize));
         this->addChild(_pSceneNode);
         
         return true;

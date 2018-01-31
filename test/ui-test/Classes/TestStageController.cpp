@@ -9,7 +9,7 @@ void TestStageController::onCreate(SCDictionary parameters)
 {
     SCSceneController::onCreate(parameters);
     
-    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize())
+    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
 
         // title
         SC_INSERT_LABEL_BMFONT(NULL,0.5,0.95,"","Test Stage","blue_font.fnt")

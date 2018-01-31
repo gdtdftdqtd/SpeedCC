@@ -4,12 +4,22 @@ package org.speedcc.lib;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import java.text.DateFormatSymbols;
 
 public class JNISystem {
+
+    public static int getOrientation(){
+        switch(Cocos2dxActivity.getContext().getResources().getConfiguration().orientation)
+        {
+            case Configuration.ORIENTATION_LANDSCAPE: return 3;
+            case Configuration.ORIENTATION_PORTRAIT: return 1;
+            default: return 0;
+        }
+    }
 
     public static String getMonthName(int month,boolean isShort){
 

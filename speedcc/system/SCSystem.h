@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "../base/SCVersion.h"
+#include "../SCConfig.h"
 
 namespace SpeedCC
 {
@@ -84,9 +85,8 @@ namespace SpeedCC
         static bool getDeviceInfo(SDeviceInfo& di);
         static SCString getProductName();
         static SCString getBundleID();
-        static cocos2d::Size getScreenSize();
         static ESizeType getScreenSizeType();
-        static void initSpeedCC();
+        static void initSpeedCC(const int nSupportAssetType=kSCDefaultResolutionAsset);
         static ESizeType getAssetSizeType(const bool bCache=true);
         static void adapterScreenResolution(const bool bCache=true);
         static void log(const char* pszFormat,...);

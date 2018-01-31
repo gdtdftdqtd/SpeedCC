@@ -13,15 +13,10 @@ void TestLabelBinderController::onCreate(SCDictionary parameters)
     _watchStrPtr = SCWatchString::create();
     *_watchStrPtr = "test string";
     
-//    SCBinderUILabel::Ptr binderNumPtr = SCBinderUILabel::create();
-//    this->ownLifecycle(binderNumPtr);
-//    binderNumPtr->setWatchSource(_watchIntPtr);
-    
     SCBinderUILabel::Ptr binderStrPtr = SCBinderUILabel::create();
-//    this->ownLifecycle(binderStrPtr);
     binderStrPtr->setWatch(_watchStrPtr);
 
-    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize())
+    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
 
         // title
         SC_INSERT_LABEL_BMFONT(NULL,0.5,0.95,"","Label Binder","blue_font.fnt")
@@ -36,7 +31,7 @@ void TestLabelBinderController::onCreate(SCDictionary parameters)
         SC_INSERT_BUTTON_LABEL(NULL,0.65,0.5,"color-text=red;","click","",25,SCF(onButtonRandomText))
     
         // back
-        SC_INSERT_BUTTON_LABEL(NULL,0.05,0.95,"color-text=red;","back","",25,SCF(onButtonBack))
+        SC_INSERT_BUTTON_LABEL(NULL,0.15,0.95,"color-text=red;","back","",25,SCF(onButtonBack))
     SC_END_CONTAINER
     
 }

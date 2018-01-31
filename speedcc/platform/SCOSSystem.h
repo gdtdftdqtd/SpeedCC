@@ -18,7 +18,6 @@ extern "C" {
     // 3: landscape right; 4: landscape left
     int scGetDeviceOrientation();
     void scInitSpeedCC(void* pController);
-    void scGetScreenSize(float* pWidth, float* pHeight);
     bool scGetFreeStorage(unsigned long* pInternal,unsigned long* pExternal);
     bool scGetOSVersion(int* pMajor,int* pMinor,int* pFix);
     // OS type. 0: unknown; 1: iOS; 2: Android

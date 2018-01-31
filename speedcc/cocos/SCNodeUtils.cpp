@@ -8,12 +8,12 @@ using namespace cocos2d;
 
 namespace SpeedCC
 {
-    Vec2 SCNodeUtils::posA2P(const Vec2& ptAbs,const Size& frameSize=SCWinSize())
+    Vec2 SCNodeUtils::posA2P(const Vec2& ptAbs,const Size& frameSize=SCWinSize)
     {
         return Vec2(ptAbs.x/frameSize.width,ptAbs.y/frameSize.height);
     }
     
-    Vec2 SCNodeUtils::posP2A(const Vec2& ptPer,const Size& frameSize=SCWinSize())
+    Vec2 SCNodeUtils::posP2A(const Vec2& ptPer,const Size& frameSize=SCWinSize)
     {
         return Vec2(ptPer.x*frameSize.width,ptPer.y*frameSize.height);
     }

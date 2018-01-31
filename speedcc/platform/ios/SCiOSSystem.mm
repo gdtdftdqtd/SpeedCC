@@ -19,8 +19,8 @@ extern "C" {
     
     // callback functions
     void scbInternetReachableChanged(const bool bNewState);
-    void scbAppEnterBackground();
-    void scbAppEnterForeground();
+//    void scbAppEnterBackground();
+//    void scbAppEnterForeground();
     void scbAppLaunched();
     
     void scbAlertBoxSelected(const int nAlertBoxID,const int nButton);
@@ -228,23 +228,6 @@ extern "C" {
         }
     }
     
-    void scGetScreenSize(float* pWidth, float* pHeight)
-    {
-        CGRect bounds = [[UIScreen mainScreen]bounds];
-        
-        bool b = (::scGetDeviceOrientation()<3);
-        
-        if(pWidth)
-        {
-            *pWidth = b ? bounds.size.width : bounds.size.height;
-        }
-        
-        if(pHeight)
-        {
-            *pHeight = b ? bounds.size.height : bounds.size.width;
-        }
-    }
-    
     
     void scShowSystemAlertBox(const char* pszTitle,
                               const char* pszMessge,
@@ -403,7 +386,7 @@ SCiOSSystem* s_shareSystem = nil;
 //                                                 selector: @selector(applicationDidBecomeActive:)
 //                                                     name: UIApplicationDidBecomeActiveNotification
 //                                                   object: nil];
-        
+        /*
         [[NSNotificationCenter defaultCenter] addObserver: self
                                                  selector: @selector(applicationWillEnterForeground:)
                                                      name: UIApplicationWillEnterForegroundNotification
@@ -413,7 +396,7 @@ SCiOSSystem* s_shareSystem = nil;
                                                  selector: @selector(applicationDidEnterBackground:)
                                                      name: UIApplicationDidEnterBackgroundNotification
                                                    object: nil];
-        
+        */
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reachabilityChanged:)
                                                      name:kReachabilityChangedNotification
@@ -459,19 +442,19 @@ SCiOSSystem* s_shareSystem = nil;
     ::scbAppLaunched();
 }
   
--(void) applicationDidEnterBackground:(UIApplication*)application
-{   
-    ::scbAppEnterBackground();
-}
-
-//- (void)applicationDidBecomeActive:(UIApplication *)application
-//{
-//
+//-(void) applicationDidEnterBackground:(UIApplication*)application
+//{   
+//    ::scbAppEnterBackground();
 //}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-    ::scbAppEnterForeground();
-}
+//
+////- (void)applicationDidBecomeActive:(UIApplication *)application
+////{
+////
+////}
+//
+//-(void) applicationWillEnterForeground:(UIApplication*)application
+//{
+//    ::scbAppEnterForeground();
+//}
 
 @end

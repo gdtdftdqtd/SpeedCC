@@ -15,9 +15,22 @@ extern "C"
 {
 #endif  // __cplusplus
 
+// 0: unknown; 1: portrait; 2: portrait upside down;
+// 3: landscape right; 4: landscape left
     int scGetDeviceOrientation()
     {
-        
+        int nRet = 0;
+
+        JniMethodInfo t;
+        if (JniHelper::getStaticMethodInfo(t, CLASS_NAME,
+                                           "getOrientation", "()I"))
+        {
+            jint s = (jint)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+            nRet = s;
+        }
+
+        return nRet;
     }
 
 int scGetBundleID(char* pszBuffer, const int nBufferSize)

@@ -38,11 +38,6 @@ bool scGetFreeStorage(unsigned long* pInternal,unsigned long* pExternal)
     return false;
 }
 
-void scGetScreenSize(float* pWidth, float* pHeight)
-{
-
-}
-
 void scSetMultipleTouch(bool bEnable)
 {
 

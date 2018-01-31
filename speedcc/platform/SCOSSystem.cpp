@@ -74,6 +74,7 @@ namespace SpeedCC
         }
         
         ///------------- app
+        /*
         void scbAppEnterBackground()
         {
             SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppEnterBackground);
@@ -83,6 +84,7 @@ namespace SpeedCC
         {
             SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppEnterForeground);
         }
+        */
         
         void scbAppLaunched()
         {

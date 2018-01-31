@@ -69,7 +69,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0f / 60);
     
     SpeedCC::SCSystem::initSpeedCC();
-//    SpeedCC::SCSystem::setSupportAssetSizeType(SpeedCC::SCSystem::kAssetBitMaskSmall);
     
     SCSceneNav()->switchScene<TestHomeController>();
 
@@ -78,6 +77,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 // This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground() {
+    SCMsgDisp()->sendMessage(SpeedCC::SCID::Msg::kSCMsgAppEnterBackground);
     Director::getInstance()->stopAnimation();
 
 #if USE_AUDIO_ENGINE
@@ -90,6 +90,7 @@ void AppDelegate::applicationDidEnterBackground() {
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
+    SCMsgDisp()->sendMessage(SpeedCC::SCID::Msg::kSCMsgAppEnterForeground);
     Director::getInstance()->startAnimation();
 
 #if USE_AUDIO_ENGINE
