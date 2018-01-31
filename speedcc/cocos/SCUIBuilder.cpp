@@ -320,6 +320,15 @@ namespace SpeedCC
         auto pItemLabel = MenuItemLabel::create(pLabel,
                                                 [this](cocos2d::Ref* pSender){this->onSCMenuItemPressed(pSender);});
         
+        SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;
+        scTemFilterConfig.bExclude = false;
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_COLOR_TEXT);
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_FONT_SIZE);
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_FONT_NAME);
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_LABEL);
+        
+        SCNodeProperty::setProperty<Label>(pLabel, property.strResult,&scTemFilterConfig);
+        
         this->addButton(pItemLabel,fPosX,fPosY,property,bvrPurifier);
         return pItemLabel;
     }
