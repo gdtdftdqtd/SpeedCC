@@ -6,7 +6,7 @@
 #include "../../../../../../../cocos2dx/v3/cocos/platform/android/jni/JniHelper.h"
 #include <android/log.h>
 
-#define CLASS_NAME "org/speedcc/lib"
+#define CLASS_NAME "org/speedcc/lib/JNISystem"
 
 using namespace cocos2d;
 
@@ -18,19 +18,197 @@ extern "C"
 
 ///--------- C => Java
 
-	void scInitSpeedCC(void* pController)
-	{
-
-	}
+void scInitSpeedCC(void* pController)
+{
+    // do nothing
+}
 
 bool scGetOSVersion(int* pMajor,int* pMinor,int* pFix)
 {
+    JniMethodInfo t;
+
+    if (pMajor)
+        *pMajor = 0;
+    if (pMinor)
+        *pMinor = 0;
+    if (pFix)
+        *pFix = 0;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getOSVersion", "()Ljava/lang/String;"))
+    {
+        jstring s = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+        std::string strResult = JniHelper::jstring2string(s);
+
+        t.env->DeleteLocalRef(s);
+        t.env->DeleteLocalRef(t.classID);
+
+        std::vector<std::string> strNumberVer;
+
+        std::stringstream ss(strResult);
+        std::string item;
+        while (std::getline(ss, item, '.'))
+        {
+            strNumberVer.push_back(item);
+        }
+
+        int i = 0;
+        for (const auto& it : strNumberVer)
+        {
+            switch (i++)
+            {
+                case 0:
+                    if (pMajor)
+                        *pMajor = atoi(it.c_str());
+                    break;
+                case 1:
+                    if (pMinor)
+                        *pMinor = atoi(it.c_str());
+                    break;
+                case 2:
+                    if (pFix)
+                        *pFix = atoi(it.c_str());
+                    break;
+                default:
+                    break;
+            }
+        }
+        return true;
+    }
+
     return false;
 }
 
-bool scGetDeviceInfo(int* pOSMainType,int* pOSDistributionType,int* pDeviceType,int* pIsSimulator,char* pszHwIdenti,const int nHwIdentiSize)
+// OS type. 0: unknown; 1: iOS; 2: Android
+// device type. 0: unkown; 1: phone; 2: tablet; 3: tv; 4:vehicle; 5: desktop
+// store type. 0:unkown; 1: apple app store; 2: google play; 3: amazon;
+//kDeviceManufactureGoogle        = 2,
+//        kDeviceManufactureSamsung       = 3,
+//        kDeviceManufactureHuawei        = 4,
+//        kDeviceManufactureLGE           = 5,
+//        kDeviceManufactureOnePlus       = 6,
+//        kDeviceManufactureSony          = 7,
+//        kDeviceManufactureXiaomi        = 8,
+//        kDeviceManufactureMeizu         = 9,
+//        kDeviceManufactureAmazon        = 10,
+bool scGetDeviceInfo(int* pOSMainType,
+                     int* pOSDistributionType,
+                     int* pDeviceType,
+                     int* pIsSimulator,
+                     int* pStoreType,
+                     char* pszHwBuffer,
+                     const int nHwBufferSize)
 {
-    return false;
+    if(pOSMainType)
+    {
+        *pOSMainType = 2; // Android
+    }
+
+    JniMethodInfo t;
+    if(pDeviceType && JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getDeviceType",
+                                                     "()I"))
+    {
+        *pDeviceType = t.env->CallStaticIntMethod(t.classID, t.methodID);
+
+        t.env->DeleteLocalRef(t.classID);
+    }
+
+    if(pIsSimulator && JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getProduct", "()Ljava/lang/String;"))
+    {
+        jstring s = (jstring) t.env->CallStaticObjectMethod(t.classID, t.methodID);
+
+        std::string strProduct = JniHelper::jstring2string(s);
+        t.env->DeleteLocalRef(s);
+        t.env->DeleteLocalRef(t.classID);
+
+        *pIsSimulator = (strProduct == "google_sdk") ? 1 : 0;
+    }
+
+    if(pOSDistributionType || pszHwBuffer)
+    {
+        std::string strModel;
+        std::string strBrand;
+        std::string strManufacture;
+
+        if(JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getDeviceBrand", "()Ljava/lang/String;"))
+        {
+            jstring s = (jstring) t.env->CallStaticObjectMethod(t.classID, t.methodID);
+            strBrand = JniHelper::jstring2string(s);
+            t.env->DeleteLocalRef(s);
+            t.env->DeleteLocalRef(t.classID);
+        }
+
+        if(JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getDeviceManufacturer", "()Ljava/lang/String;"))
+        {
+            jstring s = (jstring) t.env->CallStaticObjectMethod(t.classID, t.methodID);
+            strManufacture = JniHelper::jstring2string(s);
+            t.env->DeleteLocalRef(s);
+            t.env->DeleteLocalRef(t.classID);
+        }
+
+
+
+        if(pszHwBuffer)
+        {
+            if(JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getDeviceModel", "()Ljava/lang/String;"))
+            {
+                jstring s = (jstring) t.env->CallStaticObjectMethod(t.classID, t.methodID);
+                strModel = JniHelper::jstring2string(s);
+                t.env->DeleteLocalRef(s);
+                t.env->DeleteLocalRef(t.classID);
+            }
+
+            if(strModel.size()<nHwBufferSize)
+            {
+                strcpy(pszHwBuffer,strModel.c_str());
+            }
+        }
+
+        if(strManufacture=="Amazon")
+        {// refer to:
+         // https://developer.amazon.com/docs/fire-tablets/ft-device-and-feature-specifications.html
+         // https://developer.amazon.com/docs/fire-tv/device-specifications.html
+            *pOSDistributionType = 10;
+        }
+        else if(strManufacture=="Huawei")
+        {
+            *pOSDistributionType = 4;
+        }
+        else if(strManufacture=="Google")
+        {
+            *pOSDistributionType = 2;
+        }
+        else if(strManufacture=="Samsung")
+        {
+            *pOSDistributionType = 3;
+        }
+        else if(strManufacture=="Sony")
+        {
+            *pOSDistributionType = 7;
+        }
+        else if(strManufacture=="LGE")
+        {
+            *pOSDistributionType = 5;
+        }
+        else if(strManufacture=="OnePlus")
+        {
+            *pOSDistributionType = 6;
+        }
+        else if(strManufacture=="Meizu")
+        {
+            *pOSDistributionType = 9;
+        }
+        else if(strManufacture=="Xiaomi")
+        {
+            *pOSDistributionType = 8;
+        }
+    }
+
+    if(pStoreType)
+    {
+        *pStoreType = 2; // google play
+    }
+
+    return true;
 }
 
 bool scGetFreeStorage(unsigned long* pInternal,unsigned long* pExternal)
@@ -40,12 +218,27 @@ bool scGetFreeStorage(unsigned long* pInternal,unsigned long* pExternal)
 
 void scSetMultipleTouch(bool bEnable)
 {
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setMultipleTouch", "(Z)V"))
+    {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID,(jboolean)bEnable);
 
+        t.env->DeleteLocalRef(t.classID);
+    }
 }
 
 bool scGetMultipleTouch()
 {
-    return false;
+    bool bRet = false;
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getMultipleTouch", "()Z"))
+    {
+        bRet = (t.env->CallStaticBooleanMethod(t.classID, t.methodID)==JNI_TRUE);
+
+        t.env->DeleteLocalRef(t.classID);
+    }
+    return bRet;
 }
 
 void scShowSystemAlertBox(const char* pszTitle,
@@ -55,13 +248,33 @@ void scShowSystemAlertBox(const char* pszTitle,
                               const char* pszButton3,
                               const int nAlertBoxID)
 {
+    JniMethodInfo t;
 
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "showMessageBox","(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V"))
+    {
+        jstring strTitle = t.env->NewStringUTF(pszTitle==0?"":pszTitle);
+        jstring strMessage = t.env->NewStringUTF(pszMessge==0?"":pszMessge);
+        jstring strButton1 = t.env->NewStringUTF(pszButton1==0?"":pszButton1);
+        jstring strButton2 = t.env->NewStringUTF(pszButton2==0?"":pszButton2);
+        jstring strButton3 = t.env->NewStringUTF(pszButton3==0?"":pszButton3);
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, strTitle,strMessage,strButton1,strButton2,strButton3,nAlertBoxID);
+
+        t.env->DeleteLocalRef(t.classID);
+
+        t.env->DeleteLocalRef(strTitle);
+        t.env->DeleteLocalRef(strMessage);
+        t.env->DeleteLocalRef(strButton1);
+        t.env->DeleteLocalRef(strButton2);
+        t.env->DeleteLocalRef(strButton3);
+    }
 }
 
 bool scStorePurchaseItem(const char* pszIAP,const bool bConsumable)
 {
 	return false;
 }
+
     // callback: scbPurchaseItemInfoResult()
     bool scStoreRequestItemInfo(char** pszIAP,const int nIAPCount)
     {
@@ -73,6 +286,14 @@ bool scStorePurchaseItem(const char* pszIAP,const bool bConsumable)
     {
     	return false;
     }
+
+///------------- Java => C
+void scbAlertBoxSelected(const int nAlertBoxID,const int nButton);
+
+void Java_org_speedcc_lib_JNISystem_onAlertBoxSelected(JNIEnv *env, jobject thiz,jint nButtonIndex,jint nMsgBoxID)
+{
+    scbAlertBoxSelected((int)nButtonIndex,(int)nMsgBoxID);
+}
 
 
 #ifdef __cplusplus

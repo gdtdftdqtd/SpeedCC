@@ -125,7 +125,7 @@ namespace SpeedCC
             default: di.osType = kOSUnknown; break;
         }
         
-        di.nDistribution = nDistribution;
+        di.manufacture = nDistribution;
         
         // device type. 0: unkown; 1: phone; 2: tablet; 3: tv; 4:vehicle; 5: desktop
         switch(di.deviceType)

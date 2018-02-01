@@ -108,7 +108,7 @@ extern "C" {
     }
     
     // OS type. 0: unknown; 1: iOS; 2: Android
-    // OS distribution. 0: unkown; 1: offical;
+    // OS distribution. 0: unkown; 1: apple;
     // device type. 0: unkown; 1: phone; 2: tablet; 3: tv; 4:vehicle;
     // store type. 0:unkown; 1: apple app store; 2: google play; 3: amazon;
     bool scGetDeviceInfo(int* pOSMainType,
@@ -126,7 +126,7 @@ extern "C" {
         
         if(pOSDistributionType)
         {
-            *pOSDistributionType = 1; // offical
+            *pOSDistributionType = 1; // apple
         }
         
         if(pStoreType)

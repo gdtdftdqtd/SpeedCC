@@ -6,7 +6,7 @@
 #include "../../../../../../../cocos2dx/v3/cocos/platform/android/jni/JniHelper.h"
 #include <android/log.h>
 
-#define CLASS_NAME "org/speedcc/lib"
+#define CLASS_NAME "org/speedcc/lib/JNISystem"
 
 using namespace cocos2d;
 
@@ -25,9 +25,8 @@ extern "C"
         if (JniHelper::getStaticMethodInfo(t, CLASS_NAME,
                                            "getOrientation", "()I"))
         {
-            jint s = (jint)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+            nRet = t.env->CallStaticIntMethod(t.classID, t.methodID);
             t.env->DeleteLocalRef(t.classID);
-            nRet = s;
         }
 
         return nRet;
@@ -133,6 +132,8 @@ bool scGetAppVersion(int* pMajor,int* pMinor,int* pFix)
                     break;
             }
         }
+
+        return true;
     }
 
     return false;

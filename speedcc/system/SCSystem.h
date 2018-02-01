@@ -60,13 +60,28 @@ namespace SpeedCC
             kStoreAmazon             = 3,
         };
         
+        enum EDeviceManufacture
+        {
+            kDeviceManufactureUnknown       = 0,
+            kDeviceManufactureApple         = 1,
+            kDeviceManufactureGoogle        = 2,
+            kDeviceManufactureSamsung       = 3,
+            kDeviceManufactureHuawei        = 4,
+            kDeviceManufactureLGE           = 5,
+            kDeviceManufactureOnePlus       = 6,
+            kDeviceManufactureSony          = 7,
+            kDeviceManufactureXiaomi        = 8,
+            kDeviceManufactureMeizu         = 9,
+            kDeviceManufactureAmazon        = 10,
+        };
+        
         struct SDeviceInfo
         {
-            EOSType         osType;
-            int             nDistribution; // OS distribution. 0: unkown; 1: offical;
-            EDeviceType     deviceType;
-            bool            bIsSimulator;
-            SCString        strHardware;
+            EOSType                 osType;
+            int                     manufacture; // EDeviceManufacture
+            EDeviceType             deviceType;
+            bool                    bIsSimulator;
+            SCString                strHardware;
         };
         
         static EDeviceType getDeviceType();
