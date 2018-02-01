@@ -7,6 +7,7 @@
 #include <android/log.h>
 
 #define CLASS_NAME "org/speedcc/lib/JNISystem"
+#define CLASS_NAME_IAP "org/speedcc/lib/GooglePlayIAP"
 
 using namespace cocos2d;
 
@@ -272,27 +273,79 @@ void scShowSystemAlertBox(const char* pszTitle,
 
 bool scStorePurchaseItem(const char* pszIAP,const bool bConsumable)
 {
-	return false;
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME_IAP, "purchaseItem","(Ljava/lang/String;Z)V"))
+    {
+        jstring stringSku = t.env->NewStringUTF(pszIAP);
+
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, stringSku, bConsumable ? JNI_TRUE : JNI_FALSE);
+        t.env->DeleteLocalRef(stringSku);
+        t.env->DeleteLocalRef(t.classID);
+    }
+
+    return true;
 }
 
     // callback: scbPurchaseItemInfoResult()
     bool scStoreRequestItemInfo(char** pszIAP,const int nIAPCount)
     {
-    	return false;
+        JniMethodInfo t;
+
+        for(int i=0;i<nIAPCount;++i)
+        {
+            const char* psz = pszIAP[i];
+
+            if (JniHelper::getStaticMethodInfo(t, CLASS_NAME_IAP, "requestItemPrice","(Ljava/lang/String;)V"))
+            {
+                jstring stringSku = t.env->NewStringUTF(psz);
+
+                t.env->CallStaticVoidMethod(t.classID, t.methodID, stringSku);
+                t.env->DeleteLocalRef(stringSku);
+                t.env->DeleteLocalRef(t.classID);
+            }
+        }
+
+    	return true;
     }
 
     // callback: scbPurchaseRestoreResult()
     bool scStoreRestorePurchased()
     {
-    	return false;
+        JniMethodInfo t;
+
+        if (JniHelper::getStaticMethodInfo(t, CLASS_NAME_IAP, "restoreItem","()V"))
+        {
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            t.env->DeleteLocalRef(t.classID);
+        }
+
+        return true;
     }
 
 ///------------- Java => C
 void scbAlertBoxSelected(const int nAlertBoxID,const int nButton);
+void scbStorePurchaseItemResult(const char* pszIAP,int nResult);
+void scbStoreRestoreItemResult(const char* pszIAP,int nResult);
+void scbStoreRetrieveItemInfoResult(const char* pszIAP, const char* pszCurrency, float fPrice,int nResult);
 
 void Java_org_speedcc_lib_JNISystem_onAlertBoxSelected(JNIEnv *env, jobject thiz,jint nButtonIndex,jint nMsgBoxID)
 {
     scbAlertBoxSelected((int)nButtonIndex,(int)nMsgBoxID);
+}
+
+jint Java_org_speedcc_lib_GooglePlayIAP_onPurchaseResultEvent(JNIEnv *env,jobject thiz, jstring sku, jint result)
+{
+    std::string strIAP = JniHelper::jstring2string(sku);
+    scbStorePurchaseItemResult(strIAP.c_str(),result);
+    return 0;
+}
+
+jint Java_org_speedcc_lib_GooglePlayIAP_onPurchaseItemPriceEvent(JNIEnv *env, jobject thiz,jstring iap,jstring currency,jfloat price)
+{
+    std::string strIAP = JniHelper::jstring2string(iap);
+    std::string strCurrency = JniHelper::jstring2string(currency);
+    scbStoreRetrieveItemInfoResult(strIAP.c_str(),strCurrency.c_str(),(float)price,0);
+    return 0;
 }
 
 
