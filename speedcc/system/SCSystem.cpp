@@ -8,6 +8,9 @@
 
 #include "SCSystem.h"
 #include "SCMacroDef.h"
+
+#include "../component/SCMessageDispatch.h"
+#include "../component/SCComponentMacroDef.h"
 #include "../platform/SCOSSystem.h"
 #include "../cocos/SCCocosDef.h"
 #include "../cocos/SCScene.h"
@@ -314,6 +317,7 @@ namespace SpeedCC
         s_nSupportAssetType = nSupportAssetType;
         ::scInitSpeedCC(NULL);
         SCSystem::adapterScreenResolution();
+        SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppLaunch);
     }
     
     void SCSystem::adapterScreenResolution(const bool bCache)

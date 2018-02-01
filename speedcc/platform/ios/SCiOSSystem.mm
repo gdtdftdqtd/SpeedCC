@@ -377,10 +377,10 @@ SCiOSSystem* s_shareSystem = nil;
     
     if(self)
     {
-        [[NSNotificationCenter defaultCenter] addObserver: self
-                                                 selector: @selector(applicationDidFinishLaunching:)
-                                                     name: UIApplicationDidFinishLaunchingNotification
-                                                   object: nil];
+//        [[NSNotificationCenter defaultCenter] addObserver: self
+//                                                 selector: @selector(applicationDidFinishLaunching:)
+//                                                     name: UIApplicationDidFinishLaunchingNotification
+//                                                   object: nil];
         
 //        [[NSNotificationCenter defaultCenter] addObserver: self
 //                                                 selector: @selector(applicationDidBecomeActive:)
@@ -437,11 +437,11 @@ SCiOSSystem* s_shareSystem = nil;
     scbInternetReachableChanged(status==NotReachable);
 }
 
--(void) applicationDidFinishLaunching:(UIApplication*)application
-{
-    ::scbAppLaunched();
-}
-  
+//-(void) applicationDidFinishLaunching:(UIApplication*)application
+//{
+//    ::scbAppLaunched();
+//}
+
 //-(void) applicationDidEnterBackground:(UIApplication*)application
 //{   
 //    ::scbAppEnterBackground();

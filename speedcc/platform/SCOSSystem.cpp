@@ -84,13 +84,13 @@ namespace SpeedCC
         {
             SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppEnterForeground);
         }
-        */
+
         
         void scbAppLaunched()
         {
             SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppLaunch);
         }
-        
+        */
         ///------------- network
         void scbInternetReachableChanged(const bool bNewState)
         {
