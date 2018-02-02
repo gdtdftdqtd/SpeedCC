@@ -446,8 +446,6 @@ namespace SpeedCC
     SC_DEFINE_NUMBER_GLOBAL2(>>=,>>)
     
 
-//    using SCWatchShort = SCWatchNumberT<short>;
-//    using SCWatchInt = SCWatchNumberT<int>;
     typedef SCWatchNumberT<short>                        SCWatchShort;
     typedef SCWatchNumberT<unsigned short>               SCWatchUnsignedShort;
     typedef SCWatchNumberT<char>                         SCWatchChar;
@@ -494,7 +492,7 @@ namespace SpeedCC
     struct SCIsWatchNumber {enum {value=(SCGetIndexByClassT<T,SCWatchNumberList_t>::value== std::tuple_size<SCWatchNumberList_t>::value) ? 0 : 1};};
     
     template<typename T>
-    struct SCIsWatchClass {enum {value=(SCGetIndexByClassT<T,SCWatchClassList_t>::value==std::tuple_size<SCWatchNumberList_t>::value) ? 0 : 1};};
+    struct SCIsWatchClass {enum {value=(SCGetIndexByClassT<T,SCWatchClassList_t>::value==std::tuple_size<SCWatchClassList_t>::value) ? 0 : 1};};
     
 }
 

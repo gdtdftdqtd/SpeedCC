@@ -13,7 +13,7 @@ void TestDockController::onCreate(SCDictionary parameters)
         SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0.5,0.5,NULL,SCWinSize,Color4B::WHITE)
     
             // title
-            SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|middle-x; y-by=-100;","Test Stage","blue_font.fnt")
+            SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|middle-x; y-by=-100;","Test Dock","blue_font.fnt")
     
             // center
             SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0,0,"dock=center;",Size(80,80),Color4B::RED)

@@ -10,6 +10,7 @@
 #define __SPEEDCC__SCBEHAVIORCOMMON_H__
 
 #include "SCPerformObject.h"
+#include "../base/SCWatchNumberT.h"
 
 namespace SpeedCC
 {
@@ -130,6 +131,47 @@ namespace SpeedCC
         float               _fDelay;
         SCBehavior::Ptr     _ptrBvr;
     };
+    
+    template<typename T,
+            typename = typename std::enable_if<SCIsWatchClass<T>::value==1,T>::type >
+    class SCBehaviorCaseT : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorCaseT)
+        SC_DEFINE_CLASS_PTR(SCBehaviorCaseT)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorCaseT)
+        
+        void setCase(const typename T::type value, SCBehavior::Ptr ptrBvr)
+        {
+            _watchValue2BvrMap[value] = ptrBvr;
+        }
+        
+        inline typename T::Ptr getWatch() const {return _ptrWatch;}
+        
+        virtual void execute(const SCDictionary& par) override
+        {
+            auto it = _watchValue2BvrMap.find((*_ptrWatch));
+            if(it!=_watchValue2BvrMap.end())
+            {
+                (*it).second->execute(par);
+            }
+        }
+        
+    protected:
+        SCBehaviorCaseT()
+        {
+            _ptrWatch = T::create();
+        }
+        
+    private:
+        typename T::Ptr     _ptrWatch;
+        std::map<typename T::type, SCBehavior::Ptr>     _watchValue2BvrMap;
+    };
+    
+    typedef SCBehaviorCaseT<SCWatchInt>         SCBehaviorCaseInt;
+    typedef SCBehaviorCaseT<SCWatchBool>        SCBehaviorCaseBool;
+    typedef SCBehaviorCaseT<SCWatchString>      SCBehaviorCaseString;
 }
 
 #endif // __SPEEDCC__SCBEHAVIORCOMMON_H__

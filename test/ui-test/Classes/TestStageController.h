@@ -16,8 +16,9 @@ public:
     void setUpStage();
     
     void onButtonAdd();
-    void onButtonBack();
-
+    void onStrategyCommon(SCActor* pActor,SCMessage::Ptr ptrMsg);
+    void onEnterStrategy(const SCDictionary& par);
+    void onExitStrategy(const SCDictionary& par);
     
 private:
 
