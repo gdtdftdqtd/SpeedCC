@@ -349,22 +349,16 @@ namespace SpeedCC
         else
         {
             auto pMenu = cocos2d::Menu::create(pMenuItem,NULL);
+            pMenu->setIgnoreAnchorPointForPosition(false);
             pMenu->setContentSize(pMenuItem->getContentSize());
+            pMenu->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
+            SCNodeUtils::setPerPosition(pMenuItem, cocos2d::Vec2(0.5,0.5));
             this->insertUsertNode(pMenu, fPosX, fPosY, property);
         }
         
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);
         
         _buttonItem2InfoMap[pMenuItem] = bvrPurifier.ptrResultBvr;
-        
-        SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;
-        scTemFilterConfig.bExclude = true;
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_IMAGE);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_SCALE_Y);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_SCALE_X);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_SCALE);
-
-        itemNode.pfunSetProperty(pMenuItem,property.strResult,&scTemFilterConfig);
     }
     
     ///------------ layer

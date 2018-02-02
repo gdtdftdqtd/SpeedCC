@@ -10,15 +10,19 @@ void TestStageController::onCreate(SCDictionary parameters)
     SCSceneController::onCreate(parameters);
     
     SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
+        SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0.5,0.5,NULL,SCWinSize,Color4B::WHITE)
 
-        // title
-        SC_INSERT_LABEL_BMFONT(NULL,0.5,0.95,"","Test Stage","blue_font.fnt")
+            // title
+            SC_INSERT_LABEL_BMFONT(NULL,0.5,0.95,"","Test Stage","blue_font.fnt")
     
-        // binding number
-        SC_INSERT_BUTTON_LABEL(NULL,0.6,0.75,"color-text=red;","click","",33,SCF(onButtonAdd))
+            // binding number
+            SC_INSERT_BUTTON_LABEL(NULL,0.6,0.75,"color-text=red;","click","",33,SCF(onButtonAdd))
 
-        // back
-        SC_INSERT_BUTTON_LABEL(NULL,0.05,0.95,"color-text=red;","back","",25,SCF(onButtonBack))
+            // back
+            SC_INSERT_BUTTON_LABEL(NULL,0.05,0.95,"color-text=red;","back","",25,SCF(onButtonBack))
+    
+            SC_INSERT_BUTTON_LABEL(NULL, 0, 0, "color-text=black; dock=left|top; x-by=3; y-by=-80;", "Back", "", 22, SCBehaviorSceneBack::create())
+        SC_END_CONTAINER
     SC_END_CONTAINER
     
 }

@@ -8,7 +8,7 @@ using namespace cocos2d;
 
 namespace SpeedCC
 {
-    // keep order, so that it can apply binary search
+    // keep order by alphabet, so that it can apply binary search
     // go to http://textmechanic.com/Sort-Text-Lines.html for sorting
     SCNodeProperty::SPropertyPair SCNodeProperty::s_PropertyPairArray[] =
     {
@@ -626,7 +626,7 @@ namespace SpeedCC
             }
         };
         
-        // keep order by alphabetical
+        // keep order by alphabet
         const STemStruct colorTableArray[] =
         {
             {"black",Color3B(0,0,0)},
@@ -824,7 +824,7 @@ namespace SpeedCC
             }
         };
         
-        // keep order by alphabetical
+        // keep order by alphabet
         const STemStruct dockTableArray[] =
         {
             {"bottom",SCNodeUtils::kDockBottom},

@@ -12,6 +12,9 @@ void TestDockController::onCreate(SCDictionary parameters)
     SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
         SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0.5,0.5,NULL,SCWinSize,Color4B::WHITE)
     
+            // title
+            SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|middle-x; y-by=-100;","Test Stage","blue_font.fnt")
+    
             // center
             SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0,0,"dock=center;",Size(80,80),Color4B::RED)
                 SC_INSERT_LABEL(NULL, 0.5, 0.5, "color-text=blue;", "center", "", 18)
@@ -57,7 +60,9 @@ void TestDockController::onCreate(SCDictionary parameters)
                 SC_INSERT_LABEL(NULL, 0.5, 0.5, "color-text=blue;", "middle-y \n right", "", 18)
             SC_END_CONTAINER
 
-            SC_INSERT_BUTTON_LABEL(NULL, 0, 0, "color-text=black; dock=left|top; x-by=3; y-by=-80;", "Back", "", 22, SCBehaviorSceneBack::create())
+            // back button
+            SC_INSERT_BUTTON_LABEL(NULL, 0, 0, "color-text=black; dock=left|top; x-by=3; y-by=-100;", "Back", "", 22, SCBehaviorSceneBack::create())
+
         SC_END_CONTAINER
     SC_END_CONTAINER
 }
