@@ -1961,6 +1961,10 @@ namespace SpeedCC
                 }
             }
             
+            if(strList.empty())
+            {
+                strList.push_back(*this);
+            }
             ret.assign(strList.begin(), strList.end());
         }
         

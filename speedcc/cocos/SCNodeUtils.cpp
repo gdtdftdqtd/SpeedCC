@@ -40,4 +40,108 @@ namespace SpeedCC
         
         return true;
     }
+    
+    void SCNodeUtils::setPositionBy(cocos2d::Node* pNode,float fXBy,float fYBy)
+    {
+        SC_RETURN_V_IF(pNode==NULL);
+        
+        auto pos = pNode->getPosition();
+        pos.x += fXBy;
+        pos.y += fYBy;
+        pNode->setPosition(pos);
+    }
+    
+    bool SCNodeUtils::setDock(cocos2d::Node* pNode,const int dockFlag)
+    {
+        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,false);
+        
+        auto ptPos = pNode->getPosition();
+        
+        if(SC_BIT_HAS_OR(dockFlag, kDockLeft|kDockRight|kDockMiddleX))
+        {// x axis
+            if(SC_BIT_HAS_AND(dockFlag,kDockMiddleX))
+            {
+                ptPos.x = SCNodeUtils::getDockPosition(pNode,0,true);
+            }
+            else if(SC_BIT_HAS_AND(dockFlag,kDockLeft))
+            {
+                ptPos.x = SCNodeUtils::getDockPosition(pNode,-1,true);
+            }
+            else if(SC_BIT_HAS_AND(dockFlag,kDockRight))
+            {
+                ptPos.x = SCNodeUtils::getDockPosition(pNode,1,true);
+            }
+        }
+        
+        if(SC_BIT_HAS_OR(dockFlag, kDockTop|kDockBottom|kDockMiddleY))
+        {// y axis
+            if(SC_BIT_HAS_AND(dockFlag,kDockMiddleY))
+            {
+                ptPos.y = SCNodeUtils::getDockPosition(pNode,0,false);
+            }
+            else if(SC_BIT_HAS_AND(dockFlag,kDockTop))
+            {
+                ptPos.y = SCNodeUtils::getDockPosition(pNode,1,false);
+            }
+            else if(SC_BIT_HAS_AND(dockFlag,kDockBottom))
+            {
+                ptPos.y = SCNodeUtils::getDockPosition(pNode,-1,false);
+            }
+        }
+        
+        pNode->setPosition(ptPos);
+        
+        return true;
+    }
+    
+    float SCNodeUtils::getDockPosition(cocos2d::Node* pNode,int nPark,const bool bIsX)
+    {
+        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,-999);
+        float fRet = 0;
+        
+        const auto& frameSize = pNode->getParent()->getContentSize();
+        const auto& nodeSize = pNode->getContentSize();
+        
+        const auto& ptAnchor = pNode->isIgnoreAnchorPointForPosition() ? Vec2::ZERO : pNode->getAnchorPoint();
+        
+        if(bIsX)
+        {// x
+            const float fScaleX = pNode->getScaleX();
+            // anchor offset by (0.5,0.5)
+            float fAnchorOffset = (ptAnchor.x-0.5)*nodeSize.width*fScaleX;
+            
+            if(nPark>0)
+            {// right
+                fRet = (frameSize.width - nodeSize.width*fScaleX/2) + fAnchorOffset;
+            }
+            else if(nPark<0)
+            {// left
+                fRet = (nodeSize.width * fScaleX/2) + fAnchorOffset;
+            }
+            else
+            {// middle-x
+                fRet = frameSize.width/2 + fAnchorOffset;
+            }
+        }
+        else
+        {// y
+            const float fScaleY = pNode->getScaleY();
+            // anchor offset by (0.5,0.5)
+            float fAnchorOffset = (ptAnchor.y-0.5)*nodeSize.height*fScaleY;
+            if(nPark>0)
+            {// top
+                fRet = (frameSize.height - nodeSize.height*fScaleY/2) + fAnchorOffset;
+            }
+            else if(nPark<0)
+            {// bottom
+                fRet = (nodeSize.height * fScaleY/2) + fAnchorOffset;
+            }
+            else
+            {// middle-y
+                fRet = frameSize.height/2 + fAnchorOffset;
+            }
+        }
+        
+        return fRet;
+    }
 }

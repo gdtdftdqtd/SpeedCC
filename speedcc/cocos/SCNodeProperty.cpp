@@ -16,6 +16,7 @@ namespace SpeedCC
         {SC_NODE_PROPERTY_ANCHOR_ON     ,BOOL_TYPE},
         {SC_NODE_PROPERTY_COLOR         ,COLOR3_TYPE},
         {SC_NODE_PROPERTY_COLOR_TEXT    ,COLOR4_TYPE},
+        {SC_NODE_PROPERTY_DOCK          ,DOCK_TYPE},
         {SC_NODE_PROPERTY_FLIP_X        ,BOOL_TYPE},
         {SC_NODE_PROPERTY_FLIP_Y        ,BOOL_TYPE},
         {SC_NODE_PROPERTY_FONT_NAME     ,STRING_TYPE},
@@ -34,8 +35,10 @@ namespace SpeedCC
         {SC_NODE_PROPERTY_TAG           ,INT_TYPE},
         {SC_NODE_PROPERTY_VISIBLE       ,BOOL_TYPE},
         {SC_NODE_PROPERTY_X             ,FLOAT_TYPE},
+        {SC_NODE_PROPERTY_X_BY          ,FLOAT_TYPE},
         {SC_NODE_PROPERTY_XY            ,VEC2_TYPE},
         {SC_NODE_PROPERTY_Y             ,FLOAT_TYPE},
+        {SC_NODE_PROPERTY_Y_BY          ,FLOAT_TYPE},
         {SC_NODE_PROPERTY_Z             ,INT_TYPE},
     };
     
@@ -143,6 +146,21 @@ namespace SpeedCC
         {
             pNode->setSkewY(fValue);
         }
+        
+        if(SCNodeProperty::getInt(dic, SC_NODE_PROPERTY_DOCK, nValue))
+        {
+            SCNodeUtils::setDock(pNode, nValue);
+        }
+        
+        if(SCNodeProperty::getFloat(dic, SC_NODE_PROPERTY_X_BY, fValue))
+        {
+            SCNodeUtils::setPositionBy(pNode, fValue, 0);
+        }
+        
+        if(SCNodeProperty::getFloat(dic, SC_NODE_PROPERTY_Y_BY, fValue))
+        {
+            SCNodeUtils::setPositionBy(pNode, 0, fValue);
+        }
     }
     
     void SCNodeProperty::setProperty(Layer* pNode,const SCDictionary& dic)
@@ -197,6 +215,7 @@ namespace SpeedCC
         SCString strValue;
         Color4B crValue;
         float fValue;
+        int nValue;
         
         if(SCNodeProperty::getString(dic, SC_NODE_PROPERTY_LABEL, strValue))
         {
@@ -515,19 +534,22 @@ namespace SpeedCC
                     }
                 }
                     break;
+                    
+                case DOCK_TYPE:
+                {
+                    int nDock = 0;
+                    if(SCNodeProperty::parseDock(strValue, nDock))
+                    {
+                        value.setInt(nDock);
+                        bRet = true;
+                    }
+                }
+                    break;
             }
             
         }catch(...){}
         
         return bRet;
-    }
-    
-    SCDictionary SCNodeProperty::getProperty(Node* pNode)
-    {
-        SCDictionary retDic;
-        
-        
-        return retDic;
     }
     
     /////-------------------
@@ -604,6 +626,7 @@ namespace SpeedCC
             }
         };
         
+        // keep order by alphabetical
         const STemStruct colorTableArray[] =
         {
             {"black",Color3B(0,0,0)},
@@ -670,6 +693,7 @@ namespace SpeedCC
         val = Color3B(cr);
         return true;
     }
+    
     
     ///----------- parse
     
@@ -772,6 +796,65 @@ namespace SpeedCC
         }
         
         return bRet;
+    }
+    
+    bool SCNodeProperty::parseDock(SCString strDock,int& nDock)
+    {
+        nDock = 0;
+        SC_RETURN_IF(strDock.isEmpty(), true);
+        strDock.trimLeft('\'');
+        strDock.trimRight('\'');
+        strDock.makeLower();
+        
+        auto stringVtr = strDock.split("|");
+        
+        struct STemStruct
+        {
+            const char*     pszName;
+            int             dock;
+            
+            inline bool operator>(const STemStruct& pair) const
+            {
+                return (strcmp(pair.pszName,pszName)<0);
+            }
+            
+            inline bool operator<(const STemStruct& pair) const
+            {
+                return (strcmp(pair.pszName,pszName)>0);
+            }
+        };
+        
+        // keep order by alphabetical
+        const STemStruct dockTableArray[] =
+        {
+            {"bottom",SCNodeUtils::kDockBottom},
+            {"center",SCNodeUtils::kDockCenter},
+            {"left",SCNodeUtils::kDockLeft},
+            {"middle-x",SCNodeUtils::kDockMiddleX},
+            {"middle-y",SCNodeUtils::kDockMiddleY},
+            {"right",SCNodeUtils::kDockRight},
+            {"top",SCNodeUtils::kDockTop},
+        };
+        
+        for(auto strKey : stringVtr)
+        {
+            strKey.trimRight(' ');
+            strKey.trimLeft(' ');
+            
+            STemStruct pair = {strKey,0};
+            auto it = std::lower_bound(dockTableArray,dockTableArray+SC_ARRAY_LENGTH(dockTableArray),pair);
+            if(it!=dockTableArray+SC_ARRAY_LENGTH(dockTableArray) && strKey==(*it).pszName)
+            {
+                nDock |= (*it).dock;
+            }
+            else
+            {
+                SCLog("Unknown dock value: %s",strKey.c_str());
+                SCASSERT(false);
+            }
+        }
+        
+        return true;
     }
     
 }

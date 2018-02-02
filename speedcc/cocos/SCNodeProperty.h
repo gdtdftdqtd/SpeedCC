@@ -36,6 +36,10 @@ namespace SpeedCC
 #define SC_NODE_PROPERTY_COLOR_TEXT         "color-text"    // Color4B
 #define SC_NODE_PROPERTY_IMAGE              "image"         // string
     
+#define SC_NODE_PROPERTY_DOCK               "dock"          // SCNodeUtils::EDockType. e.g. left|top
+#define SC_NODE_PROPERTY_X_BY               "x-by"          // float
+#define SC_NODE_PROPERTY_Y_BY               "y-by"          // float
+    
     class SCNodeProperty
     {
     private:
@@ -50,6 +54,7 @@ namespace SpeedCC
             VEC2_TYPE,
             COLOR3_TYPE,
             COLOR4_TYPE,
+            DOCK_TYPE,
         };
         
         struct SPropertyPair
@@ -119,7 +124,6 @@ namespace SpeedCC
             }
         }
         
-        static SCDictionary getProperty(cocos2d::Node* pNode);
         static bool convertString2Dic(const SCString& strProerty,SCDictionary& dic);
         
     private:
@@ -143,6 +147,7 @@ namespace SpeedCC
         
         static bool parseColor4(SCString strValue,cocos2d::Color4B& val);
         static bool parseVec2(SCString strValue,cocos2d::Vec2& vec2);
+        static bool parseDock(SCString strDock,int& nDock);
         
         static bool isValidKeyChar(const char& c);
         
