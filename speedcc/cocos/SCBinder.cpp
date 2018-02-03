@@ -19,22 +19,29 @@ namespace SpeedCC
         this->onActiveChanged(_bActive);
     }
     
+    void SCBinder::removeUpdateFunc()
+    {
+        if(_removeUpdateFunc!=NULL && _nFuncID>0)
+        {
+            _removeUpdateFunc(_ptrWatch,_nFuncID);
+        }
+        
+        _removeUpdateFunc = NULL;
+        _nFuncID = 0;
+    }
+    
+    void SCBinder::reset()
+    {
+        _bActive = true;
+        this->removeUpdateFunc();
+        _ptrWatch = NULL;
+    }
+    
 ///------------- SCBinderUILabel
 
     SCBinderUILabel::~SCBinderUILabel()
     {
         this->removeUpdateFunc();
-    }
-    
-    void SCBinderUILabel::removeUpdateFunc()
-    {
-        if(_removeUpdateFunc!=NULL && _nFuncID>0)
-        {
-            _removeUpdateFunc(_ptrWatchSource,_nFuncID);
-        }
-        
-        _removeUpdateFunc = NULL;
-        _nFuncID = 0;
     }
     
     void SCBinderUILabel::setLabel(cocos2d::Label* pLabel)
@@ -86,17 +93,14 @@ namespace SpeedCC
             p->removeUpdateFunc(nID);
         };
         
-        _ptrWatchSource = watchStr;
+        _ptrWatch = watchStr;
         _nFuncID = nID;
     }
     
     void SCBinderUILabel::reset()
     {
         SCBinder::reset();
-        this->removeUpdateFunc();
-        
         _pLabel = NULL;
-        _ptrWatchSource = NULL;
     }
     
     ///-----------------
@@ -150,25 +154,9 @@ namespace SpeedCC
     void SCBinderUISwitch::reset()
     {
         SCBinder::reset();
-        
-        this->removeUpdateFunc();
-        
-        _ptrWatch = NULL;
         _pToggleMenuItem = NULL;
-        _callbackFunc = NULL;
+        _callbackFunc = NULL;   
     }
-    
-    void SCBinderUISwitch::removeUpdateFunc()
-    {
-        if(_removeUpdateFunc!=NULL && _nFuncID>0)
-        {
-            _removeUpdateFunc(_ptrWatch,_nFuncID);
-        }
-        
-        _removeUpdateFunc = NULL;
-        _nFuncID = 0;
-    }
-    
     
     void SCBinderUISwitch::onActiveChanged(const bool bNewActive)
     {
@@ -179,7 +167,8 @@ namespace SpeedCC
     {
         if(_ptrWatch!=NULL && _pToggleMenuItem!=NULL && this->getActive())
         {
-            const int nIndex = (*(_ptrWatch) ? 0 : 1);
+            auto ptrWatch = _ptrWatch.cast<SCWatchBool::Ptr>();
+            const int nIndex = (*(ptrWatch) ? 0 : 1);
             
             if(_pToggleMenuItem->getSelectedIndex()!=nIndex)
             {
@@ -195,11 +184,28 @@ namespace SpeedCC
         SCASSERT(pToggle!=NULL);
         SC_RETURN_V_IF(pToggle==NULL);
         
-        (*_ptrWatch) = (pToggle->getSelectedIndex()==0);
+        auto ptrWatch = _ptrWatch.cast<SCWatchBool::Ptr>();
+        (*ptrWatch) = (pToggle->getSelectedIndex()==0);
         
         if(_callbackFunc!=NULL)
         {
             _callbackFunc(pSender);
+        }
+    }
+    
+    ///-----------------
+    void SCBinderUIProgress::reset()
+    {
+        SCBinder::reset();
+        
+        _pProgressTimer = NULL;
+    }
+    
+    void SCBinderUIProgress::onActiveChanged(const bool bNewActive)
+    {
+        if(bNewActive && _pProgressTimer!=NULL)
+        {
+            _pProgressTimer->setPercentage(1);
         }
     }
     

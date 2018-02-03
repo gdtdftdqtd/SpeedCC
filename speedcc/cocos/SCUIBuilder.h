@@ -137,6 +137,17 @@ namespace SpeedCC
                                                     const SCUIArg::BoolPurifier& value,
                                                     SCUIArg::BehaviorPurifier bvrPurifier);
         
+        
+        cocos2d::ProgressTimer* insertProgressBar(cocos2d::ProgressTimer** ppProgress,
+                                                    const float fPosX,
+                                                    const float fPosY,
+                                                    const SCUIArg::StringPurifier& property,
+                                                    const SCString& strBackgroundImage,
+                                                    const SCString& strFrontgroundImage,
+                                                    const bool bHorizontal,
+                                                    const bool bDesc = false,
+                                                    const bool bBaseLB = true);
+        
         cocos2d::Node* getLayoutNode(const int nID);
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
         void storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder);

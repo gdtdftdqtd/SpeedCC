@@ -29,14 +29,21 @@ namespace SpeedCC
         void setActive(const bool bActive);
         inline bool getActive() const {return _bActive;}
         
-        virtual void reset(){ _bActive = true; }
+        virtual void reset();
         
+        void removeUpdateFunc();
     protected:
         SCBinder():
-        _bActive(true)
+        _bActive(true),
+        _nFuncID(0)
         {}
         
         virtual void onActiveChanged(const bool bNewActive) {}
+        
+    protected:
+        SCObject::Ptr       _ptrWatch;
+        std::function<void(SCObject::Ptr ptr,const int nID)>   _removeUpdateFunc;
+        int                     _nFuncID;
         
     private:
         bool    _bActive;
@@ -58,7 +65,8 @@ namespace SpeedCC
         inline cocos2d::Label* getLabel() const { return _pLabel; }
         void setLabel(cocos2d::Label* pLabel);
         
-        template<typename T>
+        template<typename T,
+        typename = typename std::enable_if<SCIsWatchNumberable<typename T::type>::value==1,T>::type >
         void setWatch(T num)
         {
             this->removeUpdateFunc();
@@ -89,7 +97,7 @@ namespace SpeedCC
                 p->removeUpdateFunc(nID);
             };
             
-            _ptrWatchSource = num;
+            _ptrWatch = num;
             _nFuncID = nID;
         }
         
@@ -98,24 +106,18 @@ namespace SpeedCC
         
     protected:
         SCBinderUILabel():
-        _pLabel(NULL),
-        _removeUpdateFunc(NULL)
+        _pLabel(NULL)
         {}
         
         SCBinderUILabel(cocos2d::Label* pLabel):
-        _pLabel(pLabel),
-        _removeUpdateFunc(NULL)
+        _pLabel(pLabel)
         {}
         
         virtual void onActiveChanged(const bool bNewActive) override;
-        void removeUpdateFunc();
 
     private:
         cocos2d::Label*     _pLabel;
-        SCObject::Ptr       _ptrWatchSource;
         SCString            _strLast;
-        std::function<void(SCObject::Ptr ptr,const int nID)>   _removeUpdateFunc;
-        int                     _nFuncID;
     };
     
     
@@ -139,57 +141,102 @@ namespace SpeedCC
         inline cocos2d::MenuItemToggle* getToggle() const { return _pToggleMenuItem; }
         void setToggle(cocos2d::MenuItemToggle* pToggle);
         
-        inline SCWatchBool::Ptr getWatch() const { return _ptrWatch; }
+        inline SCWatchBool::Ptr getWatch() const { return _ptrWatch.cast<SCWatchBool::Ptr>(); }
         virtual void reset() override;
         
     protected:
         SCBinderUISwitch():
         _pToggleMenuItem(NULL),
-        _callbackFunc(NULL),
-        _removeUpdateFunc(NULL),
-        _nFuncID(0)
+        _callbackFunc(NULL)
         {
         }
         
         SCBinderUISwitch(SCWatchBool::Ptr ptrWatch):
         _pToggleMenuItem(NULL),
-        _callbackFunc(NULL),
-        _removeUpdateFunc(NULL),
-        _nFuncID(0)
+        _callbackFunc(NULL)
         {
             this->setWatch(ptrWatch);
         }
         
         SCBinderUISwitch(SCWatchBool::Ptr ptrWatch,cocos2d::MenuItemToggle* pToggle):
-        _callbackFunc(NULL),
-        _removeUpdateFunc(NULL),
-        _nFuncID(0)
+        _callbackFunc(NULL)
         {
             this->setWatch(ptrWatch);
             this->setToggle(pToggle);
         }
         
         SCBinderUISwitch(cocos2d::MenuItemToggle* pToggle):
-        _callbackFunc(NULL),
-        _removeUpdateFunc(NULL),
-        _nFuncID(0)
+        _callbackFunc(NULL)
         {
             this->setToggle(pToggle);
         }
         
-        void removeUpdateFunc();
         virtual void onActiveChanged(const bool bNewActive) override;
         
         void updateValue2Toggle();
         void onMenuItemClicked(cocos2d::Ref* pSender);
         
     private:
-        SCWatchBool::Ptr                        _ptrWatch;
         cocos2d::MenuItemToggle*                _pToggleMenuItem;
-        std::function<void(SCObject::Ptr ptr,
-                           const int nID)>      _removeUpdateFunc;
-        int                                     _nFuncID;
         std::function<void(cocos2d::Ref*)>      _callbackFunc;
+    };
+    
+    ///--------------- SCBinderUIProgress
+    class SCBinderUIProgress : public SCBinder
+    {
+    public:
+        virtual ~SCBinderUIProgress();
+        
+        SC_AVOID_CLASS_COPY(SCBinderUIProgress)
+        SC_DEFINE_CLASS_PTR(SCBinderUIProgress)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBinderUIProgress)
+        
+        template<typename T,
+        typename = typename std::enable_if<SCIsWatchNumberable<typename T::type>::value==1,T>::type >
+        void setWatch(T num)
+        {
+            this->removeUpdateFunc();
+            const int nID = num->addUpdateFunc([this](T ptrNum,typename T::type newNum,typename T::type oldNum)
+                                               {
+                                                   if(_pProgressTimer!=NULL && this->getActive())
+                                                   {
+                                                       _pProgressTimer->setPercentage(newNum);
+                                                   }
+                                               });
+            
+            if(_pProgressTimer!=NULL && this->getActive())
+            {
+                _pProgressTimer->setPercentage((*num));
+            }
+            
+            _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
+            {
+                SC_RETURN_V_IF(ptr==NULL || nID<=0);
+                
+                auto p = ptr.cast<T>();
+                p->removeUpdateFunc(nID);
+            };
+            
+            _ptrWatch = num;
+            _nFuncID = nID;
+        }
+        
+        inline void setProgressTimer(cocos2d::ProgressTimer* pProgress)
+        { _pProgressTimer = pProgress; }
+        
+        virtual void reset() override;
+        
+    protected:
+        SCBinderUIProgress():
+        _pProgressTimer(NULL)
+        {}
+        
+        virtual void onActiveChanged(const bool bNewActive) override;
+        
+    private:
+        SCObject::Ptr               _ptrWatchSource;
+        cocos2d::ProgressTimer*     _pProgressTimer;
     };
     
 }

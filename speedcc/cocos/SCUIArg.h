@@ -183,6 +183,20 @@ namespace SpeedCC
         public:
             SCRefHolder::Ptr    ptrHolder;
         };
+        
+        struct NumberPurifier
+        {
+            template<typename T,
+            typename = typename std::enable_if<SCIsWatchNumber<typename T::type>::value==1,T>::type >
+            NumberPurifier(T ptrWatch)
+            {
+//                if(ptrWatch!=NULL)
+//                {
+////                    ptrLabelBinder = SCBinderUILabel::create();
+////                    ptrLabelBinder->setWatch(ptrWatch);
+//                }
+            }
+        };
  
     };
     
