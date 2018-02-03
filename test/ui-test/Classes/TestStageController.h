@@ -13,15 +13,21 @@ public:
     virtual void onCreate(SpeedCC::SCDictionary parameters);
     virtual SCStrategy::Ptr onCreateStrategy(const int nID) override;
     
-    void setUpStage();
+    void setupUI();
+    void setupStage();
+    void setupRole();
     
-    void onButtonAdd();
     void onStrategyCommon(SCActor* pActor,SCMessage::Ptr ptrMsg);
-    void onEnterStrategy(const SCDictionary& par);
-    void onExitStrategy(const SCDictionary& par);
+    void onBvrEnterStrategy(const SCDictionary& par);
+    void onBvrExitStrategy(const SCDictionary& par);
+    void onBvrLog(const SCDictionary& par);
+    
+    void onSchedule(float fDelta);
+    
+    SCString getStrategyName(const int nID);
     
 private:
-
+    SCWatchBool::Ptr    _ptrWatchRun;
 };
 
 #endif // __TESTSTAGE_SCENE_H__

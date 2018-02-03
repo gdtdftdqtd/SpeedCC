@@ -34,6 +34,8 @@ namespace SpeedCC
         
         friend class SCSceneNavigator;
         
+        typedef std::function<void(SCMessage::Ptr ptrMsg)>  MsgFunc_t;
+        
         virtual ~SCSceneController();
         
         inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==NULL);}
@@ -52,7 +54,13 @@ namespace SpeedCC
         
         void delayExecute(float fDelay,const std::function<void ()>& fun);
         void delayExecute(float fDelay,const std::function<void(SCDictionary dic)>& func,SCDictionary dic);
-        void listenMessage(const int nMsg,FUN_SCMapMessage_t pfnFunc);
+        void listenMessage(const int nMsg,MsgFunc_t func);
+        
+        void schedule(cocos2d::SEL_SCHEDULE selector);
+        void schedule(cocos2d::SEL_SCHEDULE selector, float interval);
+        void schedule(cocos2d::SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
+        void scheduleOnce(cocos2d::SEL_SCHEDULE selector, float delay);
+        void unschedule(cocos2d::SEL_SCHEDULE selector);
         
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
@@ -78,7 +86,7 @@ namespace SpeedCC
         cocos2d::Layer*                             _pBlackMaskLayer;
         bool                                        _bBlackMaskForModal;
         std::list<SCObject::Ptr>                    _ownLifecycleList;
-        std::map<int,FUN_SCMapMessage_t>            _msg2FuncMap;
+        std::map<int,MsgFunc_t>                     _msg2FuncMap;
     };
     
     

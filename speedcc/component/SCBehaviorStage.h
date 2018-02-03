@@ -20,18 +20,16 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorStrategySwitch)
         SC_DEFINE_CLASS_PTR(SCBehaviorStrategySwitch)
         
-        SC_DEFINE_CREATE_FUNC_2(SCBehaviorStrategySwitch,SCActor::Ptr,const int)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorStrategySwitch,const int)
         
         virtual void execute(const SCDictionary& par) override;
         
     protected:
-        SCBehaviorStrategySwitch(SCActor::Ptr ptrActor,const int nStragtegyID):
-        _ptrActor(ptrActor),
+        SCBehaviorStrategySwitch(const int nStragtegyID):
         _nStragtegyID(nStragtegyID)
         {}
         
     private:
-        SCActor::Ptr                _ptrActor;
         int                         _nStragtegyID;
     };
     

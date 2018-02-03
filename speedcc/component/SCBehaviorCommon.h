@@ -14,6 +14,20 @@
 
 namespace SpeedCC
 {
+    ///-------------- SCBehaviorNothing
+    class SCBehaviorNothing : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorNothing)
+        SC_DEFINE_CLASS_PTR(SCBehaviorNothing)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorNothing)
+        
+        virtual void execute(const SCDictionary& par) override {}
+        
+    protected:
+        SCBehaviorNothing(){}
+    };
     
     ///-------------- SCBehaviroCallFunc
     class SCBehaviorCallFunc : public SCBehavior
@@ -132,6 +146,7 @@ namespace SpeedCC
         SCBehavior::Ptr     _ptrBvr;
     };
     
+    ///--------------- SCBehaviorCaseT
     template<typename T,
             typename = typename std::enable_if<SCIsWatchClass<T>::value==1,T>::type >
     class SCBehaviorCaseT : public SCBehavior

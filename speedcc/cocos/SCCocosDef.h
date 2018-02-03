@@ -15,7 +15,7 @@
 namespace SpeedCC
 {
     
-#define kSCPositionIgnore       999
+#define kSCPositionIgnore       (std::numeric_limits<float>::max())
     
     ///------- define function type
     typedef void (cocos2d::Ref::*FUN_SCMapMessage_t)(SCMessage::Ptr ptrMsg);

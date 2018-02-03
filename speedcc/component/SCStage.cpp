@@ -54,6 +54,7 @@ namespace SpeedCC
             SC_RETURN_V_IF(!this->getActive());
             SC_BREAK_IF(!ptrMsg->bContinue);
             it.second->update(ptrMsg);
+            SC_BREAK_IF(!ptrMsg->bContinue);
         }
     }
     

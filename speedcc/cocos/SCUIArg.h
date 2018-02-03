@@ -17,6 +17,7 @@
 
 #include "SCBinder.h"
 #include "SCNodeProperty.h"
+#include "SCRefHolder.h"
 
 #include "cocos2d.h"
 
@@ -89,7 +90,6 @@ namespace SpeedCC
             menuFunc(NULL),
             ptrResultBvr(bvr)
             {
-                
             }
             
             BehaviorPurifier(decltype(NULL)):
@@ -149,13 +149,39 @@ namespace SpeedCC
         {
             template<typename T>
             NodePurifier(T* node):
-            pNode(node),
             pfunSetProperty(&SCNodeProperty::setProperty<T>)
             {
+                ptrNodeHolder = SCRefHolder::create(node);
             }
             
-            cocos2d::Node*          pNode;
+            SCRefHolder::Ptr        ptrNodeHolder;
             FUN_SCSetProperty_t     pfunSetProperty;
+        };
+        
+        struct MenuItemPurifier
+        {
+            MenuItemPurifier(const SCString& strImage)
+            {
+                auto pMenuItem = cocos2d::MenuItemImage::create(strImage.c_str(),strImage.c_str(),strImage.c_str());
+                ptrHolder = SCRefHolder::create(pMenuItem);
+            }
+            
+            MenuItemPurifier(const SCString& strText,const int size)
+            {
+                auto pLabel = cocos2d::Label::createWithSystemFont(strText.c_str(),"",size);
+                auto pMenuItem = cocos2d::MenuItemLabel::create(pLabel);
+                
+                ptrHolder = SCRefHolder::create(pMenuItem);
+            }
+            
+            MenuItemPurifier(cocos2d::MenuItem* pMenuItem)
+            {
+                SCASSERT(pMenuItem!=NULL);
+                ptrHolder = SCRefHolder::create(pMenuItem);
+            }
+            
+        public:
+            SCRefHolder::Ptr    ptrHolder;
         };
  
     };

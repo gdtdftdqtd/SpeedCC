@@ -68,7 +68,7 @@ do{\
 
 #define ON_MSG_NEXT_STRATEGY(_msg_,_stragegy_id_) \
 do{\
-    auto bvrPtr = SpeedCC::SCBehaviorStrategySwitch::create(sc_flow_role,(_stragegy_id_));\
+    auto bvrPtr = SpeedCC::SCBehaviorStrategySwitch::create((_stragegy_id_));\
     ON_MSG_BEHAVIOR(_msg_,bvrPtr)\
 }while(0);
 

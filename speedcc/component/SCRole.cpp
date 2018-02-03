@@ -409,10 +409,6 @@ namespace SpeedCC
         SCASSERT(ptrMsg!=NULL);
         _bUpdating = true;
         
-        if(ptrMsg->nMsgID==SpeedCC::SCID::Msg::kSCMsgSceneEnter)
-        {
-            int kkk = 0;
-        }
         do
         {
             SC_BREAK_IF(_actorList.empty());
@@ -425,6 +421,7 @@ namespace SpeedCC
                 SC_BREAK_IF(!this->getActive());
                 SC_BREAK_IF(!_pOwnerStage->getActive());
                 it->update(ptrMsg);
+                SC_BREAK_IF(!ptrMsg->bContinue);
             }
         }while(0);
         

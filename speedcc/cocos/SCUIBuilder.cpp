@@ -31,8 +31,10 @@ namespace SpeedCC
                                  const SCUIArg::NodePurifier& parentNode,
                                  cocos2d::Ref* pRef)
     {
+        Node* pParentNode = dynamic_cast<Node*>(parentNode.ptrNodeHolder->getRef());
+        SCASSERT(pParentNode!=NULL);
         _pCurrentRefCaller = pRef;
-        _pCurrentBedNode = parentNode.pNode;
+        _pCurrentBedNode = pParentNode;
         SCASSERT(_pCurrentBedNode!=NULL);
         SCASSERT(_pCurrentRefCaller!=NULL);
         
@@ -53,9 +55,9 @@ namespace SpeedCC
             _pCurrentBedNode->setPositionY(SpeedCC::SCNodeUtils::posP2A(cocos2d::Vec2(fPosX,fPosY),size).y);
         }
         
-        parentNode.pfunSetProperty(parentNode.pNode,property.strResult,NULL);
+        parentNode.pfunSetProperty(pParentNode,property.strResult,NULL);
         
-        this->pushContainerStack(parentNode.pNode);
+        this->pushContainerStack(pParentNode);
     }
     
     void SCUIBuilder::popContainerStack()
@@ -77,15 +79,16 @@ namespace SpeedCC
     }
     
     ///------------ user node
-    void SCUIBuilder::insertUsertNode(const SCUIArg::NodePurifier& userNode,
+    void SCUIBuilder::insertUserNode(const SCUIArg::NodePurifier& userNode,
                                      const float fPosX,
                                      const float fPosY,
                                      const SCUIArg::StringPurifier& property)
     {
-        SCASSERT(userNode.pNode!=NULL);
-        _contextStack.front().pContainerNode->addChild(userNode.pNode);
-        SCNodeUtils::setPerPosition(userNode.pNode, Vec2(fPosX,fPosY));
-        userNode.pfunSetProperty(userNode.pNode,property.strResult,NULL);
+        Node* pNode = dynamic_cast<Node*>(userNode.ptrNodeHolder->getRef());
+        SCASSERT(pNode!=NULL);
+        _contextStack.front().pContainerNode->addChild(pNode);
+        SCNodeUtils::setPerPosition(pNode, Vec2(fPosX,fPosY));
+        userNode.pfunSetProperty(pNode,property.strResult,NULL);
     }
     
     ///---------------- sprite
@@ -96,7 +99,7 @@ namespace SpeedCC
                                   const SCString& strImage)
     {
         auto pSprite = cocos2d::Sprite::create(SCFileUtils::getFullPathFile(strImage).c_str());
-        this->insertUsertNode(pSprite,fPosX,fPosY,property);
+        this->insertUserNode(pSprite,fPosX,fPosY,property);
         SC_ASSIGN_NODE(ppSprite,pSprite);
         return pSprite;
     }
@@ -157,14 +160,14 @@ namespace SpeedCC
                               const SCUIArg::LabelStringPurifier& labelString)
     {
         this->bindLabel(labelNode,labelString);
-        this->insertUsertNode(labelNode, fPosX, fPosY, property);
+        this->insertUserNode(labelNode, fPosX, fPosY, property);
     }
     
     void SCUIBuilder::bindLabel(const SCUIArg::NodePurifier& labelNode,
                    const SCUIArg::LabelStringPurifier& labelString)
     {
         auto ptrBinder = labelString.ptrLabelBinder;
-        cocos2d::Label* pLabel = dynamic_cast<Label*>(labelNode.pNode);
+        cocos2d::Label* pLabel = dynamic_cast<Label*>(labelNode.ptrNodeHolder->getRef());
         SCASSERT(pLabel!=NULL);
         
         if(ptrBinder!=NULL && pLabel!=NULL)
@@ -252,61 +255,48 @@ namespace SpeedCC
                                                 const float fPosX,
                                                 const float fPosY,
                                                 const SCUIArg::StringPurifier& property,
-                                                const SCString& strImageOn,
-                                                const SCString& strImageOff,
+                                                const SCUIArg::MenuItemPurifier& itemOn,
+                                                const SCUIArg::MenuItemPurifier& itemOff,
                                                 const SCUIArg::BoolPurifier& value,
                                                 SCUIArg::BehaviorPurifier bvrPurifier)
     {
-        auto& context = _contextStack.front();
-        context.menuItemVtr.push_back(NULL);
+        MenuItem* pOnItem = (MenuItem*)itemOn.ptrHolder->getRef();
+        MenuItem* pOffItem = (MenuItem*)itemOff.ptrHolder->getRef();
         
-        MenuItemImage* pItemSprite[2] = {NULL};
-        
-        for(int i=0; i<2; ++i)
-        {
-            SCString strImage = i==0 ? strImageOn : strImageOff;
-            pItemSprite[i] = MenuItemImage::create(strImage.c_str(),strImage.c_str(),strImage.c_str());
-            
-            bvrPurifier.setupBehavior(_pCurrentRefCaller,pItemSprite[i]);
-            
-            SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;
-            scTemFilterConfig.bExclude = true;
-            scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_IMAGE);
-            scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_SCALE_Y);
-            scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_SCALE_X);
-            scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_SCALE);
-            
-            SCNodeProperty::setProperty<MenuItemImage>(pItemSprite[i], property.strResult,&scTemFilterConfig);
-        }
+        bvrPurifier.setupBehavior(_pCurrentRefCaller,pOnItem);
+        bvrPurifier.setupBehavior(_pCurrentRefCaller,pOffItem);
         
         auto scCallbackFunc = [this](cocos2d::Ref* pSender) { this->onSCMenuItemPressed(pSender);};
-        auto pSCInsideToggleItem = MenuItemToggle::createWithCallback(NULL,pItemSprite[0],pItemSprite[1],NULL);
-        pSCInsideToggleItem->setSelectedIndex(value.bResult ? 0 : 1);
+        auto pToggleItem = MenuItemToggle::createWithCallback(NULL,pOnItem,pOffItem,NULL);
+        pToggleItem->setSelectedIndex(value.bResult ? 0 : 1);
         
         if(value.ptrWatch!=NULL)
         {
             auto ptrLabelBinder = SCBinderUISwitch::create();
             
             ptrLabelBinder->setWatch(value.ptrWatch);
-            ptrLabelBinder->setToggle(pSCInsideToggleItem);
+            ptrLabelBinder->setToggle(pToggleItem);
             ptrLabelBinder->setCallback(scCallbackFunc);
-            this->storeBinder(pSCInsideToggleItem,ptrLabelBinder);
+            this->storeBinder(pToggleItem,ptrLabelBinder);
         }
         else
         {
-            pSCInsideToggleItem->setCallback(scCallbackFunc);
+            pToggleItem->setCallback(scCallbackFunc);
         }
         
-        cocos2d::Menu* pMenu = cocos2d::Menu::create(pSCInsideToggleItem,NULL);
-        pMenu->setContentSize(pItemSprite[0]->getContentSize());
-        this->insertUsertNode(pMenu, fPosX, fPosY, property);
+        cocos2d::Menu* pMenu = cocos2d::Menu::create(pToggleItem,NULL);
+        pMenu->setContentSize(pOnItem->getContentSize());
+//        pMenu->setIgnoreAnchorPointForPosition(false);
+//        pMenu->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
+//        SCNodeUtils::setPerPosition(pMenuItemArray[0], cocos2d::Vec2(0.5,0.5));
+        this->insertUserNode(pMenu, fPosX, fPosY, property);
         
-        bvrPurifier.setupBehavior(_pCurrentRefCaller, pSCInsideToggleItem);
-        _buttonItem2InfoMap[pSCInsideToggleItem] = bvrPurifier.ptrResultBvr;
+        bvrPurifier.setupBehavior(_pCurrentRefCaller, pToggleItem);
+        _buttonItem2InfoMap[pToggleItem] = bvrPurifier.ptrResultBvr;
         
-        SC_ASSIGN_NODE(ppMenuItemToggle,pSCInsideToggleItem);
+        SC_ASSIGN_NODE(ppMenuItemToggle,pToggleItem);
         
-        return pSCInsideToggleItem;
+        return pToggleItem;
     }
 
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
@@ -339,7 +329,7 @@ namespace SpeedCC
                    const SCUIArg::StringPurifier& property,
                    SCUIArg::BehaviorPurifier bvrPurifier)
     {
-        auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.pNode);
+        auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.ptrNodeHolder->getRef());
         auto& context = _contextStack.front();
         
         if(!context.menuItemVtr.empty())
@@ -353,7 +343,7 @@ namespace SpeedCC
             pMenu->setContentSize(pMenuItem->getContentSize());
             pMenu->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
             SCNodeUtils::setPerPosition(pMenuItem, cocos2d::Vec2(0.5,0.5));
-            this->insertUsertNode(pMenu, fPosX, fPosY, property);
+            this->insertUserNode(pMenu, fPosX, fPosY, property);
         }
         
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);
@@ -397,13 +387,14 @@ namespace SpeedCC
                               const SCUIArg::StringPurifier& property,
                               const cocos2d::Size& size)
     {
-        cocos2d::Layer* pLayer = dynamic_cast<cocos2d::Layer*>(layerNode.pNode);
-
+        cocos2d::Layer* pLayer = dynamic_cast<cocos2d::Layer*>(layerNode.ptrNodeHolder->getRef());
+        SCASSERT(pLayer!=NULL);
+        
         pLayer->setContentSize(size);
         pLayer->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
         pLayer->setIgnoreAnchorPointForPosition(false);
         
-        this->insertUsertNode(layerNode, fPosX, fPosY, property);
+        this->insertUserNode(layerNode, fPosX, fPosY, property);
     }
     
     void SCUIBuilder::pushContainerStack(cocos2d::Node* pNode)
@@ -455,7 +446,6 @@ namespace SpeedCC
             (*it).second->execute();
             
             SCDictionary dic  = {MSG_KEY_CCREF,pSender};
-            
             SCMsgDisp()->postMessage(SCID::Msg::kSCMsgButtonClicked, dic);
         }
     }

@@ -20,6 +20,7 @@ namespace SpeedCC
     
     SCSceneController::~SCSceneController()
     {
+        SCCCScheduler()->unscheduleAllForTarget(dynamic_cast<cocos2d::Ref*>(this));
     }
     
     void SCSceneController::setBedNode(SCBedNode* pLayer)
@@ -123,6 +124,31 @@ namespace SpeedCC
         }
     }
     
+    void SCSceneController::schedule(cocos2d::SEL_SCHEDULE selector)
+    {
+        this->schedule(selector, 0.0f, CC_REPEAT_FOREVER, 0.0f);
+    }
+    
+    void SCSceneController::schedule(cocos2d::SEL_SCHEDULE selector, float interval)
+    {
+        this->schedule(selector, interval, CC_REPEAT_FOREVER, 0.0f);
+    }
+    
+    void SCSceneController::schedule(cocos2d::SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay)
+    {
+        SCCCScheduler()->schedule(selector, this, interval , repeat, delay, !_pBedNode->isRunning());
+    }
+    
+    void SCSceneController::scheduleOnce(cocos2d::SEL_SCHEDULE selector, float delay)
+    {
+        this->schedule(selector, 0.0f, 0, delay);
+    }
+    
+    void SCSceneController::unschedule(cocos2d::SEL_SCHEDULE selector)
+    {
+        SCCCScheduler()->unschedule(selector, this);
+    }
+    
     void SCSceneController::delayExecute(float fDelay,const std::function<void ()>& fun)
     {
         fDelay = (fDelay<0) ? 0 : fDelay;
@@ -142,17 +168,17 @@ namespace SpeedCC
                            });
     }
     
-    void SCSceneController::listenMessage(const int nMsg,FUN_SCMapMessage_t pfnFunc)
+    void SCSceneController::listenMessage(const int nMsg,MsgFunc_t func)
     {
         SC_RETURN_V_IF(nMsg<=0);
         
-        if(pfnFunc==NULL)
+        if(func==NULL)
         {// remove mapping
             _msg2FuncMap.erase(nMsg);
         }
         else
         {
-            _msg2FuncMap[nMsg] = pfnFunc;
+            _msg2FuncMap[nMsg] = func;
         }
     }
     
@@ -164,7 +190,8 @@ namespace SpeedCC
         
         if(it!=_msg2FuncMap.end() && (*it).second!=NULL)
         {
-            (this->*(*it).second)(ptrMsg);
+            (*it).second(ptrMsg);
+            SC_RETURN_V_IF(!ptrMsg->bContinue);
         }
         
         SCStage::onSCMessageProcess(ptrMsg);

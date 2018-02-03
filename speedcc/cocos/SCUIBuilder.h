@@ -53,7 +53,7 @@ namespace SpeedCC
                                   const cocos2d::Size& size);
         
         ///-------------- user node
-        void insertUsertNode(const SCUIArg::NodePurifier& userNode,
+        void insertUserNode(const SCUIArg::NodePurifier& userNode,
                              const float fPosX,
                              const float fPosY,
                              const SCUIArg::StringPurifier& property);
@@ -132,8 +132,8 @@ namespace SpeedCC
                                                     const float fPosX,
                                                     const float fPosY,
                                                     const SCUIArg::StringPurifier& property,
-                                                    const SCString& strImageOn,
-                                                    const SCString& strImageOff,
+                                                    const SCUIArg::MenuItemPurifier& itemOn,
+                                                    const SCUIArg::MenuItemPurifier& itemOff,
                                                     const SCUIArg::BoolPurifier& value,
                                                     SCUIArg::BehaviorPurifier bvrPurifier);
         
