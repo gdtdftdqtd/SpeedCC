@@ -144,9 +144,18 @@ namespace SpeedCC
                                                     const SCUIArg::StringPurifier& property,
                                                     const SCString& strBackgroundImage,
                                                     const SCString& strFrontgroundImage,
+                                                    SCUIArg::NumberPurifier value,
                                                     const bool bHorizontal,
                                                     const bool bDesc = false,
                                                     const bool bBaseLB = true);
+        
+        cocos2d::ProgressTimer* insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
+                                                      const float fPosX,
+                                                      const float fPosY,
+                                                      const SCUIArg::StringPurifier& property,
+                                                      const SCString& strBackgroundImage,
+                                                      const SCString& strFrontgroundImage,
+                                                      SCUIArg::NumberPurifier value);
         
         cocos2d::Node* getLayoutNode(const int nID);
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);

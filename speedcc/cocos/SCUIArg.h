@@ -13,6 +13,8 @@
 #include "../base/SCObject.h"
 #include "../base/SCWatchNumberT.h"
 
+#include "../system/SCFileUtils.h"
+
 #include "../component/SCBehaviorCommon.h"
 
 #include "SCBinder.h"
@@ -162,7 +164,8 @@ namespace SpeedCC
         {
             MenuItemPurifier(const SCString& strImage)
             {
-                auto pMenuItem = cocos2d::MenuItemImage::create(strImage.c_str(),strImage.c_str(),strImage.c_str());
+                SCString strFile = SCFileUtils::getFullPathFile(strImage);
+                auto pMenuItem = cocos2d::MenuItemImage::create(strFile.c_str(),strFile.c_str(),strFile.c_str());
                 ptrHolder = SCRefHolder::create(pMenuItem);
             }
             
@@ -187,15 +190,24 @@ namespace SpeedCC
         struct NumberPurifier
         {
             template<typename T,
-            typename = typename std::enable_if<SCIsWatchNumber<typename T::type>::value==1,T>::type >
+            typename = typename std::enable_if<SCIsWatchNumberable<typename T::type>::value==1,T>::type >
             NumberPurifier(T ptrWatch)
             {
-//                if(ptrWatch!=NULL)
-//                {
-////                    ptrLabelBinder = SCBinderUILabel::create();
-////                    ptrLabelBinder->setWatch(ptrWatch);
-//                }
+                if(ptrWatch!=NULL)
+                {
+                    ptrBinderProgress = SCBinderUIProgress::create();
+                    ptrBinderProgress->setWatch(ptrWatch);
+                }
             }
+            
+            NumberPurifier(const int nValue):
+            nPercentage(nValue)
+            {
+                
+            }
+            
+            SCBinderUIProgress::Ptr     ptrBinderProgress;
+            int                         nPercentage;
         };
  
     };

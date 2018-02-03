@@ -210,6 +210,12 @@ namespace SpeedCC
                 _pProgressTimer->setPercentage((*num));
             }
             
+            _getValueFunc = [](SCObject::Ptr ptr) -> int
+            {
+                auto p = ptr.cast<T>();
+                return (int)(*p);
+            };
+            
             _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
             {
                 SC_RETURN_V_IF(ptr==NULL || nID<=0);
@@ -235,8 +241,8 @@ namespace SpeedCC
         virtual void onActiveChanged(const bool bNewActive) override;
         
     private:
-        SCObject::Ptr               _ptrWatchSource;
         cocos2d::ProgressTimer*     _pProgressTimer;
+        std::function<int(SCObject::Ptr ptr)>   _getValueFunc;
     };
     
 }

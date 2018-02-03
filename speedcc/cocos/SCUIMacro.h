@@ -3,6 +3,7 @@
 #ifndef __SPEEDCC__SCUIMACRO_H__
 #define __SPEEDCC__SCUIMACRO_H__
 
+// root
 #define SC_BEGIN_CONTAINER_ROOT(_x_,_y_,_property_,_size_) \
     SC_BEGIN_CONTAINER_ROOT_EX((_x_),(_y_),(_property_),(_size_),this->getBedNode(),this);
 
@@ -115,7 +116,24 @@
     auto pSCContainerNode = _ptrUI->insertButtonSwitch((_node_),(_x_),(_y_),(_property_),(_true_item_),(_false_item_),(_value_),(_func_)); \
     _ptrUI->pushContainerStack(pSCContainerNode);
 
-// customize
+// progress bar
+#define SC_INSERT_PROGRESS_BAR(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_is_hor_,_is_desc_,_is_left_or_bottom_)\
+    _ptrUI->insertProgressBar((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_is_hor_),(_is_desc_),(_is_left_or_bottom_));
+
+#define SC_BEGIN_CONTAINER_PROGRESS_BAR(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_is_hor_,_is_desc_,_is_left_or_bottom_)\
+{\
+auto pSCContainerNode = _ptrUI->insertProgressBar((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_is_hor_),(_is_desc_),(_is_left_or_bottom_));\
+_ptrUI->pushContainerStack(pSCContainerNode);
+
+#define SC_INSERT_PROGRESS_RADIAL(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_)\
+    _ptrUI->insertProgressRadial((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_));
+
+#define SC_BEGIN_CONTAINER_PROGRESS_RADIAL(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_)\
+{\
+    auto pSCContainerNode = _ptrUI->insertProgressRadial((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_));\
+    _ptrUI->pushContainerStack(pSCContainerNode);
+
+// build-in
 #define SC_INSERT_OPTION_MUSIC(_node_,_x_,_y_,_property_,_true_item_,_false_item_) \
 do{\
     auto ptrMusic = SpeedCC::SCSetting::getInstance()->getMusicWatch();\

@@ -299,6 +299,86 @@ namespace SpeedCC
         return pToggleItem;
     }
 
+    cocos2d::ProgressTimer* SCUIBuilder::insertProgressBar(cocos2d::ProgressTimer** ppProgress,
+                                              const float fPosX,
+                                              const float fPosY,
+                                              const SCUIArg::StringPurifier& property,
+                                              const SCString& strBackgroundImage,
+                                              const SCString& strFrontgroundImage,
+                                              SCUIArg::NumberPurifier value,
+                                              const bool bHorizontal,
+                                              const bool bDesc,
+                                              const bool bBaseLB)
+    {
+        SCASSERT(!strFrontgroundImage.isEmpty());
+        
+        Sprite* pSpriteBar = Sprite::create( SCFileUtils::getFullPathFile(strFrontgroundImage).c_str());
+        
+        auto pProgressBar =  ProgressTimer::create(pSpriteBar);
+        pProgressBar->setBarChangeRate(bHorizontal ? Vec2(bDesc?0:1,0) : Vec2(0,(bDesc?0:1))) ;
+        pProgressBar->setMidpoint((bHorizontal ? Vec2((bBaseLB)?0.0:1.0,0.5) : Vec2(0.5,(bBaseLB)?0.0:1.0)));
+        pProgressBar->setType(ProgressTimer::Type::BAR);
+        
+        if(!strBackgroundImage.isEmpty())
+        {
+            Sprite* pSpriteBack = Sprite::create(SCFileUtils::getFullPathFile(strBackgroundImage).c_str());
+            pProgressBar->addChild(pSpriteBack,-1);
+        }
+        
+        this->insertUserNode(pProgressBar, fPosX, fPosY, property);
+        
+        if(value.ptrBinderProgress!=NULL)
+        {
+            value.ptrBinderProgress->setProgressTimer(pProgressBar);
+            this->storeBinder(pProgressBar,value.ptrBinderProgress);
+        }
+        else
+        {
+            pProgressBar->setPercentage(value.nPercentage);
+        }
+        SC_ASSIGN_NODE(ppProgress,pProgressBar);
+        
+        return pProgressBar;
+    }
+    
+    cocos2d::ProgressTimer* SCUIBuilder::insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
+                                                 const float fPosX,
+                                                 const float fPosY,
+                                                 const SCUIArg::StringPurifier& property,
+                                                 const SCString& strBackgroundImage,
+                                                 const SCString& strFrontgroundImage,
+                                                 SCUIArg::NumberPurifier value)
+    {
+        SCASSERT(!strFrontgroundImage.isEmpty());
+        
+        Sprite* pSpriteBar = Sprite::create(SCFileUtils::getFullPathFile(strFrontgroundImage).c_str());
+        
+        auto pProgressBar =  ProgressTimer::create(pSpriteBar);
+        pProgressBar->setType(ProgressTimer::Type::RADIAL);
+        
+        if(!strBackgroundImage.isEmpty())
+        {
+            Sprite* pSpriteBack = Sprite::create(SCFileUtils::getFullPathFile(strBackgroundImage).c_str());
+            pProgressBar->addChild(pSpriteBack,-1);
+        }
+        
+        this->insertUserNode(pProgressBar, fPosX, fPosY, property);
+        
+        if(value.ptrBinderProgress!=NULL)
+        {
+            value.ptrBinderProgress->setProgressTimer(pProgressBar);
+            this->storeBinder(pProgressBar,value.ptrBinderProgress);
+        }
+        else
+        {
+            pProgressBar->setPercentage(value.nPercentage);
+        }
+        SC_ASSIGN_NODE(ppProgress,pProgressBar);
+        
+        return pProgressBar;
+    }
+    
+    ///------------ internal methods
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
                                             const float fPosX,
                                                const float fPosY,

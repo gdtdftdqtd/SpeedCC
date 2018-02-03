@@ -199,13 +199,14 @@ namespace SpeedCC
         SCBinder::reset();
         
         _pProgressTimer = NULL;
+        _getValueFunc = NULL;
     }
     
     void SCBinderUIProgress::onActiveChanged(const bool bNewActive)
     {
-        if(bNewActive && _pProgressTimer!=NULL)
+        if(bNewActive && _pProgressTimer!=NULL && _getValueFunc!=NULL)
         {
-            _pProgressTimer->setPercentage(1);
+            _pProgressTimer->setPercentage(_getValueFunc(_ptrWatch));
         }
     }
     
