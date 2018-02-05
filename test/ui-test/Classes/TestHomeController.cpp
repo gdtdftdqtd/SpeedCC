@@ -1,6 +1,5 @@
 
 #include "TestHomeController.h"
-#include "TestPage1Controller.h"
 #include "TestLabelBinderController.h"
 #include "TestStageController.h"
 #include "TestDockController.h"
@@ -13,13 +12,13 @@ void TestHomeController::onCreate(SCDictionary parameters)
 {
     SCSceneController::onCreate(parameters);
 
-    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
+    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,NULL)
         SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0.5,0.5,NULL,SCWinSize,Color4B::WHITE)
             SC_INSERT_LABEL_BMFONT(NULL,0.5,0.90,"","Home Scene","blue_font.fnt")
     
-            SC_BEGIN_CONTAINER_PADDING(NULL,0.5,0.5,NULL,false,20,SCNodeUtils::kDockCenter)
+            SC_BEGIN_CONTAINER_PADDING(NULL,0.5,0.5,NULL,NULL,false,20,SCNodeUtils::kDockCenter)
     
-                SC_INSERT_BUTTON_LABEL(NULL,0.5,0.6,"color-text=blue;","Label Binder","",23,SCBehaviorSceneNavigate::create<TestLabelBinderController>(SCSceneNavigator::kSceneModal))
+                SC_INSERT_BUTTON_LABEL(NULL,0.5,0.6,"color-text=blue;","Label Binder","",23,SCBehaviorSceneNavigate::create<TestLabelBinderController>())
     
                 SC_INSERT_BUTTON_LABEL(NULL,0.5,0.4,"color-text=blue;","Stage","",23,SCBehaviorSceneNavigate::create<TestStageController>())
     

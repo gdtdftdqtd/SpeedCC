@@ -134,9 +134,9 @@ _ptrUI->pushContainerStack(pSCContainerNode);
     _ptrUI->pushContainerStack(pSCContainerNode);
 
 // layout
-#define SC_BEGIN_CONTAINER_PADDING(_node_,_x_,_y_,_property_,_is_hor_,_padding_,_dock_) \
+#define SC_BEGIN_CONTAINER_PADDING(_node_,_x_,_y_,_property_,_size_,_is_hor_,_padding_,_dock_) \
 {\
-    _ptrUI->containerLayoutPadding((_node_),(_x_),(_y_),(_property_),(_is_hor_),(_padding_),(_dock_));\
+    _ptrUI->containerLayoutPadding((_node_),(_x_),(_y_),(_property_),(_size_),(_is_hor_),(_padding_),(_dock_));\
 
 
 // build-in

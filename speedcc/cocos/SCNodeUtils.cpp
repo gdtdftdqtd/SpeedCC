@@ -119,7 +119,7 @@ namespace SpeedCC
                 fRet = (nodeSize.width * fScaleX/2) + fAnchorOffset;
             }
             else
-            {// middle-x
+            {// mid-x
                 fRet = frameSize.width/2 + fAnchorOffset;
             }
         }
@@ -137,7 +137,7 @@ namespace SpeedCC
                 fRet = (nodeSize.height * fScaleY/2) + fAnchorOffset;
             }
             else
-            {// middle-y
+            {// mid-y
                 fRet = frameSize.height/2 + fAnchorOffset;
             }
         }

@@ -30,7 +30,7 @@ namespace SpeedCC
         void beginContainerRoot(const float fPosX,
                                 const float fPosY,
                                 const SCUIArg::StringPurifier& property,
-                                const cocos2d::Size& size,
+                                const SCUIArg::SizePurifier& sizePurifier,
                                 const SCUIArg::NodePurifier& parentNode,
                                 cocos2d::Ref* pRef);
         
@@ -161,6 +161,7 @@ namespace SpeedCC
                                               const float fPosX,
                                               const float fPosY,
                                               const SCUIArg::StringPurifier& property,
+                                              const SCUIArg::SizePurifier& sizePurifier,
                                               const bool bHorizontal,
                                               const float fPadding,
                                               const int nDock);

@@ -1389,11 +1389,11 @@ namespace SpeedCC
     
     bool SCString::asBool(bool bThrow,bool bDefault) const throw(bool)
     {
-        if(this->compareNoCase("true"))
+        if(this->compareNoCase("true")==0)
         {
             return true;
         }
-        else if(this->compareNoCase("false"))
+        else if(this->compareNoCase("false")==0)
         {
             return false;
         }

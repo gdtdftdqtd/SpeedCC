@@ -13,7 +13,6 @@
 		0A4D771F20245BA10089F8D6 /* TestDockController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D771D20245BA00089F8D6 /* TestDockController.cpp */; };
 		0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc.a */; };
 		0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */; };
-		0AADA6C91FDD784800E43DC6 /* TestPage1Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AADA6C71FDD784800E43DC6 /* TestPage1Controller.cpp */; };
 		0AEA3C521FE101BB004C1F13 /* assets-medium in Resources */ = {isa = PBXBuildFile; fileRef = 0AEA3C4E1FE101BB004C1F13 /* assets-medium */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -100,8 +99,6 @@
 		0A67CAB11F80E75100FED9A5 /* speedcc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = speedcc.xcodeproj; path = ../../../speedcc/platform/ios/speedcc.xcodeproj; sourceTree = "<group>"; };
 		0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestStageController.cpp; sourceTree = "<group>"; };
 		0A6879C21FF7ED25004DCED6 /* TestStageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStageController.h; sourceTree = "<group>"; };
-		0AADA6C71FDD784800E43DC6 /* TestPage1Controller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestPage1Controller.cpp; sourceTree = "<group>"; };
-		0AADA6C81FDD784800E43DC6 /* TestPage1Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestPage1Controller.h; sourceTree = "<group>"; };
 		0AEA3C4E1FE101BB004C1F13 /* assets-medium */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "assets-medium"; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -306,8 +303,6 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
-				0AADA6C71FDD784800E43DC6 /* TestPage1Controller.cpp */,
-				0AADA6C81FDD784800E43DC6 /* TestPage1Controller.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -492,7 +487,6 @@
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				0A4D771F20245BA10089F8D6 /* TestDockController.cpp in Sources */,
 				0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */,
-				0AADA6C91FDD784800E43DC6 /* TestPage1Controller.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,

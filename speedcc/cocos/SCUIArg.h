@@ -209,6 +209,21 @@ namespace SpeedCC
             SCBinderUIProgress::Ptr     ptrBinderProgress;
             int                         nPercentage;
         };
+        
+        struct SizePurifier
+        {
+            SizePurifier(const cocos2d::Size& size0):
+            size(size0)
+            {
+            }
+            
+            SizePurifier(decltype(NULL)):
+            size(cocos2d::Size::ZERO)
+            {
+            }
+            
+            cocos2d::Size size;
+        };
  
     };
     

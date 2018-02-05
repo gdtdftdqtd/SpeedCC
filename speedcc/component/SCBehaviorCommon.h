@@ -156,6 +156,7 @@ namespace SpeedCC
         SC_DEFINE_CLASS_PTR(SCBehaviorCaseT)
         
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorCaseT)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorCaseT,typename T::Ptr)
         
         void setCase(const typename T::type value, SCBehavior::Ptr ptrBvr)
         {
@@ -163,6 +164,7 @@ namespace SpeedCC
         }
         
         inline typename T::Ptr getWatch() const {return _ptrWatch;}
+        inline int getCaseCount() const { return (int)_watchValue2BvrMap.size();}
         
         virtual void execute(const SCDictionary& par) override
         {
@@ -177,6 +179,11 @@ namespace SpeedCC
         SCBehaviorCaseT()
         {
             _ptrWatch = T::create();
+        }
+        
+        SCBehaviorCaseT(typename T::Ptr ptrWatch):
+        _ptrWatch(ptrWatch)
+        {
         }
         
     private:

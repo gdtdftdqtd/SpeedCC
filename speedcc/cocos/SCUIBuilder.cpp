@@ -28,7 +28,7 @@ namespace SpeedCC
     void SCUIBuilder::beginContainerRoot(const float fPosX,
                                  const float fPosY,
                                  const SCUIArg::StringPurifier& property,
-                                 const cocos2d::Size& size,
+                                 const SCUIArg::SizePurifier& sizePurifier,
                                  const SCUIArg::NodePurifier& parentNode,
                                  cocos2d::Ref* pRef)
     {
@@ -39,7 +39,11 @@ namespace SpeedCC
         SCASSERT(_pCurrentBedNode!=NULL);
         SCASSERT(_pCurrentRefCaller!=NULL);
         
+        cocos2d::Size size = (sizePurifier.size.equals(Size::ZERO)) ?
+        pParentNode->getContentSize() : sizePurifier.size;
+        
         _pCurrentBedNode->setContentSize(size);
+        
         _pCurrentBedNode->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
         _pCurrentBedNode->setIgnoreAnchorPointForPosition(false);
         
@@ -72,11 +76,6 @@ namespace SpeedCC
         }
         
         _contextStack.pop_front();
-        
-//        if(_contextStack.empty())
-//        {// build ui finished.
-//
-//        }
     }
     
     ///------------ user node
@@ -91,16 +90,6 @@ namespace SpeedCC
         top.pContainerNode->addChild(pNode);
         SCNodeUtils::setPerPosition(pNode, Vec2(fPosX,fPosY));
         userNode.pfunSetProperty(pNode,property.strResult,NULL);
-        
-//        switch(top.containerType)
-//        {
-//            case SCUITypeDef::EContainerType::kLayoutPadding:
-//            case SCUITypeDef::EContainerType::kMultiplexLayer:
-//                top.childNodeList.push_back(pNode);
-//                break;
-//
-//            default: break;
-//        }
     }
     
     ///---------------- sprite
@@ -394,14 +383,21 @@ namespace SpeedCC
                                               const float fPosX,
                                               const float fPosY,
                                               const SCUIArg::StringPurifier& property,
+                                              const SCUIArg::SizePurifier& sizePurifier,
                                               const bool bHorizontal,
                                               const float fPadding,
                                               const int nDock)
     {
-        const auto& top = _contextStack.front();
-//        Node* pNode = LayerColor::create(Color4B::WHITE);
         Node* pNode = Node::create();
-        pNode->setContentSize(top.pContainerNode->getContentSize());
+        if(sizePurifier.size.equals(Size::ZERO))
+        {
+            const auto& top = _contextStack.front();
+            pNode->setContentSize(top.pContainerNode->getContentSize());
+        }
+        else
+        {
+            pNode->setContentSize(sizePurifier.size);
+        }
         pNode->setIgnoreAnchorPointForPosition(false);
         pNode->setAnchorPoint(Vec2(0.5,0.5));
         

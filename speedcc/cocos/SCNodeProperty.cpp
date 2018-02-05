@@ -830,8 +830,8 @@ namespace SpeedCC
             {"bottom",SCNodeUtils::kDockBottom},
             {"center",SCNodeUtils::kDockCenter},
             {"left",SCNodeUtils::kDockLeft},
-            {"middle-x",SCNodeUtils::kDockMiddleX},
-            {"middle-y",SCNodeUtils::kDockMiddleY},
+            {"mid-x",SCNodeUtils::kDockMiddleX},
+            {"mid-y",SCNodeUtils::kDockMiddleY},
             {"right",SCNodeUtils::kDockRight},
             {"top",SCNodeUtils::kDockTop},
         };

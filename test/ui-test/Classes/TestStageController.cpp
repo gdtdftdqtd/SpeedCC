@@ -61,7 +61,7 @@ void TestStageController::setupUI()
         SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0.5,0.5,NULL,SCWinSize,Color4B::GRAY)
 
             // title
-            SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|middle-x; y-by=-100;","Test Stage","blue_font.fnt")
+            SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|mid-x; y-by=-100;","Test Stage","blue_font.fnt")
 
             SC_INSERT_BUTTON_SWITCH(NULL, 0.5, 0.6, "", SCUIArg::MenuItemPurifier("Stop",22), SCUIArg::MenuItemPurifier("Start",22), _ptrWatchRun, ptrRunBvr)
     
