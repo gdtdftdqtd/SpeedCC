@@ -9,9 +9,6 @@ class TestHomeController : public SpeedCC::SCSceneController
 public:
     
     virtual void onCreate(SpeedCC::SCDictionary parameters);
-    
-    void onButtonClicked();
-    void onButtonStage();
 };
 
 #endif // __TESTHOME_SCENE_H__

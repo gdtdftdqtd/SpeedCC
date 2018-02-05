@@ -14,6 +14,7 @@
 #include "../component/SCComponentMacroDef.h"
 
 #include "../system/SCFileUtils.h"
+#include "../system/SCSystem.h"
 
 using namespace cocos2d;
 
@@ -65,17 +66,17 @@ namespace SpeedCC
         SCASSERT(!_contextStack.empty());
         auto& front = _contextStack.front();
         
-        if(front.pfunEndFunctor!=NULL)
+        if(front.endFunc!=NULL)
         {
-            (*front.pfunEndFunctor)();
+            front.endFunc(front);
         }
         
         _contextStack.pop_front();
         
-        if(_contextStack.empty())
-        {// build ui finished.
-            
-        }
+//        if(_contextStack.empty())
+//        {// build ui finished.
+//
+//        }
     }
     
     ///------------ user node
@@ -86,9 +87,20 @@ namespace SpeedCC
     {
         Node* pNode = dynamic_cast<Node*>(userNode.ptrNodeHolder->getRef());
         SCASSERT(pNode!=NULL);
-        _contextStack.front().pContainerNode->addChild(pNode);
+        auto& top = _contextStack.front();
+        top.pContainerNode->addChild(pNode);
         SCNodeUtils::setPerPosition(pNode, Vec2(fPosX,fPosY));
         userNode.pfunSetProperty(pNode,property.strResult,NULL);
+        
+//        switch(top.containerType)
+//        {
+//            case SCUITypeDef::EContainerType::kLayoutPadding:
+//            case SCUITypeDef::EContainerType::kMultiplexLayer:
+//                top.childNodeList.push_back(pNode);
+//                break;
+//
+//            default: break;
+//        }
     }
     
     ///---------------- sprite
@@ -378,6 +390,93 @@ namespace SpeedCC
         return pProgressBar;
     }
     
+    void SCUIBuilder::containerLayoutPadding(Node** ppNode,
+                                              const float fPosX,
+                                              const float fPosY,
+                                              const SCUIArg::StringPurifier& property,
+                                              const bool bHorizontal,
+                                              const float fPadding,
+                                              const int nDock)
+    {
+        const auto& top = _contextStack.front();
+//        Node* pNode = LayerColor::create(Color4B::WHITE);
+        Node* pNode = Node::create();
+        pNode->setContentSize(top.pContainerNode->getContentSize());
+        pNode->setIgnoreAnchorPointForPosition(false);
+        pNode->setAnchorPoint(Vec2(0.5,0.5));
+        
+        SCUITypeDef::SUIContext context;
+        context.pContainerNode = pNode;
+        SCLog("layout node: %p",pNode);
+        context.endFunc = [bHorizontal,fPadding,nDock](SCUITypeDef::SUIContext& context)
+        {
+            Node* pNode = context.pContainerNode;
+            auto childrenVec = pNode->getChildren();
+            SC_RETURN_V_IF(childrenVec.empty());
+            
+            if(bHorizontal)
+            {// x
+                float fWidth = 0;
+                int nDock2 = SC_BIT_REMOVE(nDock,SCNodeUtils::kDockMiddleX);
+                const bool bApplyDock = SC_BIT_HAS_OR(nDock2, SCNodeUtils::kDockMiddleY);
+                for(const auto& child : childrenVec)
+                {
+                    fWidth += child->getContentSize().width * child->getScaleX() + fPadding;
+                }
+                
+                fWidth -= fPadding;
+                float fOffset = (pNode->getContentSize().width-fWidth)/2;
+                
+                for(const auto& child : childrenVec)
+                {
+                    const float fRealWidth = child->getContentSize().width * child->getScaleX();
+                    const auto& ptAnchor = child->isIgnoreAnchorPointForPosition() ? Vec2::ZERO : child->getAnchorPoint();
+                    float fAnchorOffset = (ptAnchor.x-0.5)*fRealWidth;
+                    
+                    child->setPositionX(fOffset + fRealWidth/2 + fAnchorOffset);
+                    fOffset += fRealWidth + fPadding;
+                    
+                    if(bApplyDock)
+                    {
+                        SCNodeUtils::setDock(child, nDock2);
+                    }
+                }
+            }
+            else
+            {// y
+                float fHeight = 0;
+                int nDock2 = SC_BIT_REMOVE(nDock,SCNodeUtils::kDockMiddleY);
+                const bool bApplyDock = SC_BIT_HAS_OR(nDock2, SCNodeUtils::kDockMiddleX);
+                for(const auto& child : childrenVec)
+                {
+                    fHeight += child->getContentSize().height * child->getScaleY() + fPadding;
+                }
+                
+                fHeight -= fPadding;
+                float fOffset = fHeight + (pNode->getContentSize().height-fHeight)/2;
+                
+                for(const auto& child : childrenVec)
+                {
+                    const float fRealHeight = child->getContentSize().height * child->getScaleY();
+                    const auto& ptAnchor = child->isIgnoreAnchorPointForPosition() ? Vec2::ZERO : child->getAnchorPoint();
+                    float fAnchorOffset = (ptAnchor.y-0.5)*fRealHeight;
+                    
+                    child->setPositionY(fOffset - fRealHeight/2 + fAnchorOffset);
+                    fOffset -= fRealHeight + fPadding;
+                    
+                    if(bApplyDock)
+                    {
+                        SCNodeUtils::setDock(child, nDock2);
+                    }
+                }
+            }
+        };
+        
+        this->insertUserNode(pNode, fPosX, fPosY, property);
+        
+        _contextStack.push_front(context);
+    }
+    
     ///------------ internal methods
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
                                             const float fPosX,
@@ -410,21 +509,13 @@ namespace SpeedCC
                    SCUIArg::BehaviorPurifier bvrPurifier)
     {
         auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.ptrNodeHolder->getRef());
-        auto& context = _contextStack.front();
         
-        if(!context.menuItemVtr.empty())
-        {
-            context.menuItemVtr.push_back(pMenuItem);
-        }
-        else
-        {
-            auto pMenu = cocos2d::Menu::create(pMenuItem,NULL);
-            pMenu->setIgnoreAnchorPointForPosition(false);
-            pMenu->setContentSize(pMenuItem->getContentSize());
-            pMenu->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
-            SCNodeUtils::setPerPosition(pMenuItem, cocos2d::Vec2(0.5,0.5));
-            this->insertUserNode(pMenu, fPosX, fPosY, property);
-        }
+        auto pMenu = cocos2d::Menu::create(pMenuItem,NULL);
+        pMenu->setIgnoreAnchorPointForPosition(false);
+        pMenu->setContentSize(pMenuItem->getContentSize());
+        pMenu->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
+        SCNodeUtils::setPerPosition(pMenuItem, cocos2d::Vec2(0.5,0.5));
+        this->insertUserNode(pMenu, fPosX, fPosY, property);
         
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);
         

@@ -98,11 +98,11 @@
 
 // add bits
 #define SC_BIT_ADD(_set_,_bit_)\
-    ((_set_)|=(_bit_))
+    ((_set_)|(_bit_))
 
 // remove bits
 #define SC_BIT_REMOVE(_set_,_bit_)\
-    ((_set_)&=(~(_bit_)))
+    ((_set_)&(~(_bit_)))
 
 ///------- class relate
 #define SC_AVOID_CLASS_COPY(_class_) \

@@ -28,11 +28,11 @@ namespace SpeedCC
         
         ///------------- root container
         void beginContainerRoot(const float fPosX,
-                                     const float fPosY,
-                                     const SCUIArg::StringPurifier& property,
-                                     const cocos2d::Size& size,
-                                     const SCUIArg::NodePurifier& parentNode,
-                                    cocos2d::Ref* pRef);
+                                const float fPosY,
+                                const SCUIArg::StringPurifier& property,
+                                const cocos2d::Size& size,
+                                const SCUIArg::NodePurifier& parentNode,
+                                cocos2d::Ref* pRef);
         
         void pushContainerStack(cocos2d::Node* pNode);
         void popContainerStack();
@@ -47,16 +47,16 @@ namespace SpeedCC
                                               const cocos2d::Color4B& crBackground);
         
         cocos2d::Layer* insertLayer(cocos2d::Layer** ppLayer,
-                                  const float fPosX,
-                                  const float fPosY,
-                                  const SCUIArg::StringPurifier& property,
-                                  const cocos2d::Size& size);
+                                    const float fPosX,
+                                    const float fPosY,
+                                    const SCUIArg::StringPurifier& property,
+                                    const cocos2d::Size& size);
         
         ///-------------- user node
         void insertUserNode(const SCUIArg::NodePurifier& userNode,
-                             const float fPosX,
-                             const float fPosY,
-                             const SCUIArg::StringPurifier& property);
+                            const float fPosX,
+                            const float fPosY,
+                            const SCUIArg::StringPurifier& property);
         
         ///-------------- sprite
         cocos2d::Sprite* insertSprite(cocos2d::Sprite** ppSprite,
@@ -84,11 +84,11 @@ namespace SpeedCC
                                        const float fFontSize);
         
         cocos2d::Label* insertLabelBMFont(cocos2d::Label** ppLabel,
-                                       const float fPosX,
-                                       const float fPosY,
-                                       const SCUIArg::StringPurifier& property,
-                                       const SCUIArg::LabelStringPurifier& labelString,
-                                       const SCString& strFile);
+                                          const float fPosX,
+                                          const float fPosY,
+                                          const SCUIArg::StringPurifier& property,
+                                          const SCUIArg::LabelStringPurifier& labelString,
+                                          const SCString& strFile);
         
         
         ///-------------- button
@@ -99,18 +99,9 @@ namespace SpeedCC
                                               const SCString& strImageNormal,
                                               const SCString& strSelect,
                                               const SCString& strDisable,
-                                            SCUIArg::BehaviorPurifier bvrPurifier);
+                                              SCUIArg::BehaviorPurifier bvrPurifier);
         
         cocos2d::MenuItemLabel* insertButtonLabel(cocos2d::MenuItemLabel** ppMenuItemLabel,
-                                          const float fPosX,
-                                          const float fPosY,
-                                          const SCUIArg::StringPurifier& property,
-                                          const SCUIArg::LabelStringPurifier& labelString,
-                                          const SCString& strFont,
-                                          const float fFontSize,
-                                          SCUIArg::BehaviorPurifier bvrPurifier);
-        
-        cocos2d::MenuItemLabel* insertButtonLabelTTF(cocos2d::MenuItemLabel** ppMenuItemLabel,
                                                   const float fPosX,
                                                   const float fPosY,
                                                   const SCUIArg::StringPurifier& property,
@@ -119,14 +110,23 @@ namespace SpeedCC
                                                   const float fFontSize,
                                                   SCUIArg::BehaviorPurifier bvrPurifier);
         
-        
-        cocos2d::MenuItemLabel* insertButtonLabelBMFont(cocos2d::MenuItemLabel** ppMenuItemLabel,
+        cocos2d::MenuItemLabel* insertButtonLabelTTF(cocos2d::MenuItemLabel** ppMenuItemLabel,
                                                      const float fPosX,
                                                      const float fPosY,
                                                      const SCUIArg::StringPurifier& property,
                                                      const SCUIArg::LabelStringPurifier& labelString,
-                                                     const SCString& strFile,
+                                                     const SCString& strFont,
+                                                     const float fFontSize,
                                                      SCUIArg::BehaviorPurifier bvrPurifier);
+        
+        
+        cocos2d::MenuItemLabel* insertButtonLabelBMFont(cocos2d::MenuItemLabel** ppMenuItemLabel,
+                                                        const float fPosX,
+                                                        const float fPosY,
+                                                        const SCUIArg::StringPurifier& property,
+                                                        const SCUIArg::LabelStringPurifier& labelString,
+                                                        const SCString& strFile,
+                                                        SCUIArg::BehaviorPurifier bvrPurifier);
         
         cocos2d::MenuItemToggle* insertButtonSwitch(cocos2d::MenuItemToggle** ppMenuItemToggle,
                                                     const float fPosX,
@@ -139,23 +139,31 @@ namespace SpeedCC
         
         
         cocos2d::ProgressTimer* insertProgressBar(cocos2d::ProgressTimer** ppProgress,
-                                                    const float fPosX,
-                                                    const float fPosY,
-                                                    const SCUIArg::StringPurifier& property,
-                                                    const SCString& strBackgroundImage,
-                                                    const SCString& strFrontgroundImage,
-                                                    SCUIArg::NumberPurifier value,
-                                                    const bool bHorizontal,
-                                                    const bool bDesc = false,
-                                                    const bool bBaseLB = true);
+                                                  const float fPosX,
+                                                  const float fPosY,
+                                                  const SCUIArg::StringPurifier& property,
+                                                  const SCString& strBackgroundImage,
+                                                  const SCString& strFrontgroundImage,
+                                                  SCUIArg::NumberPurifier value,
+                                                  const bool bHorizontal,
+                                                  const bool bDesc = false,
+                                                  const bool bBaseLB = true);
         
         cocos2d::ProgressTimer* insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
-                                                      const float fPosX,
-                                                      const float fPosY,
-                                                      const SCUIArg::StringPurifier& property,
-                                                      const SCString& strBackgroundImage,
-                                                      const SCString& strFrontgroundImage,
-                                                      SCUIArg::NumberPurifier value);
+                                                     const float fPosX,
+                                                     const float fPosY,
+                                                     const SCUIArg::StringPurifier& property,
+                                                     const SCString& strBackgroundImage,
+                                                     const SCString& strFrontgroundImage,
+                                                     SCUIArg::NumberPurifier value);
+        
+        void containerLayoutPadding(cocos2d::Node** ppNode,
+                                              const float fPosX,
+                                              const float fPosY,
+                                              const SCUIArg::StringPurifier& property,
+                                              const bool bHorizontal,
+                                              const float fPadding,
+                                              const int nDock);
         
         cocos2d::Node* getLayoutNode(const int nID);
         void storeLayoutNode(const int nID,cocos2d::Node* pNode);
@@ -203,17 +211,17 @@ namespace SpeedCC
                       const SCUIArg::LabelStringPurifier& labelString);
         
         void addButton(const SCUIArg::NodePurifier& itemNode,
-                      const float fPosX,
-                      const float fPosY,
-                      const SCUIArg::StringPurifier& property,
-                      SCUIArg::BehaviorPurifier bvrPurifier);
+                       const float fPosX,
+                       const float fPosY,
+                       const SCUIArg::StringPurifier& property,
+                       SCUIArg::BehaviorPurifier bvrPurifier);
         
         cocos2d::MenuItemLabel* addButtonLabel(cocos2d::Label* pLabel,
-                            const float fPosX,
-                            const float fPosY,
-                            const SCUIArg::StringPurifier& property,
+                                               const float fPosX,
+                                               const float fPosY,
+                                               const SCUIArg::StringPurifier& property,
                                                const SCUIArg::LabelStringPurifier& labelString,
-                            SCUIArg::BehaviorPurifier bvrPurifier);
+                                               SCUIArg::BehaviorPurifier bvrPurifier);
         
         void bindLabel(const SCUIArg::NodePurifier& labelNode,
                        const SCUIArg::LabelStringPurifier& labelString);
@@ -233,3 +241,4 @@ namespace SpeedCC
 }
 
 #endif // __SPEEDCC__SCUIBUILDER_H__
+

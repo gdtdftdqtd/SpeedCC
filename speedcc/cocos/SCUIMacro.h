@@ -133,6 +133,12 @@ _ptrUI->pushContainerStack(pSCContainerNode);
     auto pSCContainerNode = _ptrUI->insertProgressRadial((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_));\
     _ptrUI->pushContainerStack(pSCContainerNode);
 
+// layout
+#define SC_BEGIN_CONTAINER_PADDING(_node_,_x_,_y_,_property_,_is_hor_,_padding_,_dock_) \
+{\
+    _ptrUI->containerLayoutPadding((_node_),(_x_),(_y_),(_property_),(_is_hor_),(_padding_),(_dock_));\
+
+
 // build-in
 #define SC_INSERT_OPTION_MUSIC(_node_,_x_,_y_,_property_,_true_item_,_false_item_) \
 do{\

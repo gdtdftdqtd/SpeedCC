@@ -241,20 +241,19 @@ namespace SpeedCC
         enum class EContainerType
         {
             kNormal,
-            kButtonList,
+            kLayoutPadding,
             kMultiplexLayer
         };
         
         struct SUIContext
         {
             cocos2d::Node*                      pContainerNode;
-            ContainerEndFunctor*                pfunEndFunctor;
-            std::vector<cocos2d::MenuItem*>     menuItemVtr;
+            std::list<cocos2d::Node*>           childNodeList;
+            std::function<void(SUIContext&)>    endFunc;
             EContainerType                      containerType;
             
             SUIContext():
             pContainerNode(NULL),
-            pfunEndFunctor(NULL),
             containerType(EContainerType::kNormal)
             {}
         };
