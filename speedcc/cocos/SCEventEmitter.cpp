@@ -72,8 +72,8 @@ namespace SpeedCC
     {
         SCDictionary::SPair pair[] =
         {
-            {MSG_KEY_TOUCH,pTouch},
-            {MSG_KEY_RESULT,true},
+            {SC_KEY_TOUCH,pTouch},
+            {SC_KEY_RESULT,true},
         };
         
         SCDictionary dic(pair,SC_ARRAY_LENGTH(pair));
@@ -91,7 +91,7 @@ namespace SpeedCC
             _pMsgListener->onSCMessageProcess(ptrMsg);
         }
         
-        return ptrMsg->paramters.getValue(MSG_KEY_RESULT).getBool();
+        return ptrMsg->paramters.getValue(SC_KEY_RESULT).getBool();
     }
     
     void SCEventEmitter::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)

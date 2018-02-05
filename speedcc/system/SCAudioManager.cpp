@@ -149,7 +149,7 @@ namespace SpeedCC
         {
             if(it->nMsgID==SCID::Msg::kSCMsgCommand)
             {
-                auto cmd = it->paramters.getValue(MSG_KEY_COMMAND).getString();
+                auto cmd = it->paramters.getValue(SC_KEY_COMMAND).getString();
                 if(!cmd.isEmpty())
                 {
                     auto it2 = _cmd2AudioIndexMap.find(cmd);
@@ -294,7 +294,7 @@ namespace SpeedCC
         {
             if(!_cmd2AudioIndexMap.empty())
             {
-                auto cmd = ptrMsg->paramters.getValue(MSG_KEY_COMMAND).getString();
+                auto cmd = ptrMsg->paramters.getValue(SC_KEY_COMMAND).getString();
                 if(!cmd.isEmpty())
                 {
                     auto it = _cmd2AudioIndexMap.find(cmd);

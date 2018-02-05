@@ -33,7 +33,7 @@ namespace SpeedCC
         nMsgID(SCID::Msg::kSCMsgCommand),
         bContinue(true)
         {
-            paramters.setValue(MSG_KEY_COMMAND,strCmd);
+            paramters.setValue(SC_KEY_COMMAND,strCmd);
         }
         
         SCMessage(const SCString& strCmd,const SCDictionary& par):
@@ -41,7 +41,7 @@ namespace SpeedCC
         bContinue(true)
         {
             paramters = par;
-            paramters.setValue(MSG_KEY_COMMAND,strCmd);
+            paramters.setValue(SC_KEY_COMMAND,strCmd);
         }
         
     public:

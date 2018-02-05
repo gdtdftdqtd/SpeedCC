@@ -132,22 +132,22 @@ void TestStageController::onStrategyCommon(SCActor* pActor,SCMessage::Ptr ptrMsg
 
 void TestStageController::onBvrEnterStrategy(const SCDictionary& par)
 {
-    auto ptrActor = par.getValue(SC_BVR_ARG_ACTOR).getObject<SCActor::Ptr>();
+    auto ptrActor = par.getValue(SC_KEY_ACTOR).getObject<SCActor::Ptr>();
     
     SCLog("Enter Strategy Called. ID: %s",this->getStrategyName(ptrActor->getStrategy()->getID()).c_str());
 }
 
 void TestStageController::onBvrExitStrategy(const SCDictionary& par)
 {
-    auto ptrActor = par.getValue(SC_BVR_ARG_ACTOR).getObject<SCActor::Ptr>();
+    auto ptrActor = par.getValue(SC_KEY_ACTOR).getObject<SCActor::Ptr>();
     
     SCLog("Exit Strategy Called. ID: %s",this->getStrategyName(ptrActor->getStrategy()->getID()).c_str());
 }
 
 void TestStageController::onBvrLog(const SCDictionary& par)
 {
-    auto ptrActor = par.getValue(SC_BVR_ARG_ACTOR).getObject<SCActor::Ptr>();
-    auto ptrMsg = par.getValue(SC_BVR_ARG_MESSAGE).getObject<SCMessage::Ptr>();
+    auto ptrActor = par.getValue(SC_KEY_ACTOR).getObject<SCActor::Ptr>();
+    auto ptrMsg = par.getValue(SC_KEY_MESSAGE).getObject<SCMessage::Ptr>();
     
     SCString strName;
     if(ptrMsg->nMsgID==kTestMsgIDLog)

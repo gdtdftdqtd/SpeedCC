@@ -23,8 +23,8 @@ namespace SpeedCC
         if(ptrSI->ptrEnterBehavior!=NULL)
         {
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
-            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
+            dic.setValue(SC_KEY_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
+            dic.setValue(SC_KEY_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
             
             ptrSI->ptrEnterBehavior->execute(dic);
         }
@@ -41,8 +41,8 @@ namespace SpeedCC
         if(ptrSI->ptrExitBehavior!=NULL)
         {
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
-            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
+            dic.setValue(SC_KEY_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
+            dic.setValue(SC_KEY_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
             
             ptrSI->ptrExitBehavior->execute(dic);
         }
@@ -68,7 +68,7 @@ namespace SpeedCC
             SC_RETURN_V_IF(ptrSI->command2BehaviorMap.empty());
             
             bool bResult = false;
-            auto strCommand = ptrMsg->paramters.getValue(MSG_KEY_COMMAND).getString(&bResult);
+            auto strCommand = ptrMsg->paramters.getValue(SC_KEY_COMMAND).getString(&bResult);
             if(bResult && !strCommand.isEmpty())
             {
                 auto it = ptrSI->command2BehaviorMap.find(strCommand);
@@ -95,9 +95,9 @@ namespace SpeedCC
             }
             SCASSERT(pBehaviorInfo->ptrBehaviorGroup!=NULL);
             SCDictionary dic;
-            dic.setValue(SC_BVR_ARG_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
-            dic.setValue(SC_BVR_ARG_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
-            dic.setValue(SC_BVR_ARG_MESSAGE,SCValue::create(ptrMsg));
+            dic.setValue(SC_KEY_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
+            dic.setValue(SC_KEY_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
+            dic.setValue(SC_KEY_MESSAGE,SCValue::create(ptrMsg));
             pBehaviorInfo->ptrBehaviorGroup->execute(dic);
         }
     }

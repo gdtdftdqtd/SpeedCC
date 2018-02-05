@@ -616,7 +616,7 @@ namespace SpeedCC
         {
             (*it).second->execute();
             
-            SCDictionary dic  = {MSG_KEY_CCREF,pSender};
+            SCDictionary dic  = {SC_KEY_CCREF,pSender};
             SCMsgDisp()->postMessage(SCID::Msg::kSCMsgButtonClicked, dic);
         }
     }

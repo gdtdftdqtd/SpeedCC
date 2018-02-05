@@ -17,7 +17,7 @@ namespace SpeedCC
     {
         SC_RETURN_V_IF(!this->getActive());
         SC_RETURN_V_IF(_nStragtegyID==0);
-        auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
+        auto actorValue = par.getValue(SC_KEY_ACTOR);
         SC_RETURN_V_IF(!actorValue.isValidObject<SCActor::Ptr>());
         
         auto ptrActor = actorValue.getObject<SCActor::Ptr>();
@@ -33,7 +33,7 @@ namespace SpeedCC
     void SCBehaviorRemoveActor::execute(const SCDictionary& par)
     {
         SC_RETURN_V_IF(!this->getActive());
-        auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
+        auto actorValue = par.getValue(SC_KEY_ACTOR);
         SC_RETURN_V_IF(!actorValue.isValidObject<SCActor::Ptr>());
         
         auto ptrActor = actorValue.getObject<SCActor::Ptr>();
@@ -50,7 +50,7 @@ namespace SpeedCC
     ///--------------- SCBehaviorRoleActive
     void SCBehaviorRoleActive::execute(const SCDictionary& par)
     {
-        auto actorValue = par.getValue(SC_BVR_ARG_ACTOR);
+        auto actorValue = par.getValue(SC_KEY_ACTOR);
         SC_RETURN_V_IF(!actorValue.isValidObject<SCActor::Ptr>());
         auto ptrActor = actorValue.getObject<SCActor::Ptr>();
         

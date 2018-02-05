@@ -65,7 +65,7 @@ namespace SpeedCC
         template<typename T>
         void sendTouchMessage(const int nMsg, T touch)
         {
-            SCDictionary::SPair pair = {std::is_same<T,cocos2d::Touch*>::value ? MSG_KEY_TOUCH : MSG_KEY_TOUCHES,touch};
+            SCDictionary::SPair pair = {std::is_same<T,cocos2d::Touch*>::value ? SC_KEY_TOUCH : SC_KEY_TOUCHES,touch};
             
             SCDictionary dic(pair);
             

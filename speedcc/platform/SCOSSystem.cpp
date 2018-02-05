@@ -18,7 +18,7 @@ namespace SpeedCC
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = (nResult==0) ? SCID::Msg::kSCMsgStorePurchaseSuccess : SCID::Msg::kSCMsgStorePurchaseFailed;
-            ptrMsg->paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
+            ptrMsg->paramters.setValue(SC_KEY_IAP, SCString(pszIAP));
             SCMsgDisp()->postMessage(ptrMsg);
         }
         
@@ -30,7 +30,7 @@ namespace SpeedCC
             
             if(pszIAP!=NULL)
             {
-                ptrMsg->paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
+                ptrMsg->paramters.setValue(SC_KEY_IAP, SCString(pszIAP));
             }
             SCMsgDisp()->postMessage(ptrMsg);
         }
@@ -47,7 +47,7 @@ namespace SpeedCC
             {// all are fine
                 SCMessage::Ptr ptrMsg = SCMessage::create();
                 ptrMsg->nMsgID = SCID::Msg::kSCMsgStoreIAPInfoSuccess;
-                ptrMsg->paramters.setValue(MSG_KEY_IAP, SCString(pszIAP));
+                ptrMsg->paramters.setValue(SC_KEY_IAP, SCString(pszIAP));
                 ptrMsg->paramters.setValue("currency", SCString(pszCurrency));
                 ptrMsg->paramters.setValue("price", fPrice);
                 

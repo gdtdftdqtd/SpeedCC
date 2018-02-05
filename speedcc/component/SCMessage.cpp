@@ -90,7 +90,7 @@ namespace SpeedCC
         {
             SC_RETURN_IF(_strCommand.isEmpty(),false);
             
-            auto value = ptrMsg->paramters.getValue(MSG_KEY_COMMAND);
+            auto value = ptrMsg->paramters.getValue(SC_KEY_COMMAND);
             SC_RETURN_IF(!value.isValidObject<SCString>(),false);
             
             auto command = value.getString();

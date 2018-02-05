@@ -11,17 +11,24 @@
 
 namespace SpeedCC
 {
-#define MSG_KEY_CONTROLLER     "sc-controller"     // SCController*
-#define MSG_KEY_NUMBER         "sc-number"         // int
-#define MSG_KEY_NAME           "sc-name"           // SCString
-#define MSG_KEY_COMMAND        "sc-command"        // SCString
-#define MSG_KEY_STATE          "sc-state"          // ESCState
-#define MSG_KEY_IAP            "sc-iap"           // SCString
-#define MSG_KEY_CCREF           "sc-cc-ref"        // cocos2d::Ref*
-#define MSG_KEY_TOUCH          "sc-touch"           // cocos2d::Touch*
-#define MSG_KEY_TOUCHES        "sc-touches"        // std::vector<cocos2d::Touch*>
-#define MSG_KEY_DELTA           "sc-delta"         // float
-#define MSG_KEY_RESULT          "sc-result"        // for sendMessage() result, relying on specific message definition
+    // for SCMessage parameters in it's Dictionary
+#define SC_KEY_CONTROLLER     "sc-controller"     // SCController*
+#define SC_KEY_NUMBER         "sc-number"         // int
+#define SC_KEY_NAME           "sc-name"           // SCString
+#define SC_KEY_COMMAND        "sc-command"        // SCString
+#define SC_KEY_STATE          "sc-state"          // ESCState
+#define SC_KEY_IAP            "sc-iap"           // SCString
+#define SC_KEY_CCREF          "sc-cc-ref"        // cocos2d::Ref*
+#define SC_KEY_TOUCH          "sc-touch"           // cocos2d::Touch*
+#define SC_KEY_TOUCHES        "sc-touches"        // std::vector<cocos2d::Touch*>
+#define SC_KEY_DELTA          "sc-delta"         // float
+#define SC_KEY_RESULT         "sc-result"        // for sendMessage() result, relying on specific message definition
+    
+// for SCBehavior parameters in it's Dictionary
+#define SC_KEY_ACTOR            "sc-actor" // SCActor::Ptr
+#define SC_KEY_STRATEGY         "sc-strategy" // SCStrategy::Ptr
+#define SC_KEY_ROLE             "sc-role" // SCRole::Ptr
+#define SC_KEY_MESSAGE          "sc-message"   // SCMessage::Ptr
     
     struct SCID
     {
@@ -50,47 +57,47 @@ namespace SpeedCC
             kSCMsgAppEnterBackground,
             
             // internet reachable changed
-            // key: MSG_KEY_STATE
+            // key: SC_KEY_STATE
             kSCMsgInternetReachableChanged,
             
-            // key: MSG_KEY_CONTROLLER
+            // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
             kSCMsgSceneEnter,
             
-            // key: MSG_KEY_CONTROLLER
+            // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
             kSCMsgSceneEnterTransitionDidFinish,
             
-            // key: MSG_KEY_CONTROLLER
+            // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
             kSCMsgSceneExit,
             
-            // key: MSG_KEY_CONTROLLER
+            // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
             kSCMsgSceneExitTransitionDidStart,
             
-            // key: MSG_KEY_TOUCH       (if single touch)
+            // key: SC_KEY_TOUCH       (if single touch)
             // key: "result" => bool  (result from receiver, by defualt is true)
-            // key: MSG_KEY_TOUCHES     (if multiple touch)
+            // key: SC_KEY_TOUCHES     (if multiple touch)
             // lisenter: owner scene controller
             kSCMsgTouchBegan,
             
-            // key: MSG_KEY_TOUCH       (if single touch)
-            // key: MSG_KEY_TOUCHES     (if multiple touch)
+            // key: SC_KEY_TOUCH       (if single touch)
+            // key: SC_KEY_TOUCHES     (if multiple touch)
             // lisenter: owner scene controller
             kSCMsgTouchMoved,
             
-            // key: MSG_KEY_TOUCH       (if single touch)
-            // key: MSG_KEY_TOUCHES     (if multiple touch)
+            // key: SC_KEY_TOUCH       (if single touch)
+            // key: SC_KEY_TOUCHES     (if multiple touch)
             // lisenter: owner scene controller
             kSCMsgTouchEnded,
             
-            // key: MSG_KEY_TOUCH       (if single touch)
-            // key: MSG_KEY_TOUCHES     (if multiple touches)
+            // key: SC_KEY_TOUCH       (if single touch)
+            // key: SC_KEY_TOUCHES     (if multiple touches)
             // lisenter: owner scene controller
             kSCMsgTouchCancelled,
             
-            // key: MSG_KEY_CCREF
+            // key: SC_KEY_CCREF
             kSCMsgButtonClicked,
             
             kSCMsgSettingMusicChanged,
@@ -146,7 +153,7 @@ namespace SpeedCC
             
             // send this message every frame
             // delivery: send
-            // key: MSG_KEY_DELTA
+            // key: SC_KEY_DELTA
             kSCMsgFrame,
             
             // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
@@ -158,7 +165,7 @@ namespace SpeedCC
             //        // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
             //        kSCMsgPushModalScene,
             
-            // MSG_KEY_COMMAND => SCString
+            // SC_KEY_COMMAND => SCString
             kSCMsgCommand,
             
             // user message define must begin from this value

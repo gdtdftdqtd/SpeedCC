@@ -40,7 +40,7 @@ namespace SpeedCC
             {
                 SCLog("IAP Purchase success.");
                 bool bResult = false;
-                auto strIAP = ptrMsg->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->paramters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 
                 if(bResult)
@@ -63,7 +63,7 @@ namespace SpeedCC
             {
                 SCLog("Restored IAP success.");
                 bool bResult = false;
-                auto strIAP = ptrMsg->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->paramters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 
                 if(bResult)
@@ -86,7 +86,7 @@ namespace SpeedCC
             {
                 SCLog("Request IAP info success.");
                 bool bResult = false;
-                auto strIAP = ptrMsg->paramters.getValue(MSG_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->paramters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 bResult = false;
                 auto strCurrency = ptrMsg->paramters.getValue("currency").getObject<SCString>(&bResult);
