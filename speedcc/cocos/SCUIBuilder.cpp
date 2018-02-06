@@ -89,7 +89,19 @@ namespace SpeedCC
         auto& top = _contextStack.front();
         top.pContainerNode->addChild(pNode);
         SCNodeUtils::setPerPosition(pNode, Vec2(fPosX,fPosY));
-        userNode.pfunSetProperty(pNode,property.strResult,NULL);
+        
+        if(top.containerType==SCUITypeDef::EContainerType::kLayoutPadding)
+        {// for padding layout container, all of children position are ignored
+        // it's position is handled by layout container while container context pops.
+            SCNodeProperty::SFilterConfig config;
+            config.setupPosition(true);
+            userNode.pfunSetProperty(pNode,property.strResult,&config);
+        }
+        else
+        {
+            userNode.pfunSetProperty(pNode,property.strResult,NULL);
+        }
+        
     }
     
     ///---------------- sprite
@@ -316,14 +328,27 @@ namespace SpeedCC
         Sprite* pSpriteBar = Sprite::create( SCFileUtils::getFullPathFile(strFrontgroundImage).c_str());
         
         auto pProgressBar =  ProgressTimer::create(pSpriteBar);
-        pProgressBar->setBarChangeRate(bHorizontal ? Vec2(bDesc?0:1,0) : Vec2(0,(bDesc?0:1))) ;
-        pProgressBar->setMidpoint((bHorizontal ? Vec2((bBaseLB)?0.0:1.0,0.5) : Vec2(0.5,(bBaseLB)?0.0:1.0)));
+        pProgressBar->setAnchorPoint(Vec2(0.5,0.5));
+        pProgressBar->setIgnoreAnchorPointForPosition(false);
+        if(bHorizontal)
+        {
+            pProgressBar->setBarChangeRate(Vec2(bDesc?0:1,0)) ;
+            pProgressBar->setMidpoint(Vec2((bBaseLB)?0.0:1.0,0.5));
+        }
+        else
+        {
+            pProgressBar->setBarChangeRate( Vec2(0,(bDesc?0:1))) ;
+            pProgressBar->setMidpoint(Vec2(0.5,(bBaseLB)?0.0:1.0));
+
+        }
+
         pProgressBar->setType(ProgressTimer::Type::BAR);
         
         if(!strBackgroundImage.isEmpty())
         {
             Sprite* pSpriteBack = Sprite::create(SCFileUtils::getFullPathFile(strBackgroundImage).c_str());
             pProgressBar->addChild(pSpriteBack,-1);
+            pSpriteBack->setPosition(Vec2(pSpriteBar->getContentSize().width/2,pSpriteBar->getContentSize().height/2));
         }
         
         this->insertUserNode(pProgressBar, fPosX, fPosY, property);
@@ -379,32 +404,30 @@ namespace SpeedCC
         return pProgressBar;
     }
     
-    void SCUIBuilder::containerLayoutPadding(Node** ppNode,
+    void SCUIBuilder::containerAlignment(Node** ppNode,
                                               const float fPosX,
                                               const float fPosY,
                                               const SCUIArg::StringPurifier& property,
-                                              const SCUIArg::SizePurifier& sizePurifier,
                                               const bool bHorizontal,
                                               const float fPadding,
                                               const int nDock)
     {
         Node* pNode = Node::create();
-        if(sizePurifier.size.equals(Size::ZERO))
-        {
-            const auto& top = _contextStack.front();
-            pNode->setContentSize(top.pContainerNode->getContentSize());
-        }
-        else
-        {
-            pNode->setContentSize(sizePurifier.size);
-        }
         pNode->setIgnoreAnchorPointForPosition(false);
         pNode->setAnchorPoint(Vec2(0.5,0.5));
         
+        SCString strDockProperty = SCNodeProperty::extractKey(SC_NODE_PROPERTY_DOCK, property.strResult);
+        SCString strNewProperty = property.strResult;
+        if(!strDockProperty.isEmpty())
+        {
+            strNewProperty = SCNodeProperty::removeKey(SC_NODE_PROPERTY_DOCK,property.strResult);
+        }
+        
         SCUITypeDef::SUIContext context;
         context.pContainerNode = pNode;
-        SCLog("layout node: %p",pNode);
-        context.endFunc = [bHorizontal,fPadding,nDock](SCUITypeDef::SUIContext& context)
+        context.containerType = SCUITypeDef::EContainerType::kLayoutPadding;
+        
+        context.endFunc = [bHorizontal,fPadding,nDock,strDockProperty](SCUITypeDef::SUIContext& context)
         {
             Node* pNode = context.pContainerNode;
             auto childrenVec = pNode->getChildren();
@@ -415,12 +438,19 @@ namespace SpeedCC
                 float fWidth = 0;
                 int nDock2 = SC_BIT_REMOVE(nDock,SCNodeUtils::kDockMiddleX);
                 const bool bApplyDock = SC_BIT_HAS_OR(nDock2, SCNodeUtils::kDockMiddleY);
+                
+                float fMaxHeight = 0;
                 for(const auto& child : childrenVec)
                 {
                     fWidth += child->getContentSize().width * child->getScaleX() + fPadding;
+                    
+                    const float fRealHeight = child->getContentSize().height * child->getScaleY();
+                    fMaxHeight = MAX(fMaxHeight,fRealHeight);
                 }
                 
                 fWidth -= fPadding;
+                pNode->setContentSize(Size(fWidth,fMaxHeight));
+                
                 float fOffset = (pNode->getContentSize().width-fWidth)/2;
                 
                 for(const auto& child : childrenVec)
@@ -443,12 +473,17 @@ namespace SpeedCC
                 float fHeight = 0;
                 int nDock2 = SC_BIT_REMOVE(nDock,SCNodeUtils::kDockMiddleY);
                 const bool bApplyDock = SC_BIT_HAS_OR(nDock2, SCNodeUtils::kDockMiddleX);
+                
+                float fMaxWidth = 0;
                 for(const auto& child : childrenVec)
                 {
                     fHeight += child->getContentSize().height * child->getScaleY() + fPadding;
+                    const float fRealWidth = child->getContentSize().width * child->getScaleX();
+                    fMaxWidth = MAX(fMaxWidth,fRealWidth);
                 }
                 
                 fHeight -= fPadding;
+                pNode->setContentSize(Size(fMaxWidth,fHeight));
                 float fOffset = fHeight + (pNode->getContentSize().height-fHeight)/2;
                 
                 for(const auto& child : childrenVec)
@@ -466,9 +501,14 @@ namespace SpeedCC
                     }
                 }
             }
+            
+            if(!strDockProperty.isEmpty())
+            {
+                SCNodeProperty::setProperty<Node>(pNode, strDockProperty);
+            }
         };
         
-        this->insertUserNode(pNode, fPosX, fPosY, property);
+        this->insertUserNode(pNode, fPosX, fPosY, strNewProperty);
         
         _contextStack.push_front(context);
     }

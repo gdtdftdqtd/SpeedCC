@@ -215,7 +215,6 @@ namespace SpeedCC
         SCString strValue;
         Color4B crValue;
         float fValue;
-        int nValue;
         
         if(SCNodeProperty::getString(dic, SC_NODE_PROPERTY_LABEL, strValue))
         {
@@ -246,8 +245,26 @@ namespace SpeedCC
         dic.removeAllKeys();
         SC_RETURN_IF(strProerty.isEmpty(), true);
         
-        bool bRet = true;
+        bool bResult = true;
         
+        bool bRet = SCNodeProperty::scanProperty(strProerty,[strProerty,&dic,&bResult](const SCString& strKey,
+                                                             EValueType type,
+                                                             const SCString& strValue) -> bool
+                                     {
+                                         SCValue data;
+                                         if(!SCNodeProperty::parseValue(type,strValue,data))
+                                         {
+                                             SCLog("property: ========== '%s' value parse failed in '%s' ========== ",strValue.c_str(),strProerty.c_str());
+                                             SCASSERT(false);
+                                             bResult = false;
+                                             return false;
+                                         }
+                                         dic.setValue(strKey, data);
+                                         return true;
+                                     });
+        
+        bRet = (bRet && bResult);
+        /*
         auto pCurrent = (char*)strProerty.c_str();
         auto pEnd = pCurrent + strProerty.getLength();
         
@@ -301,6 +318,119 @@ namespace SpeedCC
                 }
                 
                 dic.setValue(strKey, data);
+            }
+            while(0);
+            
+            SCNodeProperty::skipSpaces(pCurrent,pEnd);
+            ++n;
+        }
+        */
+        return bRet;
+    }
+    
+    SCString SCNodeProperty::extractKey(const SCString& strKey,const SCString& strProerty)
+    {
+        SC_RETURN_IF(strKey.isEmpty() || strProerty.isEmpty(), "");
+        
+        SCString strRet;
+        SCString strValue = "";
+        SCNodeProperty::scanProperty(strProerty,[strKey,&strValue](const SCString& strKey0,
+                                                         EValueType type,
+                                                         const SCString& strValue0) -> bool
+                                     {
+                                         if(strKey==strKey0)
+                                         {
+                                             strValue = strValue0;
+                                             return false;
+                                         }
+                                         
+                                         return true;
+                                     });
+        
+        if(!strValue.isEmpty())
+        {
+            strRet = strKey + "=" + strValue + ";";
+        }
+        
+        return strRet;
+    }
+    
+    SCString SCNodeProperty::removeKey(const SCString& strKey,const SCString& strProerty)
+    {
+        SCString strRet;
+        SCNodeProperty::scanProperty(strProerty,[strKey,&strRet](const SCString& strKey0,
+                                                                   EValueType type,
+                                                                   const SCString& strValue0) -> bool
+                                     {
+                                         if(strKey!=strKey0)
+                                         {
+                                             strRet += strKey0 + "=" + strValue0 + ";";
+                                         }
+                                         
+                                         return true;
+                                     });
+        
+        return strRet;
+    }
+    
+    bool SCNodeProperty::scanProperty(const SCString& strProperty,
+                      const std::function<bool(const SCString&,EValueType type,const SCString&)>& func)
+    {
+        SCASSERT(func!=NULL);
+        SC_RETURN_IF(strProperty.isEmpty() || func==NULL,true);
+        
+        bool bRet = true;
+        auto pCurrent = (char*)strProperty.c_str();
+        auto pEnd = pCurrent + strProperty.getLength();
+        SCString strKey;
+        SCString strValue;
+        
+        int n = 1;
+        while(pCurrent != pEnd)
+        {
+            do
+            {
+                if(!SCNodeProperty::readKey(strKey,pCurrent,pEnd))
+                {
+                    SCLog("property: ========== No.%d key read failed in '%s' ==========",n,strProperty.c_str());
+                    SCASSERT(false);
+                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
+                    bRet = false;
+                    break;
+                }
+                strKey.makeLower();
+
+                auto valueType = SCNodeProperty::getKeyType(strKey);
+
+                if(valueType==UNKNOWN_TYPE)
+                {
+                    SCLog("property: ========== No.%d key parse failed in '%s' ========== ",n,strProperty.c_str());
+                    SCASSERT(false);
+                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
+                    bRet = false;
+                    break;
+                }
+                
+                if(!SCNodeProperty::readValue(strValue,valueType,pCurrent,pEnd))
+                {
+                    SCLog("property: ========== No.%d value read failed in '%s' ========== ",n,strProperty.c_str());
+                    SCASSERT(false);
+                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
+                    bRet = false;
+                    break;
+                }
+                
+                SC_RETURN_IF(!func(strKey,valueType,strValue),true);
+//                if(!SCNodeProperty::parseValue(keyType,strValue,data))
+//                {
+//                    SCLog("property: ========== No.%d value parse failed in '%s' ========== ",n,strProperty.c_str());
+//                    SCASSERT(false);
+//                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
+//                    bRet = false;
+//                    break;
+//                }
+//
+//                dic.setValue(strKey, data);
             }
             while(0);
             

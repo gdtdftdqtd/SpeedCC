@@ -78,6 +78,20 @@ namespace SpeedCC
         {
             std::vector<SCString> keyVtr;
             bool bExclude;
+            
+            void setupPosition(const bool bExclude0)
+            {
+                bExclude = bExclude0;
+                keyVtr =
+                {
+                    SC_NODE_PROPERTY_XY,
+                    SC_NODE_PROPERTY_X,
+                    SC_NODE_PROPERTY_Y,
+                    SC_NODE_PROPERTY_DOCK,
+                    SC_NODE_PROPERTY_X_BY,
+                    SC_NODE_PROPERTY_Y_BY
+                };
+            }
         };
         
     public:
@@ -125,8 +139,12 @@ namespace SpeedCC
         }
         
         static bool convertString2Dic(const SCString& strProerty,SCDictionary& dic);
+        static SCString extractKey(const SCString& strKey,const SCString& strProerty);
+        static SCString removeKey(const SCString& strKey,const SCString& strProerty);
         
     private:
+        static bool scanProperty(const SCString& strProperty,
+                                 const std::function<bool(const SCString&,EValueType type,const SCString&)>& func);
         static bool readKey(SCString& strKey,char*& pCurrent, char*& pEnd);
         static bool readValue(SCString& strValue,const EValueType type,char*& pCurrent, char*& pEnd);
         static void skipSpaces(char*& pCurrent, char*& pEnd);

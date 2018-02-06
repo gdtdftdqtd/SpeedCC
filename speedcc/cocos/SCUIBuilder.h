@@ -157,11 +157,10 @@ namespace SpeedCC
                                                      const SCString& strFrontgroundImage,
                                                      SCUIArg::NumberPurifier value);
         
-        void containerLayoutPadding(cocos2d::Node** ppNode,
+        void containerAlignment(cocos2d::Node** ppNode,
                                               const float fPosX,
                                               const float fPosY,
                                               const SCUIArg::StringPurifier& property,
-                                              const SCUIArg::SizePurifier& sizePurifier,
                                               const bool bHorizontal,
                                               const float fPadding,
                                               const int nDock);

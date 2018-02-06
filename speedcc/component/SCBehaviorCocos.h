@@ -38,7 +38,7 @@ namespace SpeedCC
             return ptrRet;
         }
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
         void setSceneParameter(const SCDictionary& dic);
         
@@ -65,7 +65,7 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorSceneBack)
         SC_DEFINE_CREATE_FUNC_1(SCBehaviorSceneBack,const int)
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
     protected:
         SCBehaviorSceneBack():

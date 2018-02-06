@@ -23,7 +23,7 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorNothing)
         
-        virtual void execute(const SCDictionary& par) override {}
+        virtual void execute(const SCDictionary& par = SCDictionary()) override {}
         
     protected:
         SCBehaviorNothing(){}
@@ -54,7 +54,7 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_1(SCBehaviorCallFunc,const std::function<void(const SCDictionary& par)>&)
         SC_DEFINE_CREATE_FUNC_1(SCBehaviorCallFunc,const std::function<void()>&)
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
         void setOnStartFunc(const std::function<void(const SCDictionary& par)>& func);
         void setOnStartFunc(const std::function<void()>& func);
@@ -92,7 +92,7 @@ namespace SpeedCC
             return ptrRet;
         }
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
         void addBehavior(const SCBehavior::Ptr& ptrBvr);
         void removeBehavior(const int nID);
@@ -121,7 +121,7 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorDelayExecute)
         SC_DEFINE_CREATE_FUNC_2(SCBehaviorDelayExecute,const float,SCBehavior::Ptr)
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         bool setBehavior(SCBehavior::Ptr ptrBvr);
         bool setDelayTime(const float fDelay);
         inline bool isRunning() const { return _bPost; }
@@ -166,7 +166,7 @@ namespace SpeedCC
         inline typename T::Ptr getWatch() const {return _ptrWatch;}
         inline int getCaseCount() const { return (int)_watchValue2BvrMap.size();}
         
-        virtual void execute(const SCDictionary& par) override
+        virtual void execute(const SCDictionary& par = SCDictionary()) override
         {
             auto it = _watchValue2BvrMap.find((*_ptrWatch));
             if(it!=_watchValue2BvrMap.end())

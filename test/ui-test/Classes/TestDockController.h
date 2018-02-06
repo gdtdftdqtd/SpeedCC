@@ -3,10 +3,11 @@
 
 #include "cocos2d.h"
 #include "SpeedCC.h"
+#include "TestCaseController.h"
 
 using namespace SpeedCC;
 
-class TestDockController : public SpeedCC::SCSceneController
+class TestDockController : public TestCaseController
 {
 public:
     
@@ -17,12 +18,6 @@ public:
     void testCaseWithScaleAnchor();
     void testCaseNoScaleWithAnchor();
     
-private:
-    cocos2d::Layer*                 _pContainerLayer;
-    SCWatchString::Ptr              _ptrWatchDescription;
-    SCBehaviorCaseInt::Ptr          _ptrCaseBvr;
-    cocos2d::MenuItemSprite*        _pNextMenuItem;
-    cocos2d::MenuItemSprite*        _pPreMenuItem;
 };
 
 #endif // __TESTHOME_SCENE_H__

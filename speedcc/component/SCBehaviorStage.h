@@ -22,7 +22,7 @@ namespace SpeedCC
         
         SC_DEFINE_CREATE_FUNC_1(SCBehaviorStrategySwitch,const int)
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
     protected:
         SCBehaviorStrategySwitch(const int nStragtegyID):
@@ -43,7 +43,7 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_0(SCBehaviorRemoveActor)
         SC_DEFINE_CREATE_FUNC_1(SCBehaviorRemoveActor,const int)
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
     protected:
         // by default, remove all actors from role
@@ -69,7 +69,7 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_1(SCBehaviorRoleActive,bool)
         SC_DEFINE_CREATE_FUNC_2(SCBehaviorRoleActive,const int,bool)
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
     protected:
         SCBehaviorRoleActive()

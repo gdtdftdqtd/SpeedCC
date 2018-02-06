@@ -25,7 +25,7 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_2(SCBehaviorDeliverMessage,const bool,const int)
         SC_DEFINE_CREATE_FUNC_2(SCBehaviorDeliverMessage,const bool,const SCString&)
         
-        virtual void execute(const SCDictionary& par) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
     protected:
         SCBehaviorDeliverMessage(const bool bSend,SCMessage::Ptr ptrMsg);
