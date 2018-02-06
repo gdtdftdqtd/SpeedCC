@@ -17,7 +17,7 @@
 
 #include "../component/SCBehaviorCommon.h"
 
-#include "SCBinder.h"
+#include "SCBinderCocos.h"
 #include "SCNodeProperty.h"
 #include "SCRefHolder.h"
 

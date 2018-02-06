@@ -320,7 +320,6 @@ namespace SpeedCC
                                               const SCString& strFrontgroundImage,
                                               SCUIArg::NumberPurifier value,
                                               const bool bHorizontal,
-                                              const bool bDesc,
                                               const bool bBaseLB)
     {
         SCASSERT(!strFrontgroundImage.isEmpty());
@@ -332,14 +331,13 @@ namespace SpeedCC
         pProgressBar->setIgnoreAnchorPointForPosition(false);
         if(bHorizontal)
         {
-            pProgressBar->setBarChangeRate(Vec2(bDesc?0:1,0)) ;
+            pProgressBar->setBarChangeRate(Vec2(1,0));
             pProgressBar->setMidpoint(Vec2((bBaseLB)?0.0:1.0,0.5));
         }
         else
         {
-            pProgressBar->setBarChangeRate( Vec2(0,(bDesc?0:1))) ;
+            pProgressBar->setBarChangeRate(Vec2(0,1)) ;
             pProgressBar->setMidpoint(Vec2(0.5,(bBaseLB)?0.0:1.0));
-
         }
 
         pProgressBar->setType(ProgressTimer::Type::BAR);
@@ -367,13 +365,14 @@ namespace SpeedCC
         return pProgressBar;
     }
     
-    cocos2d::ProgressTimer* SCUIBuilder::insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
-                                                 const float fPosX,
-                                                 const float fPosY,
-                                                 const SCUIArg::StringPurifier& property,
-                                                 const SCString& strBackgroundImage,
-                                                 const SCString& strFrontgroundImage,
-                                                 SCUIArg::NumberPurifier value)
+    ProgressTimer* SCUIBuilder::insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
+                                                     const float fPosX,
+                                                     const float fPosY,
+                                                     const SCUIArg::StringPurifier& property,
+                                                     const SCString& strBackgroundImage,
+                                                     const SCString& strFrontgroundImage,
+                                                     SCUIArg::NumberPurifier value,
+                                                     const bool bCCW)
     {
         SCASSERT(!strFrontgroundImage.isEmpty());
         
@@ -386,7 +385,10 @@ namespace SpeedCC
         {
             Sprite* pSpriteBack = Sprite::create(SCFileUtils::getFullPathFile(strBackgroundImage).c_str());
             pProgressBar->addChild(pSpriteBack,-1);
+            SCNodeUtils::setPerPosition(pSpriteBack, Vec2(0.5,0.5));
         }
+        
+        pProgressBar->setReverseDirection(!bCCW);
         
         this->insertUserNode(pProgressBar, fPosX, fPosY, property);
         

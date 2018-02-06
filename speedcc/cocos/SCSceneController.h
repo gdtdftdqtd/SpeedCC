@@ -8,7 +8,7 @@
 #include "SCScene.h"
 #include "SCRefHolder.h"
 #include "SCCocosDef.h"
-#include "SCBinder.h"
+#include "SCBinderCocos.h"
 #include "SCUIBuilder.h"
 
 #include "../base/SCBaseDef.h"

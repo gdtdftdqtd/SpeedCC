@@ -17,6 +17,7 @@
 #include "base/SCVersion.h"
 #include "base/SCWatchNumberT.h"
 #include "base/SCWatchString.h"
+#include "base/SCBinder.h"
 
 #include "system/SCSystem.h"
 #include "system/SCFileUtils.h"
@@ -27,7 +28,7 @@
 #include "cocos/SCSceneNavigator.h"
 #include "cocos/SCSceneController.h"
 #include "cocos/SCNodeProperty.h"
-#include "cocos/SCBinder.h"
+#include "cocos/SCBinderCocos.h"
 #include "cocos/SCNodeUtils.h"
 #include "cocos/SCUIMacro.h"
 #include "cocos/SCEventEmitter.h"

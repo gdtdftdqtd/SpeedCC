@@ -146,7 +146,6 @@ namespace SpeedCC
                                                   const SCString& strFrontgroundImage,
                                                   SCUIArg::NumberPurifier value,
                                                   const bool bHorizontal,
-                                                  const bool bDesc = false,
                                                   const bool bBaseLB = true);
         
         cocos2d::ProgressTimer* insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
@@ -155,7 +154,8 @@ namespace SpeedCC
                                                      const SCUIArg::StringPurifier& property,
                                                      const SCString& strBackgroundImage,
                                                      const SCString& strFrontgroundImage,
-                                                     SCUIArg::NumberPurifier value);
+                                                     SCUIArg::NumberPurifier value,
+                                                     const bool bCCW);
         
         void containerAlignment(cocos2d::Node** ppNode,
                                               const float fPosX,

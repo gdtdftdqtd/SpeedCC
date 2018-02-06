@@ -117,20 +117,20 @@
     _ptrUI->pushContainerStack(pSCContainerNode);
 
 // progress bar
-#define SC_INSERT_PROGRESS_BAR(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_is_hor_,_is_desc_,_is_left_or_bottom_)\
-    _ptrUI->insertProgressBar((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_is_hor_),(_is_desc_),(_is_left_or_bottom_));
+#define SC_INSERT_PROGRESS_BAR(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_is_hor_,_is_left_or_bottom_)\
+    _ptrUI->insertProgressBar((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_is_hor_),(_is_left_or_bottom_));
 
-#define SC_BEGIN_CONTAINER_PROGRESS_BAR(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_is_hor_,_is_desc_,_is_left_or_bottom_)\
+#define SC_BEGIN_CONTAINER_PROGRESS_BAR(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_is_hor_,_is_left_or_bottom_)\
 {\
-auto pSCContainerNode = _ptrUI->insertProgressBar((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_is_hor_),(_is_desc_),(_is_left_or_bottom_));\
+auto pSCContainerNode = _ptrUI->insertProgressBar((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_is_hor_),(_is_left_or_bottom_));\
 _ptrUI->pushContainerStack(pSCContainerNode);
 
-#define SC_INSERT_PROGRESS_RADIAL(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_)\
-    _ptrUI->insertProgressRadial((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_));
+#define SC_INSERT_PROGRESS_RADIAL(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_ccw_)\
+    _ptrUI->insertProgressRadial((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_ccw_));
 
-#define SC_BEGIN_CONTAINER_PROGRESS_RADIAL(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_)\
+#define SC_BEGIN_CONTAINER_PROGRESS_RADIAL(_node_,_x_,_y_,_property_,_image_back_,_image_front_,_value_,_ccw_)\
 {\
-    auto pSCContainerNode = _ptrUI->insertProgressRadial((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_));\
+    auto pSCContainerNode = _ptrUI->insertProgressRadial((_node_),(_x_),(_y_),(_property_),(_image_back_),(_image_front_),(_value_),(_ccw_));\
     _ptrUI->pushContainerStack(pSCContainerNode);
 
 // layout

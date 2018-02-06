@@ -194,6 +194,62 @@ namespace SpeedCC
     typedef SCBehaviorCaseT<SCWatchInt>         SCBehaviorCaseInt;
     typedef SCBehaviorCaseT<SCWatchBool>        SCBehaviorCaseBool;
     typedef SCBehaviorCaseT<SCWatchString>      SCBehaviorCaseString;
+    
+    ///------------ SCBehaviorAddNumber
+    class SCBehaviorAddNumber : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorAddNumber)
+        SC_DEFINE_CLASS_PTR(SCBehaviorAddNumber)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorAddNumber)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorAddNumber,const int)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorAddNumber,SCWatchInt::Ptr)
+        SC_DEFINE_CREATE_FUNC_2(SCBehaviorAddNumber,SCWatchInt::Ptr,const int)
+        
+        inline SCWatchInt::Ptr getWatch() const { return _ptrWatch; }
+        void setWatch(SCWatchInt::Ptr ptrWatch) { _ptrWatch = ptrWatch;}
+        
+        inline int getStep() const {return _nStep;}
+        void setStep(const int nStep) { _nStep = nStep;}
+        
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
+        
+    protected:
+        SCBehaviorAddNumber();
+        SCBehaviorAddNumber(const int nStep);
+        SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch);
+        SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch,const int nStep);
+        
+    private:
+        int                 _nStep;
+        SCWatchInt::Ptr     _ptrWatch;
+    };
+    
+    ///------------ SCBehaviorBoolInvert
+    class SCBehaviorBoolInvert : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorBoolInvert)
+        SC_DEFINE_CLASS_PTR(SCBehaviorBoolInvert)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorBoolInvert)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorBoolInvert,const bool)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorBoolInvert,SCWatchBool::Ptr)
+        
+        inline SCWatchBool::Ptr getWatch() const { return _ptrWatch; }
+        
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
+        
+    protected:
+        SCBehaviorBoolInvert();
+        SCBehaviorBoolInvert(const bool bInit);
+        SCBehaviorBoolInvert(SCWatchBool::Ptr ptrWatch);
+        
+    private:
+        SCWatchBool::Ptr        _ptrWatch;
+    };
+    
 }
 
 #endif // __SPEEDCC__SCBEHAVIORCOMMON_H__

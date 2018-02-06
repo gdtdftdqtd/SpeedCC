@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A0C34BD2029E735003A7A31 /* SCBinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A0C34BB2029E735003A7A31 /* SCBinder.cpp */; };
 		0A1556C71FD4F31600CF7420 /* SCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1556C31FD4F31500CF7420 /* SCObject.cpp */; };
 		0A2803571FA8ACDE00E0174C /* SCMessageDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803551FA8ACDD00E0174C /* SCMessageDispatch.cpp */; };
 		0A28035A1FAB073B00E0174C /* SCDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2803581FAB073A00E0174C /* SCDictionary.cpp */; };
 		0A28035D1FAB0A6B00E0174C /* SCVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A28035B1FAB0A6B00E0174C /* SCVersion.cpp */; };
 		0A3486832011A399002B779E /* SCBehaviorComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3486812011A399002B779E /* SCBehaviorComponent.cpp */; };
-		0A41B3361FE679E3003945EB /* SCBinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3341FE679E3003945EB /* SCBinder.cpp */; };
+		0A41B3361FE679E3003945EB /* SCBinderCocos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3341FE679E3003945EB /* SCBinderCocos.cpp */; };
 		0A41B3441FE7C5F0003945EB /* SCRefHolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3421FE7C5F0003945EB /* SCRefHolder.cpp */; };
 		0A41B3471FE7D9FC003945EB /* SCWatchString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3461FE7D9FC003945EB /* SCWatchString.cpp */; };
 		0A41B3651FE946B8003945EB /* SCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3641FE946B7003945EB /* SCString.cpp */; };
@@ -96,6 +97,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A0C34BB2029E735003A7A31 /* SCBinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCBinder.cpp; sourceTree = "<group>"; };
+		0A0C34BC2029E735003A7A31 /* SCBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBinder.h; sourceTree = "<group>"; };
 		0A1556C31FD4F31500CF7420 /* SCObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCObject.cpp; sourceTree = "<group>"; };
 		0A1556C61FD4F31600CF7420 /* SCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCObject.h; sourceTree = "<group>"; };
 		0A2803541FA8ACDD00E0174C /* SCMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMessage.h; sourceTree = "<group>"; };
@@ -109,8 +112,8 @@
 		0A3486822011A399002B779E /* SCBehaviorComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBehaviorComponent.h; sourceTree = "<group>"; };
 		0A3486842011AA5C002B779E /* SCComponentMacroDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCComponentMacroDef.h; sourceTree = "<group>"; };
 		0A41B3291FE113F1003945EB /* SCWatchNumberT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCWatchNumberT.h; sourceTree = "<group>"; };
-		0A41B3341FE679E3003945EB /* SCBinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCBinder.cpp; sourceTree = "<group>"; };
-		0A41B3351FE679E3003945EB /* SCBinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBinder.h; sourceTree = "<group>"; };
+		0A41B3341FE679E3003945EB /* SCBinderCocos.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCBinderCocos.cpp; sourceTree = "<group>"; };
+		0A41B3351FE679E3003945EB /* SCBinderCocos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBinderCocos.h; sourceTree = "<group>"; };
 		0A41B3421FE7C5F0003945EB /* SCRefHolder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCRefHolder.cpp; sourceTree = "<group>"; };
 		0A41B3431FE7C5F0003945EB /* SCRefHolder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCRefHolder.h; sourceTree = "<group>"; };
 		0A41B3451FE7D9A4003945EB /* SCWatchString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCWatchString.h; sourceTree = "<group>"; };
@@ -296,6 +299,8 @@
 		0A67CACA1F80E9E700FED9A5 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				0A0C34BB2029E735003A7A31 /* SCBinder.cpp */,
+				0A0C34BC2029E735003A7A31 /* SCBinder.h */,
 				0A41B3641FE946B7003945EB /* SCString.cpp */,
 				0A41B3631FE946B7003945EB /* SCString.h */,
 				0A1556C31FD4F31500CF7420 /* SCObject.cpp */,
@@ -389,8 +394,8 @@
 				0A8868161FDA536E00866266 /* SCSceneNavigator.h */,
 				0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */,
 				0A8868171FDA536E00866266 /* SCUIMacro.h */,
-				0A41B3341FE679E3003945EB /* SCBinder.cpp */,
-				0A41B3351FE679E3003945EB /* SCBinder.h */,
+				0A41B3341FE679E3003945EB /* SCBinderCocos.cpp */,
+				0A41B3351FE679E3003945EB /* SCBinderCocos.h */,
 				0A41B3421FE7C5F0003945EB /* SCRefHolder.cpp */,
 				0A41B3431FE7C5F0003945EB /* SCRefHolder.h */,
 				0A6218C91FFE68F600459055 /* SCCocosDef.h */,
@@ -496,6 +501,7 @@
 				0A6879BF1FF50132004DCED6 /* SCRole.cpp in Sources */,
 				0A41B3A01FEB8C60003945EB /* SCStore.cpp in Sources */,
 				0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */,
+				0A0C34BD2029E735003A7A31 /* SCBinder.cpp in Sources */,
 				0A60F8652010309500B6B5A3 /* SCAudioManager.cpp in Sources */,
 				0A88681A1FDA536F00866266 /* SCScene.cpp in Sources */,
 				0A6879BC1FF50132004DCED6 /* SCStage.cpp in Sources */,
@@ -518,7 +524,7 @@
 				0A67CB171F81E8EA00FED9A5 /* SCDataBlock.cpp in Sources */,
 				0A67CAEB1F813C9500FED9A5 /* SCMemAllocator.cpp in Sources */,
 				0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */,
-				0A41B3361FE679E3003945EB /* SCBinder.cpp in Sources */,
+				0A41B3361FE679E3003945EB /* SCBinderCocos.cpp in Sources */,
 				0A41B3811FEA3706003945EB /* SCSceneController.cpp in Sources */,
 				0A28035A1FAB073B00E0174C /* SCDictionary.cpp in Sources */,
 				0A41B3651FE946B8003945EB /* SCString.cpp in Sources */,

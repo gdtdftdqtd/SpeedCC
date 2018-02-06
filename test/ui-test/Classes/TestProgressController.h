@@ -10,8 +10,12 @@ class TestProgressController : public TestCaseController
 public:
     
     virtual void onCreate(SpeedCC::SCDictionary parameters);
-    void testCaseBase();
     
+    void testCaseBarBasic();
+    void testCaseRadialBasic();
+    
+    void testCaseBarBinder();
+    void testCaseRadialBinder();
 };
 
 #endif // __TESTPROGRESS_SCENE_H__

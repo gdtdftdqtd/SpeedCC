@@ -6,50 +6,21 @@
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCBINDER_H__
-#define __SPEEDCC__SCBINDER_H__
+#ifndef __SPEEDCC__SCBINDERCOCOS_H__
+#define __SPEEDCC__SCBINDERCOCOS_H__
 
 #include "cocos2d.h"
 
-#include "../base/SCObject.h"
+//#include "../base/SCObject.h"
 #include "../base/SCString.h"
-#include "../base/SCMacroDef.h"
+//#include "../base/SCMacroDef.h"
 #include "../base/SCWatchString.h"
-#include "../base/SCWatchNumberT.h"
+//#include "../base/SCWatchNumberT.h"
+#include "../base/SCBinder.h"
+
 
 namespace SpeedCC
 {
-    ///------------- SCBinder
-    class SCBinder : public SCObject
-    {
-    public:
-        SC_AVOID_CLASS_COPY(SCBinder)
-        SC_DEFINE_CLASS_PTR(SCBinder)
-        
-        void setActive(const bool bActive);
-        inline bool getActive() const {return _bActive;}
-        
-        virtual void reset();
-        
-        void removeUpdateFunc();
-    protected:
-        SCBinder():
-        _bActive(true),
-        _nFuncID(0)
-        {}
-        
-        virtual void onActiveChanged(const bool bNewActive) {}
-        
-    protected:
-        SCObject::Ptr       _ptrWatch;
-        std::function<void(SCObject::Ptr ptr,const int nID)>   _removeUpdateFunc;
-        int                     _nFuncID;
-        
-    private:
-        bool    _bActive;
-    };
-    
-    
     ///-------------- SCBinderUILabel
     class SCBinderUILabel : public SCBinder
     {
@@ -247,4 +218,4 @@ namespace SpeedCC
     
 }
 
-#endif //__SPEEDCC__SCBINDER_H__
+#endif //__SPEEDCC__SCBINDERCOCOS_H__

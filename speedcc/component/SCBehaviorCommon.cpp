@@ -112,6 +112,64 @@ namespace SpeedCC
         _fDelay = _fDelay<0 ? 0 : _fDelay;
         return true;
     }
+    
+    ///------------- SCBehaviorAddNumber
+    SCBehaviorAddNumber::SCBehaviorAddNumber():
+    _nStep(0)
+    {
+        _ptrWatch = SCWatchInt::create();
+    }
+    
+    SCBehaviorAddNumber::SCBehaviorAddNumber(const int nStep):
+    _nStep(nStep)
+    {
+        _ptrWatch = SCWatchInt::create();
+    }
+    
+    SCBehaviorAddNumber::SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch):
+    _nStep(0),
+    _ptrWatch(ptrWatch)
+    {
+    }
+    
+    SCBehaviorAddNumber::SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch,const int nStep):
+    _nStep(0),
+    _ptrWatch(ptrWatch)
+    {
+    }
+    
+    void SCBehaviorAddNumber::execute(const SCDictionary& par)
+    {
+        if(_ptrWatch!=NULL && _nStep!=0)
+        {
+            (*_ptrWatch) += _nStep;
+        }
+    }
+    
+    ///------------ SCBehaviorBoolInvert
+    SCBehaviorBoolInvert::SCBehaviorBoolInvert()
+    {
+        _ptrWatch = SCWatchBool::create();
+    }
+    
+    SCBehaviorBoolInvert::SCBehaviorBoolInvert(const bool bInit)
+    {
+        _ptrWatch = SCWatchBool::create();
+        (*_ptrWatch) = bInit;
+    }
+    
+    SCBehaviorBoolInvert::SCBehaviorBoolInvert(SCWatchBool::Ptr ptrWatch):
+    _ptrWatch(ptrWatch)
+    {
+    }
+    
+    void SCBehaviorBoolInvert::execute(const SCDictionary& par)
+    {
+        if(_ptrWatch!=NULL)
+        {
+            (*_ptrWatch) = !(*_ptrWatch);
+        }
+    }
 }
 
 
