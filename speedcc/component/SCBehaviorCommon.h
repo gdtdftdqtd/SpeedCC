@@ -9,6 +9,7 @@
 #ifndef __SPEEDCC__SCBEHAVIORCOMMON_H__
 #define __SPEEDCC__SCBEHAVIORCOMMON_H__
 
+#include "cocos2d.h"
 #include "SCPerformObject.h"
 #include "../base/SCWatchNumberT.h"
 
@@ -147,8 +148,7 @@ namespace SpeedCC
     };
     
     ///--------------- SCBehaviorCaseT
-    template<typename T,
-            typename = typename std::enable_if<SCIsWatchClass<T>::value==1,T>::type >
+    template<typename T>
     class SCBehaviorCaseT : public SCBehavior
     {
     public:
@@ -191,9 +191,15 @@ namespace SpeedCC
         std::map<typename T::type, SCBehavior::Ptr>     _watchValue2BvrMap;
     };
     
-    typedef SCBehaviorCaseT<SCWatchInt>         SCBehaviorCaseInt;
-    typedef SCBehaviorCaseT<SCWatchBool>        SCBehaviorCaseBool;
-    typedef SCBehaviorCaseT<SCWatchString>      SCBehaviorCaseString;
+    typedef SCBehaviorCaseT<SCWatchUInt>                SCBehaviorCaseUInt;
+    typedef SCBehaviorCaseT<SCWatchFloat>               SCBehaviorCaseFloat;
+    typedef SCBehaviorCaseT<SCWatchDouble>              SCBehaviorCaseDouble;
+    typedef SCBehaviorCaseT<SCWatchInt>                 SCBehaviorCaseInt;
+    typedef SCBehaviorCaseT<SCWatchLong>                SCBehaviorCaseLong;
+    typedef SCBehaviorCaseT<SCWatchByte>                SCBehaviorCaseByte;
+    typedef SCBehaviorCaseT<SCWatchBool>                SCBehaviorCaseBool;
+    typedef SCBehaviorCaseT<SCWatchString>              SCBehaviorCaseString;
+    
     
     ///------------ SCBehaviorAddNumber
     class SCBehaviorAddNumber : public SCBehavior

@@ -11,11 +11,8 @@
 
 #include "cocos2d.h"
 
-//#include "../base/SCObject.h"
 #include "../base/SCString.h"
-//#include "../base/SCMacroDef.h"
 #include "../base/SCWatchString.h"
-//#include "../base/SCWatchNumberT.h"
 #include "../base/SCBinder.h"
 
 
@@ -37,7 +34,7 @@ namespace SpeedCC
         void setLabel(cocos2d::Label* pLabel);
         
         template<typename T,
-        typename = typename std::enable_if<SCIsWatchNumberable<typename T::type>::value==1,T>::type >
+        typename = typename std::enable_if<SCIsWatchNumberableT<typename T::type>::value==1,T>::type >
         void setWatch(T num)
         {
             this->removeUpdateFunc();
@@ -116,31 +113,10 @@ namespace SpeedCC
         virtual void reset() override;
         
     protected:
-        SCBinderUISwitch():
-        _pToggleMenuItem(NULL),
-        _callbackFunc(NULL)
-        {
-        }
-        
-        SCBinderUISwitch(SCWatchBool::Ptr ptrWatch):
-        _pToggleMenuItem(NULL),
-        _callbackFunc(NULL)
-        {
-            this->setWatch(ptrWatch);
-        }
-        
-        SCBinderUISwitch(SCWatchBool::Ptr ptrWatch,cocos2d::MenuItemToggle* pToggle):
-        _callbackFunc(NULL)
-        {
-            this->setWatch(ptrWatch);
-            this->setToggle(pToggle);
-        }
-        
-        SCBinderUISwitch(cocos2d::MenuItemToggle* pToggle):
-        _callbackFunc(NULL)
-        {
-            this->setToggle(pToggle);
-        }
+        SCBinderUISwitch();
+        SCBinderUISwitch(SCWatchBool::Ptr ptrWatch);
+        SCBinderUISwitch(SCWatchBool::Ptr ptrWatch,cocos2d::MenuItemToggle* pToggle);
+        SCBinderUISwitch(cocos2d::MenuItemToggle* pToggle);
         
         virtual void onActiveChanged(const bool bNewActive) override;
         
@@ -164,7 +140,7 @@ namespace SpeedCC
         SC_DEFINE_CREATE_FUNC_0(SCBinderUIProgress)
         
         template<typename T,
-        typename = typename std::enable_if<SCIsWatchNumberable<typename T::type>::value==1,T>::type >
+        typename = typename std::enable_if<SCIsWatchNumberableT<typename T::type>::value==1,T>::type >
         void setWatch(T num)
         {
             this->removeUpdateFunc();

@@ -4,11 +4,12 @@
 #define __SPEEDCC__SCBASEDEF_H__
 
 //#include "SCMacroDef.h"
-#include "SCString.h"
-#include "cocos2d.h"
+//#include "SCString.h"
+//#include "cocos2d.h"
 
 namespace SpeedCC
 {
+    /*
     ///-------------------- type definition
     enum ESCState
     {
@@ -32,7 +33,7 @@ namespace SpeedCC
     };
     
     ///-------------------- function pointer type
-
+*/
     
     
     

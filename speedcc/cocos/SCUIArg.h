@@ -55,7 +55,7 @@ namespace SpeedCC
             LabelStringPurifier(double n):strResult(n) {}
             
             template<typename T,
-            typename = typename std::enable_if<SCIsWatchClass<typename T::type>::value==1,T>::type >
+            typename = typename std::enable_if<SCIsWatchClassT<typename T::type>::value==1,T>::type >
             LabelStringPurifier(T ptrWatch)
             {
                 if(ptrWatch!=NULL)
@@ -190,7 +190,7 @@ namespace SpeedCC
         struct NumberPurifier
         {
             template<typename T,
-            typename = typename std::enable_if<SCIsWatchNumberable<typename T::type>::value==1,T>::type >
+            typename = typename std::enable_if<SCIsWatchNumberableT<typename T::type>::value==1,T>::type >
             NumberPurifier(T ptrWatch)
             {
                 if(ptrWatch!=NULL)

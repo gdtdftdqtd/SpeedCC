@@ -94,7 +94,7 @@ namespace SpeedCC
         this->clone4Write();
         auto& map = (*this->getStub());
 
-        for(const auto pair : pairVct)
+        for(const auto& pair : pairVct)
         {
             SCASSERT(!pair.strKey.isEmpty());
             map[pair.strKey] = pair.value;

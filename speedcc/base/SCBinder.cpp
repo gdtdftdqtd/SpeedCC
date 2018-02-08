@@ -13,6 +13,11 @@ namespace SpeedCC
 {
     
 ///------------- SCBinder
+    SCBinder::~SCBinder()
+    {
+        this->reset();
+    }
+    
     void SCBinder::setActive(const bool bActive)
     {
         _bActive = bActive;

@@ -5,7 +5,7 @@
 #define __SPEEDCC__SCTEMPLATEDEF_H__
 
 #include <type_traits>
-#include "cocos2d.h"
+#include <tuple>
 
 namespace SpeedCC
 {
@@ -21,32 +21,11 @@ namespace SpeedCC
     struct SCShadowClassT<SCClassNull> {typedef SCClassEmpty type;};
     
     // judgement class
-    template<typename T1,typename T2>
-    struct SCIsSameTypeT { enum {value=0};};
+    template<typename T>
+    struct SCIsNullClassT { enum {value=std::is_same<T,SCClassNull>::value};};
     
     template<typename T>
-    struct SCIsSameTypeT<T,T> { enum {value=1};};
-    
-    template<typename T>
-    struct SCIsNullClassT { enum {value=SCIsSameTypeT<T,SCClassNull>::value};};
-    
-    template<typename T>
-    struct SCIsEmptyClassT { enum {value=SCIsSameTypeT<T,SCClassEmpty>::value};};
-    
-    template<typename BaseT, typename DeriveT>
-    struct SCIsBaseOfT
-    {
-    private:
-        template <typename B, typename D>
-        struct Host { operator B*() const; operator D*(); };
-        
-        template <typename T>
-        static int check(DeriveT*, T); // yes
-        static char check(BaseT*, int); // no
-        
-    public:
-        enum {value = SCIsSameTypeT<decltype(check(Host<BaseT,DeriveT>(), int())),int>::value};
-    };
+    struct SCIsEmptyClassT { enum {value=std::is_same<T,SCClassEmpty>::value};};
     
     
     ///---------- SCGetIndexByClassT
@@ -85,6 +64,26 @@ namespace SpeedCC
         
         enum {ArgCount = sizeof...(Ts)};
     };
+    
+    ///--------------  detect class internal type define
+    template<typename T>
+    struct SCDefineVoidT
+    {
+        typedef void type;
+    };
+    
+    template<typename T1, typename T2 = void>
+    struct SCHasInternalTypeT
+    {
+        enum { value = 0 };
+    };
+    
+    template<typename T>
+    struct SCHasInternalTypeT<T, typename SCDefineVoidT<typename T::type>::type>
+    {
+        enum { value = 1 };
+    };
+
     
 }
 

@@ -241,10 +241,10 @@ namespace SpeedCC
         static SCValue create(const ObjectT& value)
         {
             SCValue ret;
-            auto type = (SCIsSameTypeT<ObjectT, SCString>::value ? STRING_TYPE :
-                         (SCIsSameTypeT<ObjectT, SCDataBlock>::value ? DATABLOCK_TYPE :
-                          (SCIsSameTypeT<ObjectT, SCDateTime>::value ? DATETIME_TYPE :
-                           (SCIsSameTypeT<ObjectT, std::vector<SCValue>>::value) ? ARRAY_TYPE : OBJECT_TYPE)));
+            auto type = (std::is_same<ObjectT, SCString>::value ? STRING_TYPE :
+                         (std::is_same<ObjectT, SCDataBlock>::value ? DATABLOCK_TYPE :
+                          (std::is_same<ObjectT, SCDateTime>::value ? DATETIME_TYPE :
+                           (std::is_same<ObjectT, std::vector<SCValue>>::value) ? ARRAY_TYPE : OBJECT_TYPE)));
             
             ret.getCookieDesc()->cookie = type;
             SCValueStub& stub = *(ret.getStub());

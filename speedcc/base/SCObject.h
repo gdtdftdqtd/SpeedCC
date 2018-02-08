@@ -23,9 +23,9 @@ namespace SpeedCC
         }
         
         template<typename T>
-        SCObjPtrT<typename std::remove_reference<typename std::remove_pointer<T>::type>::type> makeObjPtr(T)
+        SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type> makeObjPtr(T)
         {
-            return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename std::remove_reference<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
+            return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
         }
     private:
         void setObjPtrData(void* pData);

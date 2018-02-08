@@ -8,7 +8,8 @@
 #include "SCMacroDef.h"
 
 namespace SpeedCC
-{   
+{
+    ///----------- strong smart pointer
     template<typename TargetT,bool IsStrong=true>
     class SCObjPtrT : public SCObjRefT<TargetT>
     {
@@ -120,6 +121,7 @@ namespace SpeedCC
         inline bool isWeak() const { return false;}
     };
     
+    ///----------- weak smart pointer
     template<typename TargetT>
     class SCObjPtrT<TargetT,false> : public SCObjRefT<void*>
     {
@@ -217,7 +219,7 @@ namespace SpeedCC
         template<typename T2>
         SCObjPtrT<T2,false> cast() const
         {
-            SC_RETURN_IF((SCIsSameTypeT<T2,TargetT>::value),(*this));
+            SC_RETURN_IF((std::is_same<T2,TargetT>::value),(*this));
             SC_RETURN_IF(_pObjData==NULL || (*(this->getStub()))==NULL,NULL);
             
             TargetT* p1 = (TargetT*)(*(this->getStub()));
@@ -241,39 +243,54 @@ namespace SpeedCC
     };
     
     // strong
-    template<class T>
+    template<typename T>
     inline bool operator==(const SCObjPtrT<T>& ptr, std::nullptr_t)
     { return ptr.isNull(); }
     
-    template<class T>
+    template<typename T>
     inline bool operator==(std::nullptr_t, const SCObjPtrT<T>& ptr)
     { return ptr.isNull(); }
     
-    template<class T>
+    template<typename T>
     inline bool operator!=(const SCObjPtrT<T>& ptr, std::nullptr_t)
     { return !ptr.isNull(); }
     
-    template<class T>
+    template<typename T>
     inline bool operator!=(std::nullptr_t, const SCObjPtrT<T>& ptr)
     { return !ptr.isNull();}
     
     
     // weak
-    template<class T>
+    template<typename T>
     inline bool operator==(const SCObjPtrT<T,false>& ptr, std::nullptr_t)
     { return ptr.isNull(); }
     
-    template<class T>
+    template<typename T>
     inline bool operator==(std::nullptr_t, const SCObjPtrT<T,false>& ptr)
     { return ptr.isNull(); }
     
-    template<class T>
+    template<typename T>
     inline bool operator!=(const SCObjPtrT<T,false>& ptr, std::nullptr_t)
     { return !ptr.isNull(); }
     
-    template<class T>
+    template<typename T>
     inline bool operator!=(std::nullptr_t, const SCObjPtrT<T,false>& ptr)
     { return !ptr.isNull();}
+    
+    
+    ///---------- check class wheather object smart pointer
+    
+    template<typename T, bool b = SCHasInternalTypeT<T>::value ? true : false>
+    struct SCIsObjPtrClassT
+    {
+        enum {value = std::is_same<T, SCObjPtrT<typename T::type>>::value};
+    };
+    
+    template<typename T>
+    struct SCIsObjPtrClassT<T,false>
+    {
+        enum {value = 0};
+    };
 }
 
 

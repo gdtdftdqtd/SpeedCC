@@ -447,13 +447,13 @@ namespace SpeedCC
     
 
     typedef SCWatchNumberT<short>                        SCWatchShort;
-    typedef SCWatchNumberT<unsigned short>               SCWatchUnsignedShort;
+    typedef SCWatchNumberT<unsigned short>               SCWatchUShort;
     typedef SCWatchNumberT<char>                         SCWatchChar;
     typedef SCWatchNumberT<unsigned char>                SCWatchByte;
     typedef SCWatchNumberT<int>                          SCWatchInt;
-    typedef SCWatchNumberT<unsigned int>                 SCWatchUnsignedInt;
+    typedef SCWatchNumberT<unsigned int>                 SCWatchUInt;
     typedef SCWatchNumberT<long>                         SCWatchLong;
-    typedef SCWatchNumberT<unsigned long>                SCWatchUnsignedLong;
+    typedef SCWatchNumberT<unsigned long>                SCWatchULong;
     typedef SCWatchNumberT<INT64>                        SCWatchInt64;
     typedef SCWatchNumberT<float>                        SCWatchFloat;
     typedef SCWatchNumberT<double>                       SCWatchDouble;
@@ -462,48 +462,48 @@ namespace SpeedCC
     class SCWatchString;
     
     typedef std::tuple<SCWatchShort,
-                        SCWatchUnsignedShort,
+                        SCWatchUShort,
                         SCWatchChar,
                         SCWatchByte,
                         SCWatchInt,
-                        SCWatchUnsignedInt,
+                        SCWatchUInt,
                         SCWatchLong,
-                        SCWatchUnsignedLong,
+                        SCWatchULong,
                         SCWatchInt64,
                         SCWatchFloat,
                         SCWatchDouble,
                         SCWatchBool>        SCWatchNumberList_t;
     
     typedef std::tuple<SCWatchShort,
-                        SCWatchUnsignedShort,
+                        SCWatchUShort,
                         SCWatchChar,
                         SCWatchByte,
                         SCWatchInt,
-                        SCWatchUnsignedInt,
+                        SCWatchUInt,
                         SCWatchLong,
-                        SCWatchUnsignedLong,
+                        SCWatchULong,
                         SCWatchInt64,
                         SCWatchFloat,
                         SCWatchDouble>        SCWatchNumberableList_t;
     
     typedef std::tuple<SCWatchShort,
-                        SCWatchUnsignedShort,
+                        SCWatchUShort,
                         SCWatchChar,
                         SCWatchByte,
                         SCWatchInt,
-                        SCWatchUnsignedInt,
+                        SCWatchUInt,
                         SCWatchLong,
-                        SCWatchUnsignedLong,
+                        SCWatchULong,
                         SCWatchInt64>           SCWatchNumberIntegerList_t;
     
     typedef std::tuple<SCWatchShort,
-                          SCWatchUnsignedShort,
+                          SCWatchUShort,
                           SCWatchChar,
                           SCWatchByte,
                           SCWatchInt,
-                          SCWatchUnsignedInt,
+                          SCWatchUInt,
                           SCWatchLong,
-                          SCWatchUnsignedLong,
+                          SCWatchULong,
                           SCWatchInt64,
                           SCWatchFloat,
                           SCWatchDouble,
@@ -511,16 +511,16 @@ namespace SpeedCC
                           SCWatchString>     SCWatchClassList_t;
     
     template<typename T>
-    struct SCIsWatchNumber {enum {value=(SCGetIndexByClassT<T,SCWatchNumberList_t>::value== std::tuple_size<SCWatchNumberList_t>::value) ? 0 : 1};};
+    struct SCIsWatchNumberT {enum {value=(SCGetIndexByClassT<T,SCWatchNumberList_t>::value== std::tuple_size<SCWatchNumberList_t>::value) ? 0 : 1};};
     
     template<typename T>
-    struct SCIsWatchNumberable  {enum {value=(SCGetIndexByClassT<T,SCWatchNumberableList_t>::value== std::tuple_size<SCWatchNumberableList_t>::value) ? 0 : 1};};
+    struct SCIsWatchNumberableT  {enum {value=(SCGetIndexByClassT<T,SCWatchNumberableList_t>::value== std::tuple_size<SCWatchNumberableList_t>::value) ? 0 : 1};};
     
     template<typename T>
-    struct SCIsWatchNumberInteger  {enum {value=(SCGetIndexByClassT<T,SCWatchNumberIntegerList_t>::value== std::tuple_size<SCWatchNumberIntegerList_t>::value) ? 0 : 1};};
+    struct SCIsWatchNumberIntegerT  {enum {value=(SCGetIndexByClassT<T,SCWatchNumberIntegerList_t>::value== std::tuple_size<SCWatchNumberIntegerList_t>::value) ? 0 : 1};};
     
     template<typename T>
-    struct SCIsWatchClass {enum {value=(SCGetIndexByClassT<T,SCWatchClassList_t>::value==std::tuple_size<SCWatchClassList_t>::value) ? 0 : 1};};
+    struct SCIsWatchClassT {enum {value=(SCGetIndexByClassT<T,SCWatchClassList_t>::value==std::tuple_size<SCWatchClassList_t>::value) ? 0 : 1};};
     
 }
 
