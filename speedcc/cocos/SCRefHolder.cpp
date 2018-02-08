@@ -1,5 +1,5 @@
 //
-//  SCRefHolder.cpp
+//  SCRef2Ptr.cpp
 //  libspeedcc
 //
 //  Created by Kevin on 18/12/2017.
@@ -11,19 +11,49 @@
 
 namespace SpeedCC
 {
-    SCRefHolder::SCRefHolder(cocos2d::Ref* pObject):
+    ///------------- SCRef2Ptr
+    SCRef2Ptr::SCRef2Ptr(cocos2d::Ref* pObject):
     _pObject(pObject)
     {
         SCASSERT(_pObject!=NULL);
         _pObject->retain();
     }
     
-    SCRefHolder::~SCRefHolder()
+    SCRef2Ptr::~SCRef2Ptr()
     {
         if(_pObject!=NULL)
         {
             _pObject->release();
         }
+    }
+    
+    ///------------- SCPtr2Ref
+    SCPtr2Ref::SCPtr2Ref()
+    {
+    }
+    
+    SCPtr2Ref::SCPtr2Ref(SCObject::Ptr ptr):
+    _ptrObj(ptr)
+    {
+    }
+    
+    cocos2d::Ref* SCPtr2Ref::create()
+    {
+        SCPtr2Ref * ret = new (std::nothrow) SCPtr2Ref();
+        ret->autorelease();
+        return ret;
+    }
+    
+    cocos2d::Ref* SCPtr2Ref::create(SCObject::Ptr ptr)
+    {
+        SCPtr2Ref * ret = new (std::nothrow) SCPtr2Ref(ptr);
+        ret->autorelease();
+        return ret;
+    }
+    
+    void SCPtr2Ref::setPtrObj(SCObject::Ptr ptr)
+    {
+        _ptrObj = ptr;
     }
 }
 

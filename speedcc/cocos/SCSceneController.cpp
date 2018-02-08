@@ -33,7 +33,7 @@ namespace SpeedCC
     {
         SC_RETURN_V_IF(pObject==NULL);
         
-        auto ptr = SCRefHolder::create(pObject);
+        auto ptr = SCRef2Ptr::create(pObject);
         this->ownLifecycle(ptr);
     }
     

@@ -6,35 +6,53 @@
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCREFHOLDER_H__
-#define __SPEEDCC__SCREFHOLDER_H__
+#ifndef __SPEEDCC__SCRef2Ptr_H__
+#define __SPEEDCC__SCRef2Ptr_H__
 
 #include "cocos2d.h"
 #include "../base/SCObject.h"
 
 namespace SpeedCC
 {
-    class SCRefHolder : public SCObject
+    ///---------- SCRef2Ptr
+    class SCRef2Ptr : public SCObject
     {
     public:
-        SC_AVOID_CLASS_COPY(SCRefHolder)
-        SC_DEFINE_CLASS_PTR(SCRefHolder)
+        SC_AVOID_CLASS_COPY(SCRef2Ptr)
+        SC_DEFINE_CLASS_PTR(SCRef2Ptr)
         
-        SC_DEFINE_CREATE_FUNC_1(SCRefHolder,cocos2d::Ref*)
+        SC_DEFINE_CREATE_FUNC_1(SCRef2Ptr,cocos2d::Ref*)
         
-        virtual ~SCRefHolder();
+        virtual ~SCRef2Ptr();
         
         inline cocos2d::Ref* getRef() const {return _pObject;}
     protected:
-        SCRefHolder():
+        SCRef2Ptr():
         _pObject(NULL)
         {}
         
-        SCRefHolder(cocos2d::Ref* pObject);
+        SCRef2Ptr(cocos2d::Ref* pObject);
         
     private:
         cocos2d::Ref*   _pObject;
     };
+    
+    ///------------- SCPtr2Ref
+    class SCPtr2Ref : public cocos2d::Ref
+    {
+    public:
+        static cocos2d::Ref* create();
+        static cocos2d::Ref* create(SCObject::Ptr ptr);
+        
+        void setPtrObj(SCObject::Ptr ptr);
+        
+    protected:
+        SCPtr2Ref();
+        SCPtr2Ref(SCObject::Ptr ptr);
+        
+    private:
+        SCObject::Ptr       _ptrObj;
+    };
 }
 
-#endif // __SPEEDCC__SCREFHOLDER_H__
+#endif // __SPEEDCC__SCRef2Ptr_H__

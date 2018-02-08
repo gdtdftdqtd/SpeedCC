@@ -32,6 +32,7 @@
 #include "cocos/SCNodeUtils.h"
 #include "cocos/SCUIMacro.h"
 #include "cocos/SCEventEmitter.h"
+#include "cocos/SCNodeClickable.h"
 
 #include "stage/SCFlowMacroDef.h"
 #include "stage/SCStageMacroDef.h"

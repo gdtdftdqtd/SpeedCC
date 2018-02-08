@@ -50,6 +50,7 @@
 		0A8868191FDA536F00866266 /* SCSceneNavigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */; };
 		0A88681A1FDA536F00866266 /* SCScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868131FDA536E00866266 /* SCScene.cpp */; };
 		0A88681B1FDA536F00866266 /* SCNodeUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A8868151FDA536E00866266 /* SCNodeUtils.cpp */; };
+		0AF3CB9E202C429000EFACB4 /* SCNodeClickable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF3CB9D202C429000EFACB4 /* SCNodeClickable.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,6 +198,8 @@
 		0A8868151FDA536E00866266 /* SCNodeUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeUtils.cpp; sourceTree = "<group>"; };
 		0A8868161FDA536E00866266 /* SCSceneNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneNavigator.h; sourceTree = "<group>"; };
 		0A8868171FDA536E00866266 /* SCUIMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUIMacro.h; sourceTree = "<group>"; };
+		0AF3CB9C202C429000EFACB4 /* SCNodeClickable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeClickable.h; sourceTree = "<group>"; };
+		0AF3CB9D202C429000EFACB4 /* SCNodeClickable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeClickable.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +383,8 @@
 		0A88680D1FDA536E00866266 /* cocos */ = {
 			isa = PBXGroup;
 			children = (
+				0AF3CB9D202C429000EFACB4 /* SCNodeClickable.cpp */,
+				0AF3CB9C202C429000EFACB4 /* SCNodeClickable.h */,
 				0A41B37F1FEA3706003945EB /* SCSceneController.cpp */,
 				0A41B3801FEA3706003945EB /* SCSceneController.h */,
 				0A88680E1FDA536E00866266 /* SCNodeProperty.h */,
@@ -521,6 +526,7 @@
 				0A0C34E0202BFDC2003A7A31 /* SCRoleBuilder.cpp in Sources */,
 				0A67CB101F81E4CF00FED9A5 /* SCDateTime.cpp in Sources */,
 				0A41B3361FE679E3003945EB /* SCBinderCocos.cpp in Sources */,
+				0AF3CB9E202C429000EFACB4 /* SCNodeClickable.cpp in Sources */,
 				0A0C34E9202BFDC2003A7A31 /* SCBehaviorCocos.cpp in Sources */,
 				0A0C34E4202BFDC2003A7A31 /* SCStage.cpp in Sources */,
 				0A41B3811FEA3706003945EB /* SCSceneController.cpp in Sources */,

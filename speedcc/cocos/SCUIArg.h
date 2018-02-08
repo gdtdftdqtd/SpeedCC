@@ -153,10 +153,10 @@ namespace SpeedCC
             NodePurifier(T* node):
             pfunSetProperty(&SCNodeProperty::setProperty<T>)
             {
-                ptrNodeHolder = SCRefHolder::create(node);
+                ptrNodeHolder = SCRef2Ptr::create(node);
             }
             
-            SCRefHolder::Ptr        ptrNodeHolder;
+            SCRef2Ptr::Ptr        ptrNodeHolder;
             FUN_SCSetProperty_t     pfunSetProperty;
         };
         
@@ -166,7 +166,7 @@ namespace SpeedCC
             {
                 SCString strFile = SCFileUtils::getFullPathFile(strImage);
                 auto pMenuItem = cocos2d::MenuItemImage::create(strFile.c_str(),strFile.c_str(),strFile.c_str());
-                ptrHolder = SCRefHolder::create(pMenuItem);
+                ptrHolder = SCRef2Ptr::create(pMenuItem);
             }
             
             MenuItemPurifier(const SCString& strText,const int size)
@@ -174,17 +174,17 @@ namespace SpeedCC
                 auto pLabel = cocos2d::Label::createWithSystemFont(strText.c_str(),"",size);
                 auto pMenuItem = cocos2d::MenuItemLabel::create(pLabel);
                 
-                ptrHolder = SCRefHolder::create(pMenuItem);
+                ptrHolder = SCRef2Ptr::create(pMenuItem);
             }
             
             MenuItemPurifier(cocos2d::MenuItem* pMenuItem)
             {
                 SCASSERT(pMenuItem!=NULL);
-                ptrHolder = SCRefHolder::create(pMenuItem);
+                ptrHolder = SCRef2Ptr::create(pMenuItem);
             }
             
         public:
-            SCRefHolder::Ptr    ptrHolder;
+            SCRef2Ptr::Ptr    ptrHolder;
         };
         
         struct NumberPurifier

@@ -178,6 +178,12 @@ namespace SpeedCC
                                      });
         }
         
+        void Activate()
+        {
+            SC_RETURN_V_IF(_ptrWatch==NULL);
+            this->fireBehavior((*_ptrWatch),(*_ptrWatch));
+        }
+        
     protected:
         SCTriggerT():
         _bActived(true),
