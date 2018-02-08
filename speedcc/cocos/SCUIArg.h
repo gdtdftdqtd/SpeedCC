@@ -15,7 +15,7 @@
 
 #include "../system/SCFileUtils.h"
 
-#include "../component/SCBehaviorCommon.h"
+#include "../stage/SCBehaviorCommon.h"
 
 #include "SCBinderCocos.h"
 #include "SCNodeProperty.h"

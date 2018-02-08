@@ -9,8 +9,8 @@
 #include "SCSystem.h"
 #include "SCMacroDef.h"
 
-#include "../component/SCMessageDispatch.h"
-#include "../component/SCComponentMacroDef.h"
+#include "../stage/SCMessageDispatch.h"
+#include "../stage/SCStageMacroDef.h"
 #include "../platform/SCOSSystem.h"
 #include "../cocos/SCCocosDef.h"
 #include "../cocos/SCScene.h"

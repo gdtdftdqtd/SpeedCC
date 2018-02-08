@@ -31,19 +31,18 @@ LOCAL_SRC_FILES := ../../../base/SCMemAllocator.cpp \
 					../../../cocos/SCSceneNavigator.cpp \
 					../../../cocos/SCUIArg.cpp \
 					../../../cocos/SCUIBuilder.cpp \
-					../../../component/SCActor.cpp \
-					../../../component/SCBehaviorCocos.cpp \
-					../../../component/SCBehaviorCommon.cpp \
-					../../../component/SCBehaviorComponent.cpp \
-					../../../component/SCBehaviorStage.cpp \
-					../../../component/SCMessage.cpp \
-					../../../component/SCMessageDefaultProc.cpp \
-					../../../component/SCMessageDispatch.cpp \
-					../../../component/SCPerformObject.cpp \
-					../../../component/SCRole.cpp \
-					../../../component/SCRoleBuilder.cpp \
-					../../../component/SCStage.cpp \
-					../../../component/SCStrategy.cpp \
+					../../../stage/SCActor.cpp \
+					../../../stage/SCBehaviorCocos.cpp \
+					../../../stage/SCBehaviorCommon.cpp \
+					../../../stage/SCBehaviorStage.cpp \
+					../../../stage/SCMessage.cpp \
+					../../../stage/SCMessageDefaultProc.cpp \
+					../../../stage/SCMessageDispatch.cpp \
+					../../../stage/SCPerformObject.cpp \
+					../../../stage/SCRole.cpp \
+					../../../stage/SCRoleBuilder.cpp \
+					../../../stage/SCStage.cpp \
+					../../../stage/SCStrategy.cpp \
 					../../../system/SCAudioManager.cpp \
 					../../../system/SCFileUtils.cpp \
 					../../../system/SCSetting.cpp \
@@ -59,7 +58,7 @@ LOCAL_SRC_FILES := ../../../base/SCMemAllocator.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../base \
 					$(LOCAL_PATH)/../../../cocos \
-                    $(LOCAL_PATH)/../../../component \
+                    $(LOCAL_PATH)/../../../stage \
                     $(LOCAL_PATH)/../../../platform \
                     $(LOCAL_PATH)/../../../system \
                     $(LOCAL_PATH)/../../.. 

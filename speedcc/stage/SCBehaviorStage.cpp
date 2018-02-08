@@ -8,6 +8,7 @@
 
 #include "SCBehaviorStage.h"
 #include "SCStage.h"
+#include "SCStageMacroDef.h"
 
 namespace SpeedCC
 {
@@ -61,6 +62,40 @@ namespace SpeedCC
         else
         {
             ptrActor->getRole()->getStage()->getRole(_nRoleID)->setActive(_bActive);
+        }
+    }
+    
+    ///--------------- SCBehaviorDeliverMessage
+    SCBehaviorDeliverMessage::SCBehaviorDeliverMessage(const bool bSend,SCMessage::Ptr ptrMsg):
+    _bSend(bSend)
+    {
+        SCASSERT(ptrMsg!=NULL);
+        _ptrMsg = ptrMsg->clone();
+    }
+    
+    SCBehaviorDeliverMessage::SCBehaviorDeliverMessage(const bool bSend,const int nMsgID):
+    _bSend(bSend)
+    {
+        _ptrMsg = SCMessage::create(nMsgID);
+    }
+    
+    SCBehaviorDeliverMessage::SCBehaviorDeliverMessage(const bool bSend,const SCString& strCmd):
+    _bSend(bSend)
+    {
+        _ptrMsg = SCMessage::create(strCmd);
+    }
+    
+    void SCBehaviorDeliverMessage::execute(const SCDictionary& par)
+    {
+        SCASSERT(_ptrMsg!=NULL);
+        
+        if(_bSend)
+        {
+            SCMsgDisp()->sendMessage(_ptrMsg);
+        }
+        else
+        {
+            SCMsgDisp()->postMessage(_ptrMsg);
         }
     }
 }

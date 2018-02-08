@@ -10,8 +10,8 @@
 #include "SCSceneController.h"
 #include "SCNodeUtils.h"
 
-#include "../component/SCMessageDispatch.h"
-#include "../component/SCComponentMacroDef.h"
+#include "../stage/SCMessageDispatch.h"
+#include "../stage/SCStageMacroDef.h"
 
 #include "../system/SCFileUtils.h"
 #include "../system/SCSystem.h"

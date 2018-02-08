@@ -10,7 +10,7 @@
 #define __SPEEDCC__SCCOCOSDEF_H__
 
 #include "../base/SCTemplateDef.h"
-#include "../component/SCMessage.h"
+#include "../stage/SCMessage.h"
 
 namespace SpeedCC
 {

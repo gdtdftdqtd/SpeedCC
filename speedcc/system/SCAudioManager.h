@@ -12,8 +12,8 @@
 #include "../base/SCWatchNumberT.h"
 #include "../base/SCString.h"
 
-#include "../component/SCMessageDispatch.h"
-#include "../component/SCMessage.h"
+#include "../stage/SCMessageDispatch.h"
+#include "../stage/SCMessage.h"
 
 namespace SpeedCC
 {

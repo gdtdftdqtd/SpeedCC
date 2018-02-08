@@ -1,13 +1,13 @@
 //
-//  SCComponentMacroDef.h
+//  SCStageMacroDef.h
 //  libspeedcc
 //
 //  Created by Kevin on 19/1/2018.
 //  Copyright © 2018 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCCOMPONENTMACRODEF_H__
-#define __SPEEDCC__SCCOMPONENTMACRODEF_H__
+#ifndef __SPEEDCC__SCSTAGEMACRODEF_H__
+#define __SPEEDCC__SCSTAGEMACRODEF_H__
 
 ///----------------------
 #define SC_BVR_GROUP(_bvr_,...) \
@@ -22,4 +22,4 @@
 #define SCMsgDisp() \
     (SpeedCC::SCMessageDispatch::getInstance())
 
-#endif // __SPEEDCC__SCCOMPONENTMACRODEF_H__
+#endif // __SPEEDCC__SCSTAGEMACRODEF_H__

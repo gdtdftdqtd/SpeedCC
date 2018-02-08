@@ -3,7 +3,7 @@
 #include "SCMessageDispatch.h"
 #include "../base/SCTemplateDef.h"
 #include "../cocos/SCCocosDef.h"
-#include "../component/SCComponentMacroDef.h"
+#include "../stage/SCStageMacroDef.h"
 
 using namespace std;
 

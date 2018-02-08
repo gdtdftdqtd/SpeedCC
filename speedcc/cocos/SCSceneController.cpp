@@ -4,7 +4,7 @@
 
 #include "SCSceneController.h"
 #include "../base/SCTemplateUtils.h"
-#include "../component/SCComponentMacroDef.h"
+#include "../stage/SCStageMacroDef.h"
 
 namespace SpeedCC
 {

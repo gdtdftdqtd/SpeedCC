@@ -15,8 +15,8 @@
 #include "../base/SCObjPtrT.h"
 #include "../base/SCObject.h"
 
-#include "../component/SCMessageDispatch.h"
-#include "../component/SCStage.h"
+#include "../stage/SCMessageDispatch.h"
+#include "../stage/SCStage.h"
 
 #include "../base/SCWatchNumberT.h"
 

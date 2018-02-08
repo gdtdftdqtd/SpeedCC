@@ -11,8 +11,8 @@
 
 #include "SCConfig.h"
 #include "../cocos/SCCocosDef.h"
-#include "../component/SCComponentMacroDef.h"
-#include "../component/SCMessageDispatch.h"
+#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCMessageDispatch.h"
 
 
 namespace SpeedCC
