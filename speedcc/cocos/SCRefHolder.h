@@ -6,8 +6,8 @@
 //  Copyright © 2017 speedcc. All rights reserved.
 //
 
-#ifndef __SPEEDCC__SCRef2Ptr_H__
-#define __SPEEDCC__SCRef2Ptr_H__
+#ifndef __SPEEDCC__SCREF2PTR_H__
+#define __SPEEDCC__SCREF2PTR_H__
 
 #include "cocos2d.h"
 #include "../base/SCObject.h"
@@ -44,7 +44,8 @@ namespace SpeedCC
         static cocos2d::Ref* create();
         static cocos2d::Ref* create(SCObject::Ptr ptr);
         
-        void setPtrObj(SCObject::Ptr ptr);
+        inine void setPtr(SCObject::Ptr ptr) { _ptrObj = ptr; }
+        inline SCObject::Ptr getPtr() const { return _ptrObj;}
         
     protected:
         SCPtr2Ref();
@@ -55,4 +56,4 @@ namespace SpeedCC
     };
 }
 
-#endif // __SPEEDCC__SCRef2Ptr_H__
+#endif // __SPEEDCC__SCREF2PTR_H__

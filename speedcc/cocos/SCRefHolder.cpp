@@ -51,9 +51,5 @@ namespace SpeedCC
         return ret;
     }
     
-    void SCPtr2Ref::setPtrObj(SCObject::Ptr ptr)
-    {
-        _ptrObj = ptr;
-    }
 }
 

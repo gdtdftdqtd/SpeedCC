@@ -14,10 +14,10 @@ void TestCaseController::onCreate(SCDictionary parameters)
                                                      (*_ptrCaseBvr->getWatch())++;
                                                      if(_ptrCaseBvr->getCaseCount()-1 <= (*_ptrCaseBvr->getWatch()))
                                                      {
-                                                         _pNextMenuItem->getParent()->setVisible(false);
+                                                         _pNextMenuItem->setVisible(false);
                                                      }
                                                      
-                                                     _pPreMenuItem->getParent()->setVisible(true);
+                                                     _pPreMenuItem->setVisible(true);
                                                      _ptrCaseBvr->execute();
                                                  });
     
@@ -26,9 +26,9 @@ void TestCaseController::onCreate(SCDictionary parameters)
                                                      (*_ptrCaseBvr->getWatch())--;
                                                      if((*_ptrCaseBvr->getWatch())<=0)
                                                      {
-                                                         _pPreMenuItem->getParent()->setVisible(false);
+                                                         _pPreMenuItem->setVisible(false);
                                                      }
-                                                     _pNextMenuItem->getParent()->setVisible(true);
+                                                     _pNextMenuItem->setVisible(true);
                                                      _ptrCaseBvr->execute();
                                                  });
     

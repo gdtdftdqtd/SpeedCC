@@ -9,6 +9,7 @@
 #include "SCUIBuilder.h"
 #include "SCSceneController.h"
 #include "SCNodeUtils.h"
+#include "SCNodeClickable.h"
 
 #include "../stage/SCMessageDispatch.h"
 #include "../stage/SCStageMacroDef.h"
@@ -297,12 +298,11 @@ namespace SpeedCC
             pToggleItem->setCallback(scCallbackFunc);
         }
         
-        cocos2d::Menu* pMenu = cocos2d::Menu::create(pToggleItem,NULL);
-        pMenu->setContentSize(pOnItem->getContentSize());
-//        pMenu->setIgnoreAnchorPointForPosition(false);
-//        pMenu->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
-//        SCNodeUtils::setPerPosition(pMenuItemArray[0], cocos2d::Vec2(0.5,0.5));
-        this->insertUserNode(pMenu, fPosX, fPosY, property);
+        auto ptrClick = SCNodeClickable::create(pToggleItem,NULL);
+        auto pClick = SCPtr2Ref::create(ptrClick);
+        pToggleItem->setUserObject(pClick);
+        
+        this->insertUserNode(pToggleItem, fPosX, fPosY, property);
         
         bvrPurifier.setupBehavior(_pCurrentRefCaller, pToggleItem);
         _buttonItem2InfoMap[pToggleItem] = bvrPurifier.ptrResultBvr;
@@ -548,13 +548,11 @@ namespace SpeedCC
     {
         auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.ptrNodeHolder->getRef());
         
-        auto pMenu = cocos2d::Menu::create(pMenuItem,NULL);
-        pMenu->setIgnoreAnchorPointForPosition(false);
-        pMenu->setContentSize(pMenuItem->getContentSize());
-        pMenu->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
-        SCNodeUtils::setPerPosition(pMenuItem, cocos2d::Vec2(0.5,0.5));
-        this->insertUserNode(pMenu, fPosX, fPosY, property);
+        auto ptrClick = SCNodeClickable::create(pMenuItem,NULL);
+        auto pClick = SCPtr2Ref::create(ptrClick);
+        pMenuItem->setUserObject(pClick);
         
+        this->insertUserNode(pMenuItem, fPosX, fPosY, property);
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);
         
         _buttonItem2InfoMap[pMenuItem] = bvrPurifier.ptrResultBvr;

@@ -3,6 +3,8 @@
 #include "SCNodeUtils.h"
 #include "SCMacroDef.h"
 #include "SCCocosDef.h"
+#include "SCNodeClickable.h"
+#include "SCRefHolder.h"
 
 using namespace cocos2d;
 
@@ -143,5 +145,26 @@ namespace SpeedCC
         }
         
         return fRet;
+    }
+    
+    void SCNodeUtils::setNodeClickable(cocos2d::Node* pNode,SCBehavior::Ptr ptrBvr)
+    {
+        SCASSERT(pNode!=NULL);
+        
+        auto ptrClick = SCNodeClickable::create(pNode,ptrBvr);
+        auto pClick = SCPtr2Ref::create(ptrClick);
+        pNode->setUserObject(pClick);
+    }
+    
+    void SCNodeUtils::removeNodeClickable(cocos2d::Node* pNode)
+    {
+        SCASSERT(pNode!=NULL);
+        
+        SC_RETURN_V_IF(pNode->getUserObject()==NULL);
+        SCPtr2Ref* pRef = dynamic_cast<SCPtr2Ref*>(pNode->getUserObject());
+        SC_RETURN_V_IF(pRef==NULL || pRef->getPtr()==NULL);
+        SC_RETURN_V_IF(pRef->getPtr().cast<SCNodeClickable::Ptr>()==NULL);
+        
+        pNode->setUserObject(NULL);
     }
 }

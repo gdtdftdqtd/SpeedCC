@@ -4,6 +4,7 @@
 #define __SPEEDCC__SCNODEUTILS_H__
 
 #include "cocos2d.h"
+#include "../stage/SCPerformObject.h"
 
 namespace SpeedCC
 {
@@ -29,8 +30,11 @@ namespace SpeedCC
         static void setPositionBy(cocos2d::Node* pNode,float fXBy,float fYBy);
         static bool setDock(cocos2d::Node* pNode,const int dockFlag);
         
+        static void setNodeClickable(cocos2d::Node* pNode,SCBehavior::Ptr ptrBvr);
+        static void removeNodeClickable(cocos2d::Node* pNode);
+        
     private:
-        // nPark. -1:(left or bottom); 0:center; 1:(right or top)
+        // nPark. <0:(left or bottom); 0:center; >0:(right or top)
         static float getDockPosition(cocos2d::Node* pNode,int nPark,const bool bIsX);
     };
 }

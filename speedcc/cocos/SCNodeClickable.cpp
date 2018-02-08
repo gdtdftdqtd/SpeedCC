@@ -135,7 +135,8 @@ namespace SpeedCC
                 _pNode->retain();
                 if(_ptrBvr!=NULL)
                 {
-                    _ptrBvr->execute();
+                    SCDictionary dic  = {SC_KEY_CCREF,_pNode};
+                    _ptrBvr->execute(dic);
                 }
                 if(_pMenuItem!=NULL)
                 {
