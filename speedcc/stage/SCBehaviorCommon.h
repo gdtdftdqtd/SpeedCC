@@ -196,41 +196,81 @@ namespace SpeedCC
     typedef SCBehaviorCaseT<SCWatchDouble>              SCBehaviorCaseDouble;
     typedef SCBehaviorCaseT<SCWatchInt>                 SCBehaviorCaseInt;
     typedef SCBehaviorCaseT<SCWatchLong>                SCBehaviorCaseLong;
+    typedef SCBehaviorCaseT<SCWatchULong>               SCBehaviorCaseULong;
     typedef SCBehaviorCaseT<SCWatchByte>                SCBehaviorCaseByte;
     typedef SCBehaviorCaseT<SCWatchBool>                SCBehaviorCaseBool;
     typedef SCBehaviorCaseT<SCWatchString>              SCBehaviorCaseString;
     
     
-    ///------------ SCBehaviorAddNumber
-    class SCBehaviorAddNumber : public SCBehavior
+    ///------------ SCBehaviorAddNumberT
+    template<typename T>
+    class SCBehaviorAddNumberT : public SCBehavior
     {
-    public:
-        SC_AVOID_CLASS_COPY(SCBehaviorAddNumber)
-        SC_DEFINE_CLASS_PTR(SCBehaviorAddNumber)
+    private:
+        typedef typename T::type    NumberType_t;
+        typedef typename T::Ptr     PtrType_t;
         
-        SC_DEFINE_CREATE_FUNC_0(SCBehaviorAddNumber)
-        SC_DEFINE_CREATE_FUNC_1(SCBehaviorAddNumber,const int)
-        SC_DEFINE_CREATE_FUNC_1(SCBehaviorAddNumber,SCWatchInt::Ptr)
-        SC_DEFINE_CREATE_FUNC_2(SCBehaviorAddNumber,SCWatchInt::Ptr,const int)
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorAddNumberT)
+        SC_DEFINE_CLASS_PTR(SCBehaviorAddNumberT)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorAddNumberT)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorAddNumberT,const NumberType_t)
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorAddNumberT,PtrType_t)
+        SC_DEFINE_CREATE_FUNC_2(SCBehaviorAddNumberT,PtrType_t,const NumberType_t)
         
         inline SCWatchInt::Ptr getWatch() const { return _ptrWatch; }
         void setWatch(SCWatchInt::Ptr ptrWatch) { _ptrWatch = ptrWatch;}
         
-        inline int getStep() const {return _nStep;}
-        void setStep(const int nStep) { _nStep = nStep;}
+        inline NumberType_t getStep() const {return _step;}
+        void setStep(const NumberType_t step) { _step = step;}
         
-        virtual void execute(const SCDictionary& par = SCDictionary()) override;
+        virtual void execute(const SCDictionary& par = SCDictionary()) override
+        {
+            if(_ptrWatch!=NULL && _step!=0)
+            {
+                (*_ptrWatch) += _step;
+            }
+        }
         
     protected:
-        SCBehaviorAddNumber();
-        SCBehaviorAddNumber(const int nStep);
-        SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch);
-        SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch,const int nStep);
+        SCBehaviorAddNumberT():
+        _step((NumberType_t)0)
+        {
+            _ptrWatch = T::create();
+        }
+        
+        SCBehaviorAddNumberT(const NumberType_t step):
+        _step(step)
+        {
+            _ptrWatch = T::create();
+        }
+        
+        SCBehaviorAddNumberT(PtrType_t ptrWatch):
+        _step(0),
+        _ptrWatch(ptrWatch)
+        {
+        }
+        
+        SCBehaviorAddNumberT(PtrType_t ptrWatch,const NumberType_t step):
+        _step(step),
+        _ptrWatch(ptrWatch)
+        {
+        }
         
     private:
-        int                 _nStep;
-        SCWatchInt::Ptr     _ptrWatch;
+        NumberType_t        _step;
+        typename T::Ptr     _ptrWatch;
     };
+    
+    typedef SCBehaviorAddNumberT<SCWatchUInt>                SCBehaviorAddUInt;
+    typedef SCBehaviorAddNumberT<SCWatchFloat>               SCBehaviorAddFloat;
+    typedef SCBehaviorAddNumberT<SCWatchDouble>              SCBehaviorAddDouble;
+    typedef SCBehaviorAddNumberT<SCWatchInt>                 SCBehaviorAddInt;
+    typedef SCBehaviorAddNumberT<SCWatchLong>                SCBehaviorAddLong;
+    typedef SCBehaviorAddNumberT<SCWatchULong>                SCBehaviorAddULong;
+    typedef SCBehaviorAddNumberT<SCWatchByte>                SCBehaviorAddByte;
+    typedef SCBehaviorAddNumberT<SCWatchString>              SCBehaviorAddString;
     
     ///------------ SCBehaviorBoolInvert
     class SCBehaviorBoolInvert : public SCBehavior

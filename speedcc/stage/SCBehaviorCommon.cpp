@@ -114,37 +114,13 @@ namespace SpeedCC
     }
     
     ///------------- SCBehaviorAddNumber
-    SCBehaviorAddNumber::SCBehaviorAddNumber():
-    _nStep(0)
-    {
-        _ptrWatch = SCWatchInt::create();
-    }
-    
-    SCBehaviorAddNumber::SCBehaviorAddNumber(const int nStep):
-    _nStep(nStep)
-    {
-        _ptrWatch = SCWatchInt::create();
-    }
-    
-    SCBehaviorAddNumber::SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch):
-    _nStep(0),
-    _ptrWatch(ptrWatch)
-    {
-    }
-    
-    SCBehaviorAddNumber::SCBehaviorAddNumber(SCWatchInt::Ptr ptrWatch,const int nStep):
-    _nStep(0),
-    _ptrWatch(ptrWatch)
-    {
-    }
-    
-    void SCBehaviorAddNumber::execute(const SCDictionary& par)
-    {
-        if(_ptrWatch!=NULL && _nStep!=0)
-        {
-            (*_ptrWatch) += _nStep;
-        }
-    }
+//    void SCBehaviorAddNumber::execute(const SCDictionary& par)
+//    {
+//        if(_ptrWatch!=NULL && _nStep!=0)
+//        {
+//            (*_ptrWatch) += _nStep;
+//        }
+//    }
     
     ///------------ SCBehaviorBoolInvert
     SCBehaviorBoolInvert::SCBehaviorBoolInvert()
