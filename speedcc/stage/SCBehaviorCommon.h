@@ -268,7 +268,7 @@ namespace SpeedCC
     typedef SCBehaviorAddNumberT<SCWatchDouble>              SCBehaviorAddDouble;
     typedef SCBehaviorAddNumberT<SCWatchInt>                 SCBehaviorAddInt;
     typedef SCBehaviorAddNumberT<SCWatchLong>                SCBehaviorAddLong;
-    typedef SCBehaviorAddNumberT<SCWatchULong>                SCBehaviorAddULong;
+    typedef SCBehaviorAddNumberT<SCWatchULong>               SCBehaviorAddULong;
     typedef SCBehaviorAddNumberT<SCWatchByte>                SCBehaviorAddByte;
     typedef SCBehaviorAddNumberT<SCWatchString>              SCBehaviorAddString;
     

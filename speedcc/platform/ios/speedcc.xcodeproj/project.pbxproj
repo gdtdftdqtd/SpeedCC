@@ -125,6 +125,7 @@
 		0A0C34DB202BFDC2003A7A31 /* SCBehaviorCocos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCBehaviorCocos.cpp; sourceTree = "<group>"; };
 		0A0C34DC202BFDC2003A7A31 /* SCBehaviorCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBehaviorCommon.h; sourceTree = "<group>"; };
 		0A0C34DD202BFDC2003A7A31 /* SCRole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCRole.cpp; sourceTree = "<group>"; };
+		0A0C34EB202C0394003A7A31 /* SCTriggerT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCTriggerT.h; sourceTree = "<group>"; };
 		0A1556C31FD4F31500CF7420 /* SCObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCObject.cpp; sourceTree = "<group>"; };
 		0A1556C61FD4F31600CF7420 /* SCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCObject.h; sourceTree = "<group>"; };
 		0A2803581FAB073A00E0174C /* SCDictionary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCDictionary.cpp; sourceTree = "<group>"; };
@@ -241,6 +242,7 @@
 				0A0C34DB202BFDC2003A7A31 /* SCBehaviorCocos.cpp */,
 				0A0C34C8202BFDC2003A7A31 /* SCStageMacroDef.h */,
 				0A0C34C7202BFDC2003A7A31 /* SCPerformIDDef.h */,
+				0A0C34EB202C0394003A7A31 /* SCTriggerT.h */,
 			);
 			name = stage;
 			path = ../../stage;

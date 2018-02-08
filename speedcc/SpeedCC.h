@@ -44,6 +44,7 @@
 #include "stage/SCStrategy.h"
 #include "stage/SCActor.h"
 #include "stage/SCRoleBuilder.h"
+#include "stage/SCTriggerT.h"
 
 
 

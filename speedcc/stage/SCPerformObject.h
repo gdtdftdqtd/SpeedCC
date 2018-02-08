@@ -17,6 +17,7 @@
 
 namespace SpeedCC
 {
+    ///------------ SCPerformObject
     class SCPerformObject : public SCObject
     {
     public:
@@ -39,6 +40,7 @@ namespace SpeedCC
         bool        _bActive;
     };
     
+    ///---------- SCBehavior
     class SCBehavior : public SCPerformObject
     {
     protected:
@@ -53,6 +55,8 @@ namespace SpeedCC
         virtual void execute(const SCDictionary& par=SCDictionary()) = 0;
     };
     
+    
+    ///------------ SCPropertyHolder
     class SCPropertyHolder : public SCPerformObject
     {
     public:

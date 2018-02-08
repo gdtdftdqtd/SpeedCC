@@ -28,7 +28,7 @@ namespace SpeedCC
     _nPostMsgCallStackCounter(0),
     _nSendMsgCallStackCounter(0),
     _bMessageQueFlag(true),
-    _bFrameMessageEnabled(false)
+    _bFrameMessageEnabled(true)
     {
     }
     
@@ -156,13 +156,17 @@ namespace SpeedCC
                           
                           if(info.bAdd)
                           {// add listener
-                              auto it1 = std::remove_if(_listenerList.begin(),_listenerList.end(),
-                                                        [&info](const SListenerInfo& it) -> bool
-                                                        {
-                                                            return (it.pListener==info.listener.pListener);
-                                                        });
-                              
-                              _listenerList.erase(it1,_listenerList.end());
+                              _listenerList.remove_if([&info](const SListenerInfo& it) -> bool
+                                                      {
+                                                          return (it.pListener==info.listener.pListener);
+                                                      });
+//                              auto it1 = std::remove_if(_listenerList.begin(),_listenerList.end(),
+//                                                        [&info](const SListenerInfo& it) -> bool
+//                                                        {
+//                                                            return (it.pListener==info.listener.pListener);
+//                                                        });
+//
+//                              _listenerList.erase(it1,_listenerList.end());
                               
                               SListenerInfo listenerInfo = info.listener;
                               _listenerList.push_back(listenerInfo);
