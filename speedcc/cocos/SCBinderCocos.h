@@ -148,7 +148,7 @@ namespace SpeedCC
                                                {
                                                    if(_pProgressTimer!=NULL && this->getActive())
                                                    {
-                                                       _pProgressTimer->setPercentage(newNum);
+                                                       _pProgressTimer->setPercentage((*ptrNum));
                                                    }
                                                });
             
@@ -175,9 +175,7 @@ namespace SpeedCC
             _nFuncID = nID;
         }
         
-        inline void setProgressTimer(cocos2d::ProgressTimer* pProgress)
-        { _pProgressTimer = pProgress; }
-        
+        void setProgressTimer(cocos2d::ProgressTimer* pProgress);
         virtual void reset() override;
         
     protected:
@@ -188,7 +186,7 @@ namespace SpeedCC
         virtual void onActiveChanged(const bool bNewActive) override;
         
     private:
-        cocos2d::ProgressTimer*     _pProgressTimer;
+        cocos2d::ProgressTimer*                 _pProgressTimer;
         std::function<int(SCObject::Ptr ptr)>   _getValueFunc;
     };
     

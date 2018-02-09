@@ -44,7 +44,7 @@ namespace SpeedCC
         static cocos2d::Ref* create();
         static cocos2d::Ref* create(SCObject::Ptr ptr);
         
-        inine void setPtr(SCObject::Ptr ptr) { _ptrObj = ptr; }
+        inline void setPtr(SCObject::Ptr ptr) { _ptrObj = ptr; }
         inline SCObject::Ptr getPtr() const { return _ptrObj;}
         
     protected:

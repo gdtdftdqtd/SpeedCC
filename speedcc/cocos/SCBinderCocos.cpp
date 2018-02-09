@@ -77,7 +77,7 @@ namespace SpeedCC
         _pLabel = NULL;
     }
     
-    ///-----------------
+    ///----------------- SCBinderUISwitch
     SCBinderUISwitch::SCBinderUISwitch():
     _pToggleMenuItem(NULL),
     _callbackFunc(NULL)
@@ -106,7 +106,7 @@ namespace SpeedCC
     
     SCBinderUISwitch::~SCBinderUISwitch()
     {
-        this->removeUpdateFunc();
+//        this->removeUpdateFunc();
     }
     
     void SCBinderUISwitch::setWatch(SCWatchBool::Ptr ptrWatch)
@@ -193,7 +193,12 @@ namespace SpeedCC
         }
     }
     
-    ///-----------------
+    ///----------------- SCBinderUIProgress
+    SCBinderUIProgress::~SCBinderUIProgress()
+    {
+        
+    }
+    
     void SCBinderUIProgress::reset()
     {
         SCBinder::reset();
@@ -205,6 +210,16 @@ namespace SpeedCC
     void SCBinderUIProgress::onActiveChanged(const bool bNewActive)
     {
         if(bNewActive && _pProgressTimer!=NULL && _getValueFunc!=NULL && this->getActive())
+        {
+            _pProgressTimer->setPercentage(_getValueFunc(_ptrWatch));
+        }
+    }
+    
+    void SCBinderUIProgress::setProgressTimer(cocos2d::ProgressTimer* pProgress)
+    {
+        _pProgressTimer = pProgress;
+        
+        if(_pProgressTimer!=NULL && _getValueFunc!=NULL && this->getActive())
         {
             _pProgressTimer->setPercentage(_getValueFunc(_ptrWatch));
         }
