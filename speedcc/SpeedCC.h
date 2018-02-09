@@ -27,7 +27,7 @@
 #include "cocos/SCRefHolder.h"
 #include "cocos/SCSceneNavigator.h"
 #include "cocos/SCSceneController.h"
-#include "cocos/SCNodeProperty.h"
+#include "cocos/SCNodeStyle.h"
 #include "cocos/SCBinderCocos.h"
 #include "cocos/SCNodeUtils.h"
 #include "cocos/SCUIMacro.h"

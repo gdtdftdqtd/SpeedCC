@@ -18,7 +18,7 @@
 #include "../stage/SCBehaviorCommon.h"
 
 #include "SCBinderCocos.h"
-#include "SCNodeProperty.h"
+#include "SCNodeStyle.h"
 #include "SCRefHolder.h"
 
 #include "cocos2d.h"
@@ -28,7 +28,7 @@ namespace SpeedCC
     class SCSceneController;
     class SCUIBuilder;
     
-    typedef void (*FUN_SCSetProperty_t)(cocos2d::Node* pNode,const SCString& strProperty,SCNodeProperty::SFilterConfig* pFilterConfig);
+    typedef void (*FUN_SCSetStyle_t)(cocos2d::Node* pNode,const SCString& strStyle,SCNodeStyle::SFilterConfig* pFilterConfig);
     
     struct SCUIArg
     {
@@ -151,13 +151,13 @@ namespace SpeedCC
         {
             template<typename T>
             NodePurifier(T* node):
-            pfunSetProperty(&SCNodeProperty::setProperty<T>)
+            pfunSetStyle(&SCNodeStyle::setStyle<T>)
             {
                 ptrNodeHolder = SCRef2Ptr::create(node);
             }
             
             SCRef2Ptr::Ptr        ptrNodeHolder;
-            FUN_SCSetProperty_t     pfunSetProperty;
+            FUN_SCSetStyle_t     pfunSetStyle;
         };
         
         struct MenuItemPurifier
@@ -231,24 +231,24 @@ namespace SpeedCC
     {
         friend class SCUIBuilder;
         
-        typedef void (*FUN_SCSetProperty_t)(cocos2d::Node* pNode,const SCString& strProperty);
+        typedef void (*FUN_SCSetStyle_t)(cocos2d::Node* pNode,const SCString& strStyle);
         
         struct ContainerEndFunctor
         {
             cocos2d::Node*              pNode;
-            SCString                    strProperty;
-            FUN_SCSetProperty_t         pfunSetProperty;
+            SCString                    strStyle;
+            FUN_SCSetStyle_t         pfunSetStyle;
             
             ContainerEndFunctor():
-            pfunSetProperty(NULL),
+            pfunSetStyle(NULL),
             pNode(NULL)
             {}
             
             virtual void operator()()
             {
-                if(pNode!=NULL && pfunSetProperty!=NULL && !strProperty.isEmpty())
+                if(pNode!=NULL && pfunSetStyle!=NULL && !strStyle.isEmpty())
                 {
-                    (*pfunSetProperty)(pNode,strProperty);
+                    (*pfunSetStyle)(pNode,strStyle);
                 }
             }
         };

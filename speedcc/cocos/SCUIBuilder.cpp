@@ -27,7 +27,7 @@ namespace SpeedCC
 
     void SCUIBuilder::beginContainerRoot(const float fPosX,
                                  const float fPosY,
-                                 const SCUIArg::StringPurifier& property,
+                                 const SCUIArg::StringPurifier& style,
                                  const SCUIArg::SizePurifier& sizePurifier,
                                  const SCUIArg::NodePurifier& parentNode,
                                  cocos2d::Ref* pRef)
@@ -60,7 +60,7 @@ namespace SpeedCC
             _pCurrentBedNode->setPositionY(SpeedCC::SCNodeUtils::posP2A(cocos2d::Vec2(fPosX,fPosY),size).y);
         }
         
-        parentNode.pfunSetProperty(pParentNode,property.strResult,NULL);
+        parentNode.pfunSetStyle(pParentNode,style.strResult,NULL);
         
         this->pushContainerStack(pParentNode);
     }
@@ -82,7 +82,7 @@ namespace SpeedCC
     void SCUIBuilder::insertUserNode(const SCUIArg::NodePurifier& userNode,
                                      const float fPosX,
                                      const float fPosY,
-                                     const SCUIArg::StringPurifier& property)
+                                     const SCUIArg::StringPurifier& style)
     {
         Node* pNode = dynamic_cast<Node*>(userNode.ptrNodeHolder->getRef());
         SCASSERT(pNode!=NULL);
@@ -93,13 +93,13 @@ namespace SpeedCC
         if(top.containerType==SCUITypeDef::EContainerType::kLayoutPadding)
         {// for padding layout container, all of children position are ignored
         // it's position is handled by layout container while container context pops.
-            SCNodeProperty::SFilterConfig config;
+            SCNodeStyle::SFilterConfig config;
             config.setupPosition(true);
-            userNode.pfunSetProperty(pNode,property.strResult,&config);
+            userNode.pfunSetStyle(pNode,style.strResult,&config);
         }
         else
         {
-            userNode.pfunSetProperty(pNode,property.strResult,NULL);
+            userNode.pfunSetStyle(pNode,style.strResult,NULL);
         }
         
     }
@@ -108,11 +108,11 @@ namespace SpeedCC
     cocos2d::Sprite* SCUIBuilder::insertSprite(cocos2d::Sprite** ppSprite,
                                   const float fPosX,
                                   const float fPosY,
-                                  const SCUIArg::StringPurifier& property,
+                                  const SCUIArg::StringPurifier& style,
                                   const SCString& strImage)
     {
         auto pSprite = cocos2d::Sprite::create(SCFileUtils::getFullPathFile(strImage).c_str());
-        this->insertUserNode(pSprite,fPosX,fPosY,property);
+        this->insertUserNode(pSprite,fPosX,fPosY,style);
         SC_ASSIGN_NODE(ppSprite,pSprite);
         return pSprite;
     }
@@ -122,7 +122,7 @@ namespace SpeedCC
     Label* SCUIBuilder::insertLabel(cocos2d::Label** ppLabel,
                                 const float fPosX,
                                 const float fPosY,
-                                const SCUIArg::StringPurifier& property,
+                                const SCUIArg::StringPurifier& style,
                                 const SCUIArg::LabelStringPurifier& labelString,
                                 const SCString& strFont,
                                 const float fFontSize)
@@ -130,7 +130,7 @@ namespace SpeedCC
         SCString strLabelText = labelString.strResult;
         
         auto pLabel = Label::createWithSystemFont(strLabelText.c_str(),strFont.c_str(),fFontSize);
-        this->addLabel(pLabel,fPosX,fPosY,property,labelString);
+        this->addLabel(pLabel,fPosX,fPosY,style,labelString);
         SC_ASSIGN_NODE(ppLabel,pLabel);
         return pLabel;
     }
@@ -138,7 +138,7 @@ namespace SpeedCC
     Label* SCUIBuilder::insertLabelTTF(cocos2d::Label** ppLabel,
                                    const float fPosX,
                                    const float fPosY,
-                                   const SCUIArg::StringPurifier& property,
+                                   const SCUIArg::StringPurifier& style,
                                    const SCUIArg::LabelStringPurifier& labelString,
                                    const SCString& strFont,
                                    const float fFontSize)
@@ -146,7 +146,7 @@ namespace SpeedCC
         SCString strLabelText = labelString.strResult;
         
         auto pLabel = Label::createWithTTF(strLabelText.c_str(),strFont.c_str(),fFontSize);
-        this->addLabel(pLabel,fPosX,fPosY,property,labelString);
+        this->addLabel(pLabel,fPosX,fPosY,style,labelString);
         SC_ASSIGN_NODE(ppLabel,pLabel);
         return pLabel;
     }
@@ -154,14 +154,14 @@ namespace SpeedCC
     cocos2d::Label* SCUIBuilder::insertLabelBMFont(cocos2d::Label** ppLabel,
                                       const float fPosX,
                                       const float fPosY,
-                                      const SCUIArg::StringPurifier& property,
+                                      const SCUIArg::StringPurifier& style,
                                       const SCUIArg::LabelStringPurifier& labelString,
                                       const SCString& strFile)
     {
         SCString strLabelText = labelString.strResult;
         
         auto pLabel = Label::createWithBMFont(strFile.c_str(),strLabelText.c_str());
-        this->addLabel(pLabel,fPosX,fPosY,property,labelString);
+        this->addLabel(pLabel,fPosX,fPosY,style,labelString);
         SC_ASSIGN_NODE(ppLabel,pLabel);
         return pLabel;
     }
@@ -169,11 +169,11 @@ namespace SpeedCC
     void SCUIBuilder::addLabel(const SCUIArg::NodePurifier& labelNode,
                                const float fPosX,
                               const float fPosY,
-                              const SCUIArg::StringPurifier& property,
+                              const SCUIArg::StringPurifier& style,
                               const SCUIArg::LabelStringPurifier& labelString)
     {
         this->bindLabel(labelNode,labelString);
-        this->insertUserNode(labelNode, fPosX, fPosY, property);
+        this->insertUserNode(labelNode, fPosX, fPosY, style);
     }
     
     void SCUIBuilder::bindLabel(const SCUIArg::NodePurifier& labelNode,
@@ -193,7 +193,7 @@ namespace SpeedCC
     cocos2d::MenuItemSprite* SCUIBuilder::insertButton(cocos2d::MenuItemSprite** ppMenuItemSprite,
                                                       const float fPosX,
                                                       const float fPosY,
-                                                      const SCUIArg::StringPurifier& property,
+                                                      const SCUIArg::StringPurifier& style,
                                                       const SCString& strImageNormal,
                                                       const SCString& strSelect,
                                                       const SCString& strDisable,
@@ -208,7 +208,7 @@ namespace SpeedCC
                                                  pSpriteArray[1],
                                                  pSpriteArray[2]);
         
-        this->addButton(pItemImage,fPosX,fPosY,property,bvrPurifier);
+        this->addButton(pItemImage,fPosX,fPosY,style,bvrPurifier);
         SC_ASSIGN_NODE(ppMenuItemSprite,pItemImage);
         
         return pItemImage;
@@ -217,7 +217,7 @@ namespace SpeedCC
     MenuItemLabel* SCUIBuilder::insertButtonLabel(MenuItemLabel** ppMenuItemLabel,
                                       const float fPosX,
                                       const float fPosY,
-                                      const SCUIArg::StringPurifier& property,
+                                      const SCUIArg::StringPurifier& style,
                                       const SCUIArg::LabelStringPurifier& labelString,
                                       const SCString& strFont,
                                       const float fFontSize,
@@ -227,7 +227,7 @@ namespace SpeedCC
         
         auto pLabel = Label::createWithSystemFont(strLabelText.c_str(),strFont.c_str(),fFontSize);
         
-        auto ret = this->addButtonLabel(pLabel,fPosX,fPosY,property,labelString,bvrPurifier);
+        auto ret = this->addButtonLabel(pLabel,fPosX,fPosY,style,labelString,bvrPurifier);
         SC_ASSIGN_NODE(ppMenuItemLabel,ret);
         return ret;
     }
@@ -235,7 +235,7 @@ namespace SpeedCC
     MenuItemLabel* SCUIBuilder::insertButtonLabelTTF(MenuItemLabel** ppMenuItemLabel,
                                                  const float fPosX,
                                                  const float fPosY,
-                                                 const SCUIArg::StringPurifier& property,
+                                                 const SCUIArg::StringPurifier& style,
                                                  const SCUIArg::LabelStringPurifier& labelString,
                                                  const SCString& strFont,
                                                  const float fFontSize,
@@ -243,7 +243,7 @@ namespace SpeedCC
     {
         SCString strLabelText = labelString.strResult;
         auto pLabel = Label::createWithTTF(strLabelText.c_str(),strFont.c_str(),fFontSize);
-        auto ret = this->addButtonLabel(pLabel,fPosX,fPosY,property,labelString,bvrPurifier);
+        auto ret = this->addButtonLabel(pLabel,fPosX,fPosY,style,labelString,bvrPurifier);
         SC_ASSIGN_NODE(ppMenuItemLabel,ret);
         return ret;
     }
@@ -251,14 +251,14 @@ namespace SpeedCC
     MenuItemLabel* SCUIBuilder::insertButtonLabelBMFont(cocos2d::MenuItemLabel** ppMenuItemLabel,
                                                     const float fPosX,
                                                     const float fPosY,
-                                                    const SCUIArg::StringPurifier& property,
+                                                    const SCUIArg::StringPurifier& style,
                                                     const SCUIArg::LabelStringPurifier& labelString,
                                                     const SCString& strFile,
                                                     SCUIArg::BehaviorPurifier bvrPurifier)
     {
         SCString strLabelText = labelString.strResult;
         auto pLabel = Label::createWithBMFont(strFile.c_str(),strLabelText.c_str());
-        auto ret = this->addButtonLabel(pLabel,fPosX,fPosY,property,labelString,bvrPurifier);
+        auto ret = this->addButtonLabel(pLabel,fPosX,fPosY,style,labelString,bvrPurifier);
         SC_ASSIGN_NODE(ppMenuItemLabel,ret);
         return ret;
     }
@@ -266,7 +266,7 @@ namespace SpeedCC
     MenuItemToggle* SCUIBuilder::insertButtonSwitch(MenuItemToggle** ppMenuItemToggle,
                                                 const float fPosX,
                                                 const float fPosY,
-                                                const SCUIArg::StringPurifier& property,
+                                                const SCUIArg::StringPurifier& style,
                                                 const SCUIArg::MenuItemPurifier& itemOn,
                                                 const SCUIArg::MenuItemPurifier& itemOff,
                                                 const SCUIArg::BoolPurifier& value,
@@ -293,7 +293,7 @@ namespace SpeedCC
         bvrPurifier.setupBehavior(_pCurrentRefCaller, pToggleItem);
         SCNodeUtils::addClickable(pToggleItem, bvrPurifier.ptrResultBvr);
         
-        this->insertUserNode(pToggleItem, fPosX, fPosY, property);
+        this->insertUserNode(pToggleItem, fPosX, fPosY, style);
         
 //        _buttonItem2InfoMap[pToggleItem] = bvrPurifier.ptrResultBvr;
         
@@ -305,7 +305,7 @@ namespace SpeedCC
     cocos2d::ProgressTimer* SCUIBuilder::insertProgressBar(cocos2d::ProgressTimer** ppProgress,
                                               const float fPosX,
                                               const float fPosY,
-                                              const SCUIArg::StringPurifier& property,
+                                              const SCUIArg::StringPurifier& style,
                                               const SCString& strBackgroundImage,
                                               const SCString& strFrontgroundImage,
                                               SCUIArg::NumberPurifier value,
@@ -339,7 +339,7 @@ namespace SpeedCC
             pSpriteBack->setPosition(Vec2(pSpriteBar->getContentSize().width/2,pSpriteBar->getContentSize().height/2));
         }
         
-        this->insertUserNode(pProgressBar, fPosX, fPosY, property);
+        this->insertUserNode(pProgressBar, fPosX, fPosY, style);
         
         if(value.ptrBinderProgress!=NULL)
         {
@@ -358,7 +358,7 @@ namespace SpeedCC
     ProgressTimer* SCUIBuilder::insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
                                                      const float fPosX,
                                                      const float fPosY,
-                                                     const SCUIArg::StringPurifier& property,
+                                                     const SCUIArg::StringPurifier& style,
                                                      const SCString& strBackgroundImage,
                                                      const SCString& strFrontgroundImage,
                                                      SCUIArg::NumberPurifier value,
@@ -380,7 +380,7 @@ namespace SpeedCC
         
         pProgressBar->setReverseDirection(!bCCW);
         
-        this->insertUserNode(pProgressBar, fPosX, fPosY, property);
+        this->insertUserNode(pProgressBar, fPosX, fPosY, style);
         
         if(value.ptrBinderProgress!=NULL)
         {
@@ -399,7 +399,7 @@ namespace SpeedCC
     void SCUIBuilder::containerAlignment(Node** ppNode,
                                               const float fPosX,
                                               const float fPosY,
-                                              const SCUIArg::StringPurifier& property,
+                                              const SCUIArg::StringPurifier& style,
                                               const bool bHorizontal,
                                               const float fPadding,
                                               const int nDock)
@@ -408,18 +408,18 @@ namespace SpeedCC
         pNode->setIgnoreAnchorPointForPosition(false);
         pNode->setAnchorPoint(Vec2(0.5,0.5));
         
-        SCString strDockProperty = SCNodeProperty::extractKey(SC_NODE_PROPERTY_DOCK, property.strResult);
-        SCString strNewProperty = property.strResult;
-        if(!strDockProperty.isEmpty())
+        SCString strDockstyle = SCNodeStyle::extractKey(SC_NODE_STYLE_DOCK, style.strResult);
+        SCString strNewstyle = style.strResult;
+        if(!strDockstyle.isEmpty())
         {
-            strNewProperty = SCNodeProperty::removeKey(SC_NODE_PROPERTY_DOCK,property.strResult);
+            strNewstyle = SCNodeStyle::removeKey(SC_NODE_STYLE_DOCK,style.strResult);
         }
         
         SCUITypeDef::SUIContext context;
         context.pContainerNode = pNode;
         context.containerType = SCUITypeDef::EContainerType::kLayoutPadding;
         
-        context.endFunc = [bHorizontal,fPadding,nDock,strDockProperty](SCUITypeDef::SUIContext& context)
+        context.endFunc = [bHorizontal,fPadding,nDock,strDockstyle](SCUITypeDef::SUIContext& context)
         {
             Node* pNode = context.pContainerNode;
             auto childrenVec = pNode->getChildren();
@@ -494,13 +494,13 @@ namespace SpeedCC
                 }
             }
             
-            if(!strDockProperty.isEmpty())
+            if(!strDockstyle.isEmpty())
             {
-                SCNodeProperty::setProperty<Node>(pNode, strDockProperty);
+                SCNodeStyle::setStyle<Node>(pNode, strDockstyle);
             }
         };
         
-        this->insertUserNode(pNode, fPosX, fPosY, strNewProperty);
+        this->insertUserNode(pNode, fPosX, fPosY, strNewstyle);
         
         _contextStack.push_front(context);
     }
@@ -509,30 +509,30 @@ namespace SpeedCC
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
                                             const float fPosX,
                                                const float fPosY,
-                                               const SCUIArg::StringPurifier& property,
+                                               const SCUIArg::StringPurifier& style,
                                                const SCUIArg::LabelStringPurifier& labelString,
                                                SCUIArg::BehaviorPurifier bvrPurifier)
     {
         this->bindLabel(pLabel,labelString);
         auto pItemLabel = MenuItemLabel::create(pLabel);
         
-        SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;
+        SpeedCC::SCNodeStyle::SFilterConfig scTemFilterConfig;
         scTemFilterConfig.bExclude = false;
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_COLOR_TEXT);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_FONT_SIZE);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_FONT_NAME);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_PROPERTY_LABEL);
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_COLOR_TEXT);
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_FONT_SIZE);
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_FONT_NAME);
+        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_LABEL);
         
-        SCNodeProperty::setProperty<Label>(pLabel, property.strResult,&scTemFilterConfig);
+        SCNodeStyle::setStyle<Label>(pLabel, style.strResult,&scTemFilterConfig);
         
-        this->addButton(pItemLabel,fPosX,fPosY,property,bvrPurifier);
+        this->addButton(pItemLabel,fPosX,fPosY,style,bvrPurifier);
         return pItemLabel;
     }
     
     void SCUIBuilder::addButton(const SCUIArg::NodePurifier& itemNode,
                    const float fPosX,
                    const float fPosY,
-                   const SCUIArg::StringPurifier& property,
+                   const SCUIArg::StringPurifier& style,
                    SCUIArg::BehaviorPurifier bvrPurifier)
     {
         auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.ptrNodeHolder->getRef());
@@ -540,7 +540,7 @@ namespace SpeedCC
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);
         SCNodeUtils::addClickable(pMenuItem, bvrPurifier.ptrResultBvr);
         
-        this->insertUserNode(pMenuItem, fPosX, fPosY, property);
+        this->insertUserNode(pMenuItem, fPosX, fPosY, style);
     }
     
     ///------------ layer
@@ -548,12 +548,12 @@ namespace SpeedCC
     LayerColor* SCUIBuilder::insertLayerColor(LayerColor** ppLayer,
                                               const float fPosX,
                                               const float fPosY,
-                                              const SCUIArg::StringPurifier& property,
+                                              const SCUIArg::StringPurifier& style,
                                               const cocos2d::Size& size,
                                               const cocos2d::Color4B& crBackground)
     {
         auto pLayer = LayerColor::create(crBackground);
-        this->addLayer(pLayer,fPosX,fPosY,property,size);
+        this->addLayer(pLayer,fPosX,fPosY,style,size);
         
         SC_ASSIGN_NODE(ppLayer,pLayer);
         
@@ -563,11 +563,11 @@ namespace SpeedCC
     cocos2d::Layer* SCUIBuilder::insertLayer(cocos2d::Layer** ppLayer,
                                 const float fPosX,
                                 const float fPosY,
-                                const SCUIArg::StringPurifier& property,
+                                const SCUIArg::StringPurifier& style,
                                 const cocos2d::Size& size)
     {
         auto pLayer = Layer::create();
-        this->addLayer(pLayer,fPosX,fPosY,property,size);
+        this->addLayer(pLayer,fPosX,fPosY,style,size);
         SC_ASSIGN_NODE(ppLayer,pLayer);
         
         return pLayer;
@@ -576,7 +576,7 @@ namespace SpeedCC
     void SCUIBuilder::addLayer(const SCUIArg::NodePurifier& layerNode,
                                const float fPosX,
                               const float fPosY,
-                              const SCUIArg::StringPurifier& property,
+                              const SCUIArg::StringPurifier& style,
                               const cocos2d::Size& size)
     {
         cocos2d::Layer* pLayer = dynamic_cast<cocos2d::Layer*>(layerNode.ptrNodeHolder->getRef());
@@ -586,7 +586,7 @@ namespace SpeedCC
         pLayer->setAnchorPoint(cocos2d::Vec2(0.5,0.5));
         pLayer->setIgnoreAnchorPointForPosition(false);
         
-        this->insertUserNode(layerNode, fPosX, fPosY, property);
+        this->insertUserNode(layerNode, fPosX, fPosY, style);
     }
     
     void SCUIBuilder::pushContainerStack(cocos2d::Node* pNode)

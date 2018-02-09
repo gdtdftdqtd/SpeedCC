@@ -1,6 +1,6 @@
 
 
-#include "SCNodeProperty.h"
+#include "SCNodeStyle.h"
 #include "SCNodeUtils.h"
 #include "SCSystem.h"
 
@@ -10,40 +10,40 @@ namespace SpeedCC
 {
     // keep order by alphabet, so that it can apply binary search
     // go to http://textmechanic.com/Sort-Text-Lines.html for sorting
-    SCNodeProperty::SPropertyPair SCNodeProperty::s_PropertyPairArray[] =
+    SCNodeStyle::SStylePair SCNodeStyle::s_StylePairArray[] =
     {
-        {SC_NODE_PROPERTY_ANCHOR        ,VEC2_TYPE},
-        {SC_NODE_PROPERTY_ANCHOR_ON     ,BOOL_TYPE},
-        {SC_NODE_PROPERTY_COLOR         ,COLOR3_TYPE},
-        {SC_NODE_PROPERTY_COLOR_TEXT    ,COLOR4_TYPE},
-        {SC_NODE_PROPERTY_DOCK          ,DOCK_TYPE},
-        {SC_NODE_PROPERTY_FLIP_X        ,BOOL_TYPE},
-        {SC_NODE_PROPERTY_FLIP_Y        ,BOOL_TYPE},
-        {SC_NODE_PROPERTY_FONT_NAME     ,STRING_TYPE},
-        {SC_NODE_PROPERTY_FONT_SIZE     ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_IMAGE         ,STRING_TYPE},
-        {SC_NODE_PROPERTY_LABEL         ,STRING_TYPE},
-        {SC_NODE_PROPERTY_OPACITY       ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_ROTATION      ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_ROTATION_X    ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_ROTATION_Y    ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_SCALE         ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_SCALE_X       ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_SCALE_Y       ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_SKEW_X        ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_SKEW_Y        ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_TAG           ,INT_TYPE},
-        {SC_NODE_PROPERTY_VISIBLE       ,BOOL_TYPE},
-        {SC_NODE_PROPERTY_X             ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_X_BY          ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_XY            ,VEC2_TYPE},
-        {SC_NODE_PROPERTY_Y             ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_Y_BY          ,FLOAT_TYPE},
-        {SC_NODE_PROPERTY_Z             ,INT_TYPE},
+        {SC_NODE_STYLE_ANCHOR        ,VEC2_TYPE},
+        {SC_NODE_STYLE_ANCHOR_ON     ,BOOL_TYPE},
+        {SC_NODE_STYLE_COLOR         ,COLOR3_TYPE},
+        {SC_NODE_STYLE_COLOR_TEXT    ,COLOR4_TYPE},
+        {SC_NODE_STYLE_DOCK          ,DOCK_TYPE},
+        {SC_NODE_STYLE_FLIP_X        ,BOOL_TYPE},
+        {SC_NODE_STYLE_FLIP_Y        ,BOOL_TYPE},
+        {SC_NODE_STYLE_FONT_NAME     ,STRING_TYPE},
+        {SC_NODE_STYLE_FONT_SIZE     ,FLOAT_TYPE},
+        {SC_NODE_STYLE_IMAGE         ,STRING_TYPE},
+        {SC_NODE_STYLE_LABEL         ,STRING_TYPE},
+        {SC_NODE_STYLE_OPACITY       ,FLOAT_TYPE},
+        {SC_NODE_STYLE_ROTATION      ,FLOAT_TYPE},
+        {SC_NODE_STYLE_ROTATION_X    ,FLOAT_TYPE},
+        {SC_NODE_STYLE_ROTATION_Y    ,FLOAT_TYPE},
+        {SC_NODE_STYLE_SCALE         ,FLOAT_TYPE},
+        {SC_NODE_STYLE_SCALE_X       ,FLOAT_TYPE},
+        {SC_NODE_STYLE_SCALE_Y       ,FLOAT_TYPE},
+        {SC_NODE_STYLE_SKEW_X        ,FLOAT_TYPE},
+        {SC_NODE_STYLE_SKEW_Y        ,FLOAT_TYPE},
+        {SC_NODE_STYLE_TAG           ,INT_TYPE},
+        {SC_NODE_STYLE_VISIBLE       ,BOOL_TYPE},
+        {SC_NODE_STYLE_X             ,FLOAT_TYPE},
+        {SC_NODE_STYLE_X_BY          ,FLOAT_TYPE},
+        {SC_NODE_STYLE_XY            ,VEC2_TYPE},
+        {SC_NODE_STYLE_Y             ,FLOAT_TYPE},
+        {SC_NODE_STYLE_Y_BY          ,FLOAT_TYPE},
+        {SC_NODE_STYLE_Z             ,INT_TYPE},
     };
     
     
-    void SCNodeProperty::setProperty(Node* pNode,const SCDictionary& dic)
+    void SCNodeStyle::setStyle(Node* pNode,const SCDictionary& dic)
     {
         SCASSERT(pNode!=NULL);
         SC_RETURN_V_IF(pNode==NULL);
@@ -54,207 +54,207 @@ namespace SpeedCC
         Color3B crValue;
         Vec2 vec2;
         
-        if(SCNodeProperty::getInt(dic,SC_NODE_PROPERTY_TAG,nValue))
+        if(SCNodeStyle::getInt(dic,SC_NODE_STYLE_TAG,nValue))
         {
             pNode->setTag(nValue);
         }
         
-        if(SCNodeProperty::getColor3(dic,SC_NODE_PROPERTY_COLOR, crValue))
+        if(SCNodeStyle::getColor3(dic,SC_NODE_STYLE_COLOR, crValue))
         {
             pNode->setColor(crValue);
         }
         
-        if(SCNodeProperty::getVec2(dic,SC_NODE_PROPERTY_XY,vec2))
+        if(SCNodeStyle::getVec2(dic,SC_NODE_STYLE_XY,vec2))
         {
             auto pos = SCNodeUtils::posP2A(vec2,pNode->getContentSize());
             pNode->setPosition(pos);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_X,fValue))
         {
             auto pos = SCNodeUtils::posP2A(Vec2(fValue,0),pNode->getContentSize());
             pNode->setPositionX(pos.x);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_Y,fValue))
         {
             auto pos = SCNodeUtils::posP2A(Vec2(0,fValue),pNode->getContentSize());
             pNode->setPositionY(pos.y);
         }
         
-        if(SCNodeProperty::getInt(dic,SC_NODE_PROPERTY_Z,nValue))
+        if(SCNodeStyle::getInt(dic,SC_NODE_STYLE_Z,nValue))
         {
             pNode->setLocalZOrder(nValue);
         }
         
-        if(SCNodeProperty::getVec2(dic,SC_NODE_PROPERTY_ANCHOR,vec2))
+        if(SCNodeStyle::getVec2(dic,SC_NODE_STYLE_ANCHOR,vec2))
         {
             pNode->setAnchorPoint(vec2);
         }
         
-        if(SCNodeProperty::getBool(dic,SC_NODE_PROPERTY_ANCHOR_ON,bValue))
+        if(SCNodeStyle::getBool(dic,SC_NODE_STYLE_ANCHOR_ON,bValue))
         {
             pNode->setIgnoreAnchorPointForPosition(bValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_SCALE,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SCALE,fValue))
         {
             pNode->setScale(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_SCALE_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SCALE_X,fValue))
         {
             pNode->setScaleX(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_SCALE_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SCALE_Y,fValue))
         {
             pNode->setScaleY(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_OPACITY,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_OPACITY,fValue))
         {
             pNode->setOpacity(fValue);
         }
         
-        if(SCNodeProperty::getBool(dic,SC_NODE_PROPERTY_VISIBLE,bValue))
+        if(SCNodeStyle::getBool(dic,SC_NODE_STYLE_VISIBLE,bValue))
         {
             pNode->setVisible(bValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_ROTATION,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_ROTATION,fValue))
         {
             pNode->setRotation(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_ROTATION_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_ROTATION_X,fValue))
         {
             pNode->setRotationSkewX(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_ROTATION_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_ROTATION_Y,fValue))
         {
             pNode->setRotationSkewY(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_SKEW_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SKEW_X,fValue))
         {
             pNode->setSkewX(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_SKEW_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SKEW_Y,fValue))
         {
             pNode->setSkewY(fValue);
         }
         
-        if(SCNodeProperty::getInt(dic, SC_NODE_PROPERTY_DOCK, nValue))
+        if(SCNodeStyle::getInt(dic, SC_NODE_STYLE_DOCK, nValue))
         {
             SCNodeUtils::setDock(pNode, nValue);
         }
         
-        if(SCNodeProperty::getFloat(dic, SC_NODE_PROPERTY_X_BY, fValue))
+        if(SCNodeStyle::getFloat(dic, SC_NODE_STYLE_X_BY, fValue))
         {
             SCNodeUtils::setPositionBy(pNode, fValue, 0);
         }
         
-        if(SCNodeProperty::getFloat(dic, SC_NODE_PROPERTY_Y_BY, fValue))
+        if(SCNodeStyle::getFloat(dic, SC_NODE_STYLE_Y_BY, fValue))
         {
             SCNodeUtils::setPositionBy(pNode, 0, fValue);
         }
     }
     
-    void SCNodeProperty::setProperty(Layer* pNode,const SCDictionary& dic)
+    void SCNodeStyle::setStyle(Layer* pNode,const SCDictionary& dic)
     {
         SCASSERT(pNode!=NULL);
         SC_RETURN_V_IF(pNode==NULL);
         
-        SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
+        SCNodeStyle::setStyle(dynamic_cast<Node*>(pNode),dic);
     }
     
-    void SCNodeProperty::setProperty(Sprite* pNode,const SCDictionary& dic)
+    void SCNodeStyle::setStyle(Sprite* pNode,const SCDictionary& dic)
     {
         float fValue;
         SCString strValue;
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_FLIP_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_FLIP_X,fValue))
         {
             pNode->setFlippedX(fValue);
         }
         
-        if(SCNodeProperty::getFloat(dic,SC_NODE_PROPERTY_FLIP_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_FLIP_Y,fValue))
         {
             pNode->setFlippedY(fValue);
         }
         
-        if(SCNodeProperty::getString(dic, SC_NODE_PROPERTY_IMAGE, strValue))
+        if(SCNodeStyle::getString(dic, SC_NODE_STYLE_IMAGE, strValue))
         {
             auto pSprite = Sprite::create(strValue.c_str());
             pNode->setSpriteFrame(pSprite->getSpriteFrame());
         }
         
-        SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
+        SCNodeStyle::setStyle(dynamic_cast<Node*>(pNode),dic);
     }
     
-    void SCNodeProperty::setProperty(LayerColor* pNode,const SCDictionary& dic)
+    void SCNodeStyle::setStyle(LayerColor* pNode,const SCDictionary& dic)
     {
-        SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
+        SCNodeStyle::setStyle(dynamic_cast<Node*>(pNode),dic);
     }
     
-    void SCNodeProperty::setProperty(Menu* pNode,const SCDictionary& dic)
+    void SCNodeStyle::setStyle(Menu* pNode,const SCDictionary& dic)
     {
-        SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
+        SCNodeStyle::setStyle(dynamic_cast<Node*>(pNode),dic);
     }
     
-    void SCNodeProperty::setProperty(MenuItem* pNode,const SCDictionary& dic)
+    void SCNodeStyle::setStyle(MenuItem* pNode,const SCDictionary& dic)
     {
-        SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
+        SCNodeStyle::setStyle(dynamic_cast<Node*>(pNode),dic);
     }
     
-    void SCNodeProperty::setProperty(Label* pNode,const SCDictionary& dic)
+    void SCNodeStyle::setStyle(Label* pNode,const SCDictionary& dic)
     {
         SCString strValue;
         Color4B crValue;
         float fValue;
         
-        if(SCNodeProperty::getString(dic, SC_NODE_PROPERTY_LABEL, strValue))
+        if(SCNodeStyle::getString(dic, SC_NODE_STYLE_LABEL, strValue))
         {
             pNode->setString(strValue.c_str());
         }
         
-        if(SCNodeProperty::getColor4(dic,SC_NODE_PROPERTY_COLOR_TEXT, crValue))
+        if(SCNodeStyle::getColor4(dic,SC_NODE_STYLE_COLOR_TEXT, crValue))
         {
             pNode->setTextColor(crValue);
         }
         
-        if(SCNodeProperty::getString(dic, SC_NODE_PROPERTY_FONT_NAME, strValue))
+        if(SCNodeStyle::getString(dic, SC_NODE_STYLE_FONT_NAME, strValue))
         {
             pNode->setSystemFontName(strValue.c_str());
         }
         
-        if(SCNodeProperty::getFloat(dic, SC_NODE_PROPERTY_FONT_SIZE, fValue))
+        if(SCNodeStyle::getFloat(dic, SC_NODE_STYLE_FONT_SIZE, fValue))
         {
             pNode->setSystemFontSize(fValue);
         }
         
-        SCNodeProperty::setProperty(dynamic_cast<Node*>(pNode),dic);
+        SCNodeStyle::setStyle(dynamic_cast<Node*>(pNode),dic);
     }
     
     ///-------------- convert string to dictionary
-    bool SCNodeProperty::convertString2Dic(const SCString& strProerty,SCDictionary& dic)
+    bool SCNodeStyle::convertString2Dic(const SCString& strStyle,SCDictionary& dic)
     {
         dic.removeAllKeys();
-        SC_RETURN_IF(strProerty.isEmpty(), true);
+        SC_RETURN_IF(strStyle.isEmpty(), true);
         
         bool bResult = true;
         
-        bool bRet = SCNodeProperty::scanProperty(strProerty,[strProerty,&dic,&bResult](const SCString& strKey,
+        bool bRet = SCNodeStyle::scanStyle(strStyle,[strStyle,&dic,&bResult](const SCString& strKey,
                                                              EValueType type,
                                                              const SCString& strValue) -> bool
                                      {
                                          SCValue data;
-                                         if(!SCNodeProperty::parseValue(type,strValue,data))
+                                         if(!SCNodeStyle::parseValue(type,strValue,data))
                                          {
-                                             SCLog("property: ========== '%s' value parse failed in '%s' ========== ",strValue.c_str(),strProerty.c_str());
+                                             SCLog("style: ========== '%s' value parse failed in '%s' ========== ",strValue.c_str(),strStyle.c_str());
                                              SCASSERT(false);
                                              bResult = false;
                                              return false;
@@ -264,77 +264,17 @@ namespace SpeedCC
                                      });
         
         bRet = (bRet && bResult);
-        /*
-        auto pCurrent = (char*)strProerty.c_str();
-        auto pEnd = pCurrent + strProerty.getLength();
         
-        SCString strKey;
-        SCString strValue;
-        SCValue data;
-        
-        int n = 1;
-        
-        while(pCurrent != pEnd)
-        {
-            do
-            {
-                if(!SCNodeProperty::readKey(strKey,pCurrent,pEnd))
-                {
-                    SCLog("property: ========== No.%d key read failed in '%s' ==========",n,strProerty.c_str());
-                    SCASSERT(false);
-                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
-                    bRet = false;
-                    break;
-                }
-                strKey.makeLower();
-                
-                auto keyType = SCNodeProperty::getKeyType(strKey);
-                
-                if(keyType==UNKNOWN_TYPE)
-                {
-                    SCLog("property: ========== No.%d key parse failed in '%s' ========== ",n,strProerty.c_str());
-                    SCASSERT(false);
-                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
-                    bRet = false;
-                    break;
-                }
-                
-                if(!SCNodeProperty::readValue(strValue,keyType,pCurrent,pEnd))
-                {
-                    SCLog("property: ========== No.%d value read failed in '%s' ========== ",n,strProerty.c_str());
-                    SCASSERT(false);
-                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
-                    bRet = false;
-                    break;
-                }
-                
-                if(!SCNodeProperty::parseValue(keyType,strValue,data))
-                {
-                    SCLog("property: ========== No.%d value parse failed in '%s' ========== ",n,strProerty.c_str());
-                    SCASSERT(false);
-                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
-                    bRet = false;
-                    break;
-                }
-                
-                dic.setValue(strKey, data);
-            }
-            while(0);
-            
-            SCNodeProperty::skipSpaces(pCurrent,pEnd);
-            ++n;
-        }
-        */
         return bRet;
     }
     
-    SCString SCNodeProperty::extractKey(const SCString& strKey,const SCString& strProerty)
+    SCString SCNodeStyle::extractKey(const SCString& strKey,const SCString& strStyle)
     {
-        SC_RETURN_IF(strKey.isEmpty() || strProerty.isEmpty(), "");
+        SC_RETURN_IF(strKey.isEmpty() || strStyle.isEmpty(), "");
         
         SCString strRet;
         SCString strValue = "";
-        SCNodeProperty::scanProperty(strProerty,[strKey,&strValue](const SCString& strKey0,
+        SCNodeStyle::scanStyle(strStyle,[strKey,&strValue](const SCString& strKey0,
                                                          EValueType type,
                                                          const SCString& strValue0) -> bool
                                      {
@@ -355,10 +295,10 @@ namespace SpeedCC
         return strRet;
     }
     
-    SCString SCNodeProperty::removeKey(const SCString& strKey,const SCString& strProerty)
+    SCString SCNodeStyle::removeKey(const SCString& strKey,const SCString& strStyle)
     {
         SCString strRet;
-        SCNodeProperty::scanProperty(strProerty,[strKey,&strRet](const SCString& strKey0,
+        SCNodeStyle::scanStyle(strStyle,[strKey,&strRet](const SCString& strKey0,
                                                                    EValueType type,
                                                                    const SCString& strValue0) -> bool
                                      {
@@ -373,15 +313,15 @@ namespace SpeedCC
         return strRet;
     }
     
-    bool SCNodeProperty::scanProperty(const SCString& strProperty,
+    bool SCNodeStyle::scanStyle(const SCString& strStyle,
                       const std::function<bool(const SCString&,EValueType type,const SCString&)>& func)
     {
         SCASSERT(func!=NULL);
-        SC_RETURN_IF(strProperty.isEmpty() || func==NULL,true);
+        SC_RETURN_IF(strStyle.isEmpty() || func==NULL,true);
         
         bool bRet = true;
-        auto pCurrent = (char*)strProperty.c_str();
-        auto pEnd = pCurrent + strProperty.getLength();
+        auto pCurrent = (char*)strStyle.c_str();
+        auto pEnd = pCurrent + strStyle.getLength();
         SCString strKey;
         SCString strValue;
         
@@ -390,86 +330,76 @@ namespace SpeedCC
         {
             do
             {
-                if(!SCNodeProperty::readKey(strKey,pCurrent,pEnd))
+                if(!SCNodeStyle::readKey(strKey,pCurrent,pEnd))
                 {
-                    SCLog("property: ========== No.%d key read failed in '%s' ==========",n,strProperty.c_str());
+                    SCLog("style: ========== No.%d key read failed in '%s' ==========",n,strStyle.c_str());
                     SCASSERT(false);
-                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
+                    SCNodeStyle::nextSemicolon(pCurrent,pEnd);
                     bRet = false;
                     break;
                 }
                 strKey.makeLower();
 
-                auto valueType = SCNodeProperty::getKeyType(strKey);
+                auto valueType = SCNodeStyle::getKeyType(strKey);
 
                 if(valueType==UNKNOWN_TYPE)
                 {
-                    SCLog("property: ========== No.%d key parse failed in '%s' ========== ",n,strProperty.c_str());
+                    SCLog("style: ========== No.%d key parse failed in '%s' ========== ",n,strStyle.c_str());
                     SCASSERT(false);
-                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
+                    SCNodeStyle::nextSemicolon(pCurrent,pEnd);
                     bRet = false;
                     break;
                 }
                 
-                if(!SCNodeProperty::readValue(strValue,valueType,pCurrent,pEnd))
+                if(!SCNodeStyle::readValue(strValue,valueType,pCurrent,pEnd))
                 {
-                    SCLog("property: ========== No.%d value read failed in '%s' ========== ",n,strProperty.c_str());
+                    SCLog("style: ========== No.%d value read failed in '%s' ========== ",n,strStyle.c_str());
                     SCASSERT(false);
-                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
+                    SCNodeStyle::nextSemicolon(pCurrent,pEnd);
                     bRet = false;
                     break;
                 }
                 
                 SC_RETURN_IF(!func(strKey,valueType,strValue),true);
-//                if(!SCNodeProperty::parseValue(keyType,strValue,data))
-//                {
-//                    SCLog("property: ========== No.%d value parse failed in '%s' ========== ",n,strProperty.c_str());
-//                    SCASSERT(false);
-//                    SCNodeProperty::nextSemicolon(pCurrent,pEnd);
-//                    bRet = false;
-//                    break;
-//                }
-//
-//                dic.setValue(strKey, data);
             }
             while(0);
             
-            SCNodeProperty::skipSpaces(pCurrent,pEnd);
+            SCNodeStyle::skipSpaces(pCurrent,pEnd);
             ++n;
         }
         
         return bRet;
     }
     
-    SCNodeProperty::EValueType SCNodeProperty::getKeyType(SCString& strKey)
+    SCNodeStyle::EValueType SCNodeStyle::getKeyType(SCString& strKey)
     {
-        SPropertyPair pair = {strKey,UNKNOWN_TYPE};
-        auto it = std::lower_bound(s_PropertyPairArray,s_PropertyPairArray+SC_ARRAY_LENGTH(s_PropertyPairArray),pair);
-        if(it!=s_PropertyPairArray+SC_ARRAY_LENGTH(s_PropertyPairArray) && strKey==(*it).pszKey)
+        SStylePair pair = {strKey,UNKNOWN_TYPE};
+        auto it = std::lower_bound(s_StylePairArray,s_StylePairArray+SC_ARRAY_LENGTH(s_StylePairArray),pair);
+        if(it!=s_StylePairArray+SC_ARRAY_LENGTH(s_StylePairArray) && strKey==(*it).pszKey)
         {
             return (*it).type;
         }
         return UNKNOWN_TYPE;
     }
     
-    bool SCNodeProperty::readKey(SCString& strKey,char*& pCurrent, char*& pEnd)
+    bool SCNodeStyle::readKey(SCString& strKey,char*& pCurrent, char*& pEnd)
     {
         bool bRet = false;
         
-        SCNodeProperty::skipSpaces(pCurrent,pEnd);
+        SCNodeStyle::skipSpaces(pCurrent,pEnd);
         
         char* pBegin = pCurrent;
         
         do
         {
             SC_BREAK_IF(pCurrent==pEnd);
-            SC_BREAK_IF(!SCNodeProperty::isValidKeyChar(*pCurrent));
+            SC_BREAK_IF(!SCNodeStyle::isValidKeyChar(*pCurrent));
             ++pCurrent;
         }
         while(1);
         
         char* pEnd2 = pCurrent;
-        SCNodeProperty::skipSpaces(pCurrent,pEnd);
+        SCNodeStyle::skipSpaces(pCurrent,pEnd);
         
         if(pEnd2>pBegin && *pCurrent=='=' && pCurrent!=pEnd)
         {
@@ -492,11 +422,11 @@ namespace SpeedCC
         return bRet;
     }
     
-    bool SCNodeProperty::readValue(SCString& strValue,const EValueType type,char*& pCurrent, char*& pEnd)
+    bool SCNodeStyle::readValue(SCString& strValue,const EValueType type,char*& pCurrent, char*& pEnd)
     {
         bool bRet = false;
         
-        SCNodeProperty::skipSpaces(pCurrent,pEnd);
+        SCNodeStyle::skipSpaces(pCurrent,pEnd);
         
         char* pBegin = pCurrent;
         
@@ -559,7 +489,7 @@ namespace SpeedCC
             while(1);
             
             char* pEnd2 = pCurrent;
-            SCNodeProperty::skipSpaces(pCurrent,pEnd);
+            SCNodeStyle::skipSpaces(pCurrent,pEnd);
             
             if(pEnd2>pBegin && *pCurrent==';')
             {
@@ -581,7 +511,7 @@ namespace SpeedCC
         return bRet;
     }
     
-    void SCNodeProperty::skipSpaces(char*& pCurrent, char*& pEnd)
+    void SCNodeStyle::skipSpaces(char*& pCurrent, char*& pEnd)
     {
         do
         {
@@ -594,7 +524,7 @@ namespace SpeedCC
         while(1);
     }
     
-    void SCNodeProperty::nextSemicolon(char*& pCurrent, char*& pEnd)
+    void SCNodeStyle::nextSemicolon(char*& pCurrent, char*& pEnd)
     {
         do
         {
@@ -605,7 +535,7 @@ namespace SpeedCC
         while(1);
     }
     
-    bool SCNodeProperty::parseValue(const EValueType type,const SCString& strValue,SCValue& value)
+    bool SCNodeStyle::parseValue(const EValueType type,const SCString& strValue,SCValue& value)
     {
         bool bRet = false;
         
@@ -635,7 +565,7 @@ namespace SpeedCC
                 case VEC2_TYPE:
                 {
                     Vec2 vec;
-                    if(SCNodeProperty::parseVec2(strValue,vec))
+                    if(SCNodeStyle::parseVec2(strValue,vec))
                     {
                         value.setObject(vec);
                         bRet = true;
@@ -646,7 +576,7 @@ namespace SpeedCC
                 case COLOR3_TYPE:
                 {
                     Color4B cr;
-                    if(SCNodeProperty::parseColor4(strValue,cr))
+                    if(SCNodeStyle::parseColor4(strValue,cr))
                     {
                         value.setObject(Color3B(cr));
                         bRet = true;
@@ -657,7 +587,7 @@ namespace SpeedCC
                 case COLOR4_TYPE:
                 {
                     Color4B cr;
-                    if(SCNodeProperty::parseColor4(strValue,cr))
+                    if(SCNodeStyle::parseColor4(strValue,cr))
                     {
                         value.setObject(cr);
                         bRet = true;
@@ -668,7 +598,7 @@ namespace SpeedCC
                 case DOCK_TYPE:
                 {
                     int nDock = 0;
-                    if(SCNodeProperty::parseDock(strValue, nDock))
+                    if(SCNodeStyle::parseDock(strValue, nDock))
                     {
                         value.setInt(nDock);
                         bRet = true;
@@ -683,12 +613,12 @@ namespace SpeedCC
     }
     
     /////-------------------
-    bool SCNodeProperty::isValidKeyChar(const char& c)
+    bool SCNodeStyle::isValidKeyChar(const char& c)
     {
         return ((c>='a' && c<='z') || (c>='A' && c<='Z') || (c>='0' && c<='9') || c=='-' || c=='_');
     }
     
-    bool SCNodeProperty::getInt(const SCDictionary& dic,const SCString& strKey,int& val)
+    bool SCNodeStyle::getInt(const SCDictionary& dic,const SCString& strKey,int& val)
     {
         SC_RETURN_IF(!dic.hasKey(strKey), false);
         const auto value = dic.getValue(strKey);
@@ -697,7 +627,7 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCNodeProperty::getBool(const SCDictionary& dic,const SCString& strKey,bool& val)
+    bool SCNodeStyle::getBool(const SCDictionary& dic,const SCString& strKey,bool& val)
     {
         SC_RETURN_IF(!dic.hasKey(strKey), false);
         const auto value = dic.getValue(strKey);
@@ -706,7 +636,7 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCNodeProperty::getFloat(const SCDictionary& dic,const SCString& strKey,float& val)
+    bool SCNodeStyle::getFloat(const SCDictionary& dic,const SCString& strKey,float& val)
     {
         SC_RETURN_IF(!dic.hasKey(strKey), false);
         const auto value = dic.getValue(strKey);
@@ -715,7 +645,7 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCNodeProperty::getVec2(const SCDictionary& dic,const SCString& strKey,Vec2& vec)
+    bool SCNodeStyle::getVec2(const SCDictionary& dic,const SCString& strKey,Vec2& vec)
     {
         SC_RETURN_IF(!dic.hasKey(strKey), false);
         auto value = dic.getValue(strKey);
@@ -729,7 +659,7 @@ namespace SpeedCC
         return false;
     }
     
-    bool SCNodeProperty::getString(const SCDictionary& dic,const SCString& strKey,SCString& val)
+    bool SCNodeStyle::getString(const SCDictionary& dic,const SCString& strKey,SCString& val)
     {
         SC_RETURN_IF(!dic.hasKey(strKey), false);
         const auto value = dic.getValue(strKey);
@@ -738,7 +668,7 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCNodeProperty::getColorByName(const SCString& strKey,Color3B& val)
+    bool SCNodeStyle::getColorByName(const SCString& strKey,Color3B& val)
     {
         struct STemStruct
         {
@@ -781,7 +711,7 @@ namespace SpeedCC
         return bRet;
     }
     
-    bool SCNodeProperty::getColorByName(const SCString& strKey,Color4B& val)
+    bool SCNodeStyle::getColorByName(const SCString& strKey,Color4B& val)
     {
         Color3B cr;
         if(getColorByName(strKey,cr))
@@ -793,7 +723,7 @@ namespace SpeedCC
         return false;
     }
     
-    bool SCNodeProperty::getColor4(const SCDictionary& dic,const SCString& strKey,cocos2d::Color4B& val)
+    bool SCNodeStyle::getColor4(const SCDictionary& dic,const SCString& strKey,cocos2d::Color4B& val)
     {
         SC_RETURN_IF(!dic.hasKey(strKey), false);
         
@@ -816,10 +746,10 @@ namespace SpeedCC
         return bRet;
     }
     
-    bool SCNodeProperty::getColor3(const SCDictionary& dic,const SCString& strKey,Color3B& val)
+    bool SCNodeStyle::getColor3(const SCDictionary& dic,const SCString& strKey,Color3B& val)
     {
         Color4B cr;
-        SC_RETURN_IF(!SCNodeProperty::getColor4(dic,strKey,cr),false);
+        SC_RETURN_IF(!SCNodeStyle::getColor4(dic,strKey,cr),false);
         val = Color3B(cr);
         return true;
     }
@@ -827,7 +757,7 @@ namespace SpeedCC
     
     ///----------- parse
     
-    bool SCNodeProperty::parseVec2(SCString strValue,cocos2d::Vec2& vec2)
+    bool SCNodeStyle::parseVec2(SCString strValue,cocos2d::Vec2& vec2)
     {
         bool bRet = false;
         if(strValue.getLength()>=5 &&
@@ -855,13 +785,13 @@ namespace SpeedCC
         return bRet;
     }
     
-    bool SCNodeProperty::parseColor4(SCString strValue,Color4B& val)
+    bool SCNodeStyle::parseColor4(SCString strValue,Color4B& val)
     {
         SC_RETURN_IF(strValue.isEmpty(), false);
         
         bool bRet = false;
         
-        SC_RETURN_IF(SCNodeProperty::getColorByName(strValue,val), true);
+        SC_RETURN_IF(SCNodeStyle::getColorByName(strValue,val), true);
         
         if(strValue.getLength()>1 && strValue.getLength()<=9 && strValue[0]=='#')
         {// #??????
@@ -928,7 +858,7 @@ namespace SpeedCC
         return bRet;
     }
     
-    bool SCNodeProperty::parseDock(SCString strDock,int& nDock)
+    bool SCNodeStyle::parseDock(SCString strDock,int& nDock)
     {
         nDock = 0;
         SC_RETURN_IF(strDock.isEmpty(), true);

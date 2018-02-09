@@ -9,38 +9,38 @@
 namespace SpeedCC
 {
 // for better search algorithm, must keep macro name match string value
-#define SC_NODE_PROPERTY_TAG                "tag"           // int
-#define SC_NODE_PROPERTY_XY                 "xy"            // Vec2
-#define SC_NODE_PROPERTY_X                  "x"             // float
-#define SC_NODE_PROPERTY_Y                  "y"             // float
-#define SC_NODE_PROPERTY_Z                  "z"             // int
-#define SC_NODE_PROPERTY_ANCHOR             "anchor"        // Vec2
-#define SC_NODE_PROPERTY_ANCHOR_ON          "anchor-on"     // bool
-#define SC_NODE_PROPERTY_SCALE              "scale"         // float
-#define SC_NODE_PROPERTY_SCALE_X            "scale-x"       // float
-#define SC_NODE_PROPERTY_SCALE_Y            "scale-y"       // float
-#define SC_NODE_PROPERTY_OPACITY            "opacity"       // float
-#define SC_NODE_PROPERTY_VISIBLE            "visible"       // bool
-#define SC_NODE_PROPERTY_ROTATION           "rotation"      // float
-#define SC_NODE_PROPERTY_ROTATION_X         "rotation-x"    // float
-#define SC_NODE_PROPERTY_ROTATION_Y         "rotation-y"    // float
-#define SC_NODE_PROPERTY_SKEW_X             "skew-x"        // float
-#define SC_NODE_PROPERTY_SKEW_Y             "skew-y"        // float
-#define SC_NODE_PROPERTY_COLOR              "color"         // Color3B
+#define SC_NODE_STYLE_TAG                "tag"           // int
+#define SC_NODE_STYLE_XY                 "xy"            // Vec2
+#define SC_NODE_STYLE_X                  "x"             // float
+#define SC_NODE_STYLE_Y                  "y"             // float
+#define SC_NODE_STYLE_Z                  "z"             // int
+#define SC_NODE_STYLE_ANCHOR             "anchor"        // Vec2
+#define SC_NODE_STYLE_ANCHOR_ON          "anchor-on"     // bool
+#define SC_NODE_STYLE_SCALE              "scale"         // float
+#define SC_NODE_STYLE_SCALE_X            "scale-x"       // float
+#define SC_NODE_STYLE_SCALE_Y            "scale-y"       // float
+#define SC_NODE_STYLE_OPACITY            "opacity"       // float
+#define SC_NODE_STYLE_VISIBLE            "visible"       // bool
+#define SC_NODE_STYLE_ROTATION           "rotation"      // float
+#define SC_NODE_STYLE_ROTATION_X         "rotation-x"    // float
+#define SC_NODE_STYLE_ROTATION_Y         "rotation-y"    // float
+#define SC_NODE_STYLE_SKEW_X             "skew-x"        // float
+#define SC_NODE_STYLE_SKEW_Y             "skew-y"        // float
+#define SC_NODE_STYLE_COLOR              "color"         // Color3B
 
-#define SC_NODE_PROPERTY_FLIP_X             "flip-x"        // bool
-#define SC_NODE_PROPERTY_FLIP_Y             "flip-y"        // bool
-#define SC_NODE_PROPERTY_LABEL              "label"         // string
-#define SC_NODE_PROPERTY_FONT_SIZE          "font-size"     // float
-#define SC_NODE_PROPERTY_FONT_NAME          "font-name"     // string
-#define SC_NODE_PROPERTY_COLOR_TEXT         "color-text"    // Color4B
-#define SC_NODE_PROPERTY_IMAGE              "image"         // string
+#define SC_NODE_STYLE_FLIP_X             "flip-x"        // bool
+#define SC_NODE_STYLE_FLIP_Y             "flip-y"        // bool
+#define SC_NODE_STYLE_LABEL              "label"         // string
+#define SC_NODE_STYLE_FONT_SIZE          "font-size"     // float
+#define SC_NODE_STYLE_FONT_NAME          "font-name"     // string
+#define SC_NODE_STYLE_COLOR_TEXT         "color-text"    // Color4B
+#define SC_NODE_STYLE_IMAGE              "image"         // string
     
-#define SC_NODE_PROPERTY_DOCK               "dock"          // SCNodeUtils::EDockType. e.g. left|top
-#define SC_NODE_PROPERTY_X_BY               "x-by"          // float
-#define SC_NODE_PROPERTY_Y_BY               "y-by"          // float
+#define SC_NODE_STYLE_DOCK               "dock"          // SCNodeUtils::EDockType. e.g. left|top
+#define SC_NODE_STYLE_X_BY               "x-by"          // float
+#define SC_NODE_STYLE_Y_BY               "y-by"          // float
     
-    class SCNodeProperty
+    class SCNodeStyle
     {
     private:
         
@@ -57,17 +57,17 @@ namespace SpeedCC
             DOCK_TYPE,
         };
         
-        struct SPropertyPair
+        struct SStylePair
         {
             const char*         pszKey;
             EValueType          type;
             
-            inline bool operator>(const SPropertyPair& pair) const
+            inline bool operator>(const SStylePair& pair) const
             {
                 return (::strcmp(pair.pszKey,pszKey)<0);
             }
             
-            inline bool operator<(const SPropertyPair& pair) const
+            inline bool operator<(const SStylePair& pair) const
             {
                 return (::strcmp(pair.pszKey,pszKey)>0);
             }
@@ -84,33 +84,33 @@ namespace SpeedCC
                 bExclude = bExclude0;
                 keyVtr =
                 {
-                    SC_NODE_PROPERTY_XY,
-                    SC_NODE_PROPERTY_X,
-                    SC_NODE_PROPERTY_Y,
-                    SC_NODE_PROPERTY_DOCK,
-                    SC_NODE_PROPERTY_X_BY,
-                    SC_NODE_PROPERTY_Y_BY
+                    SC_NODE_STYLE_XY,
+                    SC_NODE_STYLE_X,
+                    SC_NODE_STYLE_Y,
+                    SC_NODE_STYLE_DOCK,
+                    SC_NODE_STYLE_X_BY,
+                    SC_NODE_STYLE_Y_BY
                 };
             }
         };
         
     public:
-        static void setProperty(cocos2d::Node* pNode,const SCDictionary& dic);
-        static void setProperty(cocos2d::Layer* pNode,const SCDictionary& dic);
-        static void setProperty(cocos2d::Sprite* pNode,const SCDictionary& dic);
-        static void setProperty(cocos2d::LayerColor* pNode,const SCDictionary& dic);
-        static void setProperty(cocos2d::Menu* pNode,const SCDictionary& dic);
-        static void setProperty(cocos2d::MenuItem* pNode,const SCDictionary& dic);
-        static void setProperty(cocos2d::Label* pNode,const SCDictionary& dic);
+        static void setStyle(cocos2d::Node* pNode,const SCDictionary& dic);
+        static void setStyle(cocos2d::Layer* pNode,const SCDictionary& dic);
+        static void setStyle(cocos2d::Sprite* pNode,const SCDictionary& dic);
+        static void setStyle(cocos2d::LayerColor* pNode,const SCDictionary& dic);
+        static void setStyle(cocos2d::Menu* pNode,const SCDictionary& dic);
+        static void setStyle(cocos2d::MenuItem* pNode,const SCDictionary& dic);
+        static void setStyle(cocos2d::Label* pNode,const SCDictionary& dic);
         
         template<typename T>
-        static void setProperty(cocos2d::Node* pNode,const SCString& strProperty,SFilterConfig* pFilterConfig=NULL)
+        static void setStyle(cocos2d::Node* pNode,const SCString& strStyle,SFilterConfig* pFilterConfig=NULL)
         {
             SCASSERT(pNode!=NULL);
             SC_RETURN_V_IF(pNode==NULL);
             
             SCDictionary dic;
-            if(SCNodeProperty::convertString2Dic(strProperty,dic))
+            if(SCNodeStyle::convertString2Dic(strStyle,dic))
             {
                 if(pFilterConfig!=NULL && !pFilterConfig->keyVtr.empty())
                 {
@@ -134,16 +134,16 @@ namespace SpeedCC
                         dic = dic2;
                     }
                 }
-                SCNodeProperty::setProperty(dynamic_cast<T*>(pNode),dic);
+                SCNodeStyle::setStyle(dynamic_cast<T*>(pNode),dic);
             }
         }
         
-        static bool convertString2Dic(const SCString& strProerty,SCDictionary& dic);
-        static SCString extractKey(const SCString& strKey,const SCString& strProerty);
-        static SCString removeKey(const SCString& strKey,const SCString& strProerty);
+        static bool convertString2Dic(const SCString& strStyle,SCDictionary& dic);
+        static SCString extractKey(const SCString& strKey,const SCString& strStyle);
+        static SCString removeKey(const SCString& strKey,const SCString& strStyle);
         
     private:
-        static bool scanProperty(const SCString& strProperty,
+        static bool scanStyle(const SCString& strStyle,
                                  const std::function<bool(const SCString&,EValueType type,const SCString&)>& func);
         static bool readKey(SCString& strKey,char*& pCurrent, char*& pEnd);
         static bool readValue(SCString& strValue,const EValueType type,char*& pCurrent, char*& pEnd);
@@ -170,7 +170,7 @@ namespace SpeedCC
         static bool isValidKeyChar(const char& c);
         
     private:
-        static SPropertyPair s_PropertyPairArray[];
+        static SStylePair s_StylePairArray[];
     };
 }
 
