@@ -75,9 +75,6 @@ namespace SpeedCC
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)
         { _ptrParentModalController = controllerPtr;}
         
-    protected:
-        SCUIBuilder::Ptr                            _ptrUI;
-        
     private:
         SCBedNode*			                        _pBedNode;
         SCScene*                                    _pScene;

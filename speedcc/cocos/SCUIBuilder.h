@@ -165,10 +165,10 @@ namespace SpeedCC
                                               const float fPadding,
                                               const int nDock);
         
-        cocos2d::Node* getLayoutNode(const int nID);
-        void storeLayoutNode(const int nID,cocos2d::Node* pNode);
-        void storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder);
-        SCBinder::Ptr getBinder(cocos2d::Ref* pObj) const;
+//        cocos2d::Node* getLayoutNode(const int nID);
+//        void storeLayoutNode(const int nID,cocos2d::Node* pNode);
+//        void storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder);
+//        SCBinder::Ptr getBinder(cocos2d::Ref* pObj) const;
         
     protected:
         SCUIBuilder():
@@ -195,7 +195,7 @@ namespace SpeedCC
         {
         }
         
-        void onSCMenuItemPressed(cocos2d::Ref* pSender);
+//        void onSCMenuItemPressed(cocos2d::Ref* pSender);
         
     private:
         void addLayer(const SCUIArg::NodePurifier& layerNode,
@@ -233,10 +233,6 @@ namespace SpeedCC
         cocos2d::Node*                          _pDefaultBedNode;
         cocos2d::Ref*                           _pDefaultRefCaller;
         std::list<SCUITypeDef::SUIContext>          _contextStack;
-        
-        std::map<int,cocos2d::Node*>                _id2NodeMap;
-        std::map<cocos2d::Ref*,SCBinder::Ptr>       _ref2BinderMap;
-        std::map<cocos2d::Ref*,SCBehavior::Ptr>         _buttonItem2InfoMap;
     };
 }
 

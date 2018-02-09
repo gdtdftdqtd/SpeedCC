@@ -18,7 +18,7 @@ namespace SpeedCC
 #define SC_KEY_COMMAND        "sc-command"        // SCString
 #define SC_KEY_STATE          "sc-state"          // ESCState
 #define SC_KEY_IAP            "sc-iap"           // SCString
-#define SC_KEY_CCREF          "sc-cc-ref"        // cocos2d::Ref*
+#define SC_KEY_CCREF          "sc-cc-ref"        // SCRef2Ptr::Ptr
 #define SC_KEY_TOUCH          "sc-touch"           // cocos2d::Touch*
 #define SC_KEY_TOUCHES        "sc-touches"        // std::vector<cocos2d::Touch*>
 #define SC_KEY_DELTA          "sc-delta"         // float
@@ -98,7 +98,7 @@ namespace SpeedCC
             kSCMsgTouchCancelled,
             
             // key: SC_KEY_CCREF
-            kSCMsgButtonClicked,
+            kSCMsgNodeClicked,
             
             kSCMsgSettingMusicChanged,
             kSCMsgSettingSoundChanged,

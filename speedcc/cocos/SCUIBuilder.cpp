@@ -186,7 +186,7 @@ namespace SpeedCC
         if(ptrBinder!=NULL && pLabel!=NULL)
         {
             ptrBinder->setLabel(pLabel);
-            this->storeBinder(pLabel,ptrBinder);
+            SCNodeUtils::addUserObj(pLabel, ptrBinder);
         }
     }
     ///---------------- button
@@ -206,8 +206,7 @@ namespace SpeedCC
         
         auto pItemImage = MenuItemSprite::create(pSpriteArray[0],
                                                  pSpriteArray[1],
-                                                 pSpriteArray[2],
-                                                 [this](cocos2d::Ref* pSender){this->onSCMenuItemPressed(pSender);});
+                                                 pSpriteArray[2]);
         
         this->addButton(pItemImage,fPosX,fPosY,property,bvrPurifier);
         SC_ASSIGN_NODE(ppMenuItemSprite,pItemImage);
@@ -279,7 +278,6 @@ namespace SpeedCC
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pOnItem);
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pOffItem);
         
-        auto scCallbackFunc = [this](cocos2d::Ref* pSender) { this->onSCMenuItemPressed(pSender);};
         auto pToggleItem = MenuItemToggle::createWithCallback(NULL,pOnItem,pOffItem,NULL);
         pToggleItem->setSelectedIndex(value.bResult ? 0 : 1);
         
@@ -289,20 +287,15 @@ namespace SpeedCC
             
             ptrLabelBinder->setWatch(value.ptrWatch);
             ptrLabelBinder->setToggle(pToggleItem);
-            ptrLabelBinder->setCallback(scCallbackFunc);
-            this->storeBinder(pToggleItem,ptrLabelBinder);
-        }
-        else
-        {
-            pToggleItem->setCallback(scCallbackFunc);
+            SCNodeUtils::addUserObj(pToggleItem, ptrLabelBinder);
         }
 
-        SCNodeUtils::addClickable(pToggleItem, NULL);
+        bvrPurifier.setupBehavior(_pCurrentRefCaller, pToggleItem);
+        SCNodeUtils::addClickable(pToggleItem, bvrPurifier.ptrResultBvr);
         
         this->insertUserNode(pToggleItem, fPosX, fPosY, property);
         
-        bvrPurifier.setupBehavior(_pCurrentRefCaller, pToggleItem);
-        _buttonItem2InfoMap[pToggleItem] = bvrPurifier.ptrResultBvr;
+//        _buttonItem2InfoMap[pToggleItem] = bvrPurifier.ptrResultBvr;
         
         SC_ASSIGN_NODE(ppMenuItemToggle,pToggleItem);
         
@@ -351,7 +344,7 @@ namespace SpeedCC
         if(value.ptrBinderProgress!=NULL)
         {
             value.ptrBinderProgress->setProgressTimer(pProgressBar);
-            this->storeBinder(pProgressBar,value.ptrBinderProgress);
+            SCNodeUtils::addUserObj(pProgressBar, value.ptrBinderProgress);
         }
         else
         {
@@ -392,7 +385,7 @@ namespace SpeedCC
         if(value.ptrBinderProgress!=NULL)
         {
             value.ptrBinderProgress->setProgressTimer(pProgressBar);
-            this->storeBinder(pProgressBar,value.ptrBinderProgress);
+            SCNodeUtils::addUserObj(pProgressBar, value.ptrBinderProgress);
         }
         else
         {
@@ -521,8 +514,7 @@ namespace SpeedCC
                                                SCUIArg::BehaviorPurifier bvrPurifier)
     {
         this->bindLabel(pLabel,labelString);
-        auto pItemLabel = MenuItemLabel::create(pLabel,
-                                                [this](cocos2d::Ref* pSender){this->onSCMenuItemPressed(pSender);});
+        auto pItemLabel = MenuItemLabel::create(pLabel);
         
         SpeedCC::SCNodeProperty::SFilterConfig scTemFilterConfig;
         scTemFilterConfig.bExclude = false;
@@ -545,12 +537,10 @@ namespace SpeedCC
     {
         auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.ptrNodeHolder->getRef());
         
-        SCNodeUtils::addClickable(pMenuItem, NULL);
+        bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);
+        SCNodeUtils::addClickable(pMenuItem, bvrPurifier.ptrResultBvr);
         
         this->insertUserNode(pMenuItem, fPosX, fPosY, property);
-        bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);
-        
-        _buttonItem2InfoMap[pMenuItem] = bvrPurifier.ptrResultBvr;
     }
     
     ///------------ layer
@@ -605,51 +595,6 @@ namespace SpeedCC
         context.pContainerNode = pNode;
         context.containerType = SCUITypeDef::EContainerType::kNormal;
         _contextStack.push_front(context);
-    }
-    
-    
-    cocos2d::Node* SCUIBuilder::getLayoutNode(const int nID)
-    {
-        SC_RETURN_IF(nID<=0, NULL);
-        
-        auto it = _id2NodeMap.find(nID);
-        SC_RETURN_IF(it==_id2NodeMap.end(), NULL);
-        
-        return (*it).second;
-    }
-    
-    void SCUIBuilder::storeLayoutNode(const int nID,cocos2d::Node* pNode)
-    {
-        SC_RETURN_V_IF(nID<=0 || pNode==NULL);
-        
-        _id2NodeMap[nID] = pNode;
-    }
-    
-    void SCUIBuilder::storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder)
-    {
-        SC_RETURN_V_IF(pObj==NULL || ptrBinder==NULL);
-        
-        _ref2BinderMap[pObj] = ptrBinder;
-    }
-    
-    SCBinder::Ptr SCUIBuilder::getBinder(cocos2d::Ref* pObj) const
-    {
-        auto it = _ref2BinderMap.find(pObj);
-        return ((it==_ref2BinderMap.end()) ? NULL : (*it).second);
-    }
-    
-    void SCUIBuilder::onSCMenuItemPressed(cocos2d::Ref* pSender)
-    {
-        auto it = _buttonItem2InfoMap.find(pSender);
-        
-        SCASSERT(it!=_buttonItem2InfoMap.end());
-        if(it!=_buttonItem2InfoMap.end() && (*it).second!=NULL)
-        {
-            (*it).second->execute();
-            
-            SCDictionary dic  = {SC_KEY_CCREF,pSender};
-            SCMsgDisp()->postMessage(SCID::Msg::kSCMsgButtonClicked, dic);
-        }
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 #include "SCNodeClickable.h"
+#include "SCRefHolder.h"
 
 using namespace cocos2d;
 
@@ -132,10 +133,10 @@ namespace SpeedCC
             case SCID::Msg::kSCMsgTouchEnded:
             {
                 SC_RETURN_V_IF(!_bTrack);
-                _pNode->retain();
+                SCDictionary dic = {SC_KEY_CCREF, SCRef2Ptr::create(_pNode)};
+                SCMsgDisp()->postMessage(SCID::Msg::kSCMsgNodeClicked, dic);
                 if(_ptrBvr!=NULL)
                 {
-                    SCDictionary dic  = {SC_KEY_CCREF,_pNode};
                     _ptrBvr->execute(dic);
                 }
                 if(_pMenuItem!=NULL)
@@ -146,7 +147,6 @@ namespace SpeedCC
                 _bTrack = false;
                 _pSelectedCamera = NULL;
                 _bSelected = false;
-                _pNode->release();
             }
                 break;
                 

@@ -26,7 +26,6 @@ namespace SpeedCC
     void SCSceneController::setBedNode(SCBedNode* pLayer)
     {
         _pBedNode = pLayer;
-        _ptrUI = SCUIBuilder::create(_pBedNode,this);
     }
     
     void SCSceneController::ownLifecycle(cocos2d::Ref* pObject)
