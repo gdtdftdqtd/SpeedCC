@@ -167,10 +167,6 @@ namespace SpeedCC
             
             // SC_KEY_COMMAND => SCString
             kSCMsgCommand,
-            
-            // user message define must begin from this value
-            // "name" => SCString; required parameter
-            kSCMsgUser = 65535
         };
         
         enum Stg
@@ -178,17 +174,15 @@ namespace SpeedCC
             kSCStgNull  = 0,
             
             kSCStgEmpty,
-            
-            kSCStgUser = 65535
         };
         
         enum Act
         {
             kSCActNull = 0,
             kSCActDefault,
-            
-            kSCActUser = 65535
         };
+        
+        enum {kSCUserID = 65535};
         
     };
 }

@@ -27,7 +27,8 @@ public:
     SCString getStrategyName(const int nID);
     
 private:
-    SCWatchBool::Ptr    _ptrWatchRun;
+//    SCWatchBool::Ptr    _ptrWatchRun;
+    SCTriggerBool::Ptr      _ptrTrigger;
 };
 
 #endif // __TESTSTAGE_SCENE_H__

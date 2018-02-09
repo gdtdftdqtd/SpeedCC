@@ -7,7 +7,7 @@ using namespace SpeedCC;
 
 enum ETestStageID
 {
-    kTestUserID = 65536,
+    kTestUserID = SCID::kSCUserID,
     
     kTestRoleID1,
     
@@ -43,18 +43,19 @@ void TestStageController::setupUI()
     auto ptrBvrStart = SCBehaviorCallFunc::create([this]()
                                                   {
                                                       this->schedule(SCF(onSchedule), 1.5f);
+                                                      SCLog("Timer Started.");
                                                   });
     
     auto ptrBvrStop = SCBehaviorCallFunc::create([this]()
                                                  {
                                                      this->unschedule(SCF(onSchedule));
+                                                     SCLog("Timer Stopped.");
                                                  });
     
-    auto ptrRunBvr = SCBehaviorCaseBool::create();
-    _ptrWatchRun = ptrRunBvr->getWatch();
-    (*_ptrWatchRun) = false;
-    ptrRunBvr->setCase(true, ptrBvrStart);
-    ptrRunBvr->setCase(false, ptrBvrStop);
+    auto ptrWatchBool = SCWatchBool::create();
+    _ptrTrigger = SCTriggerBool::create(ptrWatchBool);
+    _ptrTrigger->addCondition(SCTriggerBool::EComparsion::kEqual, true, ptrBvrStart);
+    _ptrTrigger->addCondition(SCTriggerBool::EComparsion::kEqual, false, ptrBvrStop);
     
     
     SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
@@ -63,7 +64,7 @@ void TestStageController::setupUI()
             // title
             SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|mid-x; y-by=-100;","Test Stage","blue_font.fnt")
 
-            SC_INSERT_BUTTON_SWITCH(NULL, 0.5, 0.6, "", SCUIArg::MenuItemPurifier("Stop",22), SCUIArg::MenuItemPurifier("Start",22), _ptrWatchRun, ptrRunBvr)
+            SC_INSERT_BUTTON_SWITCH(NULL, 0.5, 0.6, "", SCUIArg::MenuItemPurifier("Stop",22), SCUIArg::MenuItemPurifier("Start",22), ptrWatchBool, NULL)
     
             SC_INSERT_BUTTON_LABEL(NULL, 0.5, 0.4, NULL, "Message Log", "", 20, ptrBvrMsgLog)
             SC_INSERT_BUTTON_LABEL(NULL, 0.5, 0.3, NULL, "Command Log", "", 20, ptrBvrCmdLog)
@@ -163,9 +164,8 @@ void TestStageController::onBvrLog(const SCDictionary& par)
 
 void TestStageController::onSchedule(float fDelta)
 {
-    if(*_ptrWatchRun)
+    if(*(_ptrTrigger->getWatch()))
     {
-//        SCLog("Post Message: kTestMsgIDNextStrategy");
         SCMsgDisp()->postMessage(kTestMsgIDNextStrategy);
     }
 }

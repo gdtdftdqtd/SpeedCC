@@ -267,7 +267,7 @@ namespace SpeedCC
             return result;
         }
         
-        int addUpdateFunc(const std::function<void(Ptr pNum,T newNumber,T oldNumber)>& fun)
+        int addUpdateFunc(const std::function<void(Ptr pNum,const T newNumber,const T oldNumber)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
@@ -317,7 +317,7 @@ namespace SpeedCC
     private:
         T                   _number;
         int                 _nIDCounter;
-        std::map<int,std::function<void(Ptr numPtr,
+        std::map<int,std::function<void(Ptr ptrNum,
                                         const T newNumber,
                                         const T oldNumber)> >    _postUpdateFunMap;
         std::function<SCString(const T num)>      _funGetString;
@@ -328,13 +328,6 @@ namespace SpeedCC
     class SCWatchNumberT<bool> : public SCObject
     {
     public:
-        SCWatchNumberT(const SCWatchNumberT& num):
-        _number(num._number),
-        _nIDCounter(0)
-        {
-        }
-
-        
         SC_DEFINE_CLASS_PTR(SCWatchNumberT<bool>)
         typedef bool  type;
         
@@ -355,7 +348,7 @@ namespace SpeedCC
             if(!bDiff) {return *this;}
             
             _number = (num._number==0 ? false : true);
-            this->firePostUpdateFun(_number);
+            this->firePostUpdateFun(_number,!_number);
             
             return *this;
         }
@@ -368,12 +361,12 @@ namespace SpeedCC
             if(!bDiff) {return *this;}
             
             _number = num;
-            this->firePostUpdateFun(num);
+            this->firePostUpdateFun(num,!num);
             
             return *this;
         }
         
-        int addUpdateFunc(const std::function<void(Ptr numPtr,const bool bNew)>& fun)
+        int addUpdateFunc(const std::function<void(Ptr ptrNum,const bool bNew,const bool bOld)>& fun)
         {
             ++_nIDCounter;
             _postUpdateFunMap[_nIDCounter] = fun;
@@ -404,19 +397,26 @@ namespace SpeedCC
         {
         }
         
-        void firePostUpdateFun(const bool newNumber)
+        void firePostUpdateFun(const bool bNew,const bool bOld)
         {
             for(const auto& it : _postUpdateFunMap)
             {
-                it.second(this->makeObjPtr<SCWatchNumberT<bool>::Ptr>(), newNumber);
+                it.second(this->makeObjPtr<SCWatchNumberT<bool>::Ptr>(), bNew,bOld);
             }
+        }
+        
+    protected:
+        SCWatchNumberT(const SCWatchNumberT& num):
+        _number(num._number),
+        _nIDCounter(0)
+        {
         }
         
     private:
         bool                   _number;
         int                 _nIDCounter;
-        std::map<int,std::function<void(Ptr numPtr,
-                                        const bool newNumber)> >    _postUpdateFunMap;
+        std::map<int,std::function<void(Ptr ptrNum,
+                                        const bool bNew,const bool bOld)> >    _postUpdateFunMap;
     };
     
     SC_DEFINE_NUMBER_GLOBAL1(+,SCWatchNumberT<T>)

@@ -48,7 +48,7 @@ namespace SpeedCC
         
         SCWatchInt::Ptr ret = SCWatchInt::create();
         
-        ret->addUpdateFunc([strKey](SCWatchInt::Ptr watchPtr,const int nNew,const int nOld)
+        ret->addUpdateFunc([strKey](SCWatchInt::Ptr ptrWatch,const int nNew,const int nOld)
                                {
                                    SCCCUserDefault()->setIntegerForKey(strKey, nNew);
                                });
@@ -75,7 +75,7 @@ namespace SpeedCC
         bool bValue = SCCCUserDefault()->getBoolForKey(strKey,bDefault);
         auto ret = SCWatchBool::create(bValue);
         
-        ret->addUpdateFunc([strKey](SCWatchBool::Ptr watchPtr,const bool bNew)
+        ret->addUpdateFunc([strKey](SCWatchBool::Ptr ptrWatch,const bool bNew,const bool bOld)
                           {
                               SCCCUserDefault()->setBoolForKey(strKey, bNew);
                               if(strKey==kSCSettingKeySound)
@@ -108,7 +108,7 @@ namespace SpeedCC
         
         auto ret = SCWatchFloat::create();
         
-        ret->addUpdateFunc([strKey](SCWatchFloat::Ptr watchPtr,const float fNew,const float fOld)
+        ret->addUpdateFunc([strKey](SCWatchFloat::Ptr ptrWatch,const float fNew,const float fOld)
                           {
                               SCCCUserDefault()->setFloatForKey(strKey, fNew);
                           });
@@ -133,7 +133,7 @@ namespace SpeedCC
         
         auto ret = SCWatchDouble::create();
         
-        ret->addUpdateFunc([strKey](SCWatchDouble::Ptr watchPtr,const double dNew,const double dOld)
+        ret->addUpdateFunc([strKey](SCWatchDouble::Ptr ptrWatch,const double dNew,const double dOld)
                           {
                               SCCCUserDefault()->setDoubleForKey(strKey, dNew);
                           });
@@ -158,7 +158,7 @@ namespace SpeedCC
         
         auto ret = SCWatchString::create();
         
-        ret->addUpdateFunc([strKey](SCWatchString::Ptr watchPtr,const SCString& strNew,const SCString& strOld)
+        ret->addUpdateFunc([strKey](SCWatchString::Ptr ptrWatch,const SCString& strNew,const SCString& strOld)
                           {
                               SCCCUserDefault()->setStringForKey(strKey, strNew.c_str());
                           });

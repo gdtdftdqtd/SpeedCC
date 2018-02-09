@@ -60,6 +60,7 @@ namespace SpeedCC
         SC_DEFINE_CLASS_PTR(SCTriggerT)
         
         SC_DEFINE_CREATE_FUNC_0(SCTriggerT)
+        SC_DEFINE_CREATE_FUNC_1(SCTriggerT,PtrType_t)
         
         virtual ~SCTriggerT()
         {
@@ -69,18 +70,20 @@ namespace SpeedCC
         void setActive(const bool bActived);
         inline bool getActive() const {return _bActived;}
         
-        void addWatch(PtrType_t ptrWatch)
+        void setWatch(PtrType_t ptrWatch)
         {
             SCASSERT(ptrWatch!=NULL);
             this->removeUpdateFunc();
             
-            _nFuncID = ptrWatch->addUpdateFunc([this](PtrType_t ptrNum, NumberType_t newNum,NumberType_t oldNum)
+            _nFuncID = ptrWatch->addUpdateFunc([this](PtrType_t ptrNum, const NumberType_t newNum,const NumberType_t oldNum)
                                                {
                                                    this->fireBehavior(newNum,oldNum);
                                                });
             
             _ptrWatch = ptrWatch;
         }
+        
+        inline PtrType_t getWatch() const { return _ptrWatch; }
         
         int addCondition(const EComparsion comp,
                          const NumberType_t num,
@@ -141,7 +144,7 @@ namespace SpeedCC
                          const bool bSwallow=false,
                          const bool bActived=true)
         {
-            SConditionInfo ci = {++_nIDCounter,func,ptrBvr,parDic,nPriority,bSwallow,bActived};
+            SConditionInfo ci = {++_nIDCounter,func,ptrBvr,parDic,bSwallow,bActived,nPriority};
             _conditionList.push_back(ci);
             _conditionList.sort(std::greater<SConditionInfo>());
             
@@ -191,6 +194,15 @@ namespace SpeedCC
         _nIDCounter(0)
         {}
         
+        SCTriggerT(PtrType_t ptrWatch):
+        _bActived(true),
+        _nFuncID(0),
+        _nIDCounter(0)
+        {
+            this->setWatch(ptrWatch);
+        }
+        
+        
     private:
         void removeUpdateFunc()
         {
@@ -203,7 +215,7 @@ namespace SpeedCC
         
         void fireBehavior(const NumberType_t newNum,const NumberType_t oldNum)
         {
-            for(const auto& it : _conditionList)
+            for(auto& it : _conditionList)
             {
                 SC_CONTINUE_IF(!it.bActived);
                 
@@ -230,6 +242,7 @@ namespace SpeedCC
     typedef SCTriggerT<SCWatchLong>                SCTriggerLong;
     typedef SCTriggerT<SCWatchULong>               SCTriggerULong;
     typedef SCTriggerT<SCWatchByte>                SCTriggerByte;
+    typedef SCTriggerT<SCWatchBool>                SCTriggerBool;
     typedef SCTriggerT<SCWatchString>              SCTriggerString;
 }
 

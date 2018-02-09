@@ -106,7 +106,6 @@ namespace SpeedCC
     
     SCBinderUISwitch::~SCBinderUISwitch()
     {
-//        this->removeUpdateFunc();
     }
     
     void SCBinderUISwitch::setWatch(SCWatchBool::Ptr ptrWatch)
@@ -115,7 +114,9 @@ namespace SpeedCC
         
         this->removeUpdateFunc();
         
-        const int nID = ptrWatch->addUpdateFunc([this](SCWatchBool::Ptr ptrWatch, const bool bNew)
+        const int nID = ptrWatch->addUpdateFunc([this](SCWatchBool::Ptr ptrWatch,
+                                                       const bool bNew,
+                                                       const bool bOld)
                                                 {
                                                     this->updateValue2Toggle();
                                                 });
