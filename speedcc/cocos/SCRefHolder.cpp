@@ -32,6 +32,10 @@ namespace SpeedCC
     {
     }
     
+    SCPtr2Ref::~SCPtr2Ref()
+    {
+    }
+    
     SCPtr2Ref::SCPtr2Ref(SCObject::Ptr ptr):
     _ptrObj(ptr)
     {
@@ -39,16 +43,49 @@ namespace SpeedCC
     
     cocos2d::Ref* SCPtr2Ref::create()
     {
-        SCPtr2Ref * ret = new (std::nothrow) SCPtr2Ref();
+        auto ret = new (std::nothrow) SCPtr2Ref();
         ret->autorelease();
         return ret;
     }
     
     cocos2d::Ref* SCPtr2Ref::create(SCObject::Ptr ptr)
     {
-        SCPtr2Ref * ret = new (std::nothrow) SCPtr2Ref(ptr);
+        auto ret = new (std::nothrow) SCPtr2Ref(ptr);
         ret->autorelease();
         return ret;
+    }
+    
+    ///----------- SCRefHolder
+    
+    SCRefHolder::SCRefHolder()
+    {
+        
+    }
+    
+    SCRefHolder::~SCRefHolder()
+    {
+        
+    }
+    
+    SCRefHolder* SCRefHolder::create()
+    {
+        auto ret = new (std::nothrow) SCRefHolder();
+        ret->autorelease();
+        return ret;
+    }
+    
+    void SCRefHolder::addObj(cocos2d::Ref* pRef)
+    {
+        SC_RETURN_V_IF(pRef==NULL);
+        
+        _objList.push_back(SCRef2Ptr::create(pRef));
+    }
+    
+    void SCRefHolder::addObj(SCObject::Ptr ptr)
+    {
+        SC_RETURN_V_IF(ptr==NULL);
+        
+        _objList.push_back(ptr);
     }
     
 }

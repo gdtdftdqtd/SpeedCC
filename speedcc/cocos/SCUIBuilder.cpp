@@ -9,7 +9,6 @@
 #include "SCUIBuilder.h"
 #include "SCSceneController.h"
 #include "SCNodeUtils.h"
-#include "SCNodeClickable.h"
 
 #include "../stage/SCMessageDispatch.h"
 #include "../stage/SCStageMacroDef.h"
@@ -297,10 +296,8 @@ namespace SpeedCC
         {
             pToggleItem->setCallback(scCallbackFunc);
         }
-        
-        auto ptrClick = SCNodeClickable::create(pToggleItem,NULL);
-        auto pClick = SCPtr2Ref::create(ptrClick);
-        pToggleItem->setUserObject(pClick);
+
+        SCNodeUtils::addClickable(pToggleItem, NULL);
         
         this->insertUserNode(pToggleItem, fPosX, fPosY, property);
         
@@ -548,9 +545,7 @@ namespace SpeedCC
     {
         auto pMenuItem = dynamic_cast<MenuItem*>(itemNode.ptrNodeHolder->getRef());
         
-        auto ptrClick = SCNodeClickable::create(pMenuItem,NULL);
-        auto pClick = SCPtr2Ref::create(ptrClick);
-        pMenuItem->setUserObject(pClick);
+        SCNodeUtils::addClickable(pMenuItem, NULL);
         
         this->insertUserNode(pMenuItem, fPosX, fPosY, property);
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pMenuItem);

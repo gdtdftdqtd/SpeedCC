@@ -44,6 +44,8 @@ namespace SpeedCC
         static cocos2d::Ref* create();
         static cocos2d::Ref* create(SCObject::Ptr ptr);
         
+        virtual ~SCPtr2Ref();
+        
         inline void setPtr(SCObject::Ptr ptr) { _ptrObj = ptr; }
         inline SCObject::Ptr getPtr() const { return _ptrObj;}
         
@@ -53,6 +55,109 @@ namespace SpeedCC
         
     private:
         SCObject::Ptr       _ptrObj;
+    };
+    
+    template<typename T,int n = std::is_convertible<T,cocos2d::Ref*>::value==1 ? 1 :
+    (SCIsObjPtrClassT<T>::value==1 ? 2 :0 )>
+    struct SCRefHolderTmpHelper
+    {
+    };
+    
+    // for cocos2d::Ref*
+    template<typename T>
+    struct SCRefHolderTmpHelper<T,1>
+    {
+        static void removeObj(std::list<SCObject::Ptr>& objList)
+        {
+            objList.remove_if([](SCObject::Ptr ptrIt)
+                              {
+                                  auto ptrTem = ptrIt.cast<SCRef2Ptr::Ptr>();
+                                  return (ptrTem!=NULL && dynamic_cast<T>(ptrTem->getRef())!=NULL);
+                              });
+        }
+        
+        static T getRefObj(const std::list<SCObject::Ptr>& objList)
+        {
+            for(const auto& it : objList)
+            {
+                auto p = it.cast<SCRef2Ptr::Ptr>();
+                SC_CONTINUE_IF(p==NULL);
+                auto p1 = dynamic_cast<T>(p->getRef());
+                SC_RETURN_IF(p1!=NULL, p1);
+            }
+            
+            return NULL;
+        }
+    };
+    
+    // for SCObject::Ptr
+    template<typename T>
+    struct SCRefHolderTmpHelper<T,2>
+    {
+        static void removeObj(std::list<SCObject::Ptr>& objList)
+        {
+            objList.remove_if([](SCObject::Ptr ptrIt)
+                              {
+                                  return (ptrIt.cast<T>()!=NULL);
+                              });
+        }
+        
+        static T getObj(const std::list<SCObject::Ptr>& objList)
+        {
+            for(const auto& it : objList)
+            {
+                auto p = it.cast<T>();
+                SC_RETURN_IF(p!=NULL, p);
+            }
+            
+            return NULL;
+        }
+    };
+    
+    
+    ///----------- SCRefHolder
+    class SCRefHolder : public cocos2d::Ref
+    {
+    public:
+        static SCRefHolder* create();
+        
+        virtual ~SCRefHolder();
+        
+        void addObj(cocos2d::Ref* pRef);
+        void addObj(SCObject::Ptr ptr);
+        
+    
+        template<typename T,
+        typename = typename std::enable_if<std::is_convertible<T,cocos2d::Ref*>::value==1 ||
+         SCIsObjPtrClassT<T>::value==1>::type >
+        void removeObj()
+        {
+            SCRefHolderTmpHelper<T>::removeObj(_objList);
+        }
+        
+        template<typename T,
+        typename = typename std::enable_if<SCIsObjPtrClassT<T>::value==1 ||
+        std::is_convertible<T,cocos2d::Ref*>::value==1 >::type>
+        T getObj() const
+        {
+            return SCRefHolderTmpHelper<T>::getObj(_objList);
+        }
+        
+        template<typename T,
+        typename = typename std::enable_if<SCIsObjPtrClassT<T>::value==1 ||
+        std::is_convertible<T,cocos2d::Ref*>::value==1 >::type>
+        bool hasObj() const
+        {
+            return (this->getObj<T>()!=NULL);
+        }
+        
+        inline bool isEmpty() const { return _objList.empty(); }
+        
+    protected:
+        SCRefHolder();
+        
+    private:
+        std::list<SCObject::Ptr>    _objList;
     };
 }
 

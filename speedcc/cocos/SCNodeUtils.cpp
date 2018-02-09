@@ -53,44 +53,51 @@ namespace SpeedCC
         pNode->setPosition(pos);
     }
     
-    bool SCNodeUtils::setDock(cocos2d::Node* pNode,const int dockFlag)
+    cocos2d::Vec2 SCNodeUtils::getDockPosition(cocos2d::Node* pNode,const int nDockFlag)
     {
-        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,false);
+        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,cocos2d::Vec2::ZERO);
         
         auto ptPos = pNode->getPosition();
         
-        if(SC_BIT_HAS_OR(dockFlag, kDockLeft|kDockRight|kDockMiddleX))
+        if(SC_BIT_HAS_OR(nDockFlag, kDockLeft|kDockRight|kDockMiddleX))
         {// x axis
-            if(SC_BIT_HAS_AND(dockFlag,kDockMiddleX))
+            if(SC_BIT_HAS_AND(nDockFlag,kDockMiddleX))
             {
                 ptPos.x = SCNodeUtils::getDockPosition(pNode,0,true);
             }
-            else if(SC_BIT_HAS_AND(dockFlag,kDockLeft))
+            else if(SC_BIT_HAS_AND(nDockFlag,kDockLeft))
             {
                 ptPos.x = SCNodeUtils::getDockPosition(pNode,-1,true);
             }
-            else if(SC_BIT_HAS_AND(dockFlag,kDockRight))
+            else if(SC_BIT_HAS_AND(nDockFlag,kDockRight))
             {
                 ptPos.x = SCNodeUtils::getDockPosition(pNode,1,true);
             }
         }
         
-        if(SC_BIT_HAS_OR(dockFlag, kDockTop|kDockBottom|kDockMiddleY))
+        if(SC_BIT_HAS_OR(nDockFlag, kDockTop|kDockBottom|kDockMiddleY))
         {// y axis
-            if(SC_BIT_HAS_AND(dockFlag,kDockMiddleY))
+            if(SC_BIT_HAS_AND(nDockFlag,kDockMiddleY))
             {
                 ptPos.y = SCNodeUtils::getDockPosition(pNode,0,false);
             }
-            else if(SC_BIT_HAS_AND(dockFlag,kDockTop))
+            else if(SC_BIT_HAS_AND(nDockFlag,kDockTop))
             {
                 ptPos.y = SCNodeUtils::getDockPosition(pNode,1,false);
             }
-            else if(SC_BIT_HAS_AND(dockFlag,kDockBottom))
+            else if(SC_BIT_HAS_AND(nDockFlag,kDockBottom))
             {
                 ptPos.y = SCNodeUtils::getDockPosition(pNode,-1,false);
             }
         }
         
+        return ptPos;
+    }
+    
+    bool SCNodeUtils::setDock(cocos2d::Node* pNode,const int nDockFlag)
+    {
+        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,false);
+        auto ptPos = SCNodeUtils::getDockPosition(pNode,nDockFlag);
         pNode->setPosition(ptPos);
         
         return true;
@@ -147,24 +154,69 @@ namespace SpeedCC
         return fRet;
     }
     
-    void SCNodeUtils::setNodeClickable(cocos2d::Node* pNode,SCBehavior::Ptr ptrBvr)
+    void SCNodeUtils::addClickable(cocos2d::Node* pNode,SCBehavior::Ptr ptrBvr)
     {
         SCASSERT(pNode!=NULL);
         
-        auto ptrClick = SCNodeClickable::create(pNode,ptrBvr);
-        auto pClick = SCPtr2Ref::create(ptrClick);
-        pNode->setUserObject(pClick);
+        auto ptrClick = SCNodeUtils::getUserObj<SCNodeClickable::Ptr>(pNode);
+        
+        if(ptrClick==NULL)
+        {
+            ptrClick = SCNodeClickable::create(pNode,ptrBvr);
+            SCNodeUtils::addUserObj(pNode, ptrClick);
+        }
+        else
+        {
+            ptrClick->setBehavior(ptrBvr);
+        }
     }
     
-    void SCNodeUtils::removeNodeClickable(cocos2d::Node* pNode)
+    void SCNodeUtils::removeClickable(cocos2d::Node* pNode)
     {
         SCASSERT(pNode!=NULL);
+        SCNodeUtils::removeUserObj<SCNodeClickable::Ptr>(pNode);
+    }
+    
+    SCRefHolder* SCNodeUtils::getUserHolder(cocos2d::Node* pNode,const bool bCreate)
+    {
+        SC_RETURN_IF(pNode==NULL,NULL);
+        auto pUserObj = pNode->getUserObject();
+        SC_RETURN_IF(pUserObj==NULL && !bCreate,NULL);
         
-        SC_RETURN_V_IF(pNode->getUserObject()==NULL);
-        SCPtr2Ref* pRef = dynamic_cast<SCPtr2Ref*>(pNode->getUserObject());
-        SC_RETURN_V_IF(pRef==NULL || pRef->getPtr()==NULL);
-        SC_RETURN_V_IF(pRef->getPtr().cast<SCNodeClickable::Ptr>()==NULL);
+        SCRefHolder* pHolder = NULL;
         
-        pNode->setUserObject(NULL);
+        if(pUserObj==NULL)
+        {
+            pHolder = SCRefHolder::create();
+        }
+        else
+        {
+            pHolder = dynamic_cast<SCRefHolder*>(pUserObj);
+            
+            if(pHolder==NULL)
+            {
+                pHolder = SCRefHolder::create();
+                pHolder->addObj(pUserObj);
+            }
+        }
+        
+        pNode->setUserObject(pHolder);
+        return pHolder;
+    }
+    
+    void SCNodeUtils::addUserObj(cocos2d::Node* pNode,cocos2d::Ref* pRef)
+    {
+        SC_RETURN_V_IF(pNode==NULL || pRef==NULL);
+        
+        auto pHolder = SCNodeUtils::getUserHolder(pNode,true);
+        pHolder->addObj(pRef);
+    }
+    
+    void SCNodeUtils::addUserObj(cocos2d::Node* pNode,SCObject::Ptr ptrObj)
+    {
+        SC_RETURN_V_IF(pNode==NULL || ptrObj==NULL);
+        
+        auto pHolder = SCNodeUtils::getUserHolder(pNode,true);
+        pHolder->addObj(ptrObj);
     }
 }
