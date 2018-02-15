@@ -18,8 +18,6 @@
 #include "../stage/SCMessageDispatch.h"
 #include "../stage/SCStage.h"
 
-#include "../base/SCWatchNumberT.h"
-
 
 namespace SpeedCC
 {
@@ -33,6 +31,7 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCSceneController)
         
         friend class SCSceneNavigator;
+        template<typename> friend class SCSceneNavigationCreator;
         
         typedef std::function<void(SCMessage::Ptr ptrMsg)>  MsgFunc_t;
         
@@ -64,6 +63,8 @@ namespace SpeedCC
         
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
+        void finishLoading();
+        
     protected:
         SCSceneController();
         
@@ -73,7 +74,10 @@ namespace SpeedCC
         void setBedNode(SCBedNode* pLayer);
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)
-        { _ptrParentModalController = controllerPtr;}
+        { _ptrParentModalController = controllerPtr; }
+        
+        inline void setFinishLoadingFunc(const std::function<void()>& func)
+        { _finishLoadingFunc = func; }
         
     private:
         SCBedNode*			                        _pBedNode;
@@ -84,8 +88,8 @@ namespace SpeedCC
         bool                                        _bBlackMaskForModal;
         std::list<SCObject::Ptr>                    _ownLifecycleList;
         std::map<int,MsgFunc_t>                     _msg2FuncMap;
+        std::function<void()>                       _finishLoadingFunc;
     };
-    
     
 
 }

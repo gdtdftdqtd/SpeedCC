@@ -31,7 +31,6 @@ namespace SpeedCC
     bool SCSceneNavigator::switchScene(const SSceneSwitchInfo& info)
     {
         SStackSceneInfo navigateInfo;
-        
         navigateInfo.sceneCreatorInfo = info;
         
         switch(navigateInfo.sceneCreatorInfo.switchType)
@@ -40,56 +39,109 @@ namespace SpeedCC
             {
                 SC_RETURN_IF(s_ptrCurrentSceneController==NULL, false);
                 
-                auto ptrController = (info.pfunCurrentLayerCreator)(s_SceneParameterDic);
-                s_SceneParameterDic.removeAllKeys();
+                auto call = [this,info,navigateInfo]()
+                {
+                    auto ptrController = (info.pfunLayerCreator)(s_SceneParameterDic);
+                    s_SceneParameterDic.removeAllKeys();
+                    
+                    s_ptrCurrentSceneController->pushModalController(ptrController);
+                    s_sceneStack.push_front(navigateInfo);
+                    s_ptrCurrentSceneController = ptrController;
+                };
                 
-                s_ptrCurrentSceneController->pushModalController(ptrController);
-                s_sceneStack.push_front(navigateInfo);
-                s_ptrCurrentSceneController = ptrController;
+                if(info.bHasLoading)
+                {
+                    auto ptrController = (info.pfunLoadingLayerCreator)(s_SceneParameterDic);
+                    ptrController->setFinishLoadingFunc([this,call]()
+                                                        {
+                                                            s_ptrCurrentSceneController = s_ptrCurrentSceneController->popModalFromParent();
+                                                            call();
+                                                        });
+                    s_ptrCurrentSceneController->pushModalController(ptrController);
+                    s_sceneStack.push_front(navigateInfo);
+                    s_ptrCurrentSceneController = ptrController;
+                }
+                else
+                {
+                    call();
+                }
             }
                 break;
                 
             case kSceneReplace: // replace
             case kScenePush: // push
             {
-                auto controllerPtr = (info.pfunCurrentSceneCreator)(s_SceneParameterDic);
-                s_SceneParameterDic.removeAllKeys();
-                
-                cocos2d::Scene* pScene = controllerPtr->getScene();
-            
-                if(navigateInfo.sceneCreatorInfo.pfunSelfTransCreator)
+                auto call = [this,info,navigateInfo]()
                 {
-                    pScene = (*navigateInfo.sceneCreatorInfo.pfunSelfTransCreator)(kSCDurationOfSceneTransition,pScene);
-                }
-                
-                if(SCCCDirector()->getRunningScene())
-                {
-                    if(navigateInfo.sceneCreatorInfo.switchType==kSceneReplace)
+                    auto ptrController = (info.pfunSceneCreator)(s_SceneParameterDic);
+                    s_SceneParameterDic.removeAllKeys();
+                    
+                    cocos2d::Scene* pScene = ptrController->getScene();
+                    
+                    if(navigateInfo.sceneCreatorInfo.pfunSelfTransCreator)
                     {
-                        SCCCDirector()->replaceScene(pScene);
-                        
-                        // remove previous modal scene
-                        bool bRemoved = false;
-                        s_sceneStack.remove_if([&bRemoved](const SStackSceneInfo& stackInfo) -> bool
-                                               {
-                                                   SC_RETURN_IF(bRemoved, false);
-                                                   SC_RETURN_IF(!bRemoved && stackInfo.sceneCreatorInfo.switchType==kSceneModal, true);
-                                                   bRemoved = true;
-                                                   return false;
-                                               });
+                        pScene = (*navigateInfo.sceneCreatorInfo.pfunSelfTransCreator)(kSCDurationOfSceneTransition,pScene);
+                    }
+                    
+                    if(SCCCDirector()->getRunningScene())
+                    {
+                        if(navigateInfo.sceneCreatorInfo.switchType==kSceneReplace)
+                        {
+                            SCCCDirector()->replaceScene(pScene);
+                            
+                            // remove previous modal scene
+                            bool bRemoved = false;
+                            s_sceneStack.remove_if([&bRemoved](const SStackSceneInfo& stackInfo) -> bool
+                                                   {
+                                                       SC_RETURN_IF(bRemoved, false);
+                                                       SC_RETURN_IF(!bRemoved && stackInfo.sceneCreatorInfo.switchType==kSceneModal, true);
+                                                       bRemoved = true;
+                                                       return false;
+                                                   });
+                        }
+                        else
+                        {
+                            SCCCDirector()->pushScene(pScene);
+                        }
                     }
                     else
                     {
-                        SCCCDirector()->pushScene(pScene);
+                        SCCCDirector()->runWithScene(pScene);
                     }
+                    
+                    s_sceneStack.push_front(navigateInfo);
+                    s_ptrCurrentSceneController = ptrController;
+                };
+                
+                if(info.bHasLoading)
+                {
+                    auto ptrController = (info.pfunLoadingSceneCreator)(s_SceneParameterDic);
+                    cocos2d::Scene* pScene = ptrController->getScene();
+                    
+                    ptrController->setFinishLoadingFunc([call]() { call(); });
+                    
+                    if(SCCCDirector()->getRunningScene())
+                    {
+                        if(navigateInfo.sceneCreatorInfo.switchType==kSceneReplace)
+                        {
+                            SCCCDirector()->replaceScene(pScene);
+                        }
+                        else
+                        {
+                            SCCCDirector()->pushScene(pScene);
+                        }
+                    }
+                    else
+                    {
+                        SCCCDirector()->runWithScene(pScene);
+                    }
+                    
+                    s_ptrCurrentSceneController = ptrController;
                 }
                 else
                 {
-                    SCCCDirector()->runWithScene(pScene);
+                    call();
                 }
-                
-                s_sceneStack.push_front(navigateInfo);
-                s_ptrCurrentSceneController = controllerPtr;
             }
                 break;
                 
@@ -150,7 +202,7 @@ namespace SpeedCC
                 
             case kSceneReplace: // replace
             {
-                SCASSERT(navigateInfo2.sceneCreatorInfo.pfunCurrentSceneCreator!=NULL);
+                SCASSERT(navigateInfo2.sceneCreatorInfo.pfunSceneCreator!=NULL);
                 
                 // remove all of kSceneModal layer from navigator stack
                 size_t nStackSize = s_sceneStack.size();
@@ -161,18 +213,34 @@ namespace SpeedCC
                     --nStackSize;
                 }
                 
-                auto controllerPtr = (*navigateInfo2.sceneCreatorInfo.pfunCurrentSceneCreator)(s_SceneParameterDic);
-                s_SceneParameterDic.removeAllKeys();
-                
-                cocos2d::Scene* pScene = controllerPtr->getScene();
-                if(oppositeTrans)
+                auto call = [navigateInfo2,oppositeTrans,this]()
                 {
-                    pScene = (*oppositeTrans)(kSCDurationOfSceneTransition,pScene);
+                    auto ptrController = (*navigateInfo2.sceneCreatorInfo.pfunSceneCreator)(s_SceneParameterDic);
+                    cocos2d::Scene* pScene = ptrController->getScene();
+                    if(oppositeTrans)
+                    {
+                        pScene = (*oppositeTrans)(kSCDurationOfSceneTransition,pScene);
+                    }
+                    
+                    SCCCDirector()->replaceScene(pScene);
+                    
+                    s_ptrCurrentSceneController = ptrController;
+                    s_SceneParameterDic.removeAllKeys();
+                };
+                
+                if(navigateInfo2.sceneCreatorInfo.bHasLoading)
+                {
+                    auto ptrController = (*navigateInfo2.sceneCreatorInfo.pfunLoadingSceneCreator)(s_SceneParameterDic);
+                    cocos2d::Scene* pScene = ptrController->getScene();
+                    ptrController->setFinishLoadingFunc([call]() { call(); });
+                    
+                    SCCCDirector()->replaceScene(pScene);
+                    s_ptrCurrentSceneController = ptrController;
                 }
-                
-                SCCCDirector()->replaceScene(pScene);
-                
-                s_ptrCurrentSceneController = controllerPtr;
+                else
+                {
+                    call();
+                }
             }
                 break;
                 

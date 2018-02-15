@@ -28,6 +28,7 @@ struct SActorProperty1 : SCObject
 
 void TestStageController::onCreate(SCDictionary parameters)
 {
+    parameters.setValue("title", "Test Stage");
     SCSceneController::onCreate(parameters);
     
     this->setupUI();

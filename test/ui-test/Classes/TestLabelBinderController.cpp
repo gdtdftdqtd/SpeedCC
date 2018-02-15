@@ -7,6 +7,8 @@ using namespace SpeedCC;
 
 void TestLabelBinderController::onCreate(SCDictionary parameters)
 {
+    parameters.setValue("title", "Test Binding");
+    
     SCSceneController::onCreate(parameters);
     
     _watchIntPtr = SCWatchInt::create();

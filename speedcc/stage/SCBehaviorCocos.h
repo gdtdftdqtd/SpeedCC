@@ -22,12 +22,12 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorSceneNavigate)
         SC_DEFINE_CLASS_PTR(SCBehaviorSceneNavigate)
         
-        template<typename SceneT, typename TransT = SCClassNull>
+        template<typename SceneT, typename TransT = SCClassNull, typename LoadingT = SCClassNull>
         static Ptr create(const SCSceneNavigator::ESceneSwitchType place = SCSceneNavigator::kSceneReplace,
                           const SCDictionary& dic = SCDictionary())
         {
             SCSceneNavigator::SSceneSwitchInfo swi;
-            swi.setUp<SceneT,TransT>(place);
+            swi.setUp<SceneT,TransT,LoadingT>(place);
             
             SCBehaviorSceneNavigate::Ptr ptrRet;
             ptrRet.createInstanceWithCon([swi,dic](void* pData)

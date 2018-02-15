@@ -41,22 +41,6 @@ namespace SpeedCC
     
     ///--------------------- cocos2d transition template
     
-    template<typename T>
-    struct SCTransitionCreator
-    {
-        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
-        {
-            return T::create(duration, pScene);
-        }
-    };
-    
-    template<>
-    struct SCTransitionCreator<SCClassNull>
-    {
-        static cocos2d::Scene* create(float duration,cocos2d::Scene* pScene)
-        {return pScene;}
-    };
-    
     SCClassNull SCTraitsTransitionSceneOpposite(SCClassNull*);
     cocos2d::TransitionRotoZoom SCTraitsTransitionSceneOpposite(cocos2d::TransitionRotoZoom*);
     cocos2d::TransitionJumpZoom SCTraitsTransitionSceneOpposite(cocos2d::TransitionJumpZoom*);

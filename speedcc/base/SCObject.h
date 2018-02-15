@@ -9,7 +9,7 @@ namespace SpeedCC
 {
     class SCObject
     {
-        template<typename T1,bool T2> friend class SCObjPtrT;
+        template<typename,bool> friend class SCObjPtrT;
         
     public:
         SC_DEFINE_CLASS_PTR(SCObject)

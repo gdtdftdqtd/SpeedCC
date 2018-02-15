@@ -148,6 +148,14 @@ namespace SpeedCC
         SCCCScheduler()->unschedule(selector, this);
     }
     
+    void SCSceneController::finishLoading()
+    {
+        if(_finishLoadingFunc!=NULL)
+        {
+            _finishLoadingFunc();
+        }
+    }
+    
     void SCSceneController::delayExecute(float fDelay,const std::function<void ()>& fun)
     {
         fDelay = (fDelay<0) ? 0 : fDelay;

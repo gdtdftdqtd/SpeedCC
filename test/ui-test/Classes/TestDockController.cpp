@@ -6,12 +6,8 @@ USING_NS_CC;
 void TestDockController::onCreate(SCDictionary parameters)
 {
     parameters.setValue("name", "dock");
+    parameters.setValue("title", "Test Dock");
     TestCaseController::onCreate(parameters);
-    
-//    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
-//        // back button
-//        SC_INSERT_BUTTON_LABEL(NULL, 0, 0, "color-text=black; dock=left|top; x-by=3; y-by=-100;", "Back", "", 22, SCBehaviorSceneBack::create())
-//    SC_END_CONTAINER
     
     _ptrCaseBvr->setCase(0, SCBehaviorCallFunc::create(SC_MAKE_FUNC(testCaseNoScale, this)));
     _ptrCaseBvr->setCase(1, SCBehaviorCallFunc::create(SC_MAKE_FUNC(testCaseWithScale, this)));

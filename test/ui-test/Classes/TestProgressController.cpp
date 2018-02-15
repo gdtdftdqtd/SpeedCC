@@ -7,6 +7,7 @@ using namespace SpeedCC;
 
 void TestProgressController::onCreate(SCDictionary parameters)
 {
+    parameters.setValue("title", "Test Progress");
     TestCaseController::onCreate(parameters);
 
     _ptrCaseBvr->setCase(0, SCBehaviorCallFunc::create(SC_MAKE_FUNC(testCaseBarBasic, this)));

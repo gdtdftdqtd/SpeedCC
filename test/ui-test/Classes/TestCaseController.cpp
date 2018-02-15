@@ -39,13 +39,20 @@ void TestCaseController::onCreate(SCDictionary parameters)
         bDock = (value.getString()=="dock");
     }
     
+    SCString strTitle;
+    if(parameters.hasKey("title"))
+    {
+        auto value = parameters.getValue("title");
+        strTitle = value.getString();
+    }
+    
     SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,SCWinSize)
         SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0.5,0.5,NULL,SCWinSize,Color4B::WHITE)
     
             if(bDock)
             {
                 // title
-                SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|mid-x; y-by=-100;","Test Stage","blue_font.fnt")
+                SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|mid-x; y-by=-100;",strTitle,"blue_font.fnt")
                 SC_INSERT_LABEL(NULL, 0, 0, "dock=top|mid-x; y-by=-150; color-text=black;", _ptrWatchDescription, "", 18)
                 
                 // back button
@@ -58,7 +65,7 @@ void TestCaseController::onCreate(SCDictionary parameters)
             else
             {
                 // title
-                SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|mid-x; y-by=-50;","Test Stage","blue_font.fnt")
+                SC_INSERT_LABEL_BMFONT(NULL,0,0,"dock=top|mid-x; y-by=-50;",strTitle,"blue_font.fnt")
                 SC_INSERT_LABEL(NULL, 0, 0, "dock=top|mid-x; y-by=-100; color-text=black;", _ptrWatchDescription, "", 18)
                 
                 // back button

@@ -13,7 +13,7 @@ namespace SpeedCC
     template<typename TargetT,bool IsStrong=true>
     class SCObjPtrT : public SCObjRefT<TargetT>
     {
-        template<typename T,bool s> friend class SCObjPtrT;
+        template<typename,bool> friend class SCObjPtrT;
     protected:
         virtual void onInstanceCreated(void* pData)
         {
@@ -125,7 +125,7 @@ namespace SpeedCC
     template<typename TargetT>
     class SCObjPtrT<TargetT,false> : public SCObjRefT<void*>
     {
-        template<typename T,bool s> friend class SCObjPtrT;
+        template<typename,bool> friend class SCObjPtrT;
     public:
         typedef TargetT type;
         

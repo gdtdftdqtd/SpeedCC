@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A1556CA1FD69CA200CF7420 /* TestHomeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1556C81FD69CA200CF7420 /* TestHomeController.cpp */; };
+		0A3C4FDC203291D0007DA271 /* TestLoadingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FDB203291D0007DA271 /* TestLoadingController.cpp */; };
 		0A41B34E1FE7EEEB003945EB /* TestLabelBinderController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */; };
 		0A41B3CD1FED34FF003945EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A41B3CC1FED34FE003945EB /* StoreKit.framework */; };
 		0A4D771F20245BA10089F8D6 /* TestDockController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D771D20245BA00089F8D6 /* TestDockController.cpp */; };
@@ -93,6 +94,8 @@
 /* Begin PBXFileReference section */
 		0A1556C81FD69CA200CF7420 /* TestHomeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestHomeController.cpp; sourceTree = "<group>"; };
 		0A1556C91FD69CA200CF7420 /* TestHomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHomeController.h; sourceTree = "<group>"; };
+		0A3C4FDA203291D0007DA271 /* TestLoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLoadingController.h; sourceTree = "<group>"; };
+		0A3C4FDB203291D0007DA271 /* TestLoadingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLoadingController.cpp; sourceTree = "<group>"; };
 		0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLabelBinderController.cpp; sourceTree = "<group>"; };
 		0A41B34D1FE7EEEB003945EB /* TestLabelBinderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLabelBinderController.h; sourceTree = "<group>"; };
 		0A41B3CC1FED34FE003945EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -297,6 +300,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0A3C4FDB203291D0007DA271 /* TestLoadingController.cpp */,
+				0A3C4FDA203291D0007DA271 /* TestLoadingController.h */,
 				0A4D77232028B0F10089F8D6 /* TestCaseController.cpp */,
 				0A4D77242028B0F10089F8D6 /* TestCaseController.h */,
 				0A4D772020289FA70089F8D6 /* TestProgressController.cpp */,
@@ -497,6 +502,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				0A4D771F20245BA10089F8D6 /* TestDockController.cpp in Sources */,
+				0A3C4FDC203291D0007DA271 /* TestLoadingController.cpp in Sources */,
 				0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
