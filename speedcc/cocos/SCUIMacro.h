@@ -139,6 +139,10 @@ ptrSCTemUIBuilder->pushContainerStack(pSCContainerNode);
 {\
     ptrSCTemUIBuilder->containerAlignment((_node_),(_x_),(_y_),(_style_),(_is_hor_),(_padding_),(_dock_));\
 
+// scrollview
+#define SC_BEGIN_CONTAINER_SCROLLVIEW(_node_,_x_,_y_,_style_,_is_hor_,_view_size_,_container_size_,_callback_) \
+{\
+    ptrSCTemUIBuilder->containerScrollView((_node_),(_x_),(_y_),(_style_),(_is_hor_),(_view_size_),(_container_size_),(_callback_));
 
 // build-in
 #define SC_INSERT_OPTION_MUSIC(_node_,_x_,_y_,_style_,_true_item_,_false_item_) \

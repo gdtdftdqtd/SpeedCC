@@ -48,7 +48,7 @@ namespace SpeedCC
             SCBehavior::Ptr             ptrBvr;
             SCDictionary                parDic;
             bool                        bSwallow;
-            bool                        bActived;
+            bool                        bActive;
             unsigned char               byPriority; // 0: highest; 255: lowest
             
             inline bool operator<(const SConditionInfo& info) const { return byPriority<info.byPriority; }
@@ -67,8 +67,8 @@ namespace SpeedCC
             this->removeUpdateFunc();
         }
         
-        void setActive(const bool bActived);
-        inline bool getActive() const {return _bActived;}
+        void setActive(const bool bActive);
+        inline bool getActive() const {return _bActive;}
         
         void setWatch(PtrType_t ptrWatch)
         {
@@ -91,7 +91,7 @@ namespace SpeedCC
                             const SCDictionary parDic = SCDictionary(),
                            const unsigned char nPriority=kPriorityDefault,
                            const bool bSwallow=false,
-                           const bool bActived=true)
+                           const bool bActive=true)
         {
             auto f = [num,comp](const NumberType_t newNum,const NumberType_t oldNum) -> bool
             {
@@ -108,7 +108,7 @@ namespace SpeedCC
                 return false;
             };
             
-            return this->addCondition(f,ptrBvr,parDic,nPriority,bSwallow,bActived);
+            return this->addCondition(f,ptrBvr,parDic,nPriority,bSwallow,bActive);
         }
         
         int addCondition(const EComparsion comp,
@@ -117,7 +117,7 @@ namespace SpeedCC
                          const SCDictionary parDic = SCDictionary(),
                          const unsigned char nPriority=kPriorityDefault,
                          const bool bSwallow=false,
-                         const bool bActived=true)
+                         const bool bActive=true)
         {
             auto f = [ptrNum,comp](const NumberType_t newNum,const NumberType_t oldNum) -> bool
             {
@@ -134,7 +134,7 @@ namespace SpeedCC
                 return false;
             };
             
-            return this->addCondition(f,ptrBvr,parDic,nPriority,bSwallow,bActived);
+            return this->addCondition(f,ptrBvr,parDic,nPriority,bSwallow,bActive);
         }
         
         int addCondition(const MatchFunc_t& func,
@@ -142,22 +142,22 @@ namespace SpeedCC
                          const SCDictionary parDic = SCDictionary(),
                          const unsigned char nPriority=kPriorityDefault,
                          const bool bSwallow=false,
-                         const bool bActived=true)
+                         const bool bActive=true)
         {
-            SConditionInfo ci = {++_nIDCounter,func,ptrBvr,parDic,bSwallow,bActived,nPriority};
+            SConditionInfo ci = {++_nIDCounter,func,ptrBvr,parDic,bSwallow,bActive,nPriority};
             _conditionList.push_back(ci);
             _conditionList.sort(std::greater<SConditionInfo>());
             
             return _nIDCounter;
         }
         
-        void setConditionActive(const int nConditionID,const bool bActived)
+        void setConditionActive(const int nConditionID,const bool bActive)
         {
             for(auto& it : _conditionList)
             {
                 if(it.nID == nConditionID)
                 {
-                    it.bActived = bActived;
+                    it.bActive = bActive;
                     return;
                 }
             }
@@ -167,7 +167,7 @@ namespace SpeedCC
         {
             for(const auto& it : _conditionList)
             {
-                SC_RETURN_IF(it.nID == nConditionID,it.bActived);
+                SC_RETURN_IF(it.nID == nConditionID,it.bActive);
             }
             
             return false;
@@ -189,13 +189,13 @@ namespace SpeedCC
         
     protected:
         SCTriggerT():
-        _bActived(true),
+        _bActive(true),
         _nFuncID(0),
         _nIDCounter(0)
         {}
         
         SCTriggerT(PtrType_t ptrWatch):
-        _bActived(true),
+        _bActive(true),
         _nFuncID(0),
         _nIDCounter(0)
         {
@@ -217,7 +217,7 @@ namespace SpeedCC
         {
             for(auto& it : _conditionList)
             {
-                SC_CONTINUE_IF(!it.bActived);
+                SC_CONTINUE_IF(!it.bActive);
                 
                 if(it.matchFunc(newNum,oldNum))
                 {
@@ -229,7 +229,7 @@ namespace SpeedCC
         
     private:
         int                         _nIDCounter;
-        bool                        _bActived;
+        bool                        _bActive;
         PtrType_t                   _ptrWatch;
         int                         _nFuncID;
         std::list<SConditionInfo>   _conditionList;

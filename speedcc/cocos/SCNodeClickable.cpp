@@ -14,7 +14,7 @@ using namespace cocos2d;
 namespace SpeedCC
 {
     SCNodeClickable::SCNodeClickable():
-    _bActived(true),
+    _bActive(true),
     _pNode(NULL),
     _bTrack(false),
     _bSelected(false),
@@ -23,7 +23,7 @@ namespace SpeedCC
     }
     
     SCNodeClickable::SCNodeClickable(cocos2d::Node* pNode):
-    _bActived(true),
+    _bActive(true),
     _bTrack(false),
     _bSelected(false),
     _pMenuItem(NULL)
@@ -32,7 +32,7 @@ namespace SpeedCC
     }
     
     SCNodeClickable::SCNodeClickable(cocos2d::Node* pNode,SCBehavior::Ptr ptrBvr):
-    _bActived(true),
+    _bActive(true),
     _bTrack(false),
     _bSelected(false),
     _pMenuItem(NULL),
@@ -46,14 +46,14 @@ namespace SpeedCC
         
     }
     
-    void SCNodeClickable::setActived(const bool bActived)
+    void SCNodeClickable::setActive(const bool bActive)
     {
         if(_ptrEventEmitter!=NULL)
         {
-            _ptrEventEmitter->setActived(bActived);
+            _ptrEventEmitter->setActive(bActive);
         }
         
-        _bActived = bActived;
+        _bActive = bActive;
     }
     
     void SCNodeClickable::setBehavior(SCBehavior::Ptr ptrBvr)
@@ -71,7 +71,7 @@ namespace SpeedCC
         {
             _ptrEventEmitter = SCEventEmitter::create(pNode,this);
             _ptrEventEmitter->setTouchMode(SCEventEmitter::ETouchMode::kSingle);
-            _ptrEventEmitter->setActived(_bActived);
+            _ptrEventEmitter->setActive(_bActive);
             _pMenuItem = dynamic_cast<MenuItem*>(_pNode);
         }
     }

@@ -34,12 +34,14 @@ namespace SpeedCC
         virtual ~SCEventEmitter();
         SC_DEFINE_CREATE_FUNC_2(SCEventEmitter,cocos2d::Node*,SCMessageListener*)
         
-        inline void setActived(const bool bActived) {_bActived = bActived;}
-        inline bool getActived() const {return _bActived;}
+        inline void setActive(const bool bActive) {_bActive = bActive;}
+        inline bool getActive() const {return _bActive;}
         
         cocos2d::EventListener* getEventListener(cocos2d::EventListener::Type type) const;
         void setTouchMode(const ETouchMode touch);
         inline ETouchMode getTouchMode() const { return _touchMode;}
+        
+        inline cocos2d::EventListener* getEventListener() const { return _pTouchListener; }
         
     protected:
         SCEventEmitter();
@@ -80,7 +82,7 @@ namespace SpeedCC
         }
         
     private:
-        bool                                    _bActived;
+        bool                                    _bActive;
         SCMessageListener*                      _pMsgListener;
         cocos2d::Node*                          _pReceiveNode;
         ETouchMode                              _touchMode;

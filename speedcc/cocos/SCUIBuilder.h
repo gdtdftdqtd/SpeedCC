@@ -11,6 +11,7 @@
 
 #include "../base/SCObject.h"
 #include "SCUIArg.h"
+#include "ui/CocosGUI.h"
 
 namespace SpeedCC
 {
@@ -165,10 +166,16 @@ namespace SpeedCC
                                               const float fPadding,
                                               const int nDock);
         
-//        cocos2d::Node* getLayoutNode(const int nID);
-//        void storeLayoutNode(const int nID,cocos2d::Node* pNode);
-//        void storeBinder(cocos2d::Ref* pObj,SCBinder::Ptr ptrBinder);
-//        SCBinder::Ptr getBinder(cocos2d::Ref* pObj) const;
+        
+        ///---------------- cocos2d-x extension UI
+        void containerScrollView(cocos2d::ui::ScrollView** ppScrollView,
+                                 const float fPosX,
+                                 const float fPosY,
+                                 const SCUIArg::StringPurifier& style,
+                                 const bool bHorizontal,
+                                 const cocos2d::Size& viewSize,
+                                 const cocos2d::Size& containerSize,
+                                 const std::function<void(cocos2d::Ref*, cocos2d::ui::ScrollView::EventType)>& cbFunc);
         
     protected:
         SCUIBuilder():
@@ -194,8 +201,6 @@ namespace SpeedCC
         _pDefaultRefCaller(NULL)
         {
         }
-        
-//        void onSCMenuItemPressed(cocos2d::Ref* pSender);
         
     private:
         void addLayer(const SCUIArg::NodePurifier& layerNode,

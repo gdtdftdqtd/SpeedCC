@@ -295,8 +295,6 @@ namespace SpeedCC
         
         this->insertUserNode(pToggleItem, fPosX, fPosY, style);
         
-//        _buttonItem2InfoMap[pToggleItem] = bvrPurifier.ptrResultBvr;
-        
         SC_ASSIGN_NODE(ppMenuItemToggle,pToggleItem);
         
         return pToggleItem;
@@ -505,7 +503,43 @@ namespace SpeedCC
         _contextStack.push_front(context);
     }
     
-    ///------------ internal methods
+    ///------------- cocos2d-x extension UI
+    void SCUIBuilder::containerScrollView(cocos2d::ui::ScrollView** ppScrollView,
+                             const float fPosX,
+                             const float fPosY,
+                             const SCUIArg::StringPurifier& style,
+                             const bool bHorizontal,
+                             const cocos2d::Size& viewSize,
+                             const cocos2d::Size& containerSize,
+                             const std::function<void(cocos2d::Ref*, cocos2d::ui::ScrollView::EventType)>& cbFunc)
+    {
+        auto pScrollView = ui::ScrollView::create();
+        
+        pScrollView->setIgnoreAnchorPointForPosition(false);
+        pScrollView->setAnchorPoint(Vec2(0.5,0.5));
+        pScrollView->setBounceEnabled(true);
+        pScrollView->setDirection(bHorizontal ?
+                                  ui::ScrollView::Direction::HORIZONTAL :
+                                  ui::ScrollView::Direction::VERTICAL);
+        
+        pScrollView->setContentSize(viewSize);
+        pScrollView->setInnerContainerSize(containerSize);
+        pScrollView->addEventListener(cbFunc);
+        
+//        {
+//            pScrollView->setBackGroundColor(Color3B::YELLOW);
+//            pScrollView->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
+//        }
+        
+        SCUITypeDef::SUIContext context;
+        context.pContainerNode = pScrollView;
+        context.containerType = SCUITypeDef::EContainerType::kNormal;
+        
+        this->insertUserNode(pScrollView, fPosX, fPosY, style);
+        _contextStack.push_front(context);
+    }
+    
+    ///-------------- internal methods
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
                                             const float fPosX,
                                                const float fPosY,

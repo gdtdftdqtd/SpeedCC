@@ -33,11 +33,13 @@ namespace SpeedCC
         
         virtual ~SCNodeClickable();
         
-        void setActived(const bool bActived);
-        inline bool getActived() const { return _bActived; }
+        void setActive(const bool bActive);
+        inline bool getActive() const { return _bActive; }
         
         void setNode(cocos2d::Node* pNode);
         void setBehavior(SCBehavior::Ptr ptrBvr);
+        
+        inline SCEventEmitter::Ptr getEventEmitter() const { return _ptrEventEmitter;}
         
     private:
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
@@ -49,13 +51,13 @@ namespace SpeedCC
         SCNodeClickable(cocos2d::Node* pNode,SCBehavior::Ptr ptrBvr);
         
     protected:
-        bool                        _bActived;
+        bool                        _bActive;
         bool                        _bTrack;
         bool                        _bSelected;
         cocos2d::Node*              _pNode;
         cocos2d::MenuItem*          _pMenuItem;
         SCEventEmitter::Ptr         _ptrEventEmitter;
-        const cocos2d::Camera*       _pSelectedCamera;
+        const cocos2d::Camera*      _pSelectedCamera;
         SCBehavior::Ptr             _ptrBvr;
     };
 }
