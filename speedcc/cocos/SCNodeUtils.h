@@ -27,7 +27,7 @@ namespace SpeedCC
     public:
         static cocos2d::Vec2 posA2P(const cocos2d::Vec2& ptA,const cocos2d::Size& frameSize);
         static cocos2d::Vec2 posP2A(const cocos2d::Vec2& ptP,const cocos2d::Size& frameSize);
-        static bool setPerPosition(cocos2d::Node* pNode,const cocos2d::Vec2& ptPer);
+        static bool setPositionPer(cocos2d::Node* pNode,const cocos2d::Vec2& ptPer);
         static void setPositionBy(cocos2d::Node* pNode,float fXBy,float fYBy);
         static bool setDock(cocos2d::Node* pNode,const int nDockFlag);
         static cocos2d::Vec2 getDockPosition(cocos2d::Node* pNode,const int nDockFlag);
@@ -37,8 +37,6 @@ namespace SpeedCC
         
         static void addUserObj(cocos2d::Node* pNode,cocos2d::Ref* pRef);
         static void addUserObj(cocos2d::Node* pNode,SCObject::Ptr ptrObj);
-        
-        
         
         template<typename T,
         typename = typename std::enable_if<std::is_convertible<T,cocos2d::Ref*>::value==1 ||

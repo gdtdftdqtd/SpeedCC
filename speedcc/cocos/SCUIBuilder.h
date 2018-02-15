@@ -11,7 +11,6 @@
 
 #include "../base/SCObject.h"
 #include "SCUIArg.h"
-#include "ui/CocosGUI.h"
 
 namespace SpeedCC
 {
@@ -172,10 +171,22 @@ namespace SpeedCC
                                  const float fPosX,
                                  const float fPosY,
                                  const SCUIArg::StringPurifier& style,
-                                 const bool bHorizontal,
+                                 const SCUIArg::ScrollViewDirectionPurifier& direction,
                                  const cocos2d::Size& viewSize,
                                  const cocos2d::Size& containerSize,
-                                 const std::function<void(cocos2d::Ref*, cocos2d::ui::ScrollView::EventType)>& cbFunc);
+                                 const std::function<void(cocos2d::Ref*, cocos2d::ui::ScrollView::EventType)>& funcCallback);
+        
+        void containerPageView(cocos2d::ui::PageView** ppPageView,
+                               const float fPosX,
+                               const float fPosY,
+                               const SCUIArg::StringPurifier& style,
+                               const bool bHorizontal,
+                               const cocos2d::Size& size,
+                               int nPageIndex,
+                               const std::function<void(cocos2d::Ref*, cocos2d::ui::PageView::EventType)>& funcCallback);
+        
+        void containerPage(cocos2d::ui::Widget** ppWidget,
+                           const cocos2d::Size& size);
         
     protected:
         SCUIBuilder():

@@ -22,6 +22,7 @@
 #include "SCRefHolder.h"
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 namespace SpeedCC
 {
@@ -223,6 +224,21 @@ namespace SpeedCC
             }
             
             cocos2d::Size size;
+        };
+        
+        struct ScrollViewDirectionPurifier
+        {
+            ScrollViewDirectionPurifier(const bool bHor)
+            {
+                direction = bHor ? cocos2d::ui::ScrollView::Direction::HORIZONTAL : cocos2d::ui::ScrollView::Direction::VERTICAL;
+            }
+            
+            ScrollViewDirectionPurifier(const cocos2d::ui::ScrollView::Direction dir):
+            direction(dir)
+            {
+            }
+            
+            cocos2d::ui::ScrollView::Direction direction;
         };
  
     };

@@ -20,7 +20,7 @@ namespace SpeedCC
         return Vec2(ptPer.x*frameSize.width,ptPer.y*frameSize.height);
     }
     
-    bool SCNodeUtils::setPerPosition(cocos2d::Node* pNode,const cocos2d::Vec2& ptPer)
+    bool SCNodeUtils::setPositionPer(cocos2d::Node* pNode,const cocos2d::Vec2& ptPer)
     {
         SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,false);
         

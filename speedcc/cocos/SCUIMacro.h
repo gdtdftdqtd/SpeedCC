@@ -144,7 +144,17 @@ ptrSCTemUIBuilder->pushContainerStack(pSCContainerNode);
 {\
     ptrSCTemUIBuilder->containerScrollView((_node_),(_x_),(_y_),(_style_),(_is_hor_),(_view_size_),(_container_size_),(_callback_));
 
-// build-in
+// pageview
+#define SC_BEGIN_CONTAINER_PAGEVIEW(_node_,_x_,_y_,_style_,_dir_,_size_,_page_index_,_callback_) \
+{\
+    ptrSCTemUIBuilder->containerPageView((_node_),(_x_),(_y_),(_style_),(_dir_),(_size_),(_page_index_),(_callback_));
+
+#define SC_BEGIN_CONTAINER_PAGE(_node_,_size_) \
+{\
+    ptrSCTemUIBuilder->containerPage((_node_),(_size_));
+
+
+///---------- build-in
 #define SC_INSERT_OPTION_MUSIC(_node_,_x_,_y_,_style_,_true_item_,_false_item_) \
 do{\
     auto ptrMusic = SpeedCC::SCSetting::getInstance()->getMusicWatch();\

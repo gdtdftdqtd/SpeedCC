@@ -5,6 +5,7 @@
 #include "TestDockController.h"
 #include "TestProgressController.h"
 #include "TestLoadingController.h"
+#include "TestPageViewController.h"
 
 USING_NS_CC;
 
@@ -34,6 +35,8 @@ void TestHomeController::onCreate(SCDictionary parameters)
     
     auto ptrLoadingBvr = SCBehaviorSceneNavigate::create<TestLoadingTraget0Controller,SCClassNull,TestLoadingController>();
                 SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=blue;","Loading","",23,ptrLoadingBvr)
+    
+    SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=blue;","PageView","",23,SCBehaviorSceneNavigate::create<TestPageViewController>())
     
             SC_END_CONTAINER
     SC_END_CONTAINER

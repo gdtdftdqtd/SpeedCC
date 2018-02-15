@@ -20,7 +20,7 @@ namespace SpeedCC
     
     SCSceneController::~SCSceneController()
     {
-        SCCCScheduler()->unscheduleAllForTarget(dynamic_cast<cocos2d::Ref*>(this));
+        SCCCScheduler()->unscheduleAllForTarget(static_cast<cocos2d::Ref*>(this));
     }
     
     void SCSceneController::setBedNode(SCBedNode* pLayer)

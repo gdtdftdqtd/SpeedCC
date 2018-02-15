@@ -88,7 +88,7 @@ namespace SpeedCC
         SCASSERT(pNode!=NULL);
         auto& top = _contextStack.front();
         top.pContainerNode->addChild(pNode);
-        SCNodeUtils::setPerPosition(pNode, Vec2(fPosX,fPosY));
+        SCNodeUtils::setPositionPer(pNode, Vec2(fPosX,fPosY));
         
         if(top.containerType==SCUITypeDef::EContainerType::kLayoutPadding)
         {// for padding layout container, all of children position are ignored
@@ -373,7 +373,7 @@ namespace SpeedCC
         {
             Sprite* pSpriteBack = Sprite::create(SCFileUtils::getFullPathFile(strBackgroundImage).c_str());
             pProgressBar->addChild(pSpriteBack,-1);
-            SCNodeUtils::setPerPosition(pSpriteBack, Vec2(0.5,0.5));
+            SCNodeUtils::setPositionPer(pSpriteBack, Vec2(0.5,0.5));
         }
         
         pProgressBar->setReverseDirection(!bCCW);
@@ -499,8 +499,8 @@ namespace SpeedCC
         };
         
         this->insertUserNode(pNode, fPosX, fPosY, strNewstyle);
-        
         _contextStack.push_front(context);
+        SC_ASSIGN_NODE(ppNode,pNode);
     }
     
     ///------------- cocos2d-x extension UI
@@ -508,28 +508,21 @@ namespace SpeedCC
                              const float fPosX,
                              const float fPosY,
                              const SCUIArg::StringPurifier& style,
-                             const bool bHorizontal,
+                             const SCUIArg::ScrollViewDirectionPurifier& direction,
                              const cocos2d::Size& viewSize,
                              const cocos2d::Size& containerSize,
-                             const std::function<void(cocos2d::Ref*, cocos2d::ui::ScrollView::EventType)>& cbFunc)
+                             const std::function<void(cocos2d::Ref*, cocos2d::ui::ScrollView::EventType)>& funcCallback)
     {
         auto pScrollView = ui::ScrollView::create();
         
         pScrollView->setIgnoreAnchorPointForPosition(false);
         pScrollView->setAnchorPoint(Vec2(0.5,0.5));
         pScrollView->setBounceEnabled(true);
-        pScrollView->setDirection(bHorizontal ?
-                                  ui::ScrollView::Direction::HORIZONTAL :
-                                  ui::ScrollView::Direction::VERTICAL);
+        pScrollView->setDirection(direction.direction);
         
         pScrollView->setContentSize(viewSize);
         pScrollView->setInnerContainerSize(containerSize);
-        pScrollView->addEventListener(cbFunc);
-        
-//        {
-//            pScrollView->setBackGroundColor(Color3B::YELLOW);
-//            pScrollView->setBackGroundColorType(ui::Layout::BackGroundColorType::SOLID);
-//        }
+        pScrollView->addEventListener(funcCallback);
         
         SCUITypeDef::SUIContext context;
         context.pContainerNode = pScrollView;
@@ -537,6 +530,64 @@ namespace SpeedCC
         
         this->insertUserNode(pScrollView, fPosX, fPosY, style);
         _contextStack.push_front(context);
+        
+        SC_ASSIGN_NODE(ppScrollView,pScrollView);
+    }
+    
+    void SCUIBuilder::containerPageView(cocos2d::ui::PageView** ppPageView,
+                                        const float fPosX,
+                                        const float fPosY,
+                                        const SCUIArg::StringPurifier& style,
+                                        const bool bHorizontal,
+                                        const cocos2d::Size& size,
+                                        int nPageIndex,
+                                        const std::function<void(cocos2d::Ref*, cocos2d::ui::PageView::EventType)>& funcCallback)
+    {
+        auto pPageView = ui::PageView::create();
+        pPageView->setContentSize(size);
+        pPageView->setDirection(bHorizontal ? ui::PageView::Direction::HORIZONTAL
+                                : ui::PageView::Direction::VERTICAL);
+        pPageView->setIgnoreAnchorPointForPosition(false);
+        pPageView->setAnchorPoint(Vec2(0.5,0.5));
+        pPageView->addEventListener(funcCallback);
+        
+        nPageIndex = (nPageIndex<0) ? 0 : nPageIndex;
+        
+        SCUITypeDef::SUIContext context;
+        context.pContainerNode = pPageView;
+        context.containerType = SCUITypeDef::EContainerType::kNormal;
+        context.endFunc = [nPageIndex,pPageView](SCUITypeDef::SUIContext& context)
+        {
+            const auto nCount = pPageView->getItems().size();
+            if(nCount>nPageIndex && nCount<nPageIndex)
+            {
+                pPageView->setCurrentPageIndex(nPageIndex);
+            }
+        };
+        
+        this->insertUserNode(pPageView, fPosX, fPosY, style);
+        _contextStack.push_front(context);
+        
+        SC_ASSIGN_NODE(ppPageView,pPageView);
+    }
+    
+    void SCUIBuilder::containerPage(cocos2d::ui::Widget** ppWidget,
+                       const cocos2d::Size& size)
+    {
+        auto& top = _contextStack.front();
+        auto pPageView = dynamic_cast<ui::PageView*>(top.pContainerNode);
+        SCASSERT(pPageView!=NULL);
+        auto pWidget = ui::Widget::create();
+        
+        pPageView->addPage(pWidget);
+        
+        SCUITypeDef::SUIContext context;
+        context.pContainerNode = pWidget;
+        context.containerType = SCUITypeDef::EContainerType::kNormal;
+        
+        _contextStack.push_front(context);
+        
+        SC_ASSIGN_NODE(ppWidget,pWidget);
     }
     
     ///-------------- internal methods
