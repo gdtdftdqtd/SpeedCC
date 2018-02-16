@@ -11,7 +11,7 @@ using namespace SpeedCC;
 class TestPageViewController : public TestCaseController
 {
 public:
-    virtual void onCreate(SpeedCC::SCDictionary parameters);
+    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
     
     void setupUI();
     

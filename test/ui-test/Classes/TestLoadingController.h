@@ -24,7 +24,7 @@ private:
 class TestLoadingTraget0Controller : public TestCaseController
 {
 public:
-    virtual void onCreate(SpeedCC::SCDictionary parameters);
+    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
     void setupUI();
 private:
 };
@@ -33,7 +33,7 @@ private:
 class TestLoadingTraget1Controller : public TestCaseController
 {
 public:
-    virtual void onCreate(SpeedCC::SCDictionary parameters);
+    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
 };
 
 #endif // __TESTLOADING_SCENE_H__

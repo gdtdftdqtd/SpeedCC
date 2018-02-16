@@ -600,6 +600,7 @@ namespace SpeedCC
     {
         auto pEditBox = cocos2d::ui::EditBox::create(size, strImage.c_str());
         pEditBox->setDelegate(pCallback);
+        pEditBox->setInputMode(cocos2d::ui::EditBox::InputMode::SINGLE_LINE);
         
         this->insertUserNode(pEditBox, fPosX, fPosY, style);
         SC_ASSIGN_NODE(ppEditBox,pEditBox);

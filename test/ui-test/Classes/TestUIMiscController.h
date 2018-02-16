@@ -7,12 +7,15 @@
 using namespace SpeedCC;
 
 ///--------- TestUIMiscController
-class TestUIMiscController : public TestCaseController
+class TestUIMiscController :
+public TestCaseController,
+public cocos2d::ui::EditBoxDelegate
 {
 public:
-    virtual void onCreate(SpeedCC::SCDictionary parameters);
+    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
     void setupUI();
     
+    virtual void editBoxReturn(cocos2d::ui::EditBox* editBox) override;
 private:
 
 };

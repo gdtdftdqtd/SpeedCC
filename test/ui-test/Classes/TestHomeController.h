@@ -8,7 +8,7 @@ class TestHomeController : public SpeedCC::SCSceneController
 {
 public:
     
-    virtual void onCreate(SpeedCC::SCDictionary parameters);
+    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
 };
 
 #endif // __TESTHOME_SCENE_H__

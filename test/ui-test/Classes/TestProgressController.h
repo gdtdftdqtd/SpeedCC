@@ -8,7 +8,7 @@
 class TestProgressController : public TestCaseController
 {
 public:
-    virtual void onCreate(SpeedCC::SCDictionary parameters);
+    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
     
     void testCaseBarBasic();
     void testCaseRadialBasic();

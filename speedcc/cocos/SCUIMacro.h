@@ -153,6 +153,9 @@ ptrSCTemUIBuilder->pushContainerStack(pSCContainerNode);
 {\
     ptrSCTemUIBuilder->containerPage((_node_),(_size_));
 
+// editbox
+#define SC_INSERT_EDITBOX(_node_,_x_,_y_,_style_,_size_,_image_,_callback_) \
+    ptrSCTemUIBuilder->insertEditBox((_node_),(_x_),(_y_),(_style_),(_size_),(_image_),(_callback_));
 
 ///---------- build-in
 #define SC_INSERT_OPTION_MUSIC(_node_,_x_,_y_,_style_,_true_item_,_false_item_) \

@@ -10,7 +10,7 @@ class TestLabelBinderController : public SpeedCC::SCSceneController
 {
 public:
     
-    virtual void onCreate(SpeedCC::SCDictionary parameters);
+    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
     
     void onButtonAdd();
     void onButtonSub();

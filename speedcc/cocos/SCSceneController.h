@@ -68,7 +68,7 @@ namespace SpeedCC
     protected:
         SCSceneController();
         
-        virtual void onCreate(const SCDictionary& parameters){}
+        virtual void onCreate(SCDictionary parameters){}
         
     private:
         void setBedNode(SCBedNode* pLayer);
