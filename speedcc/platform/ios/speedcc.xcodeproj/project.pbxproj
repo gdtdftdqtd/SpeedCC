@@ -164,7 +164,7 @@
 		0A6218C91FFE68F600459055 /* SCCocosDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCCocosDef.h; sourceTree = "<group>"; };
 		0A6218DF2004C6F600459055 /* SCEventEmitter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCEventEmitter.cpp; sourceTree = "<group>"; };
 		0A6218E02004C6F600459055 /* SCEventEmitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEventEmitter.h; sourceTree = "<group>"; };
-		0A67CA7E1F80E31700FED9A5 /* libspeedcc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libspeedcc.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A67CA7E1F80E31700FED9A5 /* libspeedcc-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libspeedcc-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2dx/v3/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMemAllocator.cpp; sourceTree = "<group>"; };
 		0A67CAE21F813C8800FED9A5 /* SCMemAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMemAllocator.h; sourceTree = "<group>"; };
@@ -310,7 +310,7 @@
 		0A67CA7F1F80E31700FED9A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A67CA7E1F80E31700FED9A5 /* libspeedcc.a */,
+				0A67CA7E1F80E31700FED9A5 /* libspeedcc-iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -415,9 +415,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0A67CA7D1F80E31700FED9A5 /* libspeedcc */ = {
+		0A67CA7D1F80E31700FED9A5 /* libspeedcc-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A67CA871F80E31700FED9A5 /* Build configuration list for PBXNativeTarget "libspeedcc" */;
+			buildConfigurationList = 0A67CA871F80E31700FED9A5 /* Build configuration list for PBXNativeTarget "libspeedcc-iOS" */;
 			buildPhases = (
 				0A67CA7A1F80E31700FED9A5 /* Sources */,
 				0A67CA7B1F80E31700FED9A5 /* Frameworks */,
@@ -428,9 +428,9 @@
 			dependencies = (
 				0A67CAC81F80E7D700FED9A5 /* PBXTargetDependency */,
 			);
-			name = libspeedcc;
+			name = "libspeedcc-iOS";
 			productName = speedcc;
-			productReference = 0A67CA7E1F80E31700FED9A5 /* libspeedcc.a */;
+			productReference = 0A67CA7E1F80E31700FED9A5 /* libspeedcc-iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -466,7 +466,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				0A67CA7D1F80E31700FED9A5 /* libspeedcc */,
+				0A67CA7D1F80E31700FED9A5 /* libspeedcc-iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -717,7 +717,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A67CA871F80E31700FED9A5 /* Build configuration list for PBXNativeTarget "libspeedcc" */ = {
+		0A67CA871F80E31700FED9A5 /* Build configuration list for PBXNativeTarget "libspeedcc-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A67CA881F80E31700FED9A5 /* Debug */,
