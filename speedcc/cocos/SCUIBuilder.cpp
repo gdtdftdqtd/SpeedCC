@@ -590,6 +590,22 @@ namespace SpeedCC
         SC_ASSIGN_NODE(ppWidget,pWidget);
     }
     
+    cocos2d::ui::EditBox* SCUIBuilder::insertEditBox(cocos2d::ui::EditBox** ppEditBox,
+                                        const float fPosX,
+                                        const float fPosY,
+                                        const SCUIArg::StringPurifier& style,
+                                        const cocos2d::Size& size,
+                                        const SCString& strImage,
+                                        cocos2d::ui::EditBoxDelegate* pCallback)
+    {
+        auto pEditBox = cocos2d::ui::EditBox::create(size, strImage.c_str());
+        pEditBox->setDelegate(pCallback);
+        
+        this->insertUserNode(pEditBox, fPosX, fPosY, style);
+        SC_ASSIGN_NODE(ppEditBox,pEditBox);
+        return pEditBox;
+    }
+    
     ///-------------- internal methods
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
                                             const float fPosX,

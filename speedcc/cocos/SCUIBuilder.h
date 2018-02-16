@@ -188,6 +188,14 @@ namespace SpeedCC
         void containerPage(cocos2d::ui::Widget** ppWidget,
                            const cocos2d::Size& size);
         
+        cocos2d::ui::EditBox* insertEditBox(cocos2d::ui::EditBox** ppEditBox,
+                                            const float fPosX,
+                                            const float fPosY,
+                                            const SCUIArg::StringPurifier& style,
+                                            const cocos2d::Size& size,
+                                            const SCString& strImage,
+                                            cocos2d::ui::EditBoxDelegate* pCallback);
+        
     protected:
         SCUIBuilder():
         _pCurrentBedNode(NULL),
