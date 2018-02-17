@@ -17,18 +17,30 @@ namespace SpeedCC
 #define SC_KEY_NAME           "sc-name"           // SCString
 #define SC_KEY_COMMAND        "sc-command"        // SCString
 #define SC_KEY_STATE          "sc-state"          // ESCState
-#define SC_KEY_IAP            "sc-iap"           // SCString
 #define SC_KEY_CCREF          "sc-cc-ref"        // SCRef2Ptr::Ptr
 #define SC_KEY_TOUCH          "sc-touch"           // cocos2d::Touch*
 #define SC_KEY_TOUCHES        "sc-touches"        // std::vector<cocos2d::Touch*>
 #define SC_KEY_DELTA          "sc-delta"         // float
 #define SC_KEY_RESULT         "sc-result"        // for sendMessage() result, relying on specific message definition
+#define SC_KEY_ID             "sc-id"     // int
     
-// for SCBehavior parameters in it's Dictionary
+    // for SCBehavior parameters in it's Dictionary
 #define SC_KEY_ACTOR            "sc-actor" // SCActor::Ptr
 #define SC_KEY_STRATEGY         "sc-strategy" // SCStrategy::Ptr
 #define SC_KEY_ROLE             "sc-role" // SCRole::Ptr
 #define SC_KEY_MESSAGE          "sc-message"   // SCMessage::Ptr
+    
+    // alertbox
+#define SC_KEY_TITLE            "sc-title" // SCString
+#define SC_KEY_TEXT             "sc-text"   // SCString
+#define SC_KEY_STRING0          "sc-button0"    // SCString
+#define SC_KEY_STRING1          "sc-button1"    // SCString
+#define SC_KEY_STRING2          "sc-button2"    // SCString
+    
+    // IAP
+#define SC_KEY_IAP              "sc-iap"           // SCString
+#define SC_KEY_PRICE            "sc-price" // SCString
+#define SC_KEY_CURRENCY         "sc-currency" // SCString
     
     struct SCID
     {
@@ -105,16 +117,16 @@ namespace SpeedCC
             // show alert box,
             // must block it if want to show customize alert box
             // otherwise will show with system alert box
-            // "title" => SCString
-            // "message" => SCString
-            // "id" => int
-            // "button0" => SCString
-            // "button1" => SCString (optional)
-            // "button2" => SCString (optional)
-            kSCMsgShowAlertBox,
+            // SC_KEY_TITLE => SCString
+            // SC_KEY_TEXT => SCString
+            // SC_KEY_ID => int
+            // SC_KEY_STRING0 => SCString
+            // SC_KEY_STRING1 => SCString (optional)
+            // SC_KEY_STRING2 => SCString (optional)
+//            kSCMsgShowAlertBox,
             
-            // "id" => int
-            // "selected" => int
+            // SC_KEY_ID => int
+            // SC_KEY_RESULT => int
             kSCMsgAlertBoxSelected,
             //        // "number" => int; number of scenes to back
             //        kSCMsgSceneBack,
@@ -124,11 +136,11 @@ namespace SpeedCC
             kSCMsgStoreUserCancelled,
             
             // IAP purchased is success
-            // "iap" => SCString
+            // SC_KEY_IAP => SCString
             kSCMsgStorePurchaseSuccess,
             
             // IAP purchased is failed
-            // "iap" => SCString
+            // SC_KEY_IAP => SCString
             kSCMsgStorePurchaseFailed,
             
             // IAP restored is success
@@ -140,9 +152,9 @@ namespace SpeedCC
             kSCMsgStoreRestoreFailed,
             
             // retrieve IAP success
-            // "iap" => SCString
-            // "currency" => SCString
-            // "price" => float
+            // SC_KEY_IAP => SCString
+            // SC_KEY_CURRENCY => SCString
+            // SC_KEY_PRICE => float
             kSCMsgStoreIAPInfoSuccess,
             
             // retrieve IAP failed

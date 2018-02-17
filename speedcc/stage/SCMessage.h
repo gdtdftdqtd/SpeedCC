@@ -25,7 +25,7 @@ namespace SpeedCC
         
         SCMessage(const int nMsgID1,const SCDictionary& par):
         nMsgID(nMsgID1),
-        paramters(par),
+        parameters(par),
         bContinue(true)
         {}
         
@@ -33,15 +33,15 @@ namespace SpeedCC
         nMsgID(SCID::Msg::kSCMsgCommand),
         bContinue(true)
         {
-            paramters.setValue(SC_KEY_COMMAND,strCmd);
+            parameters.setValue(SC_KEY_COMMAND,strCmd);
         }
         
         SCMessage(const SCString& strCmd,const SCDictionary& par):
         nMsgID(SCID::Msg::kSCMsgCommand),
+        parameters(par),
         bContinue(true)
         {
-            paramters = par;
-            paramters.setValue(SC_KEY_COMMAND,strCmd);
+            parameters.setValue(SC_KEY_COMMAND,strCmd);
         }
         
     public:
@@ -57,7 +57,7 @@ namespace SpeedCC
         Ptr clone();
         
         int                 nMsgID;
-        SCDictionary        paramters;
+        SCDictionary        parameters;
         bool                bContinue;
     };
     

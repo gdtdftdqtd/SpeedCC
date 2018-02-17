@@ -13,12 +13,18 @@
 
 namespace SpeedCC
 {
-    class SCMessageDefaultProc
+    class SCMessageDefaultProc final
     {
         friend class SCMessageDispatch;
         
+    public:
+        void addAlertBoxCallback(const std::function<void(int)>& func, const int nAlertBoxID);
+        
     protected:
         void processMessage(SCMessage::Ptr ptrMsg);
+        
+    private:
+        std::map<int,std::function<void(int)> >     _alertBoxID2CBMap;
     };
 }
 

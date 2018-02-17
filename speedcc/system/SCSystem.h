@@ -15,6 +15,51 @@
 
 namespace SpeedCC
 {
+    /*
+    template<typename T>
+    struct SCSystemTmpUtils
+    {
+        int showAlertBox(const SCString& strTitle,
+                         const SCString& strText,
+                         const SCString& strButton1,
+                         const SCString& strButton2,
+                         const SCString& strButton3,
+                         const std::function<void(int)>& resultFunc)
+        {
+            
+        }
+    };
+    
+    template<>
+    struct SCSystemTmpUtils<SCClassNull>
+    {
+        int showAlertBox(const SCString& strTitle,
+                         const SCString& strText,
+                         const SCString& strButton1,
+                         const SCString& strButton2,
+                         const SCString& strButton3,
+                         const std::function<void(int)>& resultFunc)
+        {
+            int nAlertBoxID = ::rand();
+//            const SCDictionary::SPair pairArray[] =
+//            {
+//                {SC_KEY_TITLE,strTitle},
+//                {SC_KEY_TEXT,strText},
+//                {SC_KEY_STRING0,strButton1},
+//                {SC_KEY_STRING1,strButton2},
+//                {SC_KEY_STRING2,strButton3},
+//                {SC_KEY_ID,nAlertBoxID},
+//            };
+//            SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
+//
+//            auto ptrMsg = SCMessage::create(SCID::Msg::kSCMsgShowAlertBox, dic);
+//            SCMsgDisp()->postMessage(ptrMsg);
+            
+            return nAlertBoxID;
+        }
+    };
+    */
+    
     class SCSystem final
     {
     public:
@@ -96,6 +141,35 @@ namespace SpeedCC
         static void setSupportAssetSizeType(int type);
         static void setGlobalDisableTouch(const bool bDisable);
         static bool getGlobalDisableTouch();
+        
+        static int showAlertBox(const SCString& strTitle,
+                                 const SCString& strText,
+                                 const SCString& strButton1,
+                                 const SCString& strButton2,
+                                 const SCString& strButton3,
+                                 const std::function<void(int)>& resultFunc = NULL);
+        
+        static int showAlertBox(const SCString& strTitle,
+                                const SCString& strText,
+                                const SCString& strButton1,
+                                const std::function<void(int)>& resultFunc = NULL);
+        
+        static int showAlertBox(const SCString& strTitle,
+                                const SCString& strText,
+                                const SCString& strButton1,
+                                const SCString& strButton2,
+                                const std::function<void(int)>& resultFunc = NULL);
+        
+        template<typename T>
+        static int showAlertBox(const SCString& strTitle,
+                                const SCString& strText,
+                                const SCString& strButton1,
+                                const SCString& strButton2= "",
+                                const SCString& strButton3 = "",
+                                const std::function<void(int)>& resultFunc = NULL)
+        {
+            return 0;
+        }
         
         static bool getDeviceInfo(SDeviceInfo& di);
         static SCString getProductName();

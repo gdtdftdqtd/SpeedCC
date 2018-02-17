@@ -11,12 +11,13 @@
 		0A3C4FDC203291D0007DA271 /* TestLoadingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FDB203291D0007DA271 /* TestLoadingController.cpp */; };
 		0A3C4FDF2035F68C007DA271 /* TestPageViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FDD2035F68C007DA271 /* TestPageViewController.cpp */; };
 		0A3C4FE82036960E007DA271 /* TestUIMiscController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FE72036960D007DA271 /* TestUIMiscController.cpp */; };
+		0A3C4FEE203732C5007DA271 /* TestAlertBoxController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FED203732C5007DA271 /* TestAlertBoxController.cpp */; };
 		0A41B34E1FE7EEEB003945EB /* TestLabelBinderController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */; };
 		0A41B3CD1FED34FF003945EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A41B3CC1FED34FE003945EB /* StoreKit.framework */; };
 		0A4D771F20245BA10089F8D6 /* TestDockController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D771D20245BA00089F8D6 /* TestDockController.cpp */; };
 		0A4D772220289FA80089F8D6 /* TestProgressController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D772020289FA70089F8D6 /* TestProgressController.cpp */; };
 		0A4D77252028B0F10089F8D6 /* TestCaseController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D77232028B0F10089F8D6 /* TestCaseController.cpp */; };
-		0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc.a */; };
+		0A67CADD1F813A4F00FED9A5 /* libspeedcc-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc-iOS.a */; };
 		0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */; };
 		0AEA3C521FE101BB004C1F13 /* assets-medium in Resources */ = {isa = PBXBuildFile; fileRef = 0AEA3C4E1FE101BB004C1F13 /* assets-medium */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -102,6 +103,8 @@
 		0A3C4FDE2035F68C007DA271 /* TestPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPageViewController.h; sourceTree = "<group>"; };
 		0A3C4FE62036960D007DA271 /* TestUIMiscController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUIMiscController.h; sourceTree = "<group>"; };
 		0A3C4FE72036960D007DA271 /* TestUIMiscController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestUIMiscController.cpp; sourceTree = "<group>"; };
+		0A3C4FEC203732C4007DA271 /* TestAlertBoxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAlertBoxController.h; sourceTree = "<group>"; };
+		0A3C4FED203732C5007DA271 /* TestAlertBoxController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestAlertBoxController.cpp; sourceTree = "<group>"; };
 		0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLabelBinderController.cpp; sourceTree = "<group>"; };
 		0A41B34D1FE7EEEB003945EB /* TestLabelBinderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLabelBinderController.h; sourceTree = "<group>"; };
 		0A41B3CC1FED34FE003945EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -180,7 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A41B3CD1FED34FF003945EB /* StoreKit.framework in Frameworks */,
-				0A67CADD1F813A4F00FED9A5 /* libspeedcc.a in Frameworks */,
+				0A67CADD1F813A4F00FED9A5 /* libspeedcc-iOS.a in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
@@ -236,7 +239,7 @@
 		0A67CAB21F80E75100FED9A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A67CAB71F80E75100FED9A5 /* libspeedcc.a */,
+				0A67CAB71F80E75100FED9A5 /* libspeedcc-iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -306,6 +309,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0A3C4FED203732C5007DA271 /* TestAlertBoxController.cpp */,
+				0A3C4FEC203732C4007DA271 /* TestAlertBoxController.h */,
 				0A3C4FE72036960D007DA271 /* TestUIMiscController.cpp */,
 				0A3C4FE62036960D007DA271 /* TestUIMiscController.h */,
 				0A3C4FDD2035F68C007DA271 /* TestPageViewController.cpp */,
@@ -453,10 +458,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0A67CAB71F80E75100FED9A5 /* libspeedcc.a */ = {
+		0A67CAB71F80E75100FED9A5 /* libspeedcc-iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libspeedcc.a;
+			path = "libspeedcc-iOS.a";
 			remoteRef = 0A67CAB61F80E75100FED9A5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -522,6 +527,7 @@
 				0A41B34E1FE7EEEB003945EB /* TestLabelBinderController.cpp in Sources */,
 				0A4D77252028B0F10089F8D6 /* TestCaseController.cpp in Sources */,
 				0A1556CA1FD69CA200CF7420 /* TestHomeController.cpp in Sources */,
+				0A3C4FEE203732C5007DA271 /* TestAlertBoxController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

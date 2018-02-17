@@ -69,7 +69,7 @@ namespace SpeedCC
             
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = nMsg;
-            ptrMsg->paramters = dic;
+            ptrMsg->parameters = dic;
             
             if(_pMsgListener==NULL)
             {

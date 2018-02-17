@@ -54,11 +54,11 @@ namespace SpeedCC
         SCMessage::Ptr ptrMsg = SCMessage::create();
         
         ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneLostFocus;
-        ptrMsg->paramters.setValue(SC_KEY_CONTROLLER,this);
+        ptrMsg->parameters.setValue(SC_KEY_CONTROLLER,this);
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
         
         ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
-        ptrMsg->paramters.setValue(SC_KEY_CONTROLLER,ptrController.getRawPointer());
+        ptrMsg->parameters.setValue(SC_KEY_CONTROLLER,ptrController.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
     }
     
@@ -79,7 +79,7 @@ namespace SpeedCC
         // generate modal mssage
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
-        ptrMsg->paramters.setValue(SC_KEY_CONTROLLER,ret.getRawPointer());
+        ptrMsg->parameters.setValue(SC_KEY_CONTROLLER,ret.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
         
         return ret;
@@ -148,11 +148,11 @@ namespace SpeedCC
         SCCCScheduler()->unschedule(selector, this);
     }
     
-    void SCSceneController::finishLoading()
+    void SCSceneController::finish(int nResult)
     {
-        if(_finishLoadingFunc!=NULL)
+        if(_finishFunc!=NULL)
         {
-            _finishLoadingFunc();
+            _finishFunc(nResult);
         }
     }
     

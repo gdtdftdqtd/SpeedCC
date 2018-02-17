@@ -400,6 +400,47 @@ namespace SpeedCC
         SCCCDirector()->setContentScaleFactor(fContentScale);
     }
     
+    int SCSystem::showAlertBox(const SCString& strTitle,
+                            const SCString& strText,
+                            const SCString& strButton1,
+                            const std::function<void(int)>& resultFunc)
+    {
+        return SCSystem::showAlertBox(strTitle,strText,strButton1,"","",resultFunc);
+    }
+    
+    int SCSystem::showAlertBox(const SCString& strTitle,
+                            const SCString& strText,
+                            const SCString& strButton1,
+                            const SCString& strButton2,
+                            const std::function<void(int)>& resultFunc)
+    {
+        return SCSystem::showAlertBox(strTitle,strText,strButton1,strButton2,"",resultFunc);
+    }
+    
+    int SCSystem::showAlertBox(const SCString& strTitle,
+                                const SCString& strText,
+                                const SCString& strButton1,
+                                const SCString& strButton2,
+                                const SCString& strButton3,
+                                const std::function<void(int)>& resultFunc)
+    {
+        int nAlertBoxID = (int)::time(NULL);
+        
+        if(resultFunc!=NULL)
+        {
+            SCMsgDisp()->getDefaultProc()->addAlertBoxCallback(resultFunc,nAlertBoxID);
+        }
+
+        ::scShowSystemAlertBox(strTitle,
+                               strText,
+                               strButton1,
+                               strButton2,
+                               strButton3,
+                               nAlertBoxID);
+        
+        return nAlertBoxID;
+    }
+    
     void SCSystem::log(const char* pszFormat,...)
     {
         SC_RETURN_V_IF(pszFormat==NULL);

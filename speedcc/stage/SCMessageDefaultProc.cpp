@@ -16,6 +16,14 @@
 
 namespace SpeedCC
 {
+    void SCMessageDefaultProc::addAlertBoxCallback(const std::function<void(int)>& func,
+                                                   const int nAlertBoxID)
+    {
+        SCASSERT(func!=NULL);
+        SCASSERT(nAlertBoxID>0);
+        _alertBoxID2CBMap[nAlertBoxID] = func;
+    }
+    
     void SCMessageDefaultProc::processMessage(SCMessage::Ptr ptrMsg)
     {
         SCASSERT(ptrMsg!=NULL);
@@ -40,7 +48,7 @@ namespace SpeedCC
             {
                 SCLog("IAP Purchase success.");
                 bool bResult = false;
-                auto strIAP = ptrMsg->paramters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->parameters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 
                 if(bResult)
@@ -63,7 +71,7 @@ namespace SpeedCC
             {
                 SCLog("Restored IAP success.");
                 bool bResult = false;
-                auto strIAP = ptrMsg->paramters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->parameters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 
                 if(bResult)
@@ -86,12 +94,12 @@ namespace SpeedCC
             {
                 SCLog("Request IAP info success.");
                 bool bResult = false;
-                auto strIAP = ptrMsg->paramters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
+                auto strIAP = ptrMsg->parameters.getValue(SC_KEY_IAP).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
                 bResult = false;
-                auto strCurrency = ptrMsg->paramters.getValue("currency").getObject<SCString>(&bResult);
+                auto strCurrency = ptrMsg->parameters.getValue(SC_KEY_CURRENCY).getObject<SCString>(&bResult);
                 SCASSERT(bResult);
-                float fPrice = ptrMsg->paramters.getValue("price").getFloat();
+                float fPrice = ptrMsg->parameters.getValue(SC_KEY_PRICE).getFloat();
                 if(bResult)
                 {
                     SCStore::getInstance()->setIAPInfo(strIAP, fPrice, strCurrency);
@@ -104,26 +112,26 @@ namespace SpeedCC
                 SCLog("Request IAP info failed.");
             }
                 break;
-                
+                /*
             case SCID::Msg::kSCMsgShowAlertBox:
             {
                 bool bResult = false;
-                auto strTitle = ptrMsg->paramters.getValue("title").getObject<SCString>(&bResult);
+                auto strTitle = ptrMsg->parameters.getValue(SC_KEY_TITLE).getString(&bResult);
                 SCASSERT(bResult);
                 bResult = false;
-                auto strMessage = ptrMsg->paramters.getValue("message").getObject<SCString>(&bResult);
+                auto strMessage = ptrMsg->parameters.getValue(SC_KEY_TEXT).getString(&bResult);
                 SCASSERT(bResult);
-                auto nAlertBoxID = ptrMsg->paramters.getValue("id").getInt();
+                auto nAlertBoxID = ptrMsg->parameters.getValue(SC_KEY_ID).getInt();
                 bResult = false;
-                auto strButton1 = ptrMsg->paramters.getValue("button0").getObject<SCString>(&bResult);
+                auto strButton1 = ptrMsg->parameters.getValue(SC_KEY_STRING0).getString(&bResult);
                 SCASSERT(bResult);
                 bResult = false;
-                auto strButton2 = ptrMsg->paramters.getValue("button1").getObject<SCString>(&bResult);
+                auto strButton2 = ptrMsg->parameters.getValue(SC_KEY_STRING1).getString(&bResult);
                 SCString strButton3;
                 if(bResult)
                 {
                     bResult = false;
-                    strButton3 = ptrMsg->paramters.getValue("button2").getObject<SCString>(&bResult);
+                    strButton3 = ptrMsg->parameters.getValue(SC_KEY_STRING2).getString(&bResult);
                 }
                 
                 ::scShowSystemAlertBox(strTitle,
@@ -132,6 +140,19 @@ namespace SpeedCC
                                           strButton2,
                                           strButton3,
                                           nAlertBoxID);
+            }
+                break;
+                */
+            case SCID::Msg::kSCMsgAlertBoxSelected:
+            {
+                auto nAlertBoxID = ptrMsg->parameters.getValue(SC_KEY_ID).getInt();
+                auto it = _alertBoxID2CBMap.find(nAlertBoxID);
+                if(it!=_alertBoxID2CBMap.end())
+                {
+                    auto nSelected = ptrMsg->parameters.getValue(SC_KEY_RESULT).getInt();
+                    (*it).second(nSelected);
+                    _alertBoxID2CBMap.erase(it);
+                }
             }
                 break;
                 

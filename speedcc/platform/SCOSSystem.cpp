@@ -18,7 +18,7 @@ namespace SpeedCC
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = (nResult==0) ? SCID::Msg::kSCMsgStorePurchaseSuccess : SCID::Msg::kSCMsgStorePurchaseFailed;
-            ptrMsg->paramters.setValue(SC_KEY_IAP, SCString(pszIAP));
+            ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
             SCMsgDisp()->postMessage(ptrMsg);
         }
         
@@ -30,7 +30,7 @@ namespace SpeedCC
             
             if(pszIAP!=NULL)
             {
-                ptrMsg->paramters.setValue(SC_KEY_IAP, SCString(pszIAP));
+                ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
             }
             SCMsgDisp()->postMessage(ptrMsg);
         }
@@ -47,9 +47,9 @@ namespace SpeedCC
             {// all are fine
                 SCMessage::Ptr ptrMsg = SCMessage::create();
                 ptrMsg->nMsgID = SCID::Msg::kSCMsgStoreIAPInfoSuccess;
-                ptrMsg->paramters.setValue(SC_KEY_IAP, SCString(pszIAP));
-                ptrMsg->paramters.setValue("currency", SCString(pszCurrency));
-                ptrMsg->paramters.setValue("price", fPrice);
+                ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
+                ptrMsg->parameters.setValue(SC_KEY_CURRENCY, SCString(pszCurrency));
+                ptrMsg->parameters.setValue(SC_KEY_PRICE, fPrice);
                 
                 SCMsgDisp()->postMessage(ptrMsg);
             }
@@ -68,8 +68,8 @@ namespace SpeedCC
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = SCID::Msg::kSCMsgAlertBoxSelected;
-            ptrMsg->paramters.setValue("id", nAlertBoxID);
-            ptrMsg->paramters.setValue("selected", nButton);
+            ptrMsg->parameters.setValue(SC_KEY_ID, nAlertBoxID);
+            ptrMsg->parameters.setValue(SC_KEY_RESULT, nButton);
             SCMsgDisp()->postMessage(ptrMsg);
         }
         

@@ -39,7 +39,7 @@ void TestLoadingController::onTimer(float)
 {
     if(--_nCounter<0)
     {
-        this->finishLoading();
+        this->finish();
     }
     else
     {

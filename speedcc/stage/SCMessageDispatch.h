@@ -46,6 +46,8 @@ namespace SpeedCC
         inline void setFrameMessageEnabled(const bool bEnable) { _bFrameMessageEnabled = bEnable; }
         inline bool getFrameMessageEnabled() const { return _bFrameMessageEnabled; }
         
+        SCMessageDefaultProc* getDefaultProc() { return &_defaultProc; }
+        
     protected:
         SCMessageDispatch();
         void onFrameMessagePump(float);

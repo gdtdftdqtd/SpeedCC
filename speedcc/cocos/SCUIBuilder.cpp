@@ -607,6 +607,38 @@ namespace SpeedCC
         return pEditBox;
     }
     
+    /*
+    void SCUIBuilder::containerTableView(cocos2d::extension::TableView** ppTableView,
+                                         const float fPosX,
+                                         const float fPosY,
+                                         const SCUIArg::StringPurifier& style,
+                                         const bool bHorizontal,
+                                         const cocos2d::Size& viewSize,
+                                         cocos2d::extension::TableViewDataSource* pSournce,
+                                         cocos2d::extension::TableViewDelegate* pDelegate)
+    {
+        auto pTableView = extension::TableView::create(pSournce, viewSize);
+        pTableView->setDirection(bHorizontal ?
+                                 cocos2d::extension::TableView::Direction::HORIZONTAL :
+                                 cocos2d::extension::TableView::Direction::VERTICAL);
+        pTableView->setBounceable(true);
+        pTableView->setDelegate(pDelegate);
+        pTableView->setTouchEnabled(true);
+        
+        SCUITypeDef::SUIContext context;
+        context.pContainerNode = pTableView;
+        context.containerType = SCUITypeDef::EContainerType::kNormal;
+        context.endFunc = [pTableView](SCUITypeDef::SUIContext& context)
+        {
+            
+        };
+        
+        _contextStack.push_front(context);
+        
+        SC_ASSIGN_NODE(ppTableView,pTableView);
+    }
+    */
+    
     ///-------------- internal methods
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
                                             const float fPosX,

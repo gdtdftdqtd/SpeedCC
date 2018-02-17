@@ -68,7 +68,7 @@ namespace SpeedCC
             SC_RETURN_V_IF(ptrSI->command2BehaviorMap.empty());
             
             bool bResult = false;
-            auto strCommand = ptrMsg->paramters.getValue(SC_KEY_COMMAND).getString(&bResult);
+            auto strCommand = ptrMsg->parameters.getValue(SC_KEY_COMMAND).getString(&bResult);
             if(bResult && !strCommand.isEmpty())
             {
                 auto it = ptrSI->command2BehaviorMap.find(strCommand);

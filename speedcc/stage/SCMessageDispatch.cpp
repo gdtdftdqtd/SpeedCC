@@ -118,7 +118,7 @@ namespace SpeedCC
     {
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = nMsgID;
-        ptrMsg->paramters = dic;
+        ptrMsg->parameters = dic;
         this->sendMessage(ptrMsg);
     }
     
@@ -138,7 +138,7 @@ namespace SpeedCC
     {
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = nMsgID;
-        ptrMsg->paramters = dic;
+        ptrMsg->parameters = dic;
         this->postMessage(ptrMsg);
     }
     
@@ -160,13 +160,6 @@ namespace SpeedCC
                                                       {
                                                           return (it.pListener==info.listener.pListener);
                                                       });
-//                              auto it1 = std::remove_if(_listenerList.begin(),_listenerList.end(),
-//                                                        [&info](const SListenerInfo& it) -> bool
-//                                                        {
-//                                                            return (it.pListener==info.listener.pListener);
-//                                                        });
-//
-//                              _listenerList.erase(it1,_listenerList.end());
                               
                               SListenerInfo listenerInfo = info.listener;
                               _listenerList.push_back(listenerInfo);
@@ -193,32 +186,40 @@ namespace SpeedCC
         // update mutable listener first before message loop
         this->updateMutableListener();
         
-        ++_nPostMsgCallStackCounter;
-        
         // send frame message
         if(_bFrameMessageEnabled)
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = SCID::Msg::kSCMsgFrame;
-            ptrMsg->paramters.setValue(SC_KEY_DELTA, SCValue(fDelta));
+            ptrMsg->parameters.setValue(SC_KEY_DELTA, SCValue(fDelta));
             SCMsgDisp()->sendMessage(ptrMsg);
+            
+            if(!ptrMsg->bContinue)
+            {
+                workingQue.clear();
+                return;
+            }
         }
         
+        ++_nPostMsgCallStackCounter;
+        bool bContinue = true;
         while(!workingQue.empty())
         {
             auto& msg = workingQue.front();
             
             auto it = _listenerList.begin();
-            for(;it!=_listenerList.end() && msg->bContinue;++it)
+            for(;it!=_listenerList.end() && bContinue;++it)
             {
                 SCASSERT((*it).pListener!=NULL);
-                if((*it).pListener!=NULL)
-                {
-                    (*it).pListener->onSCMessageProcess(msg);
-                }
+                SC_CONTINUE_IF((*it).pListener==NULL);
+                (*it).pListener->onSCMessageProcess(msg);
+                bContinue = msg->bContinue;
             }
          
-            _defaultProc.processMessage(msg);
+            if(bContinue)
+            {
+                _defaultProc.processMessage(msg);
+            }
             workingQue.pop_front();
         }
         

@@ -104,7 +104,7 @@ namespace SpeedCC
         
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = SCID::Msg::kSCMsgTouchBegan;
-        ptrMsg->paramters = dic;
+        ptrMsg->parameters = dic;
         
         if(_pMsgListener==NULL)
         {
@@ -115,7 +115,7 @@ namespace SpeedCC
             _pMsgListener->onSCMessageProcess(ptrMsg);
         }
         
-        return ptrMsg->paramters.getValue(SC_KEY_RESULT).getBool();
+        return ptrMsg->parameters.getValue(SC_KEY_RESULT).getBool();
     }
     
     void SCEventEmitter::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)

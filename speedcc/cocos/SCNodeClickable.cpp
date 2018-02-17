@@ -82,7 +82,7 @@ namespace SpeedCC
         {
             case SCID::Msg::kSCMsgTouchBegan:
             {
-                ptrMsg->paramters.setValue(SC_KEY_RESULT,false);
+                ptrMsg->parameters.setValue(SC_KEY_RESULT,false);
                 
                 auto pCamera = Camera::getVisitingCamera();
                 SC_RETURN_V_IF(!pCamera || !_pNode->isVisible());
@@ -97,12 +97,12 @@ namespace SpeedCC
                     SC_RETURN_V_IF(!pTemNode->isVisible());
                 }while(true);
                 
-                auto pEvent = (cocos2d::Touch*)ptrMsg->paramters.getValue(SC_KEY_TOUCH).getPointer();
+                auto pEvent = (cocos2d::Touch*)ptrMsg->parameters.getValue(SC_KEY_TOUCH).getPointer();
                 SC_RETURN_V_IF(!this->isNodeInTouch(pEvent,pCamera));
                 
                 _bTrack = true;
                 _bSelected = true;
-                ptrMsg->paramters.setValue(SC_KEY_RESULT,true);
+                ptrMsg->parameters.setValue(SC_KEY_RESULT,true);
                 _pSelectedCamera = pCamera;
                 if(_pMenuItem!=NULL)
                 {
@@ -114,7 +114,7 @@ namespace SpeedCC
             case SCID::Msg::kSCMsgTouchMoved:
             {
                 SC_RETURN_V_IF(_pMenuItem==NULL || !_bTrack);
-                auto pEvent = (cocos2d::Touch*)ptrMsg->paramters.getValue(SC_KEY_TOUCH).getPointer();
+                auto pEvent = (cocos2d::Touch*)ptrMsg->parameters.getValue(SC_KEY_TOUCH).getPointer();
                 const bool bNewSelect = this->isNodeInTouch(pEvent,_pSelectedCamera);
                 
                 SC_RETURN_V_IF(bNewSelect==_bSelected);

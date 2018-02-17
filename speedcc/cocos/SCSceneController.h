@@ -63,7 +63,7 @@ namespace SpeedCC
         
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
-        void finishLoading();
+        void finish(int nResult=0);
         
     protected:
         SCSceneController();
@@ -76,8 +76,8 @@ namespace SpeedCC
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)
         { _ptrParentModalController = controllerPtr; }
         
-        inline void setFinishLoadingFunc(const std::function<void()>& func)
-        { _finishLoadingFunc = func; }
+        inline void setFinishFunc(const std::function<void(int)>& func)
+        { _finishFunc = func; }
         
     private:
         SCBedNode*			                        _pBedNode;
@@ -88,7 +88,7 @@ namespace SpeedCC
         bool                                        _bBlackMaskForModal;
         std::list<SCObject::Ptr>                    _ownLifecycleList;
         std::map<int,MsgFunc_t>                     _msg2FuncMap;
-        std::function<void()>                       _finishLoadingFunc;
+        std::function<void(int)>                    _finishFunc;
     };
     
 

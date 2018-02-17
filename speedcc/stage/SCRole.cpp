@@ -254,7 +254,7 @@ namespace SpeedCC
         {
             SC_RETURN_IF(_cmd2FilterCounterMap.empty(), false);
             bool bResult = false;
-            auto strCommand = ptrMsg->paramters.getValue(SC_KEY_COMMAND).getString(&bResult);
+            auto strCommand = ptrMsg->parameters.getValue(SC_KEY_COMMAND).getString(&bResult);
             if(bResult && !strCommand.isEmpty())
             {
                 return (_cmd2FilterCounterMap.find(strCommand)!=_cmd2FilterCounterMap.end());

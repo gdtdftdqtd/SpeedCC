@@ -7,6 +7,7 @@
 #include "TestLoadingController.h"
 #include "TestPageViewController.h"
 #include "TestUIMiscController.h"
+#include "TestAlertBoxController.h"
 
 USING_NS_CC;
 
@@ -18,6 +19,8 @@ void TestHomeController::onCreate(SCDictionary parameters)
 
     auto viewSize = Size(SCWinSize.width*3/4,SCWinSize.height*2/3);
     auto containerSize = Size(viewSize.width,viewSize.height);
+    
+    auto ptrLoadingBvr = SCBehaviorSceneNavigate::create<TestLoadingTraget0Controller,SCClassNull,TestLoadingController>();
     
     SC_BEGIN_CONTAINER_ROOT(0.5,0.5,NULL,NULL)
         SC_BEGIN_CONTAINER_LAYER_COLOR(NULL,0.5,0.5,NULL,SCWinSize,Color4B::WHITE)
@@ -34,7 +37,6 @@ void TestHomeController::onCreate(SCDictionary parameters)
     
                     SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","Progress","",23,SCBehaviorSceneNavigate::create<TestProgressController>())
     
-        auto ptrLoadingBvr = SCBehaviorSceneNavigate::create<TestLoadingTraget0Controller,SCClassNull,TestLoadingController>();
                     SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","Loading","",23,ptrLoadingBvr)
     
                     SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","PageView","",23,SCBehaviorSceneNavigate::create<TestPageViewController>())
@@ -42,6 +44,8 @@ void TestHomeController::onCreate(SCDictionary parameters)
                     SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","PageView","",23,SCBehaviorSceneNavigate::create<TestPageViewController>())
     
                     SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","UI Misc","",23,SCBehaviorSceneNavigate::create<TestUIMiscController>())
+    
+                    SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","AlertBox","",23,SCBehaviorSceneNavigate::create<TestAlertBoxController>())
     
                 SC_END_CONTAINER
             SC_END_CONTAINER

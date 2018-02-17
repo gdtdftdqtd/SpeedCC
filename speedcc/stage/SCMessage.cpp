@@ -7,7 +7,7 @@ namespace SpeedCC
 {
     SCMessage::Ptr SCMessage::clone()
     {
-        auto ptrRet = SCMessage::create(nMsgID,paramters);
+        auto ptrRet = SCMessage::create(nMsgID,parameters);
         ptrRet->bContinue = bContinue;
         
         return ptrRet;
@@ -90,7 +90,7 @@ namespace SpeedCC
         {
             SC_RETURN_IF(_strCommand.isEmpty(),false);
             
-            auto value = ptrMsg->paramters.getValue(SC_KEY_COMMAND);
+            auto value = ptrMsg->parameters.getValue(SC_KEY_COMMAND);
             SC_RETURN_IF(!value.isValidObject<SCString>(),false);
             
             auto command = value.getString();
@@ -102,7 +102,7 @@ namespace SpeedCC
             bool bResult = true;
             _paraDic.forEach([this,ptrMsg,&bResult](const SCString& strKey,const SCValue& value) -> bool
                              {
-                                 auto value2 = ptrMsg->paramters.getValue(strKey);
+                                 auto value2 = ptrMsg->parameters.getValue(strKey);
                                  
                                  do
                                  {
