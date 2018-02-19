@@ -15,8 +15,6 @@ public:
     
     void showSystemAlertBox();
     void showCustomizeAlertBox();
-    void onAlertBoxMessage(SCMessage::Ptr ptrMsg);
-    void onAlsertBoxSelected(SCMessage::Ptr ptrMsg);
 };
 
 ///---------- TestCustomizeABController

@@ -161,8 +161,6 @@ namespace SpeedCC
 		{
             static_assert(std::is_base_of<SCSceneController,SceneT>::value,
                           "Target Scene Must Derive From SCSceneController");
-//            static_assert(std::is_same<LoadingT,SCClassNull>::value,
-//                          "Loading scene must derive from SCLoadingController");
 
 			s_SceneParameterDic = dic;
 
@@ -180,47 +178,6 @@ namespace SpeedCC
     private:
         bool switchScene(const SSceneSwitchInfo& info);
         
-        /*
-        template<typename TargetCtlrT>
-        static SCSceneController::Ptr createScene(const SCDictionary& parameterDic)
-        {
-            SCObjPtrT<TargetCtlrT> ptrSceneCtlr;
-            
-            do
-            {
-                ptrSceneCtlr.createInstance();
-                
-                SC_BREAK_IF(ptrSceneCtlr.isNull());
-                
-                auto scene = SCScene::create();
-                auto pRootLayer = scene->getBedNode();
-                pRootLayer->setController(ptrSceneCtlr);
-                ptrSceneCtlr->setScene(scene);
-                ptrSceneCtlr->setBedNode(pRootLayer);
-                ptrSceneCtlr->onCreate(parameterDic);
-                
-            } while (0);
-            
-            return ptrSceneCtlr;
-        }
-        
-        template<typename TargetCtlrT>
-        static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic)
-        {
-            SCObjPtrT<TargetCtlrT> ptrSceneCtlr;
-            ptrSceneCtlr.createInstance();
-            
-            auto rootLayer = SCBedNode::create();
-            rootLayer->setController(ptrSceneCtlr);
-            ptrSceneCtlr->setBedNode(rootLayer);
-            
-            ptrSceneCtlr->setScene(NULL);
-            ptrSceneCtlr->onCreate(parameterDic);
-            
-            return ptrSceneCtlr;
-        }
-         */
-
 	private:
         SCSceneController::Ptr           s_ptrCurrentSceneController;
         SCDictionary                     s_SceneParameterDic;

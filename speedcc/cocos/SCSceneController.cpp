@@ -23,6 +23,17 @@ namespace SpeedCC
         SCCCScheduler()->unscheduleAllForTarget(static_cast<cocos2d::Ref*>(this));
     }
     
+    void SCSceneController::onCreate(SCDictionary parameters)
+    {
+        bool bResult = false;
+        auto finishFunc = parameters.getValue(SC_KEY_FINISHFUNC).getObject<FinishFunc_t>(&bResult);
+        
+        if(bResult && finishFunc!=NULL)
+        {
+            _finishFunc = finishFunc;
+        }
+    }
+    
     void SCSceneController::setBedNode(SCBedNode* pLayer)
     {
         _pBedNode = pLayer;
@@ -148,11 +159,11 @@ namespace SpeedCC
         SCCCScheduler()->unschedule(selector, this);
     }
     
-    void SCSceneController::finish(int nResult)
+    void SCSceneController::finish(void* pResult)
     {
         if(_finishFunc!=NULL)
         {
-            _finishFunc(nResult);
+            _finishFunc(pResult);
         }
     }
     

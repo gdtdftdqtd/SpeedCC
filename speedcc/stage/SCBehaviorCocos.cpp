@@ -7,18 +7,25 @@
 //
 
 #include "SCBehaviorCocos.h"
+#include "../cocos/SCSceneController.h"
 
 namespace SpeedCC
 {
     ///--------------- SCBehaviorSceneNavigate
     void SCBehaviorSceneNavigate::execute(const SCDictionary& par)
     {
-        if(_ptrDelayBvr==NULL)
+        if(_bDirect)
+        {
+            this->onBvrFunc();
+        }
+        else if(_ptrDelayBvr==NULL)
         {
             auto ptr = SCBehaviorCallFunc::create(SC_MAKE_FUNC(onBvrFunc, this));
             _ptrDelayBvr = SCBehaviorDelayExecute::create(0, ptr);
+            _ptrDelayBvr->addObject(this->makeObjPtr(this));
             _ptrDelayBvr->execute(par);
         }
+        
     }
     
     void SCBehaviorSceneNavigate::setSceneParameter(const SCDictionary& dic)
@@ -36,10 +43,16 @@ namespace SpeedCC
     ///--------------- SCBehaviorSceneBack
     void SCBehaviorSceneBack::execute(const SCDictionary& par)
     {
-        if(_ptrDelayBvr==NULL)
+        if(_bDirect)
         {
+            this->onBvrFunc();
+        }
+        else if(_ptrDelayBvr==NULL)
+        {
+            
             auto ptr = SCBehaviorCallFunc::create(SC_MAKE_FUNC(onBvrFunc, this));
             _ptrDelayBvr = SCBehaviorDelayExecute::create(0, ptr);
+            _ptrDelayBvr->addObject(this->makeObjPtr(this));
             _ptrDelayBvr->execute(par);
         }
     }
@@ -48,5 +61,37 @@ namespace SpeedCC
     {
         SCSceneNavigator::getInstance()->back(_nSceneNum);
         _ptrDelayBvr = NULL;
+    }
+    
+    ///--------------- SCBehaviorAlertBoxSelected
+    SCBehaviorAlertBoxSelected::SCBehaviorAlertBoxSelected():
+    _pController(NULL),
+    _nSelected(0)
+    {
+    }
+    
+    SCBehaviorAlertBoxSelected::SCBehaviorAlertBoxSelected(SCSceneController* pController,const int nSelected):
+    _pController(pController),
+    _nSelected(nSelected)
+    {
+    }
+    
+    void SCBehaviorAlertBoxSelected::setController(SCSceneController* pController)
+    {
+        _pController = pController;
+    }
+    
+    void SCBehaviorAlertBoxSelected::setSelectedIndex(const int nSelectedIndex)
+    {
+        _nSelected = nSelectedIndex;
+    }
+    
+    void SCBehaviorAlertBoxSelected::execute(const SCDictionary& par)
+    {
+        if(_pController!=NULL)
+        {
+            SCBehaviorSceneBack::create()->execute();
+            _pController->finish((void*)(long)_nSelected);
+        }
     }
 }

@@ -34,6 +34,7 @@ namespace SpeedCC
         template<typename> friend class SCSceneNavigationCreator;
         
         typedef std::function<void(SCMessage::Ptr ptrMsg)>  MsgFunc_t;
+        typedef std::function<void(void*)>                    FinishFunc_t;
         
         virtual ~SCSceneController();
         
@@ -63,21 +64,18 @@ namespace SpeedCC
         
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
-        void finish(int nResult=0);
+        void finish(void* pResult=NULL);
         
     protected:
         SCSceneController();
         
-        virtual void onCreate(SCDictionary parameters){}
+        virtual void onCreate(SCDictionary parameters);
         
     private:
         void setBedNode(SCBedNode* pLayer);
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
         inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)
         { _ptrParentModalController = controllerPtr; }
-        
-        inline void setFinishFunc(const std::function<void(int)>& func)
-        { _finishFunc = func; }
         
     private:
         SCBedNode*			                        _pBedNode;
@@ -88,7 +86,7 @@ namespace SpeedCC
         bool                                        _bBlackMaskForModal;
         std::list<SCObject::Ptr>                    _ownLifecycleList;
         std::map<int,MsgFunc_t>                     _msg2FuncMap;
-        std::function<void(int)>                    _finishFunc;
+        FinishFunc_t                                _finishFunc;
     };
     
 

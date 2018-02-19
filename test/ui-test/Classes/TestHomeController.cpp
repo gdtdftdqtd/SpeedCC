@@ -41,7 +41,7 @@ void TestHomeController::onCreate(SCDictionary parameters)
     
                     SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","PageView","",23,SCBehaviorSceneNavigate::create<TestPageViewController>())
     
-                    SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","PageView","",23,SCBehaviorSceneNavigate::create<TestPageViewController>())
+//                    SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","PageView","",23,SCBehaviorSceneNavigate::create<TestPageViewController>())
     
                     SC_INSERT_BUTTON_LABEL(NULL,0,0,"color-text=black;","UI Misc","",23,SCBehaviorSceneNavigate::create<TestUIMiscController>())
     

@@ -75,7 +75,7 @@ namespace SpeedCC
     ///------------- SCBehaviorDelayExecute
     SCBehaviorDelayExecute::~SCBehaviorDelayExecute()
     {
-        SCCCScheduler()->unschedule(SCF(onDelayExecute),this);
+        SCCCScheduler()->unschedule(SCF(onDelayExecute),static_cast<cocos2d::Ref*>(this));
     }
     
     void SCBehaviorDelayExecute::execute(const SCDictionary& par)
@@ -83,14 +83,13 @@ namespace SpeedCC
         if(!_bPost && _ptrBvr!=NULL)
         {
             _bPost = true;
-            
-            SCCCScheduler()->schedule(SCF(onDelayExecute),this,_fDelay,false);
+            SCCCScheduler()->schedule(SCF(onDelayExecute),static_cast<cocos2d::Ref*>(this),_fDelay,false);
         }
     }
     
     void SCBehaviorDelayExecute::onDelayExecute(float fDelta)
     {
-        SCCCScheduler()->unschedule(SCF(onDelayExecute),this);
+        SCCCScheduler()->unschedule(SCF(onDelayExecute),static_cast<cocos2d::Ref*>(this));
         _bPost = false;
         if(_ptrBvr!=NULL)
         {
@@ -112,15 +111,6 @@ namespace SpeedCC
         _fDelay = _fDelay<0 ? 0 : _fDelay;
         return true;
     }
-    
-    ///------------- SCBehaviorAddNumber
-//    void SCBehaviorAddNumber::execute(const SCDictionary& par)
-//    {
-//        if(_ptrWatch!=NULL && _nStep!=0)
-//        {
-//            (*_ptrWatch) += _nStep;
-//        }
-//    }
     
     ///------------ SCBehaviorBoolInvert
     SCBehaviorBoolInvert::SCBehaviorBoolInvert()

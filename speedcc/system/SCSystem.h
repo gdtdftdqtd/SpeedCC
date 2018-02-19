@@ -10,8 +10,9 @@
 #define __SPEEDCC__SCSYSTEM_H__
 
 #include "cocos2d.h"
-#include "../base/SCVersion.h"
 #include "../SCConfig.h"
+#include "../base/SCVersion.h"
+#include "../stage/SCBehaviorCocos.h"
 
 namespace SpeedCC
 {
@@ -164,11 +165,33 @@ namespace SpeedCC
         static int showAlertBox(const SCString& strTitle,
                                 const SCString& strText,
                                 const SCString& strButton1,
-                                const SCString& strButton2= "",
-                                const SCString& strButton3 = "",
                                 const std::function<void(int)>& resultFunc = NULL)
         {
-            return 0;
+            auto ptrBvr = SCBehaviorSceneNavigate::create<T>(SCSceneNavigator::kSceneModal);
+            return SCSystem::showAlertBox(ptrBvr,strTitle,strText,strButton1,"","",resultFunc);
+        }
+        
+        template<typename T>
+        static int showAlertBox(const SCString& strTitle,
+                                const SCString& strText,
+                                const SCString& strButton1,
+                                const SCString& strButton2,
+                                const std::function<void(int)>& resultFunc = NULL)
+        {
+            auto ptrBvr = SCBehaviorSceneNavigate::create<T>(SCSceneNavigator::kSceneModal);
+            return SCSystem::showAlertBox(ptrBvr,strTitle,strText,strButton1,strButton2,"",resultFunc);
+        }
+        
+        template<typename T>
+        static int showAlertBox(const SCString& strTitle,
+                                const SCString& strText,
+                                const SCString& strButton1,
+                                const SCString& strButton2,
+                                const SCString& strButton3,
+                                const std::function<void(int)>& resultFunc = NULL)
+        {
+            auto ptrBvr = SCBehaviorSceneNavigate::create<T>(SCSceneNavigator::kSceneModal);
+            return SCSystem::showAlertBox(ptrBvr,strTitle,strText,strButton1,strButton2,strButton3,resultFunc);
         }
         
         static bool getDeviceInfo(SDeviceInfo& di);
@@ -179,6 +202,15 @@ namespace SpeedCC
         static ESizeType getAssetSizeType(const bool bCache=true);
         static void adapterScreenResolution(const bool bCache=true);
         static void log(const char* pszFormat,...);
+        
+    private:
+        static int showAlertBox(SCBehaviorSceneNavigate::Ptr ptrBvr,
+                                const SCString& strTitle,
+                                const SCString& strText,
+                                const SCString& strButton1,
+                                const SCString& strButton2= "",
+                                const SCString& strButton3 = "",
+                                const std::function<void(int)>& resultFunc = NULL);
         
     private:
         static int     s_nSupportAssetType;

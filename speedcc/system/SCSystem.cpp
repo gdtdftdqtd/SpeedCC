@@ -441,6 +441,44 @@ namespace SpeedCC
         return nAlertBoxID;
     }
     
+    int SCSystem::showAlertBox(SCBehaviorSceneNavigate::Ptr ptrBvr,
+                               const SCString& strTitle,
+                               const SCString& strText,
+                               const SCString& strButton1,
+                               const SCString& strButton2,
+                               const SCString& strButton3,
+                               const std::function<void(int)>& resultFunc)
+    {
+        int nAlertBoxID = (int)::time(NULL);
+        
+        SCDictionary::SPair pairArray[] =
+        {
+            {SC_KEY_TITLE,strTitle},
+            {SC_KEY_TEXT,strText},
+            {SC_KEY_ID,nAlertBoxID},
+            {SC_KEY_STRING0,strButton1},
+            {SC_KEY_STRING1,strButton2},
+            {SC_KEY_STRING2,strButton3}
+        };
+        
+        SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
+        
+        if(resultFunc!=NULL)
+        {
+            SCSceneController::FinishFunc_t call = [resultFunc](void* pUserData)
+            {
+                int nIndex = (int)(long)pUserData;
+                resultFunc(nIndex);
+            };
+            
+            dic.setValue(SC_KEY_FINISHFUNC, call);
+        }
+        ptrBvr->setSceneParameter(dic);
+        ptrBvr->execute();
+        
+        return nAlertBoxID;
+    }
+    
     void SCSystem::log(const char* pszFormat,...)
     {
         SC_RETURN_V_IF(pszFormat==NULL);

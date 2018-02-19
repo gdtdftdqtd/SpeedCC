@@ -27,11 +27,16 @@ namespace SpeedCC
         {
             return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
         }
+        
+        void addObject(SCObject::Ptr ptrObj);
+        void removeObject(SCObject::Ptr ptrObj);
+        
     private:
         void setObjPtrData(void* pData);
         
     private:
-        void*       _pObjPtrData;
+        void*                       _pObjPtrData;
+        std::list<SCObject::Ptr>    _objList;
     };
 }
 

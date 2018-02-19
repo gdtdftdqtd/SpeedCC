@@ -250,8 +250,8 @@ namespace SpeedCC
             SCValueStub& stub = *(ret.getStub());
             
             void* pBuf = SCMemAllocator::allocate(sizeof(ObjectT));
-            ObjectT* pMyClass = new(pBuf)ObjectT();
-            *pMyClass = value;
+            ObjectT* pMyClass = new(pBuf)ObjectT(value);
+//            *pMyClass = value;
             stub.data.pObject = pMyClass;
             stub.pfunDestroyFunctor_t = SCDataTypeLifeCycleT<ObjectT>::destroy;
             

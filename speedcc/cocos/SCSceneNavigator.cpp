@@ -51,12 +51,14 @@ namespace SpeedCC
                 
                 if(info.bHasLoading)
                 {
+                    SCSceneController::FinishFunc_t finishFunc = [this,call](void*)
+                    {
+                        s_ptrCurrentSceneController = s_ptrCurrentSceneController->popModalFromParent();
+                        call();
+                    };
+                    
+                    s_SceneParameterDic.setValue(SC_KEY_FINISHFUNC, finishFunc);
                     auto ptrController = (info.pfunLoadingLayerCreator)(s_SceneParameterDic);
-                    ptrController->setFinishFunc([this,call](int)
-                                                        {
-                                                            s_ptrCurrentSceneController = s_ptrCurrentSceneController->popModalFromParent();
-                                                            call();
-                                                        });
                     s_ptrCurrentSceneController->pushModalController(ptrController);
                     s_sceneStack.push_front(navigateInfo);
                     s_ptrCurrentSceneController = ptrController;
@@ -115,10 +117,10 @@ namespace SpeedCC
                 
                 if(info.bHasLoading)
                 {
+                    SCSceneController::FinishFunc_t finishFunc = [call](void*) { call(); };
+                    s_SceneParameterDic.setValue(SC_KEY_FINISHFUNC, finishFunc);
                     auto ptrController = (info.pfunLoadingSceneCreator)(s_SceneParameterDic);
                     cocos2d::Scene* pScene = ptrController->getScene();
-                    
-                    ptrController->setFinishFunc([call](int) { call(); });
                     
                     if(SCCCDirector()->getRunningScene())
                     {
@@ -230,9 +232,10 @@ namespace SpeedCC
                 
                 if(navigateInfo2.sceneCreatorInfo.bHasLoading)
                 {
+                    SCSceneController::FinishFunc_t finishFunc = [call](void*) { call(); };
+                    s_SceneParameterDic.setValue(SC_KEY_FINISHFUNC, finishFunc);
                     auto ptrController = (*navigateInfo2.sceneCreatorInfo.pfunLoadingSceneCreator)(s_SceneParameterDic);
                     cocos2d::Scene* pScene = ptrController->getScene();
-                    ptrController->setFinishFunc([call](int) { call(); });
                     
                     SCCCDirector()->replaceScene(pScene);
                     s_ptrCurrentSceneController = ptrController;

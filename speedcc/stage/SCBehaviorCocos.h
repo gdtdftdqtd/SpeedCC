@@ -41,11 +41,14 @@ namespace SpeedCC
         virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
         void setSceneParameter(const SCDictionary& dic);
+        inline void setDirect(const bool bDirect) { _bDirect = bDirect; }
+        inline bool getDirect() const { return _bDirect; }
         
     protected:
         SCBehaviorSceneNavigate(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic):
         _switch(swi),
-        _parameterDic(dic)
+        _parameterDic(dic),
+        _bDirect(false)
         {}
         
         void onBvrFunc();
@@ -53,6 +56,7 @@ namespace SpeedCC
         SCBehaviorDelayExecute::Ptr             _ptrDelayBvr;
         SCSceneNavigator::SSceneSwitchInfo      _switch;
         SCDictionary                            _parameterDic;
+        bool                                    _bDirect;
     };
     
     ///-------------- SCBehaviorSceneBack
@@ -67,21 +71,53 @@ namespace SpeedCC
         
         virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
+        inline void setDirect(const bool bDirect) { _bDirect = bDirect; }
+        inline bool getDirect() const { return _bDirect; }
+        
     protected:
         SCBehaviorSceneBack():
-        _nSceneNum(1)
+        _nSceneNum(1),
+        _bDirect(false)
         {
         }
         
         SCBehaviorSceneBack(const int nSceneNum):
-        _nSceneNum(nSceneNum)
+        _nSceneNum(nSceneNum),
+        _bDirect(false)
         {
         }
         
         void onBvrFunc();
     private:
         SCBehaviorDelayExecute::Ptr     _ptrDelayBvr;
-        int         _nSceneNum;
+        int                             _nSceneNum;
+        bool                            _bDirect;
+    };
+    
+    
+    ///------------ SCBehaviorAlertBoxSelected
+    class SCSceneController;
+    class SCBehaviorAlertBoxSelected : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorAlertBoxSelected)
+        SC_DEFINE_CLASS_PTR(SCBehaviorAlertBoxSelected)
+        
+        SC_DEFINE_CREATE_FUNC_0(SCBehaviorAlertBoxSelected)
+        SC_DEFINE_CREATE_FUNC_2(SCBehaviorAlertBoxSelected,SCSceneController*,const int)
+        
+        void setController(SCSceneController* pController);
+        void setSelectedIndex(const int nSelectedIndex);
+        
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
+        
+    protected:
+        SCBehaviorAlertBoxSelected();
+        SCBehaviorAlertBoxSelected(SCSceneController* pController,const int nSelected);
+        
+    private:
+        SCSceneController*      _pController;
+        int                     _nSelected;
     };
 }
 

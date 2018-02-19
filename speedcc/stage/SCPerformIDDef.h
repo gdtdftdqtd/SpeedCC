@@ -23,6 +23,7 @@ namespace SpeedCC
 #define SC_KEY_DELTA          "sc-delta"         // float
 #define SC_KEY_RESULT         "sc-result"        // for sendMessage() result, relying on specific message definition
 #define SC_KEY_ID             "sc-id"     // int
+#define SC_KEY_FINISHFUNC       "sc-finish-func"    // SCSceneController::FinishFunc_t
     
     // for SCBehavior parameters in it's Dictionary
 #define SC_KEY_ACTOR            "sc-actor" // SCActor::Ptr
