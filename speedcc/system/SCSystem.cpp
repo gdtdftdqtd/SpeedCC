@@ -467,7 +467,7 @@ namespace SpeedCC
         {
             SCSceneController::FinishFunc_t call = [resultFunc](void* pUserData)
             {
-                int nIndex = (int)(long)pUserData;
+                int nIndex = SC_PVOID_2_NUM(pUserData);
                 resultFunc(nIndex);
             };
             

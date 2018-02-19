@@ -75,6 +75,8 @@ namespace SpeedCC
             return pHolder->hasObj<T>();
         }
         
+        static cocos2d::Sprite* createSprite(const SCString& strName);
+        
     private:
         // nPark. <0:(left or bottom); 0:center; >0:(right or top)
         static float getDockPosition(cocos2d::Node* pNode,int nPark,const bool bIsX);

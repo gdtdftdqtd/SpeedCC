@@ -11,7 +11,6 @@
 #include "SCBinderCocos.h"
 #include "SCUIBuilder.h"
 
-#include "../base/SCBaseDef.h"
 #include "../base/SCObjPtrT.h"
 #include "../base/SCObject.h"
 

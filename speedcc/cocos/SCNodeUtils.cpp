@@ -219,4 +219,19 @@ namespace SpeedCC
         auto pHolder = SCNodeUtils::getUserHolder(pNode,true);
         pHolder->addObj(ptrObj);
     }
+    
+    cocos2d::Sprite* SCNodeUtils::createSprite(const SCString& strName)
+    {
+        // find in sprite frame cache
+        auto pSpriteFrame = SCCCSpriteFrameCache()->getSpriteFrameByName(strName.c_str());
+        SC_RETURN_IF(pSpriteFrame!=NULL, cocos2d::Sprite::createWithSpriteFrame(pSpriteFrame));
+        
+        // find in file
+        auto strFile = SCCCFileUtils()->fullPathForFilename(strName.c_str());
+        SC_RETURN_IF(!strFile.empty(), cocos2d::Sprite::create(strFile.c_str()));
+        
+        CCLOG("Can't Found Match Name: %s",strName.c_str());
+        SCASSERT(false);
+        return NULL;
+    }
 }

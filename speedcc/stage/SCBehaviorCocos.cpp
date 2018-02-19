@@ -91,7 +91,7 @@ namespace SpeedCC
         if(_pController!=NULL)
         {
             SCBehaviorSceneBack::create()->execute();
-            _pController->finish((void*)(long)_nSelected);
+            _pController->finish(SC_NUM_2_PVOID(_nSelected));
         }
     }
 }

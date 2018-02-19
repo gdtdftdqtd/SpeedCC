@@ -70,6 +70,12 @@
 #define SC_MAKE_WORD(_hight_,_low_)\
     (((_hight_)<<8)|(_low_))
 
+#define SC_NUM_2_PVOID(_num_) \
+    ((void*)(long)(_num_))
+
+#define SC_PVOID_2_NUM(_p_) \
+    ((int)(long)(void*)(_p_))
+
 ///------- execute flow control short name
 #define SC_CONTINUE_IF(_condition_)\
     if((_condition_)) {continue;}

@@ -13,7 +13,6 @@
 #include "../stage/SCMessageDispatch.h"
 #include "../stage/SCStageMacroDef.h"
 
-#include "../system/SCFileUtils.h"
 #include "../system/SCSystem.h"
 
 using namespace cocos2d;
@@ -111,7 +110,7 @@ namespace SpeedCC
                                   const SCUIArg::StringPurifier& style,
                                   const SCString& strImage)
     {
-        auto pSprite = cocos2d::Sprite::create(SCFileUtils::getFullPathFile(strImage).c_str());
+        auto pSprite = SCNodeUtils::createSprite(strImage);
         this->insertUserNode(pSprite,fPosX,fPosY,style);
         SC_ASSIGN_NODE(ppSprite,pSprite);
         return pSprite;
@@ -200,9 +199,9 @@ namespace SpeedCC
                                                        SCUIArg::BehaviorPurifier bvrPurifier)
     {
         cocos2d::Sprite* pSpriteArray[3] = {NULL};
-        pSpriteArray[0] = Sprite::create(SCFileUtils::getFullPathFile(strImageNormal).c_str());
-        pSpriteArray[1] = Sprite::create(SCFileUtils::getFullPathFile(strSelect).c_str());
-        pSpriteArray[2] = Sprite::create(SCFileUtils::getFullPathFile(strDisable).c_str());
+        pSpriteArray[0] = SCNodeUtils::createSprite(strImageNormal);
+        pSpriteArray[1] = SCNodeUtils::createSprite(strSelect);
+        pSpriteArray[2] = SCNodeUtils::createSprite(strDisable);
         
         auto pItemImage = MenuItemSprite::create(pSpriteArray[0],
                                                  pSpriteArray[1],
@@ -312,7 +311,7 @@ namespace SpeedCC
     {
         SCASSERT(!strFrontgroundImage.isEmpty());
         
-        Sprite* pSpriteBar = Sprite::create( SCFileUtils::getFullPathFile(strFrontgroundImage).c_str());
+        Sprite* pSpriteBar = SCNodeUtils::createSprite(strFrontgroundImage);
         
         auto pProgressBar =  ProgressTimer::create(pSpriteBar);
         pProgressBar->setAnchorPoint(Vec2(0.5,0.5));
@@ -332,7 +331,7 @@ namespace SpeedCC
         
         if(!strBackgroundImage.isEmpty())
         {
-            Sprite* pSpriteBack = Sprite::create(SCFileUtils::getFullPathFile(strBackgroundImage).c_str());
+            Sprite* pSpriteBack = SCNodeUtils::createSprite(strBackgroundImage);
             pProgressBar->addChild(pSpriteBack,-1);
             pSpriteBack->setPosition(Vec2(pSpriteBar->getContentSize().width/2,pSpriteBar->getContentSize().height/2));
         }
@@ -364,14 +363,14 @@ namespace SpeedCC
     {
         SCASSERT(!strFrontgroundImage.isEmpty());
         
-        Sprite* pSpriteBar = Sprite::create(SCFileUtils::getFullPathFile(strFrontgroundImage).c_str());
+        Sprite* pSpriteBar = SCNodeUtils::createSprite(strFrontgroundImage);
         
         auto pProgressBar =  ProgressTimer::create(pSpriteBar);
         pProgressBar->setType(ProgressTimer::Type::RADIAL);
         
         if(!strBackgroundImage.isEmpty())
         {
-            Sprite* pSpriteBack = Sprite::create(SCFileUtils::getFullPathFile(strBackgroundImage).c_str());
+            Sprite* pSpriteBack = SCNodeUtils::createSprite(strBackgroundImage);
             pProgressBar->addChild(pSpriteBack,-1);
             SCNodeUtils::setPositionPer(pSpriteBack, Vec2(0.5,0.5));
         }
@@ -606,38 +605,6 @@ namespace SpeedCC
         SC_ASSIGN_NODE(ppEditBox,pEditBox);
         return pEditBox;
     }
-    
-    /*
-    void SCUIBuilder::containerTableView(cocos2d::extension::TableView** ppTableView,
-                                         const float fPosX,
-                                         const float fPosY,
-                                         const SCUIArg::StringPurifier& style,
-                                         const bool bHorizontal,
-                                         const cocos2d::Size& viewSize,
-                                         cocos2d::extension::TableViewDataSource* pSournce,
-                                         cocos2d::extension::TableViewDelegate* pDelegate)
-    {
-        auto pTableView = extension::TableView::create(pSournce, viewSize);
-        pTableView->setDirection(bHorizontal ?
-                                 cocos2d::extension::TableView::Direction::HORIZONTAL :
-                                 cocos2d::extension::TableView::Direction::VERTICAL);
-        pTableView->setBounceable(true);
-        pTableView->setDelegate(pDelegate);
-        pTableView->setTouchEnabled(true);
-        
-        SCUITypeDef::SUIContext context;
-        context.pContainerNode = pTableView;
-        context.containerType = SCUITypeDef::EContainerType::kNormal;
-        context.endFunc = [pTableView](SCUITypeDef::SUIContext& context)
-        {
-            
-        };
-        
-        _contextStack.push_front(context);
-        
-        SC_ASSIGN_NODE(ppTableView,pTableView);
-    }
-    */
     
     ///-------------- internal methods
     MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,

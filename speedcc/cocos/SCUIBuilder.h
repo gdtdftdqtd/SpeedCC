@@ -189,17 +189,6 @@ namespace SpeedCC
         void containerPage(cocos2d::ui::Widget** ppWidget,
                            const cocos2d::Size& size);
         
-        /*
-        void containerTableView(cocos2d::extension::TableView** ppTableView,
-                                const float fPosX,
-                                const float fPosY,
-                                const SCUIArg::StringPurifier& style,
-                                const bool bHorizontal,
-                                const cocos2d::Size& viewSize,
-                                cocos2d::extension::TableViewDataSource* pSournce,
-                                cocos2d::extension::TableViewDelegate* pDelegate);
-        */
-        
         cocos2d::ui::EditBox* insertEditBox(cocos2d::ui::EditBox** ppEditBox,
                                             const float fPosX,
                                             const float fPosY,

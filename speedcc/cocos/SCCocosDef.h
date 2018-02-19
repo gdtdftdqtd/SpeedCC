@@ -87,10 +87,8 @@ namespace SpeedCC
 #define SCCCTouchDispatch()\
     (SCCCDirector()->getEventDispatcher())
     
-    
 #define SCCCSoundEngine()\
     (CocosDenshion::SimpleAudioEngine::getInstance())
-
 
 #define SCWinSize \
     (SCCCDirector()->getWinSize())
@@ -106,6 +104,12 @@ namespace SpeedCC
     
 #define SCF(_fun_)\
     ((decltype(SpeedCC::SCTraitsFunctionPointerType(&std::remove_pointer<decltype(this)>::type::_fun_)))(&std::remove_pointer<decltype(this)>::type::_fun_))
+    
+#define SCCCSpriteFrameCache()\
+    (cocos2d::SpriteFrameCache::getInstance())
+    
+#define SCLoadSpriteFrame(_plist_) \
+    SCCCSpriteFrameCache()->addSpriteFramesWithFile(SpeedCC::SCString(_plist_).c_str())
     
 #define SCSceneNav() \
     (SpeedCC::SCSceneNavigator::getInstance())

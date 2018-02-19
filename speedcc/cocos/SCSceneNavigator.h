@@ -7,8 +7,6 @@
 #include "SCCocosDef.h"
 #include "SCSceneController.h"
 
-#include "../base/SCBaseDef.h"
-
 namespace SpeedCC
 {
     

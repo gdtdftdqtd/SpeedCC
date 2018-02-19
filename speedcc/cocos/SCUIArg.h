@@ -13,8 +13,6 @@
 #include "../base/SCObject.h"
 #include "../base/SCWatchNumberT.h"
 
-#include "../system/SCFileUtils.h"
-
 #include "../stage/SCBehaviorCommon.h"
 
 #include "SCBinderCocos.h"
@@ -166,15 +164,13 @@ namespace SpeedCC
             MenuItemPurifier(const char* pszImage)
             {
                 SCString strImage = pszImage;
-                SCString strFile = SCFileUtils::getFullPathFile(strImage);
-                auto pMenuItem = cocos2d::MenuItemImage::create(strFile.c_str(),strFile.c_str(),strFile.c_str());
+                auto pMenuItem = cocos2d::MenuItemImage::create(strImage.c_str(),strImage.c_str(),strImage.c_str());
                 ptrHolder = SCRef2Ptr::create(pMenuItem);
             }
             
             MenuItemPurifier(const SCString& strImage)
             {
-                SCString strFile = SCFileUtils::getFullPathFile(strImage);
-                auto pMenuItem = cocos2d::MenuItemImage::create(strFile.c_str(),strFile.c_str(),strFile.c_str());
+                auto pMenuItem = cocos2d::MenuItemImage::create(strImage.c_str(),strImage.c_str(),strImage.c_str());
                 ptrHolder = SCRef2Ptr::create(pMenuItem);
             }
             

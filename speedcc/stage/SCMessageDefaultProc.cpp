@@ -112,37 +112,7 @@ namespace SpeedCC
                 SCLog("Request IAP info failed.");
             }
                 break;
-                /*
-            case SCID::Msg::kSCMsgShowAlertBox:
-            {
-                bool bResult = false;
-                auto strTitle = ptrMsg->parameters.getValue(SC_KEY_TITLE).getString(&bResult);
-                SCASSERT(bResult);
-                bResult = false;
-                auto strMessage = ptrMsg->parameters.getValue(SC_KEY_TEXT).getString(&bResult);
-                SCASSERT(bResult);
-                auto nAlertBoxID = ptrMsg->parameters.getValue(SC_KEY_ID).getInt();
-                bResult = false;
-                auto strButton1 = ptrMsg->parameters.getValue(SC_KEY_STRING0).getString(&bResult);
-                SCASSERT(bResult);
-                bResult = false;
-                auto strButton2 = ptrMsg->parameters.getValue(SC_KEY_STRING1).getString(&bResult);
-                SCString strButton3;
-                if(bResult)
-                {
-                    bResult = false;
-                    strButton3 = ptrMsg->parameters.getValue(SC_KEY_STRING2).getString(&bResult);
-                }
                 
-                ::scShowSystemAlertBox(strTitle,
-                                          strMessage,
-                                          strButton1,
-                                          strButton2,
-                                          strButton3,
-                                          nAlertBoxID);
-            }
-                break;
-                */
             case SCID::Msg::kSCMsgAlertBoxSelected:
             {
                 auto nAlertBoxID = ptrMsg->parameters.getValue(SC_KEY_ID).getInt();

@@ -20,7 +20,6 @@
 #include "base/SCBinder.h"
 
 #include "system/SCSystem.h"
-#include "system/SCFileUtils.h"
 #include "system/SCSetting.h"
 #include "system/SCAudioManager.h"
 

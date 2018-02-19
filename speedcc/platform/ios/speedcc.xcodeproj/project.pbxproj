@@ -30,7 +30,6 @@
 		0A41B3811FEA3706003945EB /* SCSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B37F1FEA3706003945EB /* SCSceneController.cpp */; };
 		0A41B3861FEA4F90003945EB /* SCiOSSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3841FEA4F90003945EB /* SCiOSSystem.mm */; };
 		0A41B39E1FEB8C60003945EB /* SCSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3981FEB8C60003945EB /* SCSystem.cpp */; };
-		0A41B39F1FEB8C60003945EB /* SCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3991FEB8C60003945EB /* SCFileUtils.cpp */; };
 		0A41B3A01FEB8C60003945EB /* SCStore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B39A1FEB8C60003945EB /* SCStore.cpp */; };
 		0A41B3A21FEBC478003945EB /* SCiOSStore.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3A11FEBC478003945EB /* SCiOSStore.mm */; };
 		0A41B3A51FEBEE93003945EB /* SCSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B3A31FEBEE93003945EB /* SCSetting.cpp */; };
@@ -147,11 +146,9 @@
 		0A41B3841FEA4F90003945EB /* SCiOSSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SCiOSSystem.mm; sourceTree = SOURCE_ROOT; };
 		0A41B3851FEA4F90003945EB /* SCiOSSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCiOSSystem.h; sourceTree = SOURCE_ROOT; };
 		0A41B3981FEB8C60003945EB /* SCSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCSystem.cpp; sourceTree = "<group>"; };
-		0A41B3991FEB8C60003945EB /* SCFileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCFileUtils.cpp; sourceTree = "<group>"; };
 		0A41B39A1FEB8C60003945EB /* SCStore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCStore.cpp; sourceTree = "<group>"; };
 		0A41B39B1FEB8C60003945EB /* SCStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCStore.h; sourceTree = "<group>"; };
 		0A41B39C1FEB8C60003945EB /* SCSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSystem.h; sourceTree = "<group>"; };
-		0A41B39D1FEB8C60003945EB /* SCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFileUtils.h; sourceTree = "<group>"; };
 		0A41B3A11FEBC478003945EB /* SCiOSStore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SCiOSStore.mm; sourceTree = SOURCE_ROOT; };
 		0A41B3A31FEBEE93003945EB /* SCSetting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCSetting.cpp; sourceTree = "<group>"; };
 		0A41B3A41FEBEE93003945EB /* SCSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCSetting.h; sourceTree = "<group>"; };
@@ -169,7 +166,6 @@
 		0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMemAllocator.cpp; sourceTree = "<group>"; };
 		0A67CAE21F813C8800FED9A5 /* SCMemAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMemAllocator.h; sourceTree = "<group>"; };
 		0A67CAE51F813C8900FED9A5 /* SCMacroDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMacroDef.h; sourceTree = "<group>"; };
-		0A67CAE61F813C8900FED9A5 /* SCBaseDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBaseDef.h; sourceTree = "<group>"; };
 		0A67CB031F81DF7000FED9A5 /* SCValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCValue.cpp; sourceTree = "<group>"; };
 		0A67CB061F81DF7000FED9A5 /* SCObjRefT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCObjRefT.h; sourceTree = "<group>"; };
 		0A67CB071F81DF7100FED9A5 /* SCValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCValue.h; sourceTree = "<group>"; };
@@ -269,8 +265,6 @@
 			children = (
 				0A41B39C1FEB8C60003945EB /* SCSystem.h */,
 				0A41B3981FEB8C60003945EB /* SCSystem.cpp */,
-				0A41B39D1FEB8C60003945EB /* SCFileUtils.h */,
-				0A41B3991FEB8C60003945EB /* SCFileUtils.cpp */,
 				0A41B39B1FEB8C60003945EB /* SCStore.h */,
 				0A41B39A1FEB8C60003945EB /* SCStore.cpp */,
 				0A41B3A31FEBEE93003945EB /* SCSetting.cpp */,
@@ -353,7 +347,6 @@
 				0A67CB061F81DF7000FED9A5 /* SCObjRefT.h */,
 				0A67CB031F81DF7000FED9A5 /* SCValue.cpp */,
 				0A67CB071F81DF7100FED9A5 /* SCValue.h */,
-				0A67CAE61F813C8900FED9A5 /* SCBaseDef.h */,
 				0A67CAE51F813C8900FED9A5 /* SCMacroDef.h */,
 				0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */,
 				0A67CAE21F813C8800FED9A5 /* SCMemAllocator.h */,
@@ -541,7 +534,6 @@
 				0A6218E12004C6F600459055 /* SCEventEmitter.cpp in Sources */,
 				0A41B3441FE7C5F0003945EB /* SCRefHolder.cpp in Sources */,
 				0A0C34E5202BFDC2003A7A31 /* SCMessage.cpp in Sources */,
-				0A41B39F1FEB8C60003945EB /* SCFileUtils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
