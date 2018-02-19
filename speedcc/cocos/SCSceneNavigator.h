@@ -74,7 +74,7 @@ namespace SpeedCC
     
     class SCSceneNavigator final
     {
-        friend class SCBehaviorSceneNavigate;
+        friend class SCBehaviorSceneGoto;
 	public:
 		enum ESceneSwitchType
 		{
@@ -157,7 +157,7 @@ namespace SpeedCC
         static SCSceneNavigator* getInstance();
         
         template<typename SceneT, typename TransT = SCClassNull, typename LoadingT=SCClassNull>
-        bool switchScene(const ESceneSwitchType place = kSceneReplace, const SCDictionary& dic = SCDictionary())
+        bool gotoScene(const ESceneSwitchType place = kSceneReplace, const SCDictionary& dic = SCDictionary())
 		{
             static_assert(std::is_base_of<SCSceneController,SceneT>::value,
                           "Target Scene Must Derive From SCSceneController");
@@ -167,7 +167,7 @@ namespace SpeedCC
 			SSceneSwitchInfo switchInfo;
 
             switchInfo.setUp<SceneT,TransT,LoadingT>(place);
-			return SCSceneNavigator::getInstance()->switchScene(switchInfo);
+			return SCSceneNavigator::getInstance()->gotoScene(switchInfo);
 		}
 
         SCSceneController::Ptr getCurrentController() {return s_ptrCurrentSceneController;}
@@ -176,7 +176,7 @@ namespace SpeedCC
         void setSceneParameter(const SCDictionary& dic);
         
     private:
-        bool switchScene(const SSceneSwitchInfo& info);
+        bool gotoScene(const SSceneSwitchInfo& info);
         
 	private:
         SCSceneController::Ptr           s_ptrCurrentSceneController;

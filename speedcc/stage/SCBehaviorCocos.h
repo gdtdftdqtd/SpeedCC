@@ -15,12 +15,12 @@
 
 namespace SpeedCC
 {
-    ///----------- SCBehaviorSceneNavigate
-    class SCBehaviorSceneNavigate : public SCBehavior
+    ///----------- SCBehaviorSceneGoto
+    class SCBehaviorSceneGoto : public SCBehavior
     {
     public:
-        SC_AVOID_CLASS_COPY(SCBehaviorSceneNavigate)
-        SC_DEFINE_CLASS_PTR(SCBehaviorSceneNavigate)
+        SC_AVOID_CLASS_COPY(SCBehaviorSceneGoto)
+        SC_DEFINE_CLASS_PTR(SCBehaviorSceneGoto)
         
         template<typename SceneT, typename TransT = SCClassNull, typename LoadingT = SCClassNull>
         static Ptr create(const SCSceneNavigator::ESceneSwitchType place = SCSceneNavigator::kSceneReplace,
@@ -29,10 +29,10 @@ namespace SpeedCC
             SCSceneNavigator::SSceneSwitchInfo swi;
             swi.setUp<SceneT,TransT,LoadingT>(place);
             
-            SCBehaviorSceneNavigate::Ptr ptrRet;
+            SCBehaviorSceneGoto::Ptr ptrRet;
             ptrRet.createInstanceWithCon([swi,dic](void* pData)
                                          {
-                                             new(pData)SCBehaviorSceneNavigate(swi,dic);
+                                             new(pData)SCBehaviorSceneGoto(swi,dic);
                                          });
             
             return ptrRet;
@@ -45,7 +45,7 @@ namespace SpeedCC
         inline bool getDirect() const { return _bDirect; }
         
     protected:
-        SCBehaviorSceneNavigate(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic):
+        SCBehaviorSceneGoto(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic):
         _switch(swi),
         _parameterDic(dic),
         _bDirect(false)

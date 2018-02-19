@@ -167,7 +167,7 @@ namespace SpeedCC
                                 const SCString& strButton1,
                                 const std::function<void(int)>& resultFunc = NULL)
         {
-            auto ptrBvr = SCBehaviorSceneNavigate::create<T>(SCSceneNavigator::kSceneModal);
+            auto ptrBvr = SCBehaviorSceneGoto::create<T>(SCSceneNavigator::kSceneModal);
             return SCSystem::showAlertBox(ptrBvr,strTitle,strText,strButton1,"","",resultFunc);
         }
         
@@ -178,7 +178,7 @@ namespace SpeedCC
                                 const SCString& strButton2,
                                 const std::function<void(int)>& resultFunc = NULL)
         {
-            auto ptrBvr = SCBehaviorSceneNavigate::create<T>(SCSceneNavigator::kSceneModal);
+            auto ptrBvr = SCBehaviorSceneGoto::create<T>(SCSceneNavigator::kSceneModal);
             return SCSystem::showAlertBox(ptrBvr,strTitle,strText,strButton1,strButton2,"",resultFunc);
         }
         
@@ -190,7 +190,7 @@ namespace SpeedCC
                                 const SCString& strButton3,
                                 const std::function<void(int)>& resultFunc = NULL)
         {
-            auto ptrBvr = SCBehaviorSceneNavigate::create<T>(SCSceneNavigator::kSceneModal);
+            auto ptrBvr = SCBehaviorSceneGoto::create<T>(SCSceneNavigator::kSceneModal);
             return SCSystem::showAlertBox(ptrBvr,strTitle,strText,strButton1,strButton2,strButton3,resultFunc);
         }
         
@@ -204,7 +204,7 @@ namespace SpeedCC
         static void log(const char* pszFormat,...);
         
     private:
-        static int showAlertBox(SCBehaviorSceneNavigate::Ptr ptrBvr,
+        static int showAlertBox(SCBehaviorSceneGoto::Ptr ptrBvr,
                                 const SCString& strTitle,
                                 const SCString& strText,
                                 const SCString& strButton1,

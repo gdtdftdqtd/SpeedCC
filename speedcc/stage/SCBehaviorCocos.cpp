@@ -11,8 +11,8 @@
 
 namespace SpeedCC
 {
-    ///--------------- SCBehaviorSceneNavigate
-    void SCBehaviorSceneNavigate::execute(const SCDictionary& par)
+    ///--------------- SCBehaviorSceneGoto
+    void SCBehaviorSceneGoto::execute(const SCDictionary& par)
     {
         if(_bDirect)
         {
@@ -28,15 +28,15 @@ namespace SpeedCC
         
     }
     
-    void SCBehaviorSceneNavigate::setSceneParameter(const SCDictionary& dic)
+    void SCBehaviorSceneGoto::setSceneParameter(const SCDictionary& dic)
     {
         _parameterDic = dic;
     }
     
-    void SCBehaviorSceneNavigate::onBvrFunc()
+    void SCBehaviorSceneGoto::onBvrFunc()
     {
         SCSceneNavigator::getInstance()->setSceneParameter(_parameterDic);
-        SCSceneNavigator::getInstance()->switchScene(_switch);
+        SCSceneNavigator::getInstance()->gotoScene(_switch);
         _ptrDelayBvr = NULL;
     }
     

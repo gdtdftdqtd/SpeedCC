@@ -441,7 +441,7 @@ namespace SpeedCC
         return nAlertBoxID;
     }
     
-    int SCSystem::showAlertBox(SCBehaviorSceneNavigate::Ptr ptrBvr,
+    int SCSystem::showAlertBox(SCBehaviorSceneGoto::Ptr ptrBvr,
                                const SCString& strTitle,
                                const SCString& strText,
                                const SCString& strButton1,

@@ -60,7 +60,7 @@ void TestLoadingTraget0Controller::onCreate(SpeedCC::SCDictionary parameters)
 void TestLoadingTraget0Controller::setupUI()
 {
     SC_BEGIN_CONTAINER_ROOT_EX(0.5, 0.5, NULL, SCWinSize, _pContainerLayer, this)
-        SC_INSERT_BUTTON_LABEL(NULL, 0, 0, "dock=center; color-text=black;", "Test Back", "", 20, SCBehaviorSceneNavigate::create<TestLoadingTraget1Controller>())
+        SC_INSERT_BUTTON_LABEL(NULL, 0, 0, "dock=center; color-text=black;", "Test Back", "", 20, SCBehaviorSceneGoto::create<TestLoadingTraget1Controller>())
     SC_END_CONTAINER
 }
 

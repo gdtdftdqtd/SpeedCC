@@ -70,7 +70,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     SpeedCC::SCSystem::initSpeedCC();
     
-    SCSceneNav()->switchScene<TestHomeController>();
+    SCSceneNav()->gotoScene<TestHomeController>();
 
     return true;
 }

@@ -28,7 +28,7 @@ namespace SpeedCC
 //        return s_SceneParameterDic;
 //    }
 
-    bool SCSceneNavigator::switchScene(const SSceneSwitchInfo& info)
+    bool SCSceneNavigator::gotoScene(const SSceneSwitchInfo& info)
     {
         SStackSceneInfo navigateInfo;
         navigateInfo.sceneCreatorInfo = info;
