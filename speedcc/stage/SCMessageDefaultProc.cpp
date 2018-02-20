@@ -19,14 +19,14 @@ namespace SpeedCC
     void SCMessageDefaultProc::addAlertBoxCallback(const std::function<void(int)>& func,
                                                    const int nAlertBoxID)
     {
-        SCASSERT(func!=NULL);
+        SCASSERT(func!=nullptr);
         SCASSERT(nAlertBoxID>0);
         _alertBoxID2CBMap[nAlertBoxID] = func;
     }
     
     void SCMessageDefaultProc::processMessage(SCMessage::Ptr ptrMsg)
     {
-        SCASSERT(ptrMsg!=NULL);
+        SCASSERT(ptrMsg!=nullptr);
         
         switch(ptrMsg->nMsgID)
         {

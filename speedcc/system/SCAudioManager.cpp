@@ -14,7 +14,7 @@
 
 namespace SpeedCC
 {
-    SCAudioManager*    SCAudioManager::s_pInstance = NULL;
+    SCAudioManager*    SCAudioManager::s_pInstance = nullptr;
     
     SCAudioManager::SCAudioManager():
     _bMsgProcessing(false),
@@ -32,7 +32,7 @@ namespace SpeedCC
     
     SCAudioManager* SCAudioManager::getInstance()
     {
-        if(s_pInstance==NULL)
+        if(s_pInstance==nullptr)
         {
             s_pInstance = new SCAudioManager();
         }
@@ -191,7 +191,7 @@ namespace SpeedCC
     bool SCAudioManager::setup(const SAudioListInfo* pInfo,const int nSize)
     {
         SC_RETURN_IF(_bMsgProcessing, false);
-        SC_RETURN_IF(pInfo==NULL || nSize<=0, false);
+        SC_RETURN_IF(pInfo==nullptr || nSize<=0, false);
         
         this->Unsetup();
         
@@ -199,7 +199,7 @@ namespace SpeedCC
         
         for(int i=0; i<nSize; ++i)
         {
-            if(pInfo[i].ptrOffMsgGroup!=NULL || pInfo[i].ptrOnMsgGroup!=NULL)
+            if(pInfo[i].ptrOffMsgGroup!=nullptr || pInfo[i].ptrOnMsgGroup!=nullptr)
             {
                 SAudioInfo ai = {pInfo[i].pszAudioFile, pInfo[i].byAudioFlag,0};
                 _audioInfoVtr[i] = ai;
@@ -216,13 +216,13 @@ namespace SpeedCC
                     }
                 }
                 
-                if(pInfo[i].ptrOffMsgGroup!=NULL)
+                if(pInfo[i].ptrOffMsgGroup!=nullptr)
                 {
                     auto msgList = pInfo[i].ptrOffMsgGroup->getMessageList();
                     this->setupSwitchList(msgList,false,i);
                 }
                 
-                if(pInfo[i].ptrOnMsgGroup!=NULL)
+                if(pInfo[i].ptrOnMsgGroup!=nullptr)
                 {
                     auto msgList = pInfo[i].ptrOnMsgGroup->getMessageList();
                     
@@ -268,7 +268,7 @@ namespace SpeedCC
     
     void SCAudioManager::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
-        SCASSERT(ptrMsg!=NULL);
+        SCASSERT(ptrMsg!=nullptr);
         _bMsgProcessing = true;
         
         switch(ptrMsg->nMsgID)

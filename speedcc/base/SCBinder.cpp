@@ -26,12 +26,12 @@ namespace SpeedCC
     
     void SCBinder::removeUpdateFunc()
     {
-        if(_removeUpdateFunc!=NULL && _nFuncID>0)
+        if(_removeUpdateFunc!=nullptr && _nFuncID>0)
         {
             _removeUpdateFunc(_ptrWatch,_nFuncID);
         }
         
-        _removeUpdateFunc = NULL;
+        _removeUpdateFunc = nullptr;
         _nFuncID = 0;
     }
     
@@ -39,7 +39,7 @@ namespace SpeedCC
     {
         _bActive = true;
         this->removeUpdateFunc();
-        _ptrWatch = NULL;
+        _ptrWatch = nullptr;
     }
     
     

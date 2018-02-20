@@ -11,8 +11,8 @@
 namespace SpeedCC
 {
     SCEventEmitter::SCEventEmitter():
-    _pMsgListener(NULL),
-    _pReceiveNode(NULL),
+    _pMsgListener(nullptr),
+    _pReceiveNode(nullptr),
     _bActive(true)
     {}
     
@@ -25,16 +25,16 @@ namespace SpeedCC
     
     SCEventEmitter::~SCEventEmitter()
     {
-        if(_pTouchListener!=NULL)
+        if(_pTouchListener!=nullptr)
         {
             SCCCDirector()->getEventDispatcher()->removeEventListener(_pTouchListener);
-            _pTouchListener = NULL;
+            _pTouchListener = nullptr;
         }
     }
     
     cocos2d::EventListener* SCEventEmitter::getEventListener(cocos2d::EventListener::Type type) const
     {
-        SC_RETURN_IF((type!=cocos2d::EventListener::Type::TOUCH_ONE_BY_ONE && type!=cocos2d::EventListener::Type::TOUCH_ALL_AT_ONCE),NULL);
+        SC_RETURN_IF((type!=cocos2d::EventListener::Type::TOUCH_ONE_BY_ONE && type!=cocos2d::EventListener::Type::TOUCH_ALL_AT_ONCE),nullptr);
         
         if(type==cocos2d::EventListener::Type::TOUCH_ONE_BY_ONE)
         {
@@ -50,10 +50,10 @@ namespace SpeedCC
     {
         SC_RETURN_V_IF(touch==_touchMode);
         
-        if(_pTouchListener!=NULL)
+        if(_pTouchListener!=nullptr)
         {
             SCCCDirector()->getEventDispatcher()->removeEventListener(_pTouchListener);
-            _pTouchListener = NULL;
+            _pTouchListener = nullptr;
         }
         
         switch(touch)
@@ -106,7 +106,7 @@ namespace SpeedCC
         ptrMsg->nMsgID = SCID::Msg::kSCMsgTouchBegan;
         ptrMsg->parameters = dic;
         
-        if(_pMsgListener==NULL)
+        if(_pMsgListener==nullptr)
         {
             SCMsgDisp()->sendMessage(ptrMsg);
         }

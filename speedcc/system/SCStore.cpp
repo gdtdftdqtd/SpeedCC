@@ -12,7 +12,7 @@
 
 namespace SpeedCC
 {
-    SCStore*      SCStore::s_pInstance = NULL;
+    SCStore*      SCStore::s_pInstance = nullptr;
     
     SCStore::SCStore()
     {
@@ -20,7 +20,7 @@ namespace SpeedCC
     
     SCStore* SCStore::getInstance()
     {
-        if(s_pInstance==NULL)
+        if(s_pInstance==nullptr)
         {
             s_pInstance = new SCStore();
         }
@@ -153,12 +153,12 @@ namespace SpeedCC
             for(int i=0; i<nCount; ++i)
             {
                 ::free(pIAPArray[i]);
-                pIAPArray[i] = NULL;
+                pIAPArray[i] = nullptr;
             }
         }
         
         delete [] pIAPArray;
-        pIAPArray = NULL;
+        pIAPArray = nullptr;
         
         return bRet;
     }

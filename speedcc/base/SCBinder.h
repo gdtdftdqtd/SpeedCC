@@ -69,20 +69,20 @@ namespace SpeedCC
                                                            typename T1::type newNum,
                                                            typename T1::type oldNum)
                                                {
-                                                   if(this->getActive() && _ptrDst!=NULL)
+                                                   if(this->getActive() && _ptrDst!=nullptr)
                                                    {
                                                        (*_ptrDst) = (typename T2::type)newNum;
                                                    }
                                                });
             
-            if(_ptrDst!=NULL && this->getActive())
+            if(_ptrDst!=nullptr && this->getActive())
             {
                 (*_ptrDst) = (typename T2::type)(*ptrWatch);
             }
             
             _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
             {
-                SC_RETURN_V_IF(ptr==NULL || nID<=0);
+                SC_RETURN_V_IF(ptr==nullptr || nID<=0);
                 
                 auto p = ptr.cast<typename T1::Ptr>();
                 p->removeUpdateFunc(nID);
@@ -94,7 +94,7 @@ namespace SpeedCC
         
         inline typename T1::Ptr getSourceWatch() const
         {
-            return _ptrWatch==NULL ? NULL : _ptrWatch.cast<typename T1::Ptr>();
+            return _ptrWatch==nullptr ? nullptr : _ptrWatch.cast<typename T1::Ptr>();
         }
         
         inline typename T2::Ptr getDestWatch() const
@@ -106,7 +106,7 @@ namespace SpeedCC
         {
             _ptrDst = ptrWatch;
             
-            if(_ptrDst!=NULL && _ptrWatch!=NULL)
+            if(_ptrDst!=nullptr && _ptrWatch!=nullptr)
             {
                 (*_ptrDst) = (typename T2::type)(*(_ptrWatch.cast<typename T1::Ptr>()));
             }
@@ -115,7 +115,7 @@ namespace SpeedCC
         virtual void reset() override
         {
             SCBinder::reset();
-            _ptrDst = NULL;
+            _ptrDst = nullptr;
         }
         
     protected:

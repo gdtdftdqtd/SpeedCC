@@ -20,7 +20,7 @@ using namespace cocos2d;
 namespace SpeedCC
 {
 #define SC_ASSIGN_NODE(_to_,_from_) \
-    do{ if((_to_)!=NULL) { (*(_to_)) = (_from_); }} while(0)
+    do{ if((_to_)!=nullptr) { (*(_to_)) = (_from_); }} while(0)
     
     ///------------ root container
 
@@ -32,11 +32,11 @@ namespace SpeedCC
                                  cocos2d::Ref* pRef)
     {
         Node* pParentNode = dynamic_cast<Node*>(parentNode.ptrNodeHolder->getRef());
-        SCASSERT(pParentNode!=NULL);
+        SCASSERT(pParentNode!=nullptr);
         _pCurrentRefCaller = pRef;
         _pCurrentBedNode = pParentNode;
-        SCASSERT(_pCurrentBedNode!=NULL);
-        SCASSERT(_pCurrentRefCaller!=NULL);
+        SCASSERT(_pCurrentBedNode!=nullptr);
+        SCASSERT(_pCurrentRefCaller!=nullptr);
         
         cocos2d::Size size = (sizePurifier.size.equals(Size::ZERO)) ?
         pParentNode->getContentSize() : sizePurifier.size;
@@ -59,7 +59,7 @@ namespace SpeedCC
             _pCurrentBedNode->setPositionY(SpeedCC::SCNodeUtils::posP2A(cocos2d::Vec2(fPosX,fPosY),size).y);
         }
         
-        parentNode.pfunSetStyle(pParentNode,style.strResult,NULL);
+        parentNode.pfunSetStyle(pParentNode,style.strResult,nullptr);
         
         this->pushContainerStack(pParentNode);
     }
@@ -69,7 +69,7 @@ namespace SpeedCC
         SCASSERT(!_contextStack.empty());
         auto& front = _contextStack.front();
         
-        if(front.endFunc!=NULL)
+        if(front.endFunc!=nullptr)
         {
             front.endFunc(front);
         }
@@ -84,7 +84,7 @@ namespace SpeedCC
                                      const SCUIArg::StringPurifier& style)
     {
         Node* pNode = dynamic_cast<Node*>(userNode.ptrNodeHolder->getRef());
-        SCASSERT(pNode!=NULL);
+        SCASSERT(pNode!=nullptr);
         auto& top = _contextStack.front();
         top.pContainerNode->addChild(pNode);
         SCNodeUtils::setPositionPer(pNode, Vec2(fPosX,fPosY));
@@ -98,7 +98,7 @@ namespace SpeedCC
         }
         else
         {
-            userNode.pfunSetStyle(pNode,style.strResult,NULL);
+            userNode.pfunSetStyle(pNode,style.strResult,nullptr);
         }
         
     }
@@ -180,9 +180,9 @@ namespace SpeedCC
     {
         auto ptrBinder = labelString.ptrLabelBinder;
         cocos2d::Label* pLabel = dynamic_cast<Label*>(labelNode.ptrNodeHolder->getRef());
-        SCASSERT(pLabel!=NULL);
+        SCASSERT(pLabel!=nullptr);
         
-        if(ptrBinder!=NULL && pLabel!=NULL)
+        if(ptrBinder!=nullptr && pLabel!=nullptr)
         {
             ptrBinder->setLabel(pLabel);
             SCNodeUtils::addUserObj(pLabel, ptrBinder);
@@ -198,7 +198,7 @@ namespace SpeedCC
                                                       const SCString& strDisable,
                                                        SCUIArg::BehaviorPurifier bvrPurifier)
     {
-        cocos2d::Sprite* pSpriteArray[3] = {NULL};
+        cocos2d::Sprite* pSpriteArray[3] = {nullptr};
         pSpriteArray[0] = SCNodeUtils::createSprite(strImageNormal);
         pSpriteArray[1] = SCNodeUtils::createSprite(strSelect);
         pSpriteArray[2] = SCNodeUtils::createSprite(strDisable);
@@ -277,10 +277,10 @@ namespace SpeedCC
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pOnItem);
         bvrPurifier.setupBehavior(_pCurrentRefCaller,pOffItem);
         
-        auto pToggleItem = MenuItemToggle::createWithCallback(NULL,pOnItem,pOffItem,NULL);
+        auto pToggleItem = MenuItemToggle::createWithCallback(nullptr,pOnItem,pOffItem,nullptr);
         pToggleItem->setSelectedIndex(value.bResult ? 0 : 1);
         
-        if(value.ptrWatch!=NULL)
+        if(value.ptrWatch!=nullptr)
         {
             auto ptrLabelBinder = SCBinderUISwitch::create();
             
@@ -338,7 +338,7 @@ namespace SpeedCC
         
         this->insertUserNode(pProgressBar, fPosX, fPosY, style);
         
-        if(value.ptrBinderProgress!=NULL)
+        if(value.ptrBinderProgress!=nullptr)
         {
             value.ptrBinderProgress->setProgressTimer(pProgressBar);
             SCNodeUtils::addUserObj(pProgressBar, value.ptrBinderProgress);
@@ -379,7 +379,7 @@ namespace SpeedCC
         
         this->insertUserNode(pProgressBar, fPosX, fPosY, style);
         
-        if(value.ptrBinderProgress!=NULL)
+        if(value.ptrBinderProgress!=nullptr)
         {
             value.ptrBinderProgress->setProgressTimer(pProgressBar);
             SCNodeUtils::addUserObj(pProgressBar, value.ptrBinderProgress);
@@ -575,7 +575,7 @@ namespace SpeedCC
     {
         auto& top = _contextStack.front();
         auto pPageView = dynamic_cast<ui::PageView*>(top.pContainerNode);
-        SCASSERT(pPageView!=NULL);
+        SCASSERT(pPageView!=nullptr);
         auto pWidget = ui::Widget::create();
         
         pPageView->addPage(pWidget);
@@ -681,7 +681,7 @@ namespace SpeedCC
                               const cocos2d::Size& size)
     {
         cocos2d::Layer* pLayer = dynamic_cast<cocos2d::Layer*>(layerNode.ptrNodeHolder->getRef());
-        SCASSERT(pLayer!=NULL);
+        SCASSERT(pLayer!=nullptr);
         
         pLayer->setContentSize(size);
         pLayer->setAnchorPoint(cocos2d::Vec2(0.5,0.5));

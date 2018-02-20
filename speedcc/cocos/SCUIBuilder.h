@@ -199,26 +199,26 @@ namespace SpeedCC
         
     protected:
         SCUIBuilder():
-        _pCurrentBedNode(NULL),
-        _pCurrentRefCaller(NULL),
-        _pDefaultBedNode(NULL),
-        _pDefaultRefCaller(NULL)
+        _pCurrentBedNode(nullptr),
+        _pCurrentRefCaller(nullptr),
+        _pDefaultBedNode(nullptr),
+        _pDefaultRefCaller(nullptr)
         {
         }
         
         SCUIBuilder(cocos2d::Node* pBedNode,cocos2d::Ref* pRef):
-        _pCurrentBedNode(NULL),
-        _pCurrentRefCaller(NULL),
+        _pCurrentBedNode(nullptr),
+        _pCurrentRefCaller(nullptr),
         _pDefaultBedNode(pBedNode),
         _pDefaultRefCaller(pRef)
         {
         }
         
         SCUIBuilder(cocos2d::Node* pBedNode):
-        _pCurrentBedNode(NULL),
-        _pCurrentRefCaller(NULL),
+        _pCurrentBedNode(nullptr),
+        _pCurrentRefCaller(nullptr),
         _pDefaultBedNode(pBedNode),
-        _pDefaultRefCaller(NULL)
+        _pDefaultRefCaller(nullptr)
         {
         }
         

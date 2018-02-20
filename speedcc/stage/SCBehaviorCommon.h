@@ -78,8 +78,8 @@ namespace SpeedCC
         template<typename ...Ts>
         static Ptr create(SCBehavior::Ptr ptrBvr1,SCBehavior::Ptr ptrBvr2,Ts... ts)
         {
-            SCASSERT(ptrBvr1!=NULL);
-            SCASSERT(ptrBvr2!=NULL);
+            SCASSERT(ptrBvr1!=nullptr);
+            SCASSERT(ptrBvr2!=nullptr);
             auto ptr2 = SCBehaviorGroup::create(ptrBvr2,ts...);
             
             auto ptrRet = SCBehaviorGroup::create();
@@ -227,7 +227,7 @@ namespace SpeedCC
         
         virtual void execute(const SCDictionary& par = SCDictionary()) override
         {
-            if(_ptrWatch!=NULL && _step!=0)
+            if(_ptrWatch!=nullptr && _step!=0)
             {
                 (*_ptrWatch) += _step;
             }

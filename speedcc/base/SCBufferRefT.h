@@ -26,9 +26,9 @@ namespace SpeedCC
         
         virtual ~SCBufferRefT();
         
-        inline int getSize() const { return ( this->_pObjData==NULL ? 0 : this->getCookie()->nUsedSize);}
-        inline bool isEmpty() const {return ( this->_pObjData==NULL || this->getCookie()->nUsedSize==0);}
-        inline const void* getDataPtr() const {return this->_pObjData==NULL ? "" : this->_pObjData;}
+        inline int getSize() const { return ( this->_pObjData==nullptr ? 0 : this->getCookie()->nUsedSize);}
+        inline bool isEmpty() const {return ( this->_pObjData==nullptr || this->getCookie()->nUsedSize==0);}
+        inline const void* getDataPtr() const {return this->_pObjData==nullptr ? "" : this->_pObjData;}
         
         void clear();
         
@@ -53,7 +53,7 @@ namespace SpeedCC
     template<typename CookieT>
     SCBufferRefT<CookieT>::SCBufferRefT(const void* pData,const int nDataSize)
     {
-        if(pData!=NULL && nDataSize>0)
+        if(pData!=nullptr && nDataSize>0)
         {
             this->allocBuf(nDataSize);
             ::memcpy(this->_pObjData,pData,nDataSize);
@@ -77,7 +77,7 @@ namespace SpeedCC
     template<typename CookieT>
     int SCBufferRefT<CookieT>::assign(const void* pData,const int nDataSize)
     {
-        if((pData==NULL && nDataSize>0) || nDataSize<0)
+        if((pData==nullptr && nDataSize>0) || nDataSize<0)
         {
             return -1;
         }
@@ -121,7 +121,7 @@ namespace SpeedCC
             if(nTotalSize<512)
             {
                 char buf[512];
-                if(this->_pObjData!=NULL && nSize0>0)
+                if(this->_pObjData!=nullptr && nSize0>0)
                 {
                     ::memcpy(buf,this->_pObjData,nSize0);
                 }
@@ -132,7 +132,7 @@ namespace SpeedCC
             else
             {
                 char* buf = (char*)::malloc(nTotalSize);
-                if(this->_pObjData!=NULL && nSize0>0)
+                if(this->_pObjData!=nullptr && nSize0>0)
                 {
                     ::memcpy(buf,this->_pObjData,nSize0);
                 }
@@ -168,7 +168,7 @@ namespace SpeedCC
     void SCBufferRefT<CookieT>::clear()
     {
         this->decreaseRef();
-        this->_pObjData = NULL;
+        this->_pObjData = nullptr;
     }
     
     template<typename CookieT>
@@ -176,7 +176,7 @@ namespace SpeedCC
     {
         bool bNew = true;
         
-        if(this->_pObjData!=NULL)
+        if(this->_pObjData!=nullptr)
         {
             auto pDesc = this->getCookieDesc();
             if(1==pDesc->nRefs && (pDesc->getBufferSize() > nSize+(int)sizeof(char)))

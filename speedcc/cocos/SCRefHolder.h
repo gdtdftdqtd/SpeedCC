@@ -28,7 +28,7 @@ namespace SpeedCC
         inline cocos2d::Ref* getRef() const {return _pObject;}
     protected:
         SCRef2Ptr():
-        _pObject(NULL)
+        _pObject(nullptr)
         {}
         
         SCRef2Ptr(cocos2d::Ref* pObject);
@@ -72,7 +72,7 @@ namespace SpeedCC
             objList.remove_if([](SCObject::Ptr ptrIt)
                               {
                                   auto ptrTem = ptrIt.cast<SCRef2Ptr::Ptr>();
-                                  return (ptrTem!=NULL && dynamic_cast<T>(ptrTem->getRef())!=NULL);
+                                  return (ptrTem!=nullptr && dynamic_cast<T>(ptrTem->getRef())!=nullptr);
                               });
         }
         
@@ -81,12 +81,12 @@ namespace SpeedCC
             for(const auto& it : objList)
             {
                 auto p = it.cast<SCRef2Ptr::Ptr>();
-                SC_CONTINUE_IF(p==NULL);
+                SC_CONTINUE_IF(p==nullptr);
                 auto p1 = dynamic_cast<T>(p->getRef());
-                SC_RETURN_IF(p1!=NULL, p1);
+                SC_RETURN_IF(p1!=nullptr, p1);
             }
             
-            return NULL;
+            return nullptr;
         }
     };
     
@@ -98,7 +98,7 @@ namespace SpeedCC
         {
             objList.remove_if([](SCObject::Ptr ptrIt)
                               {
-                                  return (ptrIt.cast<T>()!=NULL);
+                                  return (ptrIt.cast<T>()!=nullptr);
                               });
         }
         
@@ -107,10 +107,10 @@ namespace SpeedCC
             for(const auto& it : objList)
             {
                 auto p = it.cast<T>();
-                SC_RETURN_IF(p!=NULL, p);
+                SC_RETURN_IF(p!=nullptr, p);
             }
             
-            return NULL;
+            return nullptr;
         }
     };
     
@@ -148,7 +148,7 @@ namespace SpeedCC
         std::is_convertible<T,cocos2d::Ref*>::value==1 >::type>
         bool hasObj() const
         {
-            return (this->getObj<T>()!=NULL);
+            return (this->getObj<T>()!=nullptr);
         }
         
         inline bool isEmpty() const { return _objList.empty(); }

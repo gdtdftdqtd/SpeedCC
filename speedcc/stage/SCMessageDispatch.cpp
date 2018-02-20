@@ -11,11 +11,11 @@ namespace SpeedCC
 {
     ///----------- SCMessageListener
     
-    SCMessageDispatch* SCMessageDispatch::_pInstance = NULL;
+    SCMessageDispatch* SCMessageDispatch::_pInstance = nullptr;
     
     SCMessageDispatch* SCMessageDispatch::getInstance()
     {
-        if(_pInstance==NULL)
+        if(_pInstance==nullptr)
         {
             _pInstance = new SCMessageDispatch();
             SCCCScheduler()->schedule(SC_FUNC(SCMessageDispatch::onFrameMessagePump),_pInstance,0,false);
@@ -34,7 +34,7 @@ namespace SpeedCC
     
     void SCMessageDispatch::addListener(SCMessageListener* pListener,const unsigned char nPriority)
     {
-        SCASSERT(pListener!=NULL);
+        SCASSERT(pListener!=nullptr);
         
         SMutabelListenerInfo info;
         
@@ -60,7 +60,7 @@ namespace SpeedCC
     
     void SCMessageDispatch::removeListener(SCMessageListener* pListener)
     {
-        SCASSERT(pListener!=NULL);
+        SCASSERT(pListener!=nullptr);
         
         SMutabelListenerInfo info;
         
@@ -94,9 +94,9 @@ namespace SpeedCC
         auto it = _listenerList.begin();
         for(;it!=_listenerList.end() && ptrMsg->bContinue;++it)
         {
-            SCASSERT((*it).pListener!=NULL);
+            SCASSERT((*it).pListener!=nullptr);
             
-            if((*it).pListener!=NULL)
+            if((*it).pListener!=nullptr)
             {
                 (*it).pListener->onSCMessageProcess(ptrMsg);
             }
@@ -152,7 +152,7 @@ namespace SpeedCC
         std::for_each(_mutableListenerList.begin(),_mutableListenerList.end(),
                       [this](const SMutabelListenerInfo& info)-> void
                       {
-                          SC_RETURN_V_IF(info.listener.pListener==NULL);
+                          SC_RETURN_V_IF(info.listener.pListener==nullptr);
                           
                           if(info.bAdd)
                           {// add listener
@@ -210,8 +210,8 @@ namespace SpeedCC
             auto it = _listenerList.begin();
             for(;it!=_listenerList.end() && bContinue;++it)
             {
-                SCASSERT((*it).pListener!=NULL);
-                SC_CONTINUE_IF((*it).pListener==NULL);
+                SCASSERT((*it).pListener!=nullptr);
+                SC_CONTINUE_IF((*it).pListener==nullptr);
                 (*it).pListener->onSCMessageProcess(msg);
                 bContinue = msg->bContinue;
             }

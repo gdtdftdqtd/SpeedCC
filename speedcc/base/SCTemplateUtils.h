@@ -4,6 +4,7 @@
 #ifndef __SPEEDCC__SCTEMPLATEUTILS_H__
 #define __SPEEDCC__SCTEMPLATEUTILS_H__
 
+#include <functional>
 #include "SCTemplateDef.h"
 #include "SCMacroDef.h"
 #include "SCMemAllocator.h"

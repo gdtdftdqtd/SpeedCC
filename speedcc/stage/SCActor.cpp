@@ -13,27 +13,27 @@
 namespace SpeedCC
 {
     SCActor::SCActor(const int nID):
-    _pCurStrategy(NULL),
-    _pOwnerRole(NULL)
+    _pCurStrategy(nullptr),
+    _pOwnerRole(nullptr)
     {
         this->setID(nID);
     }
     
     bool SCActor::applyStrategy(SCStrategy* pStrategy)
     {
-        SC_RETURN_IF(_pOwnerRole==NULL,false);
+        SC_RETURN_IF(_pOwnerRole==nullptr,false);
         SC_RETURN_IF(!_pOwnerRole->getActive(),false);
         SC_RETURN_IF(!_pOwnerRole->getStage()->getActive(),false);
         
         
-        if(_pCurStrategy!=NULL)
+        if(_pCurStrategy!=nullptr)
         {
             _pCurStrategy->exit(this);
         }
         
         _pCurStrategy = pStrategy;
         
-        if(_pCurStrategy!=NULL)
+        if(_pCurStrategy!=nullptr)
         {
             _pCurStrategy->enter(this);
         }
@@ -43,14 +43,14 @@ namespace SpeedCC
     
     void SCActor::removeFromRole()
     {
-        SC_RETURN_V_IF(_pOwnerRole==NULL);
+        SC_RETURN_V_IF(_pOwnerRole==nullptr);
         _pOwnerRole->removeActor(this->getID());
     }
     
     void SCActor::update(SCMessage::Ptr ptrMsg)
     {
-        SCASSERT(ptrMsg!=NULL);
-        SC_RETURN_V_IF(_pCurStrategy==NULL);
+        SCASSERT(ptrMsg!=nullptr);
+        SC_RETURN_V_IF(_pCurStrategy==nullptr);
         SC_RETURN_V_IF(!this->getActive());
         _pCurStrategy->update(this,ptrMsg);
     }

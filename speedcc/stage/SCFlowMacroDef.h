@@ -64,7 +64,7 @@ do{\
 }while(0);
 
 #define ON_MSG(_msg_) \
-    ON_MSG_BEHAVIOR((_msg_),NULL)
+    ON_MSG_BEHAVIOR((_msg_),nullptr)
 
 #define ON_MSG_NEXT_STRATEGY(_msg_,_stragegy_id_) \
 do{\

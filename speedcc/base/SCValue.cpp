@@ -181,7 +181,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -215,7 +215,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -249,7 +249,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -283,7 +283,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -317,7 +317,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -346,14 +346,14 @@ namespace SpeedCC
                 case INT64_TYPE: bRet = (data.llValue!=0); break;
                 case FLOAT_TYPE: bRet = (data.fValue!=0.0f); break;
                 case DOUBLE_TYPE: bRet = (data.dValue!=0.0); break;
-                case POINTER_TYPE: bRet = (data.pValue!=NULL); break;
+                case POINTER_TYPE: bRet = (data.pValue!=nullptr); break;
                 case BOOL_TYPE: bRet = data.bValue; break;
                     
                 default:bResult = false; break;
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -389,7 +389,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -425,7 +425,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -461,7 +461,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -497,7 +497,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -534,7 +534,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -572,7 +572,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -606,7 +606,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -652,7 +652,7 @@ namespace SpeedCC
             }
         }
         
-        if(pResult!=NULL)
+        if(pResult!=nullptr)
         {
             *pResult = bResult;
         }
@@ -665,7 +665,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.nValue = nValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = INT_TYPE;
     }
     
@@ -674,7 +674,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.byValue = byValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = BYTE_TYPE;
     }
     
@@ -683,7 +683,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.cValue = cValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = CHAR_TYPE;
     }
     
@@ -692,7 +692,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.uValue = uValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = UINT_TYPE;
         
         return *this;
@@ -703,7 +703,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.lValue = lValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = LONG_TYPE;
     }
     
@@ -712,7 +712,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.bValue = bValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = BOOL_TYPE;
     }
     
@@ -721,7 +721,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.fValue = fValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = FLOAT_TYPE;
     }
     
@@ -730,7 +730,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.dValue = dValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = DOUBLE_TYPE;
     }
     
@@ -739,7 +739,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.llValue = llValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = INT64_TYPE;
     }
     
@@ -748,7 +748,7 @@ namespace SpeedCC
         this->check4Write();
         this->clone4Write();
         this->getStub()->data.pValue = pValue;
-        (*(this->getStub())).pfunDestroyFunctor_t = NULL;
+        (*(this->getStub())).pfunDestroyFunctor_t = nullptr;
         this->getCookieDesc()->cookie = POINTER_TYPE;
     }
     

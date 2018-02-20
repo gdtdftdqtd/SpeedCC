@@ -40,8 +40,8 @@ namespace SpeedCC
     
     SCMessageGroup::SCMessageGroup(SCMessageGroup::Ptr ptr1, SCMessageGroup::Ptr ptr2)
     {
-        SCASSERT(ptr1!=NULL);
-        SCASSERT(ptr2!=NULL);
+        SCASSERT(ptr1!=nullptr);
+        SCASSERT(ptr2!=nullptr);
         
         auto list1 = ptr1->getMessageList();
         auto list2 = ptr2->getMessageList();
@@ -68,7 +68,7 @@ namespace SpeedCC
     SCMessageMatcher::SCMessageMatcher(const int nMsgID,const SCDictionary& dic):
     _nMsgID(nMsgID),
     _paraDic(dic),
-    _func(NULL)
+    _func(nullptr)
     {
     }
     
@@ -76,15 +76,15 @@ namespace SpeedCC
     _nMsgID(SCID::Msg::kSCMsgCommand),
     _strCommand(strCommand),
     _paraDic(dic),
-    _func(NULL)
+    _func(nullptr)
     {
         SCASSERT(!_strCommand.isEmpty());
     }
     
     bool SCMessageMatcher::isMatch(const SCMessage::Ptr ptrMsg) const
     {
-        SCASSERT(ptrMsg!=NULL);
-        SC_RETURN_IF((_func==NULL || ptrMsg==NULL || _nMsgID!=ptrMsg->nMsgID), false);
+        SCASSERT(ptrMsg!=nullptr);
+        SC_RETURN_IF((_func==nullptr || ptrMsg==nullptr || _nMsgID!=ptrMsg->nMsgID), false);
         
         if(_nMsgID==SCID::Msg::kSCMsgCommand)
         {
@@ -140,7 +140,7 @@ namespace SpeedCC
             SC_RETURN_IF(!bResult, false);
         }
         
-        return (_func==NULL) ? true : _func(ptrMsg);
+        return (_func==nullptr) ? true : _func(ptrMsg);
     }
     
     ///--------------- SCMessageMatcherGroup

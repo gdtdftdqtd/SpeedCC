@@ -17,11 +17,11 @@ namespace SpeedCC
     void SCBehaviorCallFunc::execute(const SCDictionary& par)
     {
         SC_RETURN_V_IF(!this->getActive());
-        if(_startFunc!=NULL)
+        if(_startFunc!=nullptr)
         {
             _startFunc(par);
         }
-        else if(_startFunc2!=NULL)
+        else if(_startFunc2!=nullptr)
         {
             _startFunc2();
         }
@@ -30,13 +30,13 @@ namespace SpeedCC
     void SCBehaviorCallFunc::setOnStartFunc(const std::function<void(const SCDictionary& par)>& func)
     {
         _startFunc = func;
-        _startFunc2 = NULL;
+        _startFunc2 = nullptr;
     }
     
     void SCBehaviorCallFunc::setOnStartFunc(const std::function<void()>& func)
     {
         _startFunc2 = func;
-        _startFunc = NULL;
+        _startFunc = nullptr;
     }
     
     
@@ -44,7 +44,7 @@ namespace SpeedCC
     
     SCBehaviorGroup::SCBehaviorGroup(SCBehavior::Ptr ptrBvr)
     {
-        SCASSERT(ptrBvr!=NULL);
+        SCASSERT(ptrBvr!=nullptr);
         this->addBehavior(ptrBvr);
     }
     
@@ -59,7 +59,7 @@ namespace SpeedCC
     
     void SCBehaviorGroup::addBehavior(const SCBehavior::Ptr& ptrBvr)
     {
-        SC_RETURN_V_IF(ptrBvr==NULL);
+        SC_RETURN_V_IF(ptrBvr==nullptr);
         _behaviorList.push_back(ptrBvr);
     }
     
@@ -80,7 +80,7 @@ namespace SpeedCC
     
     void SCBehaviorDelayExecute::execute(const SCDictionary& par)
     {
-        if(!_bPost && _ptrBvr!=NULL)
+        if(!_bPost && _ptrBvr!=nullptr)
         {
             _bPost = true;
             SCCCScheduler()->schedule(SCF(onDelayExecute),static_cast<cocos2d::Ref*>(this),_fDelay,false);
@@ -91,7 +91,7 @@ namespace SpeedCC
     {
         SCCCScheduler()->unschedule(SCF(onDelayExecute),static_cast<cocos2d::Ref*>(this));
         _bPost = false;
-        if(_ptrBvr!=NULL)
+        if(_ptrBvr!=nullptr)
         {
             _ptrBvr->execute();
         }
@@ -131,7 +131,7 @@ namespace SpeedCC
     
     void SCBehaviorBoolInvert::execute(const SCDictionary& par)
     {
-        if(_ptrWatch!=NULL)
+        if(_ptrWatch!=nullptr)
         {
             (*_ptrWatch) = !(*_ptrWatch);
         }

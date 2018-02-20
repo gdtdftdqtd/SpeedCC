@@ -15,13 +15,13 @@ namespace SpeedCC
     SCRef2Ptr::SCRef2Ptr(cocos2d::Ref* pObject):
     _pObject(pObject)
     {
-        SCASSERT(_pObject!=NULL);
+        SCASSERT(_pObject!=nullptr);
         _pObject->retain();
     }
     
     SCRef2Ptr::~SCRef2Ptr()
     {
-        if(_pObject!=NULL)
+        if(_pObject!=nullptr)
         {
             _pObject->release();
         }
@@ -76,14 +76,14 @@ namespace SpeedCC
     
     void SCRefHolder::addObj(cocos2d::Ref* pRef)
     {
-        SC_RETURN_V_IF(pRef==NULL);
+        SC_RETURN_V_IF(pRef==nullptr);
         
         _objList.push_back(SCRef2Ptr::create(pRef));
     }
     
     void SCRefHolder::addObj(SCObject::Ptr ptr)
     {
-        SC_RETURN_V_IF(ptr==NULL);
+        SC_RETURN_V_IF(ptr==nullptr);
         
         _objList.push_back(ptr);
     }

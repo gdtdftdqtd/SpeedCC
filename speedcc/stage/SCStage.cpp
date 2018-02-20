@@ -23,7 +23,7 @@ namespace SpeedCC
     
     void SCStage::addRole(SCRole::Ptr ptrRole)
     {
-        SCASSERT(ptrRole!=NULL);
+        SCASSERT(ptrRole!=nullptr);
         SCASSERT(ptrRole->getID()>0);
         
         _id2RoleMap[ptrRole->getID()] = ptrRole;
@@ -36,16 +36,16 @@ namespace SpeedCC
     
     SCRole::Ptr SCStage::getRole(const int nID)
     {
-        SC_RETURN_IF(nID<=0,NULL);
+        SC_RETURN_IF(nID<=0,nullptr);
         
         auto it = _id2RoleMap.find(nID);
-        SC_RETURN_IF(it==_id2RoleMap.end(),NULL);
+        SC_RETURN_IF(it==_id2RoleMap.end(),nullptr);
         return (*it).second;
     }
     
     void SCStage::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
-        SCASSERT(ptrMsg!=NULL);
+        SCASSERT(ptrMsg!=nullptr);
         SC_RETURN_V_IF(_id2RoleMap.empty());
         SC_RETURN_V_IF(!this->getActive());
         

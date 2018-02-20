@@ -98,8 +98,8 @@ namespace SpeedCC
         SCObjPtrT<T> getProperty()
         {
             auto it = _id2PropertyMap.find(std::type_index(typeid(T)));
-            SC_RETURN_IF(it==_id2PropertyMap.end(),NULL);
-            SC_RETURN_IF(!(*it).second.isValidObject<SCObjPtrT<T>>(),NULL);
+            SC_RETURN_IF(it==_id2PropertyMap.end(),nullptr);
+            SC_RETURN_IF(!(*it).second.isValidObject<SCObjPtrT<T>>(),nullptr);
             return (*it).second.getObject<SCObjPtrT<T>>();
         }
         

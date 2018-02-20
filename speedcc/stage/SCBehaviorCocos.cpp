@@ -18,7 +18,7 @@ namespace SpeedCC
         {
             this->onBvrFunc();
         }
-        else if(_ptrDelayBvr==NULL)
+        else if(_ptrDelayBvr==nullptr)
         {
             auto ptr = SCBehaviorCallFunc::create(SC_MAKE_FUNC(onBvrFunc, this));
             _ptrDelayBvr = SCBehaviorDelayExecute::create(0, ptr);
@@ -37,7 +37,7 @@ namespace SpeedCC
     {
         SCSceneNavigator::getInstance()->setSceneParameter(_parameterDic);
         SCSceneNavigator::getInstance()->gotoScene(_switch);
-        _ptrDelayBvr = NULL;
+        _ptrDelayBvr = nullptr;
     }
     
     ///--------------- SCBehaviorSceneBack
@@ -47,7 +47,7 @@ namespace SpeedCC
         {
             this->onBvrFunc();
         }
-        else if(_ptrDelayBvr==NULL)
+        else if(_ptrDelayBvr==nullptr)
         {
             
             auto ptr = SCBehaviorCallFunc::create(SC_MAKE_FUNC(onBvrFunc, this));
@@ -60,12 +60,12 @@ namespace SpeedCC
     void SCBehaviorSceneBack::onBvrFunc()
     {
         SCSceneNavigator::getInstance()->back(_nSceneNum);
-        _ptrDelayBvr = NULL;
+        _ptrDelayBvr = nullptr;
     }
     
     ///--------------- SCBehaviorAlertBoxSelected
     SCBehaviorAlertBoxSelected::SCBehaviorAlertBoxSelected():
-    _pController(NULL),
+    _pController(nullptr),
     _nSelected(0)
     {
     }
@@ -88,7 +88,7 @@ namespace SpeedCC
     
     void SCBehaviorAlertBoxSelected::execute(const SCDictionary& par)
     {
-        if(_pController!=NULL)
+        if(_pController!=nullptr)
         {
             SCBehaviorSceneBack::create()->execute();
             _pController->finish(SC_NUM_2_PVOID(_nSelected));

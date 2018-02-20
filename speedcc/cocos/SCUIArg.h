@@ -34,8 +34,7 @@ namespace SpeedCC
         struct StringPurifier
         {
             StringPurifier(void*){}
-            StringPurifier(long){}
-            StringPurifier(int){}
+            StringPurifier(decltype(nullptr)){}
             StringPurifier(const char* psz):strResult(psz){}
             StringPurifier(const SCString& str):strResult(str){}
             
@@ -57,7 +56,7 @@ namespace SpeedCC
             typename = typename std::enable_if<SCIsWatchClassT<typename T::type>::value==1,T>::type >
             LabelStringPurifier(T ptrWatch)
             {
-                if(ptrWatch!=NULL)
+                if(ptrWatch!=nullptr)
                 {
                     ptrLabelBinder = SCBinderUILabel::create();
                     ptrLabelBinder->setWatch(ptrWatch);
@@ -74,35 +73,35 @@ namespace SpeedCC
         {
             BehaviorPurifier(cocos2d::SEL_CallFunc func):
             callFunc(func),
-            menuFunc(NULL)
+            menuFunc(nullptr)
             {
             }
             
             BehaviorPurifier(cocos2d::SEL_MenuHandler func):
             menuFunc(func),
-            callFunc(NULL)
+            callFunc(nullptr)
             {
             }
             
             template<typename T,
             typename = typename std::enable_if<std::is_convertible<T,SCBehavior::Ptr>::value,T>::type >
             BehaviorPurifier(T bvr):
-            callFunc(NULL),
-            menuFunc(NULL),
+            callFunc(nullptr),
+            menuFunc(nullptr),
             ptrResultBvr(bvr)
             {
             }
             
-            BehaviorPurifier(decltype(NULL)):
-            callFunc(NULL),
-            menuFunc(NULL)
+            BehaviorPurifier(decltype(nullptr)):
+            callFunc(nullptr),
+            menuFunc(nullptr)
             {}
             
             void setupBehavior(cocos2d::Ref* pCall,cocos2d::Ref* pSender)
             {
-                if(ptrResultBvr==NULL)
+                if(ptrResultBvr==nullptr)
                 {
-                    if(menuFunc!=NULL)
+                    if(menuFunc!=nullptr)
                     {
                         auto func = menuFunc;
                         ptrResultBvr = SCBehaviorCallFunc::create([pCall,func,pSender]()
@@ -111,7 +110,7 @@ namespace SpeedCC
                                                                   });
 
                     }
-                    else if(callFunc!=NULL)
+                    else if(callFunc!=nullptr)
                     {
                         auto func = callFunc;
                         ptrResultBvr = SCBehaviorCallFunc::create([pCall,func]()
@@ -138,8 +137,8 @@ namespace SpeedCC
             BoolPurifier(SCWatchBool::Ptr ptrBool):
             ptrWatch(ptrBool)
             {
-                SCASSERT(ptrBool!=NULL);
-                bResult = (ptrBool==NULL ? false : (bool)(*ptrBool));
+                SCASSERT(ptrBool!=nullptr);
+                bResult = (ptrBool==nullptr ? false : (bool)(*ptrBool));
             }
             
             bool bResult;
@@ -184,7 +183,7 @@ namespace SpeedCC
             
             MenuItemPurifier(cocos2d::MenuItem* pMenuItem)
             {
-                SCASSERT(pMenuItem!=NULL);
+                SCASSERT(pMenuItem!=nullptr);
                 ptrHolder = SCRef2Ptr::create(pMenuItem);
             }
             
@@ -198,7 +197,7 @@ namespace SpeedCC
             typename = typename std::enable_if<SCIsWatchNumberableT<typename T::type>::value==1,T>::type >
             NumberPurifier(T ptrWatch)
             {
-                if(ptrWatch!=NULL)
+                if(ptrWatch!=nullptr)
                 {
                     ptrBinderProgress = SCBinderUIProgress::create();
                     ptrBinderProgress->setWatch(ptrWatch);
@@ -222,7 +221,7 @@ namespace SpeedCC
             {
             }
             
-            SizePurifier(decltype(NULL)):
+            SizePurifier(decltype(nullptr)):
             size(cocos2d::Size::ZERO)
             {
             }
@@ -260,13 +259,13 @@ namespace SpeedCC
             FUN_SCSetStyle_t         pfunSetStyle;
             
             ContainerEndFunctor():
-            pfunSetStyle(NULL),
-            pNode(NULL)
+            pfunSetStyle(nullptr),
+            pNode(nullptr)
             {}
             
             virtual void operator()()
             {
-                if(pNode!=NULL && pfunSetStyle!=NULL && !strStyle.isEmpty())
+                if(pNode!=nullptr && pfunSetStyle!=nullptr && !strStyle.isEmpty())
                 {
                     (*pfunSetStyle)(pNode,strStyle);
                 }
@@ -288,7 +287,7 @@ namespace SpeedCC
             EContainerType                      containerType;
             
             SUIContext():
-            pContainerNode(NULL),
+            pContainerNode(nullptr),
             containerType(EContainerType::kNormal)
             {}
         };

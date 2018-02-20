@@ -104,15 +104,15 @@ namespace SpeedCC
         static void setStyle(cocos2d::Label* pNode,const SCDictionary& dic);
         
         template<typename T>
-        static void setStyle(cocos2d::Node* pNode,const SCString& strStyle,SFilterConfig* pFilterConfig=NULL)
+        static void setStyle(cocos2d::Node* pNode,const SCString& strStyle,SFilterConfig* pFilterConfig=nullptr)
         {
-            SCASSERT(pNode!=NULL);
-            SC_RETURN_V_IF(pNode==NULL);
+            SCASSERT(pNode!=nullptr);
+            SC_RETURN_V_IF(pNode==nullptr);
             
             SCDictionary dic;
             if(SCNodeStyle::convertString2Dic(strStyle,dic))
             {
-                if(pFilterConfig!=NULL && !pFilterConfig->keyVtr.empty())
+                if(pFilterConfig!=nullptr && !pFilterConfig->keyVtr.empty())
                 {
                     if(pFilterConfig->bExclude)
                     {

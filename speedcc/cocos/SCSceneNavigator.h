@@ -49,7 +49,7 @@ namespace SpeedCC
             rootLayer->setController(ptrSceneCtlr);
             ptrSceneCtlr->setBedNode(rootLayer);
             
-            ptrSceneCtlr->setScene(NULL);
+            ptrSceneCtlr->setScene(nullptr);
             ptrSceneCtlr->onCreate(parameterDic);
             
             return ptrSceneCtlr;
@@ -63,10 +63,10 @@ namespace SpeedCC
         {return pScene;}
         
         static SCSceneController::Ptr createScene(const SCDictionary& parameterDic)
-        { return NULL; }
+        { return nullptr; }
         
         static SCSceneController::Ptr createLayer(const SCDictionary& parameterDic)
-        { return NULL; }
+        { return nullptr; }
     };
     
     
@@ -100,12 +100,12 @@ namespace SpeedCC
             
 			SSceneSwitchInfo() :
 				switchType(kSceneReplace),
-				pfunSelfTransCreator(NULL),
-				pfunOppositeTransCreator(NULL),
-				pfunSceneCreator(NULL),
-                pfunLayerCreator(NULL),
-            pfunLoadingSceneCreator(NULL),
-            pfunLoadingLayerCreator(NULL),
+				pfunSelfTransCreator(nullptr),
+				pfunOppositeTransCreator(nullptr),
+				pfunSceneCreator(nullptr),
+                pfunLayerCreator(nullptr),
+            pfunLoadingSceneCreator(nullptr),
+            pfunLoadingLayerCreator(nullptr),
                 bHasLoading(false)
 			{}
 
@@ -132,7 +132,7 @@ namespace SpeedCC
             {
                 static_assert(!SCIsEmptyClassT<SceneT>::value,"target scene should not empty class");
                 
-                TransT* pTrans = NULL;
+                TransT* pTrans = nullptr;
                 switchType = place;
                 pfunSelfTransCreator = &SCSceneNavigationCreator<TransT>::createTransition;
                 pfunOppositeTransCreator = &SCSceneNavigationCreator< decltype(SCTraitsTransitionSceneOpposite(pTrans)) >::createTransition;

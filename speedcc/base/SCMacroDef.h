@@ -49,7 +49,7 @@
 #define SC_DELETE(_pointer_)\
     do{\
         if((_pointer_)) {SCMemAllocator::deleteObject((_pointer_));}\
-        (_pointer_) = NULL;\
+        (_pointer_) = nullptr;\
     }while(0)
 
 #define SCMapInsert(_map_,_key_,_value_)\
@@ -120,7 +120,7 @@
     typedef SpeedCC::SCObjPtrT<_class_,false>        WeakPtr;
 
 #define SC_HAS_CLASS(_ptr_,_class_) \
-    ((_ptr_).cast<_class_>()!=NULL)
+    ((_ptr_).cast<_class_>()!=nullptr)
 
 
 #define SC_DEFINE_CREATE_FUNC_0(_class_)\

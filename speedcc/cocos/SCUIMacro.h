@@ -161,13 +161,13 @@ ptrSCTemUIBuilder->pushContainerStack(pSCContainerNode);
 #define SC_INSERT_OPTION_MUSIC(_node_,_x_,_y_,_style_,_true_item_,_false_item_) \
 do{\
     auto ptrMusic = SpeedCC::SCSetting::getInstance()->getMusicWatch();\
-    SC_INSERT_BUTTON_SWITCH((_node_),(_x_),(_y_),(_style_),(_true_item_),(_false_item_),ptrMusic,NULL) \
+    SC_INSERT_BUTTON_SWITCH((_node_),(_x_),(_y_),(_style_),(_true_item_),(_false_item_),ptrMusic,nullptr) \
 }while(0);
 
 #define SC_INSERT_OPTION_SOUND(_node_,_x_,_y_,_style_,_true_item_,_false_item_) \
 do{\
     auto ptrSound = SpeedCC::SCSetting::getInstance()->getSoundWatch();\
-    SC_INSERT_BUTTON_SWITCH((_node_),(_x_),(_y_),(_style_),(_true_item_),(_false_item_),ptrSound,NULL) \
+    SC_INSERT_BUTTON_SWITCH((_node_),(_x_),(_y_),(_style_),(_true_item_),(_false_item_),ptrSound,nullptr) \
 }while(0);
 
 #endif

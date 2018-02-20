@@ -26,7 +26,7 @@ namespace SpeedCC
         SCObjPtrT(std::nullptr_t p){}
         explicit SCObjPtrT(void* p)
         {
-            if(p!=NULL)
+            if(p!=nullptr)
             {
                 this->_pObjData = p;
                 this->increaseRef();
@@ -46,13 +46,13 @@ namespace SpeedCC
         
         TargetT& operator*()
         {
-            SCASSERT(this->_pObjData!=NULL);
+            SCASSERT(this->_pObjData!=nullptr);
             return (*this->getStub());
         }
         
         const TargetT& operator*() const
         {
-            SCASSERT(this->_pObjData!=NULL);
+            SCASSERT(this->_pObjData!=nullptr);
             return (*this->getStub());
         }
         
@@ -76,7 +76,7 @@ namespace SpeedCC
             return this->getStub();
         }
         
-        inline bool isNull() const {return (this->_pObjData==NULL);}
+        inline bool isNull() const {return (this->_pObjData==nullptr);}
         
         inline bool operator==(const SCObjPtrT<TargetT,true>& data) const
         {
@@ -105,7 +105,7 @@ namespace SpeedCC
         template<typename T2>
         T2 cast() const
         {
-            SC_RETURN_IF(this->_pObjData==NULL,NULL);
+            SC_RETURN_IF(this->_pObjData==nullptr,nullptr);
             
             TargetT* p1 = (TargetT*)this->_pObjData;
             SCObjPtrT<typename T2::type> ptrRet;
@@ -133,7 +133,7 @@ namespace SpeedCC
         
         SCObjPtrT(void* p)
         {
-            if(p!=NULL)
+            if(p!=nullptr)
             {
                 this->SCObjRefT<void*>::createInstance();
                 *(this->getStub()) = p;
@@ -154,13 +154,13 @@ namespace SpeedCC
         
         TargetT& operator*()
         {
-            SCASSERT(this->_pObjData!=NULL);
+            SCASSERT(this->_pObjData!=nullptr);
             return *((TargetT*)this->getTargetPointer());
         }
         
         const TargetT& operator*() const
         {
-            SCASSERT(this->_pObjData!=NULL);
+            SCASSERT(this->_pObjData!=nullptr);
             return *((TargetT*)this->getTargetPointer());
         }
         
@@ -174,7 +174,7 @@ namespace SpeedCC
             return (TargetT*)this->getTargetPointer();
         }
         
-        inline bool isNull() const {return (this->getTargetPointer()==NULL);}
+        inline bool isNull() const {return (this->getTargetPointer()==nullptr);}
         
         inline bool operator==(const SCObjPtrT& data) const
         {
@@ -192,7 +192,7 @@ namespace SpeedCC
         {
             if(ptr.getStub()!=this->_pObjData)
             {
-                if(this->_pObjData==NULL)
+                if(this->_pObjData==nullptr)
                 {
                     this->SCObjRefT<void*>::createInstance();
                 }
@@ -220,7 +220,7 @@ namespace SpeedCC
         SCObjPtrT<T2,false> cast() const
         {
             SC_RETURN_IF((std::is_same<T2,TargetT>::value),(*this));
-            SC_RETURN_IF(_pObjData==NULL || (*(this->getStub()))==NULL,NULL);
+            SC_RETURN_IF(_pObjData==nullptr || (*(this->getStub()))==nullptr,nullptr);
             
             TargetT* p1 = (TargetT*)(*(this->getStub()));
             SCObjPtrT<T2,false> ptrRet;
@@ -238,7 +238,7 @@ namespace SpeedCC
     private:
         TargetT* getTargetPointer() const
         {
-            return (this->_pObjData==NULL) ? NULL : ((TargetT*)(*(this->getStub())));
+            return (this->_pObjData==nullptr) ? nullptr : ((TargetT*)(*(this->getStub())));
         }
     };
     

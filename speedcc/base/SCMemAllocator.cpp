@@ -8,7 +8,7 @@
 namespace SpeedCC
 {
 #ifdef SPEEDCC_FEATURE_MEMORY_POOL_THREAD_SAFE
-    static std::mutex* s_pLock = NULL;
+    static std::mutex* s_pLock = nullptr;
 #endif
     
     char* SCPoolAllocator::_pFreeStart = 0;
@@ -128,7 +128,7 @@ namespace SpeedCC
     void* SCPoolAllocator::allocate(size_t nSize)
     {
 #ifdef SPEEDCC_FEATURE_MEMORY_POOL_THREAD_SAFE
-        if(s_pLock==NULL)
+        if(s_pLock==nullptr)
         {
             s_pLock = new std::mutex();
         }
@@ -167,7 +167,7 @@ namespace SpeedCC
     void SCPoolAllocator::deallocate(void* pBuffer, size_t nSize)
     {
 #ifdef SPEEDCC_FEATURE_MEMORY_POOL_THREAD_SAFE
-        if(s_pLock==NULL)
+        if(s_pLock==nullptr)
         {
             s_pLock = new std::mutex();
         }

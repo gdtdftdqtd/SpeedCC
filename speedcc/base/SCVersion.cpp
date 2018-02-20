@@ -18,7 +18,7 @@ namespace SpeedCC
     
     SCVersion::SCVersion(const char* pszVersion)
     {
-        SCASSERT(pszVersion!=NULL);
+        SCASSERT(pszVersion!=nullptr);
         this->setString(pszVersion);
     }
     

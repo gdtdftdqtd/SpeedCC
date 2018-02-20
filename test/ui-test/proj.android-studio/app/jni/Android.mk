@@ -17,7 +17,13 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/TestHomeController.cpp \
                    ../../../Classes/TestStageController.cpp \
                    ../../../Classes/TestLabelBinderController.cpp \
-                   ../../../Classes/TestPage1Controller.cpp
+                   ../../../Classes/TestAlertBoxController.cpp \
+                   ../../../Classes/TestCaseController.cpp \
+                   ../../../Classes/TestDockController.cpp \
+                   ../../../Classes/TestLoadingController.cpp \
+                   ../../../Classes/TestPageViewController.cpp \
+                   ../../../Classes/TestProgressController.cpp \
+                   ../../../Classes/TestUIMiscController.cpp \
 
 
 

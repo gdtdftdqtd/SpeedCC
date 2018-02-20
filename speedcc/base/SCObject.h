@@ -19,13 +19,13 @@ namespace SpeedCC
         template<typename T>
         T makeObjPtr()
         {
-            return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename T::type>(_pObjPtrData);
+            return _pObjPtrData==nullptr ? nullptr : SCObjPtrT<typename T::type>(_pObjPtrData);
         }
         
         template<typename T>
         SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type> makeObjPtr(T)
         {
-            return _pObjPtrData==NULL ? NULL : SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
+            return _pObjPtrData==nullptr ? nullptr : SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
         }
         
         void addObject(SCObject::Ptr ptrObj);

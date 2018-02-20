@@ -72,7 +72,7 @@ namespace SpeedCC
         
         void setWatch(PtrType_t ptrWatch)
         {
-            SCASSERT(ptrWatch!=NULL);
+            SCASSERT(ptrWatch!=nullptr);
             this->removeUpdateFunc();
             
             _nFuncID = ptrWatch->addUpdateFunc([this](PtrType_t ptrNum, const NumberType_t newNum,const NumberType_t oldNum)
@@ -183,7 +183,7 @@ namespace SpeedCC
         
         void Activate()
         {
-            SC_RETURN_V_IF(_ptrWatch==NULL);
+            SC_RETURN_V_IF(_ptrWatch==nullptr);
             this->fireBehavior((*_ptrWatch),(*_ptrWatch));
         }
         
@@ -206,7 +206,7 @@ namespace SpeedCC
     private:
         void removeUpdateFunc()
         {
-            if(_ptrWatch!=NULL && _nFuncID>0)
+            if(_ptrWatch!=nullptr && _nFuncID>0)
             {
                 _ptrWatch->removeUpdateFunc(_nFuncID);
             }

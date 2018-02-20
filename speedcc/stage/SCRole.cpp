@@ -22,8 +22,8 @@ namespace SpeedCC
     
     bool SCRole::addActor(SCActor::Ptr ptrActor)
     {
-        SCASSERT(ptrActor!=NULL);
-        SC_RETURN_IF(ptrActor==NULL,false);
+        SCASSERT(ptrActor!=nullptr);
+        SC_RETURN_IF(ptrActor==nullptr,false);
         const int nID = ptrActor->getID();
         
         if(this->isActorInRemovedList(nID))
@@ -64,7 +64,7 @@ namespace SpeedCC
         SC_RETURN_V_IF(nID<=0);
         
         auto ptrActor = this->getActor(nID);
-        if(ptrActor!=NULL)
+        if(ptrActor!=nullptr)
         {
             if(_bUpdating)
             {
@@ -100,8 +100,8 @@ namespace SpeedCC
     
     SCActor::Ptr SCRole::getActor(const int nID)
     {
-        SC_RETURN_IF(nID<=0, NULL);
-        SC_RETURN_IF(this->isActorInRemovedList(nID),NULL);
+        SC_RETURN_IF(nID<=0, nullptr);
+        SC_RETURN_IF(this->isActorInRemovedList(nID),nullptr);
         
         for(auto it : _actorList)
         {
@@ -111,7 +111,7 @@ namespace SpeedCC
             }
         }
         
-        return NULL;
+        return nullptr;
     }
     
     bool SCRole::isActorInRemovedList(const int nID) const
@@ -137,7 +137,7 @@ namespace SpeedCC
     
     void SCRole::addStrategy(SCStrategy::Ptr ptrStrategy,const int nParentID)
     {
-        SCASSERT(ptrStrategy!=NULL);
+        SCASSERT(ptrStrategy!=nullptr);
         SCASSERT(ptrStrategy->getID()>0);
         
         SCStrategyInfo::Ptr ptrSI = SCStrategyInfo::create();
@@ -148,10 +148,10 @@ namespace SpeedCC
     
     SCStrategy::Ptr SCRole::getStrategy(const int nID) const
     {
-        SC_RETURN_IF(_id2StrategyInfoMap.empty() || nID<=0, NULL);
+        SC_RETURN_IF(_id2StrategyInfoMap.empty() || nID<=0, nullptr);
         
         auto it = _id2StrategyInfoMap.find(nID);
-        SC_RETURN_IF(it==_id2StrategyInfoMap.end(), NULL);
+        SC_RETURN_IF(it==_id2StrategyInfoMap.end(), nullptr);
 
         
         return (*it).second->ptrStrategy;
@@ -159,10 +159,10 @@ namespace SpeedCC
     
     SCStrategyInfo::Ptr SCRole::getStrategyInfo(const int nID) const
     {
-        SC_RETURN_IF(_id2StrategyInfoMap.empty() || nID<=0, NULL);
+        SC_RETURN_IF(_id2StrategyInfoMap.empty() || nID<=0, nullptr);
         
         auto it = _id2StrategyInfoMap.find(nID);
-        SC_RETURN_IF(it==_id2StrategyInfoMap.end(), NULL);
+        SC_RETURN_IF(it==_id2StrategyInfoMap.end(), nullptr);
         
         
         return (*it).second;
@@ -277,7 +277,7 @@ namespace SpeedCC
         SCASSERT(nMsgID>0);
         
         auto ptrSI =  this->getStrategyInfo(nStrategyID);
-        SC_RETURN_IF(ptrSI==NULL, false);
+        SC_RETURN_IF(ptrSI==nullptr, false);
         
         auto it = ptrSI->msgID2BehaviorMap.find(nMsgID);
         
@@ -308,7 +308,7 @@ namespace SpeedCC
         SCASSERT(!strCommand.isEmpty());
         
         auto ptrSI =  this->getStrategyInfo(nStrategyID);
-        SC_RETURN_IF(ptrSI==NULL, false);
+        SC_RETURN_IF(ptrSI==nullptr, false);
         
         auto it = ptrSI->command2BehaviorMap.find(strCommand);
         if(it==ptrSI->command2BehaviorMap.end())
@@ -353,9 +353,9 @@ namespace SpeedCC
     bool SCRole::addEnterBehavior2Strategy(const int nStrategyID,SCBehavior::Ptr bvrPtr)
     {
         auto ptrSI = this->getStrategyInfo(nStrategyID);
-        SC_RETURN_IF(ptrSI==NULL, false);
+        SC_RETURN_IF(ptrSI==nullptr, false);
         
-        if(ptrSI->ptrEnterBehavior==NULL)
+        if(ptrSI->ptrEnterBehavior==nullptr)
         {
             ptrSI->ptrEnterBehavior = SCBehaviorGroup::create();
         }
@@ -367,9 +367,9 @@ namespace SpeedCC
     bool SCRole::addExitBehavior2Strategy(const int nStrategyID,SCBehavior::Ptr bvrPtr)
     {
         auto ptrSI = this->getStrategyInfo(nStrategyID);
-        SC_RETURN_IF(ptrSI==NULL, false);
+        SC_RETURN_IF(ptrSI==nullptr, false);
         
-        if(ptrSI->ptrExitBehavior==NULL)
+        if(ptrSI->ptrExitBehavior==nullptr)
         {
             ptrSI->ptrExitBehavior = SCBehaviorGroup::create();
         }
@@ -406,7 +406,7 @@ namespace SpeedCC
     
     void SCRole::update(SCMessage::Ptr ptrMsg)
     {
-        SCASSERT(ptrMsg!=NULL);
+        SCASSERT(ptrMsg!=nullptr);
         _bUpdating = true;
         
         do

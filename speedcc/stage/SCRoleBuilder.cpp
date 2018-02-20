@@ -11,7 +11,7 @@
 namespace SpeedCC
 {
     SCRoleBuilder::SCRoleBuilder():
-    _pStage(NULL)
+    _pStage(nullptr)
     {
     }
     
@@ -20,7 +20,7 @@ namespace SpeedCC
         SCASSERT(_strategyStack.empty());
         SCASSERT(nRoleID>0);
         SCASSERT(nInitStrategyID>0);
-        SCASSERT(pStage!=NULL);
+        SCASSERT(pStage!=nullptr);
         
         _pStage = pStage;
         _ptrRole = SCRole::create(nRoleID, pStage);
@@ -62,7 +62,7 @@ namespace SpeedCC
     
     void SCRoleBuilder::insertBehaviorWithMsg(const SCRoleBuilder::MessagePurifier& msgPurifier,const BehaviorPurifier& bvrPurifier)
     {
-//        SCASSERT(bvrPurifier.ptrBehavior !=NULL);
+//        SCASSERT(bvrPurifier.ptrBehavior !=nullptr);
         SCASSERT(!_strategyStack.empty());
         
         int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
@@ -76,7 +76,7 @@ namespace SpeedCC
     void SCRoleBuilder::insertBehaviorWithCmd(const SCString& strCmd,const BehaviorPurifier& bvrPurifier)
     {
         SCASSERT(!strCmd.isEmpty());
-        SCASSERT(bvrPurifier.ptrBehavior!=NULL);
+        SCASSERT(bvrPurifier.ptrBehavior!=nullptr);
         SCASSERT(!_strategyStack.empty());
         
         int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
@@ -85,7 +85,7 @@ namespace SpeedCC
     
     void SCRoleBuilder::insertEnterBehavior(const BehaviorPurifier& bvrPurifier)
     {
-        SCASSERT(bvrPurifier.ptrBehavior!=NULL);
+        SCASSERT(bvrPurifier.ptrBehavior!=nullptr);
         SCASSERT(!_strategyStack.empty());
         
         int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
@@ -94,7 +94,7 @@ namespace SpeedCC
     
     void SCRoleBuilder::insertExitBehavior(const BehaviorPurifier& bvrPurifier)
     {
-        SCASSERT(bvrPurifier.ptrBehavior!=NULL);
+        SCASSERT(bvrPurifier.ptrBehavior!=nullptr);
         SCASSERT(!_strategyStack.empty());
         
         int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
@@ -139,7 +139,7 @@ namespace SpeedCC
     {
         SMsgListInfo mli;
         mli.nMsg = nMsgID;
-        mli.ptrMatcher = NULL;
+        mli.ptrMatcher = nullptr;
         
         msgList.push_back(mli);
     }
@@ -161,7 +161,7 @@ namespace SpeedCC
             SMsgListInfo mli;
             
             mli.nMsg = it->nMsgID;
-            mli.ptrMatcher = NULL;
+            mli.ptrMatcher = nullptr;
             
             msgList.push_back(mli);
         }

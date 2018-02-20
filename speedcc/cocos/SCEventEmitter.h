@@ -71,7 +71,7 @@ namespace SpeedCC
             ptrMsg->nMsgID = nMsg;
             ptrMsg->parameters = dic;
             
-            if(_pMsgListener==NULL)
+            if(_pMsgListener==nullptr)
             {
                 SCMsgDisp()->sendMessage(ptrMsg);
             }

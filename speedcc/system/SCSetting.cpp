@@ -17,11 +17,11 @@
 
 namespace SpeedCC
 {
-    SCSetting*       SCSetting::s_pInstance = NULL;
+    SCSetting*       SCSetting::s_pInstance = nullptr;
     
     SCSetting* SCSetting::getInstance()
     {
-        if(s_pInstance==NULL)
+        if(s_pInstance==nullptr)
         {
             s_pInstance = new SCSetting();
         }
@@ -36,13 +36,13 @@ namespace SpeedCC
     SCWatchInt::Ptr SCSetting::getWatchInt(const SCString& strKey,const int nDefault)
     {
         SCASSERT(!strKey.isEmpty());
-        SC_RETURN_IF(strKey.isEmpty(), NULL);
+        SC_RETURN_IF(strKey.isEmpty(), nullptr);
         
         auto it = _key2WatchNumMap.find(strKey);
         
         if(it!=_key2WatchNumMap.end())
         {
-            SCASSERT((*it).second!=NULL);
+            SCASSERT((*it).second!=nullptr);
             return (*it).second.cast<SCWatchInt::Ptr>();
         }
         
@@ -62,13 +62,13 @@ namespace SpeedCC
     SCWatchBool::Ptr SCSetting::getWatchBool(const SCString& strKey,const bool bDefault)
     {
         SCASSERT(!strKey.isEmpty());
-        SC_RETURN_IF(strKey.isEmpty(), NULL);
+        SC_RETURN_IF(strKey.isEmpty(), nullptr);
         
         auto it = _key2WatchNumMap.find(strKey);
         
         if(it!=_key2WatchNumMap.end())
         {
-            SCASSERT((*it).second!=NULL);
+            SCASSERT((*it).second!=nullptr);
             return (*it).second.cast<SCWatchBool::Ptr>();
         }
         
@@ -96,13 +96,13 @@ namespace SpeedCC
     SCWatchFloat::Ptr SCSetting::getWatchFloat(const SCString& strKey,const float fDefault)
     {
         SCASSERT(!strKey.isEmpty());
-        SC_RETURN_IF(strKey.isEmpty(), NULL);
+        SC_RETURN_IF(strKey.isEmpty(), nullptr);
         
         auto it = _key2WatchNumMap.find(strKey);
         
         if(it!=_key2WatchNumMap.end())
         {
-            SCASSERT((*it).second!=NULL);
+            SCASSERT((*it).second!=nullptr);
             return (*it).second.cast<SCWatchFloat::Ptr>();
         }
         
@@ -121,13 +121,13 @@ namespace SpeedCC
     SCWatchDouble::Ptr SCSetting::getWatchDouble(const SCString& strKey,const double dDefault)
     {
         SCASSERT(!strKey.isEmpty());
-        SC_RETURN_IF(strKey.isEmpty(), NULL);
+        SC_RETURN_IF(strKey.isEmpty(), nullptr);
         
         auto it = _key2WatchNumMap.find(strKey);
         
         if(it!=_key2WatchNumMap.end())
         {
-            SCASSERT((*it).second!=NULL);
+            SCASSERT((*it).second!=nullptr);
             return (*it).second.cast<SCWatchDouble::Ptr>();
         }
         
@@ -146,13 +146,13 @@ namespace SpeedCC
     SCWatchString::Ptr SCSetting::getWatchString(const SCString& strKey)
     {
         SCASSERT(!strKey.isEmpty());
-        SC_RETURN_IF(strKey.isEmpty(), NULL);
+        SC_RETURN_IF(strKey.isEmpty(), nullptr);
         
         auto it = _key2WatchNumMap.find(strKey);
         
         if(it!=_key2WatchNumMap.end())
         {
-            SCASSERT((*it).second!=NULL);
+            SCASSERT((*it).second!=nullptr);
             return (*it).second.cast<SCWatchString::Ptr>();
         }
         
@@ -190,35 +190,35 @@ namespace SpeedCC
         for(auto it : _key2WatchNumMap)
         {
             auto v1 = it.second.cast<SCWatchInt::Ptr>();
-            if(v1!=NULL)
+            if(v1!=nullptr)
             {
                 ret.setValue(it.first,v1->getValue());
                 continue;
             }
             
             auto v2 = it.second.cast<SCWatchString::Ptr>();
-            if(v2!=NULL)
+            if(v2!=nullptr)
             {
                 ret.setValue(it.first,v2->getValue());
                 continue;
             }
             
             auto v3 = it.second.cast<SCWatchBool::Ptr>();
-            if(v3!=NULL)
+            if(v3!=nullptr)
             {
                 ret.setValue(it.first,v3->getValue());
                 continue;
             }
             
             auto v4 = it.second.cast<SCWatchFloat::Ptr>();
-            if(v4!=NULL)
+            if(v4!=nullptr)
             {
                 ret.setValue(it.first,v4->getValue());
                 continue;
             }
             
             auto v5 = it.second.cast<SCWatchDouble::Ptr>();
-            if(v5!=NULL)
+            if(v5!=nullptr)
             {
                 ret.setValue(it.first,v5->getValue());
                 continue;

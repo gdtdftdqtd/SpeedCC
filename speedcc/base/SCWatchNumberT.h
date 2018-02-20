@@ -25,7 +25,7 @@ namespace SpeedCC
     SCWatchNumberT(const _type_ num):\
     _number(0),\
     _nIDCounter(0),\
-    _funGetString(NULL){\
+    _funGetString(nullptr){\
         this->_number = (T)(num);\
     }
     
@@ -115,7 +115,7 @@ namespace SpeedCC
         SCWatchNumberT(const SCWatchNumberT& num):
         _number(num._number),
         _nIDCounter(0),
-        _funGetString(NULL)
+        _funGetString(nullptr)
         {
         }
 
@@ -303,7 +303,7 @@ namespace SpeedCC
         SCWatchNumberT():
         _number(0),
         _nIDCounter(0),
-        _funGetString(NULL)
+        _funGetString(nullptr)
         {}
         
         void firePostUpdateFun(const T newNumber,const T oldNumber)

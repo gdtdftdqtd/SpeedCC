@@ -24,7 +24,7 @@ namespace SpeedCC
         auto ptrActor = actorValue.getObject<SCActor::Ptr>();
         
         auto stragtegy = ptrActor->getRole()->getStrategy(_nStragtegyID);
-        SC_RETURN_V_IF(stragtegy==NULL);
+        SC_RETURN_V_IF(stragtegy==nullptr);
         
         ptrActor->applyStrategy(stragtegy.getRawPointer());
     }
@@ -69,7 +69,7 @@ namespace SpeedCC
     SCBehaviorDeliverMessage::SCBehaviorDeliverMessage(const bool bSend,SCMessage::Ptr ptrMsg):
     _bSend(bSend)
     {
-        SCASSERT(ptrMsg!=NULL);
+        SCASSERT(ptrMsg!=nullptr);
         _ptrMsg = ptrMsg->clone();
     }
     
@@ -87,7 +87,7 @@ namespace SpeedCC
     
     void SCBehaviorDeliverMessage::execute(const SCDictionary& par)
     {
-        SCASSERT(_ptrMsg!=NULL);
+        SCASSERT(_ptrMsg!=nullptr);
         
         if(_bSend)
         {

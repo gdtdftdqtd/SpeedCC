@@ -43,7 +43,7 @@ namespace SpeedCC
         SCIsObjPtrClassT<T>::value==1>::type>
         static void removeUserObj(cocos2d::Node* pNode)
         {
-            SC_RETURN_V_IF(pNode==NULL || pNode->getUserObject()==NULL);
+            SC_RETURN_V_IF(pNode==nullptr || pNode->getUserObject()==nullptr);
             auto pHolder = SCNodeUtils::getUserHolder(pNode);
             
             SC_RETURN_V_IF(pHolder->isEmpty());
@@ -56,10 +56,10 @@ namespace SpeedCC
         std::is_convertible<T,cocos2d::Ref*>::value==1 >::type>
         static T getUserObj(cocos2d::Node* pNode)
         {
-            SC_RETURN_IF(pNode==NULL || pNode->getUserObject()==NULL,NULL);
+            SC_RETURN_IF(pNode==nullptr || pNode->getUserObject()==nullptr,nullptr);
             auto pHolder = SCNodeUtils::getUserHolder(pNode,false);
             
-            SC_RETURN_IF(pHolder==NULL || pHolder->isEmpty(),NULL);
+            SC_RETURN_IF(pHolder==nullptr || pHolder->isEmpty(),nullptr);
             
             return pHolder->getObj<T>();
         }
@@ -69,9 +69,9 @@ namespace SpeedCC
         std::is_convertible<T,cocos2d::Ref*>::value==1 >::type>
         static bool hasUserObj(cocos2d::Node* pNode)
         {
-            SC_RETURN_IF(pNode==NULL || pNode->getUserObject()==NULL,false);
+            SC_RETURN_IF(pNode==nullptr || pNode->getUserObject()==nullptr,false);
             auto pHolder = SCNodeUtils::getUserHolder(pNode,false);
-            SC_RETURN_IF(pHolder==NULL || pHolder->isEmpty(),false);
+            SC_RETURN_IF(pHolder==nullptr || pHolder->isEmpty(),false);
             return pHolder->hasObj<T>();
         }
         

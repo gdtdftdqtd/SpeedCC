@@ -14,13 +14,13 @@ namespace SpeedCC
 {
     void SCStrategy::enter(SCActor* pActor)
     {
-        SCASSERT(pActor!=NULL);
+        SCASSERT(pActor!=nullptr);
         SC_RETURN_V_IF(!this->getActive());
         
         auto ptrSI = pActor->getRole()->getStrategyInfo(this->getID());
-        SCASSERT(ptrSI!=NULL);
+        SCASSERT(ptrSI!=nullptr);
         
-        if(ptrSI->ptrEnterBehavior!=NULL)
+        if(ptrSI->ptrEnterBehavior!=nullptr)
         {
             SCDictionary dic;
             dic.setValue(SC_KEY_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
@@ -32,13 +32,13 @@ namespace SpeedCC
     
     void SCStrategy::exit(SCActor* pActor)
     {
-        SCASSERT(pActor!=NULL);
+        SCASSERT(pActor!=nullptr);
         SC_RETURN_V_IF(!this->getActive());
         
         auto ptrSI = pActor->getRole()->getStrategyInfo(this->getID());
-        SCASSERT(ptrSI!=NULL);
+        SCASSERT(ptrSI!=nullptr);
         
-        if(ptrSI->ptrExitBehavior!=NULL)
+        if(ptrSI->ptrExitBehavior!=nullptr)
         {
             SCDictionary dic;
             dic.setValue(SC_KEY_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
@@ -50,18 +50,18 @@ namespace SpeedCC
     
     void SCStrategy::update(SCActor* pActor,SCMessage::Ptr ptrMsg)
     {
-        SCASSERT(pActor!=NULL);
-        SCASSERT(ptrMsg!=NULL);
+        SCASSERT(pActor!=nullptr);
+        SCASSERT(ptrMsg!=nullptr);
         
         SC_RETURN_V_IF(!this->getActive());
-        SC_RETURN_V_IF(ptrMsg==NULL);
-        SC_RETURN_V_IF(pActor==NULL);
-        SC_RETURN_V_IF(pActor->getRole()==NULL);
+        SC_RETURN_V_IF(ptrMsg==nullptr);
+        SC_RETURN_V_IF(pActor==nullptr);
+        SC_RETURN_V_IF(pActor->getRole()==nullptr);
         
         auto ptrSI = pActor->getRole()->getStrategyInfo(this->getID());
-        SCASSERT(ptrSI!=NULL);
+        SCASSERT(ptrSI!=nullptr);
         
-        SCStrategyInfo::SBehaviorInfo* pBehaviorInfo = NULL;
+        SCStrategyInfo::SBehaviorInfo* pBehaviorInfo = nullptr;
         
         if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
         {
@@ -87,13 +87,13 @@ namespace SpeedCC
             }
         }
         
-        if(pBehaviorInfo!=NULL)
+        if(pBehaviorInfo!=nullptr)
         {
-            if(pBehaviorInfo->ptrMatcher!=NULL)
+            if(pBehaviorInfo->ptrMatcher!=nullptr)
             {
                 SC_RETURN_V_IF(!pBehaviorInfo->ptrMatcher->isMatch(ptrMsg));
             }
-            SCASSERT(pBehaviorInfo->ptrBehaviorGroup!=NULL);
+            SCASSERT(pBehaviorInfo->ptrBehaviorGroup!=nullptr);
             SCDictionary dic;
             dic.setValue(SC_KEY_ACTOR, SCValue::create(pActor->makeObjPtr<SCActor::Ptr>()));
             dic.setValue(SC_KEY_STRATEGY, SCValue::create(this->makeObjPtr<SCStrategy::Ptr>()));
@@ -107,7 +107,7 @@ namespace SpeedCC
     
     void SCStrategyFunc::update(SCActor* pActor,SCMessage::Ptr ptrMsg)
     {
-        if(_func!=NULL)
+        if(_func!=nullptr)
         {
             _func(pActor,ptrMsg);
         }

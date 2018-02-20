@@ -45,8 +45,8 @@ namespace SpeedCC
     
     void SCNodeStyle::setStyle(Node* pNode,const SCDictionary& dic)
     {
-        SCASSERT(pNode!=NULL);
-        SC_RETURN_V_IF(pNode==NULL);
+        SCASSERT(pNode!=nullptr);
+        SC_RETURN_V_IF(pNode==nullptr);
         
         int nValue;
         float fValue;
@@ -165,8 +165,8 @@ namespace SpeedCC
     
     void SCNodeStyle::setStyle(Layer* pNode,const SCDictionary& dic)
     {
-        SCASSERT(pNode!=NULL);
-        SC_RETURN_V_IF(pNode==NULL);
+        SCASSERT(pNode!=nullptr);
+        SC_RETURN_V_IF(pNode==nullptr);
         
         SCNodeStyle::setStyle(dynamic_cast<Node*>(pNode),dic);
     }
@@ -316,8 +316,8 @@ namespace SpeedCC
     bool SCNodeStyle::scanStyle(const SCString& strStyle,
                       const std::function<bool(const SCString&,EValueType type,const SCString&)>& func)
     {
-        SCASSERT(func!=NULL);
-        SC_RETURN_IF(strStyle.isEmpty() || func==NULL,true);
+        SCASSERT(func!=nullptr);
+        SC_RETURN_IF(strStyle.isEmpty() || func==nullptr,true);
         
         bool bRet = true;
         auto pCurrent = (char*)strStyle.c_str();
@@ -434,8 +434,8 @@ namespace SpeedCC
         {
             const char cQuote = '\'';
             int nQuoteStack = 0;
-            char* pBeginQuote = NULL;
-            char* pEndQuote = NULL;
+            char* pBeginQuote = nullptr;
+            char* pEndQuote = nullptr;
             
             do
             {
@@ -462,7 +462,7 @@ namespace SpeedCC
             
             char szBuf[64+1] = {0};
             
-            if(pBeginQuote!=NULL && pEndQuote-pBeginQuote<sizeof(szBuf))
+            if(pBeginQuote!=nullptr && pEndQuote-pBeginQuote<sizeof(szBuf))
             {
                 memcpy(szBuf,pBeginQuote+1,pEndQuote-pBeginQuote-1);
                 strValue = szBuf;
@@ -797,7 +797,7 @@ namespace SpeedCC
         {// #??????
             strValue.format("0x%s",strValue.c_str()+1);
             
-            char* p = NULL;
+            char* p = nullptr;
             uint32_t uv=0;
             uv=(uint32_t)std::strtoul(strValue.c_str(), &p, 16);
             
@@ -809,7 +809,7 @@ namespace SpeedCC
         }
         else if(strValue.getLength()>2 && strValue.getLength()<=10 && strValue[0]=='0' && strValue[1]=='x')
         {// 0x????????
-            char* p = NULL;
+            char* p = nullptr;
             uint32_t uv=0;
             uv=(uint32_t)std::strtoul(strValue.c_str(), &p, 16);
             

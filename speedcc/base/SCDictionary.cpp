@@ -76,7 +76,7 @@ namespace SpeedCC
     
     void SCDictionary::setValue(const SPair* pPairArray,const int nCount)
     {
-        SC_RETURN_V_IF(pPairArray==NULL || nCount<=0);
+        SC_RETURN_V_IF(pPairArray==nullptr || nCount<=0);
         this->clone4Write();
         auto& map = (*this->getStub());
         

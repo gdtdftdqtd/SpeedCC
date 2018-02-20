@@ -36,7 +36,7 @@ namespace SpeedCC
     void SCSystem::setGlobalDisableTouch(const bool bDisable)
     {
         auto pScene = SCCCDirector()->getRunningScene();
-        const bool bHas = (pScene->getChildByTag(SCLayerDisableTouch::kTAG)!=NULL);
+        const bool bHas = (pScene->getChildByTag(SCLayerDisableTouch::kTAG)!=nullptr);
         
         if(bDisable && !bHas)
         {
@@ -52,7 +52,7 @@ namespace SpeedCC
     bool SCSystem::getGlobalDisableTouch()
     {
         auto pScene = SCCCDirector()->getRunningScene();
-        return (pScene->getChildByTag(SCLayerDisableTouch::kTAG)!=NULL);
+        return (pScene->getChildByTag(SCLayerDisableTouch::kTAG)!=nullptr);
     }
     
     SCString SCSystem::getProductName()
@@ -315,7 +315,7 @@ namespace SpeedCC
     {
         SCLog("SpeedCC v%d.%d.%d",(int)SPEEDCC_VERSION_MAJOR,(int)SPEEDCC_VERSION_MINOR,(int)SPEEDCC_VERSION_FIX);
         s_nSupportAssetType = nSupportAssetType;
-        ::scInitSpeedCC(NULL);
+        ::scInitSpeedCC(nullptr);
         SCSystem::adapterScreenResolution();
         SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppLaunch);
     }
@@ -424,9 +424,9 @@ namespace SpeedCC
                                 const SCString& strButton3,
                                 const std::function<void(int)>& resultFunc)
     {
-        int nAlertBoxID = (int)::time(NULL);
+        int nAlertBoxID = (int)::time(nullptr);
         
-        if(resultFunc!=NULL)
+        if(resultFunc!=nullptr)
         {
             SCMsgDisp()->getDefaultProc()->addAlertBoxCallback(resultFunc,nAlertBoxID);
         }
@@ -449,7 +449,7 @@ namespace SpeedCC
                                const SCString& strButton3,
                                const std::function<void(int)>& resultFunc)
     {
-        int nAlertBoxID = (int)::time(NULL);
+        int nAlertBoxID = (int)::time(nullptr);
         
         SCDictionary::SPair pairArray[] =
         {
@@ -463,7 +463,7 @@ namespace SpeedCC
         
         SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
         
-        if(resultFunc!=NULL)
+        if(resultFunc!=nullptr)
         {
             SCSceneController::FinishFunc_t call = [resultFunc](void* pUserData)
             {
@@ -481,7 +481,7 @@ namespace SpeedCC
     
     void SCSystem::log(const char* pszFormat,...)
     {
-        SC_RETURN_V_IF(pszFormat==NULL);
+        SC_RETURN_V_IF(pszFormat==nullptr);
         SC_RETURN_V_IF(*pszFormat==0);
         
         char szMessage[1024+1] = {0};
@@ -492,7 +492,7 @@ namespace SpeedCC
         va_end(argList);
         
         struct timeval  tv;
-        ::gettimeofday(&tv, NULL);
+        ::gettimeofday(&tv, nullptr);
         
         time_t now;
         time(&now);
@@ -501,14 +501,14 @@ namespace SpeedCC
         char szBuf[64] = {0};
         sprintf(szBuf, "[%02d:%02d:%02d.%03d] ",(int)p->tm_hour,(int)p->tm_min,(int)p->tm_sec,(int)tv.tv_usec/1000);
         
-        static std::mutex* pLock = NULL;
+        static std::mutex* pLock = nullptr;
         
-        if(pLock==NULL)
+        if(pLock==nullptr)
         {
             pLock = new std::mutex();
         }
         
-        SCASSERT(pLock!=NULL);
+        SCASSERT(pLock!=nullptr);
         SCAutoLock(*pLock);
         
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)

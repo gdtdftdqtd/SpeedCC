@@ -203,13 +203,13 @@ namespace SpeedCC
         auto pDesc = this->getStringDesc();
         //SCLog("SCString deallocate: %d %p",pDesc->nMallocBufSize,pDesc);
         SCMemAllocator::deallocate(pDesc, pDesc->nMallocBufSize);
-        _pchStrData = NULL;
+        _pchStrData = nullptr;
         
     }
     
     int SCString::decreaseRef()
     {
-        SCASSERT(NULL!=_pchStrData);
+        SCASSERT(nullptr!=_pchStrData);
         
         if(this->getStringDesc()!=this->getEmptyBuffer())
         {// if not empty string
@@ -230,7 +230,7 @@ namespace SpeedCC
     
     int SCString::increaseRef() const
     {
-        SCASSERT(NULL!=_pchStrData);
+        SCASSERT(nullptr!=_pchStrData);
         
         if(this->getStringDesc()!=this->getEmptyBuffer())
         {// if not empty string
@@ -244,7 +244,7 @@ namespace SpeedCC
     {
         bool bNew = true;
         
-        if(_pchStrData!=NULL && this->getStringDesc()!=this->getEmptyBuffer())
+        if(_pchStrData!=nullptr && this->getStringDesc()!=this->getEmptyBuffer())
         {
             SStringDesc* pDesc = this->getStringDesc();
             if(1==pDesc->nRefs && (pDesc->getStrBufSize() > nStringSize+(int)sizeof(char)))
@@ -282,20 +282,20 @@ namespace SpeedCC
     //-------- SCString operation function
     
     SCString::SCString():
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
         this->setEmpty();
     }
     
     SCString::SCString(const SCString& strString):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
         strString.increaseRef();
         _pchStrData = (char*)strString.getStringDesc()->getStringPtr();
     }
     
     SCString::SCString(const char ch):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
         this->allocBuf(sizeof(char));
         this->getStringDesc()->nUsedSize = sizeof(char);
@@ -383,7 +383,7 @@ namespace SpeedCC
     }
     
     SCString::SCString(const std::string& str):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
         if(str.empty())
         {
@@ -400,7 +400,7 @@ namespace SpeedCC
     }
     
     SCString::SCString(const int nNumber):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
         char szBuf[32+1] = {0};
         sprintf(szBuf, "%d",nNumber);
@@ -414,7 +414,7 @@ namespace SpeedCC
     }
     
     SCString::SCString(const unsigned int uNumber):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
         char szBuf[32+1] = {0};
         sprintf(szBuf, "%u",uNumber);
@@ -428,9 +428,9 @@ namespace SpeedCC
     }
     
     SCString::SCString(const unsigned short* pszStr):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
-        SCASSERT(pszStr!=NULL);
+        SCASSERT(pszStr!=nullptr);
         
         const unsigned short* p = pszStr;
         int nLen = 0;
@@ -455,9 +455,9 @@ namespace SpeedCC
     }
     
     SCString::SCString(const char* pszStr):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
-        const auto nLen = pszStr==NULL ? 0 : strlen(pszStr);
+        const auto nLen = pszStr==nullptr ? 0 : strlen(pszStr);
         
         if(nLen>0)
         {
@@ -489,7 +489,7 @@ namespace SpeedCC
     }
     
     SCString::SCString(int,const char* pszFormat, ...):
-    _pchStrData(NULL)
+    _pchStrData(nullptr)
     {
         this->setEmpty();
         
@@ -506,7 +506,7 @@ namespace SpeedCC
     
     void SCString::setEmpty()
     {
-        if(_pchStrData!=NULL && this->getRefCount()>0)
+        if(_pchStrData!=nullptr && this->getRefCount()>0)
         {
             this->decreaseRef();
         }
@@ -524,9 +524,9 @@ namespace SpeedCC
     
     void SCString::formatV(const char* pszFormat, va_list argList)
     {
-        SCASSERT(pszFormat!=NULL);
+        SCASSERT(pszFormat!=nullptr);
         
-        SC_RETURN_V_IF(pszFormat==NULL);
+        SC_RETURN_V_IF(pszFormat==nullptr);
         
         //va_list argListSave = argList;
         va_list argListSave;
@@ -634,9 +634,9 @@ namespace SpeedCC
                 case 'S':
                 {
                     const char* pstrNextArg = va_arg(argList, const char*);
-                    if (pstrNextArg==NULL)
+                    if (pstrNextArg==nullptr)
                     {
-                        nItemLen = 6; // "(null)"
+                        nItemLen = 6; // "(nullptr)"
                     }
                     else
                     {
@@ -846,7 +846,7 @@ namespace SpeedCC
     
     char* SCString::getEncodingPointer(const int nEncodingCharIndex) const
     {
-        char* pRet = NULL;
+        char* pRet = nullptr;
         
         switch(this->getEncoding())
         {
@@ -957,7 +957,7 @@ namespace SpeedCC
     {
         char* p = this->getEncodingPointer(nEncodingCharIndex);
         
-        return (int)(p==NULL? -1 : p - _pchStrData);
+        return (int)(p==nullptr? -1 : p - _pchStrData);
     }
     
     void SCString::setAt(const int nIndex, const char ch)
@@ -1014,14 +1014,14 @@ namespace SpeedCC
     
     int SCString::find(const char* pszSub, int nStart) const
     {
-        SCASSERT(pszSub!=NULL);
+        SCASSERT(pszSub!=nullptr);
         
         int nLength = this->getLength();
         SC_RETURN_IF(nStart > nLength, -1);
         
         const char* lpsz = ::strstr(_pchStrData + nStart, pszSub);
         
-        return (lpsz == NULL) ? -1 : (int)(lpsz - (char*)_pchStrData);
+        return (lpsz == nullptr) ? -1 : (int)(lpsz - (char*)_pchStrData);
     }
     
     int SCString::find(const std::string& str, int nStart) const
@@ -1036,14 +1036,14 @@ namespace SpeedCC
         
         const char* lpsz = ::strchr(_pchStrData + nStart, ch);
         
-        return (lpsz == NULL) ? -1 : (int)(lpsz - (char*)_pchStrData);
+        return (lpsz == nullptr) ? -1 : (int)(lpsz - (char*)_pchStrData);
     }
     
     int SCString::reverseFind(char ch) const
     {
         const char* lpsz = ::strrchr(_pchStrData , (unsigned char)ch);
         
-        return (lpsz == NULL) ? -1 : (int)(lpsz - (char*)_pchStrData);
+        return (lpsz == nullptr) ? -1 : (int)(lpsz - (char*)_pchStrData);
     }
     
     int SCString::reverseFind(char ch, int nStart) const
@@ -1068,11 +1068,11 @@ namespace SpeedCC
     
     //int SCString::findOneOf(const char* lpszCharSet) const
     //{
-    //    SCASSERT(lpszCharSet!=NULL);
+    //    SCASSERT(lpszCharSet!=nullptr);
     //
     //    const char* lpsz = ::strtok(_pchStrData , lpszCharSet);
     //
-    //    return (lpsz == NULL) ? -1 : (int)(lpsz - (char*)_pchStrData);
+    //    return (lpsz == nullptr) ? -1 : (int)(lpsz - (char*)_pchStrData);
     //}
     //
     //int SCString::findOneOf(const std::string& str) const
@@ -1111,8 +1111,8 @@ namespace SpeedCC
     
     int SCString::replace(const char* lpszOld, const char* lpszNew)
     {
-        SCASSERT(lpszOld!=NULL);
-        SCASSERT(lpszNew!=NULL);
+        SCASSERT(lpszOld!=nullptr);
+        SCASSERT(lpszNew!=nullptr);
         
         SC_RETURN_IF((*lpszOld==0 || *lpszNew==0), 0);
         
@@ -1205,7 +1205,7 @@ namespace SpeedCC
     
     int SCString::remove(const char* pszStr)
     {
-        SCASSERT(pszStr!=NULL);
+        SCASSERT(pszStr!=nullptr);
         
         int nRet = 0;
         int nFindStrLength = (int)strlen(pszStr);
@@ -1270,7 +1270,7 @@ namespace SpeedCC
     
     int SCString::insert(int nIndex, const char* pstr)
     {
-        SCASSERT(pstr!=NULL);
+        SCASSERT(pstr!=nullptr);
         
         if (nIndex < 0)
         {
@@ -1361,7 +1361,7 @@ namespace SpeedCC
             It++;
         }
         
-        return (unsigned)strtoul(_pchStrData, NULL, 0);
+        return (unsigned)strtoul(_pchStrData, nullptr, 0);
     }
     
     float SCString::asFloat(bool bThrow,float fDefault) const throw(float)
@@ -1434,7 +1434,7 @@ namespace SpeedCC
     
     int SCString::trimLeft(const char* szStr)
     {
-        if(szStr!=NULL)
+        if(szStr!=nullptr)
         {
             const int nLength = (const int)::strlen(szStr);
             const int nStrLen = this->getLength();
@@ -1497,7 +1497,7 @@ namespace SpeedCC
     
     int SCString::trimRight(const char* szStr)
     {
-        if(szStr!=NULL)
+        if(szStr!=nullptr)
         {
             const int nLength = (const int)::strlen(szStr);
             const int nStrLen = this->getLength();
@@ -1559,7 +1559,7 @@ namespace SpeedCC
     
     const SCString& SCString::operator=(const char* psz)
     {
-        const int nLen = psz==NULL ? 0 : (int)strlen(psz);
+        const int nLen = psz==nullptr ? 0 : (int)strlen(psz);
         
         if(nLen>0)
         {
@@ -1677,7 +1677,7 @@ namespace SpeedCC
     
     const SCString& SCString::operator+=(const char* psz)
     {
-        if(psz!=NULL)
+        if(psz!=nullptr)
         {
             SCString str(psz);
             *this += str;
@@ -1788,7 +1788,7 @@ namespace SpeedCC
     
     bool SCString::operator==(const char* psz) const
     {
-        SCASSERT(psz!=NULL);
+        SCASSERT(psz!=nullptr);
         return strcmp((char*)psz,(char*)_pchStrData) ? false : true;
     }
     
@@ -1804,7 +1804,7 @@ namespace SpeedCC
     
     bool SCString::operator!=(const char* psz) const
     {
-        SCASSERT(psz!=NULL);
+        SCASSERT(psz!=nullptr);
         return !((*this)==psz);
     }
     
@@ -1840,7 +1840,7 @@ namespace SpeedCC
     
     int SCString::compareNoCase(const char* psz) const
     {
-        SCASSERT(psz!=NULL);
+        SCASSERT(psz!=nullptr);
         
         SCString str1(*this);
         SCString str2(psz);

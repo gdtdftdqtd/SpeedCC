@@ -69,11 +69,11 @@ namespace SpeedCC
         bool addBehavior2Strategy(const int nStrategyID,
                                   const int nMsgID,
                                   SCBehavior::Ptr bvrPtr,
-                                  SCMessageMatcher::Ptr ptrMatcher=NULL);
+                                  SCMessageMatcher::Ptr ptrMatcher=nullptr);
         bool addBehavior2Strategy(const int nStrategyID,
                                   const SCString& strCommand,
                                   SCBehavior::Ptr bvrPtr,
-                                  SCMessageMatcher::Ptr ptrMatcher=NULL);
+                                  SCMessageMatcher::Ptr ptrMatcher=nullptr);
         bool addBehavior2Strategy(const int nStrategyID,
                                   SCMessageMatcher::Ptr ptrMatcher,
                                   SCBehavior::Ptr bvrPtr);

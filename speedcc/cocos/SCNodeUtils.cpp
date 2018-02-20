@@ -22,7 +22,7 @@ namespace SpeedCC
     
     bool SCNodeUtils::setPositionPer(cocos2d::Node* pNode,const cocos2d::Vec2& ptPer)
     {
-        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,false);
+        SC_RETURN_IF(pNode==nullptr || pNode->getParent()==nullptr,false);
         
         const auto frameSize = pNode->getParent()->getContentSize();
         const auto pos = SCNodeUtils::posP2A(ptPer,frameSize);
@@ -45,7 +45,7 @@ namespace SpeedCC
     
     void SCNodeUtils::setPositionBy(cocos2d::Node* pNode,float fXBy,float fYBy)
     {
-        SC_RETURN_V_IF(pNode==NULL);
+        SC_RETURN_V_IF(pNode==nullptr);
         
         auto pos = pNode->getPosition();
         pos.x += fXBy;
@@ -55,7 +55,7 @@ namespace SpeedCC
     
     cocos2d::Vec2 SCNodeUtils::getDockPosition(cocos2d::Node* pNode,const int nDockFlag)
     {
-        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,cocos2d::Vec2::ZERO);
+        SC_RETURN_IF(pNode==nullptr || pNode->getParent()==nullptr,cocos2d::Vec2::ZERO);
         
         auto ptPos = pNode->getPosition();
         
@@ -96,7 +96,7 @@ namespace SpeedCC
     
     bool SCNodeUtils::setDock(cocos2d::Node* pNode,const int nDockFlag)
     {
-        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,false);
+        SC_RETURN_IF(pNode==nullptr || pNode->getParent()==nullptr,false);
         auto ptPos = SCNodeUtils::getDockPosition(pNode,nDockFlag);
         pNode->setPosition(ptPos);
         
@@ -105,7 +105,7 @@ namespace SpeedCC
     
     float SCNodeUtils::getDockPosition(cocos2d::Node* pNode,int nPark,const bool bIsX)
     {
-        SC_RETURN_IF(pNode==NULL || pNode->getParent()==NULL,-999);
+        SC_RETURN_IF(pNode==nullptr || pNode->getParent()==nullptr,-999);
         float fRet = 0;
         
         const auto& frameSize = pNode->getParent()->getContentSize();
@@ -156,11 +156,11 @@ namespace SpeedCC
     
     void SCNodeUtils::addClickable(cocos2d::Node* pNode,SCBehavior::Ptr ptrBvr)
     {
-        SCASSERT(pNode!=NULL);
+        SCASSERT(pNode!=nullptr);
         
         auto ptrClick = SCNodeUtils::getUserObj<SCNodeClickable::Ptr>(pNode);
         
-        if(ptrClick==NULL)
+        if(ptrClick==nullptr)
         {
             ptrClick = SCNodeClickable::create(pNode,ptrBvr);
             SCNodeUtils::addUserObj(pNode, ptrClick);
@@ -173,19 +173,19 @@ namespace SpeedCC
     
     void SCNodeUtils::removeClickable(cocos2d::Node* pNode)
     {
-        SCASSERT(pNode!=NULL);
+        SCASSERT(pNode!=nullptr);
         SCNodeUtils::removeUserObj<SCNodeClickable::Ptr>(pNode);
     }
     
     SCRefHolder* SCNodeUtils::getUserHolder(cocos2d::Node* pNode,const bool bCreate)
     {
-        SC_RETURN_IF(pNode==NULL,NULL);
+        SC_RETURN_IF(pNode==nullptr,nullptr);
         auto pUserObj = pNode->getUserObject();
-        SC_RETURN_IF(pUserObj==NULL && !bCreate,NULL);
+        SC_RETURN_IF(pUserObj==nullptr && !bCreate,nullptr);
         
-        SCRefHolder* pHolder = NULL;
+        SCRefHolder* pHolder = nullptr;
         
-        if(pUserObj==NULL)
+        if(pUserObj==nullptr)
         {
             pHolder = SCRefHolder::create();
         }
@@ -193,7 +193,7 @@ namespace SpeedCC
         {
             pHolder = dynamic_cast<SCRefHolder*>(pUserObj);
             
-            if(pHolder==NULL)
+            if(pHolder==nullptr)
             {
                 pHolder = SCRefHolder::create();
                 pHolder->addObj(pUserObj);
@@ -206,7 +206,7 @@ namespace SpeedCC
     
     void SCNodeUtils::addUserObj(cocos2d::Node* pNode,cocos2d::Ref* pRef)
     {
-        SC_RETURN_V_IF(pNode==NULL || pRef==NULL);
+        SC_RETURN_V_IF(pNode==nullptr || pRef==nullptr);
         
         auto pHolder = SCNodeUtils::getUserHolder(pNode,true);
         pHolder->addObj(pRef);
@@ -214,7 +214,7 @@ namespace SpeedCC
     
     void SCNodeUtils::addUserObj(cocos2d::Node* pNode,SCObject::Ptr ptrObj)
     {
-        SC_RETURN_V_IF(pNode==NULL || ptrObj==NULL);
+        SC_RETURN_V_IF(pNode==nullptr || ptrObj==nullptr);
         
         auto pHolder = SCNodeUtils::getUserHolder(pNode,true);
         pHolder->addObj(ptrObj);
@@ -224,7 +224,7 @@ namespace SpeedCC
     {
         // find in sprite frame cache
         auto pSpriteFrame = SCCCSpriteFrameCache()->getSpriteFrameByName(strName.c_str());
-        SC_RETURN_IF(pSpriteFrame!=NULL, cocos2d::Sprite::createWithSpriteFrame(pSpriteFrame));
+        SC_RETURN_IF(pSpriteFrame!=nullptr, cocos2d::Sprite::createWithSpriteFrame(pSpriteFrame));
         
         // find in file
         auto strFile = SCCCFileUtils()->fullPathForFilename(strName.c_str());
@@ -232,6 +232,6 @@ namespace SpeedCC
         
         CCLOG("Can't Found Match Name: %s",strName.c_str());
         SCASSERT(false);
-        return NULL;
+        return nullptr;
     }
 }

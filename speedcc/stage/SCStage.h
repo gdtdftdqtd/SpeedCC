@@ -45,7 +45,7 @@ namespace SpeedCC
         void insertExitBehavior(SCBehavior::Ptr ptrBvr);
         */
 //        virtual void setUp(){}
-        virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return NULL;}
+        virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return nullptr;}
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
         template<typename T1,typename T2,typename ...Ts>

@@ -240,7 +240,8 @@ TEST(TestSCString, Split)
     EXPECT_STREQ(resutl1[2], "ghi");
     
     auto resutl2 = strTest1.split("|");
-    EXPECT_EQ(resutl2.size(), 0);
+    EXPECT_EQ(resutl2.size(), 1);
+    EXPECT_STREQ(resutl2[0], "abc,def,ghi");
 
     auto resutl3 = strTest2.split(",");
     ASSERT_EQ(resutl3.size(), 5);

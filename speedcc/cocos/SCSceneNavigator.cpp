@@ -6,11 +6,11 @@ using namespace cocos2d;
 
 namespace SpeedCC
 {
-    SCSceneNavigator*           SCSceneNavigator::s_pInstance = NULL;
+    SCSceneNavigator*           SCSceneNavigator::s_pInstance = nullptr;
     
     SCSceneNavigator* SCSceneNavigator::getInstance()
     {
-        if(s_pInstance==NULL)
+        if(s_pInstance==nullptr)
         {
             s_pInstance = new SCSceneNavigator();
         }
@@ -37,7 +37,7 @@ namespace SpeedCC
         {
             case kSceneModal: // modal
             {
-                SC_RETURN_IF(s_ptrCurrentSceneController==NULL, false);
+                SC_RETURN_IF(s_ptrCurrentSceneController==nullptr, false);
                 
                 auto call = [this,info,navigateInfo]()
                 {
@@ -165,7 +165,7 @@ namespace SpeedCC
         auto nSize = s_sceneStack.size();
         SC_RETURN_V_IF(nSize<=nNumber);
         
-        FUN_SCSceneTransitionCreateFunctor_t oppositeTrans = NULL;
+        FUN_SCSceneTransitionCreateFunctor_t oppositeTrans = nullptr;
         auto switchType = kSceneReplace;
         
         SStackSceneInfo navigateInfo1;
@@ -196,15 +196,15 @@ namespace SpeedCC
                 SCCCDirector()->popScene();
                 SCScene* pScene = (SCScene*)SCCCDirector()->getRunningScene();
                 auto rootLayer = pScene->getBedNode();
-                SCASSERT(rootLayer!=NULL);
+                SCASSERT(rootLayer!=nullptr);
                 s_ptrCurrentSceneController = rootLayer->getController().cast<SCSceneController::Ptr>();
-                SCASSERT(s_ptrCurrentSceneController!=NULL);
+                SCASSERT(s_ptrCurrentSceneController!=nullptr);
             }
                 break;
                 
             case kSceneReplace: // replace
             {
-                SCASSERT(navigateInfo2.sceneCreatorInfo.pfunSceneCreator!=NULL);
+                SCASSERT(navigateInfo2.sceneCreatorInfo.pfunSceneCreator!=nullptr);
                 
                 // remove all of kSceneModal layer from navigator stack
                 size_t nStackSize = s_sceneStack.size();

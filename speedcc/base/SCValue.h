@@ -32,14 +32,14 @@ namespace SpeedCC
         int (*pfunDestroyFunctor_t)(void*);
         
         SCValueStub():
-        pfunDestroyFunctor_t(NULL)
+        pfunDestroyFunctor_t(nullptr)
         {
             ::memset(&data,0,sizeof(data));
         }
         
         ~SCValueStub()
         {
-            if(pfunDestroyFunctor_t!=NULL && data.pObject!=NULL)
+            if(pfunDestroyFunctor_t!=nullptr && data.pObject!=nullptr)
             {
                 int nSize = pfunDestroyFunctor_t(data.pObject);
                 SCMemAllocator::deallocate(data.pObject, nSize);
@@ -103,20 +103,20 @@ namespace SpeedCC
         inline EType getType() const {return (EType)*this->getCookie();}
         inline bool isUnknown() const {return (getType()==UNKNOWN_TYPE);}
         
-        char getChar(bool* pResult=NULL,const bool bExactMatch=false) const;
-        unsigned char getByte(bool* pResult=NULL,const bool bExactMatch=false) const;
-        unsigned int getUnsignedInt(bool* pResult=NULL,const bool bExactMatch=false) const;
-        int getInt(bool* pResult=NULL,const bool bExactMatch=false) const;
-        long getLong(bool* pResult=NULL,const bool bExactMatch=false) const;
-        bool getBool(bool* pResult=NULL,const bool bExactMatch=false) const;
-        float getFloat(bool* pResult=NULL,const bool bExactMatch=false) const;
-        double getDouble(bool* pResult=NULL,const bool bExactMatch=false) const;
-        void* getPointer(bool* pResult=NULL,const bool bExactMatch=false) const;
-        INT64 getInt64(bool* pResult=NULL,const bool bExactMatch=false) const;
-        SCString getString(bool* pResult=NULL,const bool bExactMatch=false) const;
-        SCDataBlock getDataBlock(bool* pResult=NULL,const bool bExactMatch=false) const;
-        SCDateTime getDateTime(bool* pResult=NULL,const bool bExactMatch=false) const;
-        std::vector<SCValue> getArray(bool* pResult=NULL,const bool bExactMatch=false) const;
+        char getChar(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        unsigned char getByte(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        unsigned int getUnsignedInt(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        int getInt(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        long getLong(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        bool getBool(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        float getFloat(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        double getDouble(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        void* getPointer(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        INT64 getInt64(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        SCString getString(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        SCDataBlock getDataBlock(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        SCDateTime getDateTime(bool* pResult=nullptr,const bool bExactMatch=false) const;
+        std::vector<SCValue> getArray(bool* pResult=nullptr,const bool bExactMatch=false) const;
         
         void setChar(const char cValue);
         void setByte(const unsigned char byValue);
@@ -162,9 +162,9 @@ namespace SpeedCC
         }
         
         template<typename ObjectT>
-        ObjectT getObject(bool* pResult=NULL) const
+        ObjectT getObject(bool* pResult=nullptr) const
         {
-            if(pResult!=NULL)
+            if(pResult!=nullptr)
             {
                 *pResult = false;
             }
@@ -176,12 +176,12 @@ namespace SpeedCC
             
             const SCValueStub& stub = *(this->getStub());
             
-            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycleT<ObjectT>::destroy)
+            if(stub.data.pObject==nullptr || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycleT<ObjectT>::destroy)
             {
                 return ObjectT();
             }
             
-            if(pResult!=NULL)
+            if(pResult!=nullptr)
             {
                 *pResult = true;
             }
@@ -189,26 +189,26 @@ namespace SpeedCC
         }
         
         template<typename ObjectT>
-        ObjectT* getRefObject(bool* pResult=NULL)
+        ObjectT* getRefObject(bool* pResult=nullptr)
         {
-            if(pResult!=NULL)
+            if(pResult!=nullptr)
             {
                 *pResult = false;
             }
             
             if(this->getCookieDesc()->cookie!=OBJECT_TYPE)
             {
-                return NULL;
+                return nullptr;
             }
             
             const SCValueStub& stub = *(this->getStub());
             
-            if(stub.data.pObject==NULL || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycleT<ObjectT>::destroy)
+            if(stub.data.pObject==nullptr || stub.pfunDestroyFunctor_t!=SCDataTypeLifeCycleT<ObjectT>::destroy)
             {
-                return NULL;
+                return nullptr;
             }
             
-            if(pResult!=NULL)
+            if(pResult!=nullptr)
             {
                 *pResult = true;
             }

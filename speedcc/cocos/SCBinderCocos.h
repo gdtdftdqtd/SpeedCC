@@ -41,14 +41,14 @@ namespace SpeedCC
             
             const int nID = num->addUpdateFunc([this](T ptrNum,typename T::type newNum,typename T::type oldNum)
                                                {
-                                                   if(_pLabel!=NULL && this->getActive())
+                                                   if(_pLabel!=nullptr && this->getActive())
                                                    {
                                                        _pLabel->setString(ptrNum->getString().c_str());
                                                    }
                                                    _strLast = ptrNum->getString();
                                                });
             
-            if(_pLabel!=NULL && this->getActive())
+            if(_pLabel!=nullptr && this->getActive())
             {
                 _pLabel->setString(num->getString().c_str());
             }
@@ -59,7 +59,7 @@ namespace SpeedCC
             
             _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
             {
-                SC_RETURN_V_IF(ptr==NULL || nID<=0);
+                SC_RETURN_V_IF(ptr==nullptr || nID<=0);
                 
                 auto p = ptr.cast<T>();
                 p->removeUpdateFunc(nID);
@@ -74,7 +74,7 @@ namespace SpeedCC
         
     protected:
         SCBinderUILabel():
-        _pLabel(NULL)
+        _pLabel(nullptr)
         {}
         
         SCBinderUILabel(cocos2d::Label* pLabel):
@@ -146,13 +146,13 @@ namespace SpeedCC
             this->removeUpdateFunc();
             const int nID = num->addUpdateFunc([this](T ptrNum,typename T::type newNum,typename T::type oldNum)
                                                {
-                                                   if(_pProgressTimer!=NULL && this->getActive())
+                                                   if(_pProgressTimer!=nullptr && this->getActive())
                                                    {
                                                        _pProgressTimer->setPercentage((*ptrNum));
                                                    }
                                                });
             
-            if(_pProgressTimer!=NULL && this->getActive())
+            if(_pProgressTimer!=nullptr && this->getActive())
             {
                 _pProgressTimer->setPercentage((*num));
             }
@@ -165,7 +165,7 @@ namespace SpeedCC
             
             _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
             {
-                SC_RETURN_V_IF(ptr==NULL || nID<=0);
+                SC_RETURN_V_IF(ptr==nullptr || nID<=0);
                 
                 auto p = ptr.cast<T>();
                 p->removeUpdateFunc(nID);
@@ -180,7 +180,7 @@ namespace SpeedCC
         
     protected:
         SCBinderUIProgress():
-        _pProgressTimer(NULL)
+        _pProgressTimer(nullptr)
         {}
         
         virtual void onActiveChanged(const bool bNewActive) override;

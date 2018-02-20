@@ -37,7 +37,7 @@ namespace SpeedCC
         
         virtual ~SCSceneController();
         
-        inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==NULL);}
+        inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==nullptr);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
         inline cocos2d::Node* getBedNode()  {return _pBedNode;}
         inline SCScene* getScene()  {return _pScene;}
@@ -63,7 +63,7 @@ namespace SpeedCC
         
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
-        void finish(void* pResult=NULL);
+        void finish(void* pResult=nullptr);
         
     protected:
         SCSceneController();

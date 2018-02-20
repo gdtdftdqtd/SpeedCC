@@ -21,9 +21,11 @@ LOCAL_SRC_FILES := ../../../base/SCMemAllocator.cpp \
 					../../../base/SCValue.cpp \
 					../../../base/SCVersion.cpp \
 					../../../base/SCWatchString.cpp \
-					../../../cocos/SCBinder.cpp \
+					../../../base/SCBinder.cpp \
+					../../../cocos/SCBinderCocos.cpp \
 					../../../cocos/SCEventEmitter.cpp \
-					../../../cocos/SCNodeProperty.cpp \
+					../../../cocos/SCNodeClickable.cpp \
+					../../../cocos/SCNodeStyle.cpp \
 					../../../cocos/SCNodeUtils.cpp \
 					../../../cocos/SCRefHolder.cpp \
 					../../../cocos/SCScene.cpp \
@@ -44,7 +46,6 @@ LOCAL_SRC_FILES := ../../../base/SCMemAllocator.cpp \
 					../../../stage/SCStage.cpp \
 					../../../stage/SCStrategy.cpp \
 					../../../system/SCAudioManager.cpp \
-					../../../system/SCFileUtils.cpp \
 					../../../system/SCSetting.cpp \
 					../../../system/SCStore.cpp \
 					../../../system/SCSystem.cpp \

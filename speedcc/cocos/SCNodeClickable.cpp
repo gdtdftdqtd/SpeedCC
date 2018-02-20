@@ -15,10 +15,10 @@ namespace SpeedCC
 {
     SCNodeClickable::SCNodeClickable():
     _bActive(true),
-    _pNode(NULL),
+    _pNode(nullptr),
     _bTrack(false),
     _bSelected(false),
-    _pMenuItem(NULL)
+    _pMenuItem(nullptr)
     {
     }
     
@@ -26,7 +26,7 @@ namespace SpeedCC
     _bActive(true),
     _bTrack(false),
     _bSelected(false),
-    _pMenuItem(NULL)
+    _pMenuItem(nullptr)
     {
         this->setNode(pNode);
     }
@@ -35,7 +35,7 @@ namespace SpeedCC
     _bActive(true),
     _bTrack(false),
     _bSelected(false),
-    _pMenuItem(NULL),
+    _pMenuItem(nullptr),
     _ptrBvr(ptrBvr)
     {
         this->setNode(pNode);
@@ -48,7 +48,7 @@ namespace SpeedCC
     
     void SCNodeClickable::setActive(const bool bActive)
     {
-        if(_ptrEventEmitter!=NULL)
+        if(_ptrEventEmitter!=nullptr)
         {
             _ptrEventEmitter->setActive(bActive);
         }
@@ -63,11 +63,11 @@ namespace SpeedCC
     
     void SCNodeClickable::setNode(cocos2d::Node* pNode)
     {
-        _ptrEventEmitter = NULL;
-        _pMenuItem = NULL;
+        _ptrEventEmitter = nullptr;
+        _pMenuItem = nullptr;
         _pNode = pNode;
         
-        if(pNode!=NULL)
+        if(pNode!=nullptr)
         {
             _ptrEventEmitter = SCEventEmitter::create(pNode,this);
             _ptrEventEmitter->setTouchMode(SCEventEmitter::ETouchMode::kSingle);
@@ -87,13 +87,13 @@ namespace SpeedCC
                 auto pCamera = Camera::getVisitingCamera();
                 SC_RETURN_V_IF(!pCamera || !_pNode->isVisible());
                 
-                SC_RETURN_V_IF(_pMenuItem!=NULL && !_pMenuItem->isEnabled());
+                SC_RETURN_V_IF(_pMenuItem!=nullptr && !_pMenuItem->isEnabled());
                 
                 Node* pTemNode = _pNode;
                 do
                 {
                     pTemNode = pTemNode->getParent();
-                    SC_BREAK_IF(pTemNode==NULL);
+                    SC_BREAK_IF(pTemNode==nullptr);
                     SC_RETURN_V_IF(!pTemNode->isVisible());
                 }while(true);
                 
@@ -104,7 +104,7 @@ namespace SpeedCC
                 _bSelected = true;
                 ptrMsg->parameters.setValue(SC_KEY_RESULT,true);
                 _pSelectedCamera = pCamera;
-                if(_pMenuItem!=NULL)
+                if(_pMenuItem!=nullptr)
                 {
                     _pMenuItem->selected();
                 }
@@ -113,7 +113,7 @@ namespace SpeedCC
                 
             case SCID::Msg::kSCMsgTouchMoved:
             {
-                SC_RETURN_V_IF(_pMenuItem==NULL || !_bTrack);
+                SC_RETURN_V_IF(_pMenuItem==nullptr || !_bTrack);
                 auto pEvent = (cocos2d::Touch*)ptrMsg->parameters.getValue(SC_KEY_TOUCH).getPointer();
                 const bool bNewSelect = this->isNodeInTouch(pEvent,_pSelectedCamera);
                 
@@ -135,17 +135,17 @@ namespace SpeedCC
                 SC_RETURN_V_IF(!_bTrack);
                 SCDictionary dic = {SC_KEY_CCREF, SCRef2Ptr::create(_pNode)};
                 SCMsgDisp()->postMessage(SCID::Msg::kSCMsgNodeClicked, dic);
-                if(_ptrBvr!=NULL)
+                if(_ptrBvr!=nullptr)
                 {
                     _ptrBvr->execute(dic);
                 }
-                if(_pMenuItem!=NULL)
+                if(_pMenuItem!=nullptr)
                 {
                     _pMenuItem->unselected();
                     _pMenuItem->activate();
                 }
                 _bTrack = false;
-                _pSelectedCamera = NULL;
+                _pSelectedCamera = nullptr;
                 _bSelected = false;
             }
                 break;
@@ -156,7 +156,7 @@ namespace SpeedCC
                 _pNode->retain();
                 _bSelected = false;
                 _bTrack = false;
-                if(_pMenuItem!=NULL)
+                if(_pMenuItem!=nullptr)
                 {
                     _pMenuItem->unselected();
                 }

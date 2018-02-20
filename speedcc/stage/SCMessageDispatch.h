@@ -66,7 +66,7 @@ namespace SpeedCC
             
             SListenerInfo():
             byPriority(0),
-            pListener(NULL)
+            pListener(nullptr)
             {}
             
             inline bool operator<(const SListenerInfo& info) const { return byPriority<info.byPriority; }
@@ -80,7 +80,7 @@ namespace SpeedCC
             
             bool operator==(const SMutabelListenerInfo& info) const
             {
-                return (info.listener.pListener!=NULL && info.listener.pListener==listener.pListener);
+                return (info.listener.pListener!=nullptr && info.listener.pListener==listener.pListener);
             }
             
             SMutabelListenerInfo():

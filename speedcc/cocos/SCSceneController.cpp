@@ -10,10 +10,10 @@ namespace SpeedCC
 {
     ////-------------- member methods
     SCSceneController::SCSceneController():
-    _pBedNode(NULL),
-    _pScene(NULL),
-    _pDisableTouchLayer(NULL),
-    _pBlackMaskLayer(NULL),
+    _pBedNode(nullptr),
+    _pScene(nullptr),
+    _pDisableTouchLayer(nullptr),
+    _pBlackMaskLayer(nullptr),
     _bBlackMaskForModal(true)
     {
     }
@@ -28,7 +28,7 @@ namespace SpeedCC
         bool bResult = false;
         auto finishFunc = parameters.getValue(SC_KEY_FINISHFUNC).getObject<FinishFunc_t>(&bResult);
         
-        if(bResult && finishFunc!=NULL)
+        if(bResult && finishFunc!=nullptr)
         {
             _finishFunc = finishFunc;
         }
@@ -41,7 +41,7 @@ namespace SpeedCC
     
     void SCSceneController::ownLifecycle(cocos2d::Ref* pObject)
     {
-        SC_RETURN_V_IF(pObject==NULL);
+        SC_RETURN_V_IF(pObject==nullptr);
         
         auto ptr = SCRef2Ptr::create(pObject);
         this->ownLifecycle(ptr);
@@ -75,7 +75,7 @@ namespace SpeedCC
     
     SCSceneController::Ptr SCSceneController::popModalFromParent()
     {
-        SCASSERT(_ptrParentModalController!=NULL);
+        SCASSERT(_ptrParentModalController!=nullptr);
         auto ret = _ptrParentModalController->makeObjPtr<SCSceneController::Ptr>();
         
         _ptrParentModalController->setAllTouchEnabled(true);
@@ -84,7 +84,7 @@ namespace SpeedCC
             _ptrParentModalController->showBlackMask(false);
         }
         
-        _ptrParentModalController = NULL;
+        _ptrParentModalController = nullptr;
         _pBedNode->removeFromParent();
         
         // generate modal mssage
@@ -98,7 +98,7 @@ namespace SpeedCC
     
     void SCSceneController::setAllTouchEnabled(const bool bEnable)
     {
-        if(_pDisableTouchLayer==NULL && !bEnable)
+        if(_pDisableTouchLayer==nullptr && !bEnable)
         {// turn to no touch
             auto pLayer = SCLayerDisableTouch::create();
             _pBedNode->addChild(pLayer);
@@ -106,10 +106,10 @@ namespace SpeedCC
             
             _pDisableTouchLayer = pLayer;
         }
-        else if(_pDisableTouchLayer!=NULL && bEnable)
+        else if(_pDisableTouchLayer!=nullptr && bEnable)
         {// turn to touchable
             _pDisableTouchLayer->removeFromParentAndCleanup(true);
-            _pDisableTouchLayer = NULL;
+            _pDisableTouchLayer = nullptr;
         }
     }
     
@@ -118,7 +118,7 @@ namespace SpeedCC
     {
         if(bShow)
         {
-            if(_pBlackMaskLayer==NULL)
+            if(_pBlackMaskLayer==nullptr)
             {
                 _pBlackMaskLayer = cocos2d::LayerColor::create(cocos2d::Color4B(0, 0, 0, 200));
                 _pBedNode->addChild(_pBlackMaskLayer);
@@ -126,10 +126,10 @@ namespace SpeedCC
         }
         else
         {
-            if(_pBlackMaskLayer!=NULL)
+            if(_pBlackMaskLayer!=nullptr)
             {
                 _pBlackMaskLayer->removeFromParentAndCleanup(true);
-                _pBlackMaskLayer = NULL;
+                _pBlackMaskLayer = nullptr;
             }
         }
     }
@@ -161,7 +161,7 @@ namespace SpeedCC
     
     void SCSceneController::finish(void* pResult)
     {
-        if(_finishFunc!=NULL)
+        if(_finishFunc!=nullptr)
         {
             _finishFunc(pResult);
         }
@@ -173,7 +173,7 @@ namespace SpeedCC
         
         auto pSeqAction = ASequence(ADelayTime(fDelay),
                                     ACallFunc(fun),
-                                    NULL);
+                                    nullptr);
         
         this->getBedNode()->runAction(pSeqAction);
     }
@@ -190,7 +190,7 @@ namespace SpeedCC
     {
         SC_RETURN_V_IF(nMsg<=0);
         
-        if(func==NULL)
+        if(func==nullptr)
         {// remove mapping
             _msg2FuncMap.erase(nMsg);
         }
@@ -202,11 +202,11 @@ namespace SpeedCC
     
     void SCSceneController::onSCMessageProcess(SCMessage::Ptr ptrMsg)
     {
-        SCASSERT(ptrMsg!=NULL);
+        SCASSERT(ptrMsg!=nullptr);
         
         auto it = _msg2FuncMap.find(ptrMsg->nMsgID);
         
-        if(it!=_msg2FuncMap.end() && (*it).second!=NULL)
+        if(it!=_msg2FuncMap.end() && (*it).second!=nullptr)
         {
             (*it).second(ptrMsg);
             SC_RETURN_V_IF(!ptrMsg->bContinue);

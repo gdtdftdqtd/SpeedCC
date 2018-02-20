@@ -61,7 +61,7 @@ namespace SpeedCC
     ///-------------- SCScene
     
     SCScene::SCScene():
-    _pSceneNode(NULL),
+    _pSceneNode(nullptr),
     cocos2d::Scene()
     {
     }
