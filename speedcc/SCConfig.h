@@ -73,11 +73,11 @@
 #endif
 
 #ifndef kSCWidthOfAssetDesignBaseline
-#define kSCWidthOfAssetDesignBaseline                             (384)
+#define kSCWidthOfAssetDesignBaseline                             (320)
 #endif
 
 #ifndef kSCHeightOfAssetDesignBaseline
-#define kSCHeightOfAssetDesignBaseline                            (512)
+#define kSCHeightOfAssetDesignBaseline                            (480)
 #endif
 
 #ifndef kSCWidthOfAssetDesignSmall

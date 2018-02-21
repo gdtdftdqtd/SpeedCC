@@ -416,18 +416,36 @@ namespace SpeedCC
         pNode->setIgnoreAnchorPointForPosition(false);
         pNode->setAnchorPoint(Vec2(0.5,0.5));
         
-        SCString strDockstyle = SCNodeStyle::extractKey(SC_NODE_STYLE_DOCK, style.strResult);
-        SCString strNewstyle = style.strResult;
-        if(!strDockstyle.isEmpty())
+        SCString strDockStyle = SCNodeStyle::extractKey(SC_NODE_STYLE_DOCK, style.strResult);
+        SCString strXByStyle = SCNodeStyle::extractKey(SC_NODE_STYLE_X_BY, style.strResult);
+        SCString strYByStyle = SCNodeStyle::extractKey(SC_NODE_STYLE_Y_BY, style.strResult);
+        
+        SCString strNewStyle = style.strResult;
+        if(!strDockStyle.isEmpty())
         {
-            strNewstyle = SCNodeStyle::removeKey(SC_NODE_STYLE_DOCK,style.strResult);
+            strNewStyle = SCNodeStyle::removeKey(SC_NODE_STYLE_DOCK,strNewStyle);
         }
+        
+        if(!strXByStyle.isEmpty())
+        {
+            strNewStyle = SCNodeStyle::removeKey(SC_NODE_STYLE_X_BY,strNewStyle);
+        }
+        
+        if(!strYByStyle.isEmpty())
+        {
+            strNewStyle = SCNodeStyle::removeKey(SC_NODE_STYLE_Y_BY,strNewStyle);
+        }
+        
+        SCString strDelayStyle = strDockStyle + strXByStyle + strYByStyle;
         
         SCUITypeDef::SUIContext context;
         context.pContainerNode = pNode;
         context.containerType = SCUITypeDef::EContainerType::kLayoutPadding;
         
-        context.endFunc = [bHorizontal,fPadding,nDock,strDockstyle](SCUITypeDef::SUIContext& context)
+        context.endFunc = [bHorizontal,
+                           fPadding,
+                           nDock,
+                           strDelayStyle](SCUITypeDef::SUIContext& context)
         {
             Node* pNode = context.pContainerNode;
             auto childrenVec = pNode->getChildren();
@@ -502,13 +520,13 @@ namespace SpeedCC
                 }
             }
             
-            if(!strDockstyle.isEmpty())
+            if(!strDelayStyle.isEmpty())
             {
-                SCNodeStyle::setStyle<Node>(pNode, strDockstyle);
+                SCNodeStyle::setStyle<Node>(pNode, strDelayStyle);
             }
         };
         
-        this->insertUserNode(pNode, fPosX, fPosY, strNewstyle);
+        this->insertUserNode(pNode, fPosX, fPosY, strNewStyle);
         _contextStack.push_front(context);
         SC_ASSIGN_NODE(ppNode,pNode);
     }
