@@ -12,7 +12,7 @@
 		0A3C4FDF2035F68C007DA271 /* TestPageViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FDD2035F68C007DA271 /* TestPageViewController.cpp */; };
 		0A3C4FE82036960E007DA271 /* TestUIMiscController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FE72036960D007DA271 /* TestUIMiscController.cpp */; };
 		0A3C4FEE203732C5007DA271 /* TestAlertBoxController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C4FED203732C5007DA271 /* TestAlertBoxController.cpp */; };
-		0A41B34E1FE7EEEB003945EB /* TestLabelBinderController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */; };
+		0A41B34E1FE7EEEB003945EB /* TestLabelBindingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A41B34C1FE7EEEB003945EB /* TestLabelBindingController.cpp */; };
 		0A41B3CD1FED34FF003945EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A41B3CC1FED34FE003945EB /* StoreKit.framework */; };
 		0A4D771F20245BA10089F8D6 /* TestDockController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D771D20245BA00089F8D6 /* TestDockController.cpp */; };
 		0A4D772220289FA80089F8D6 /* TestProgressController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D772020289FA70089F8D6 /* TestProgressController.cpp */; };
@@ -28,8 +28,6 @@
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
-		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
-		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -105,8 +103,8 @@
 		0A3C4FE72036960D007DA271 /* TestUIMiscController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestUIMiscController.cpp; sourceTree = "<group>"; };
 		0A3C4FEC203732C4007DA271 /* TestAlertBoxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAlertBoxController.h; sourceTree = "<group>"; };
 		0A3C4FED203732C5007DA271 /* TestAlertBoxController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestAlertBoxController.cpp; sourceTree = "<group>"; };
-		0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLabelBinderController.cpp; sourceTree = "<group>"; };
-		0A41B34D1FE7EEEB003945EB /* TestLabelBinderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLabelBinderController.h; sourceTree = "<group>"; };
+		0A41B34C1FE7EEEB003945EB /* TestLabelBindingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLabelBindingController.cpp; sourceTree = "<group>"; };
+		0A41B34D1FE7EEEB003945EB /* TestLabelBindingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLabelBindingController.h; sourceTree = "<group>"; };
 		0A41B3CC1FED34FE003945EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		0A4D771D20245BA00089F8D6 /* TestDockController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestDockController.cpp; sourceTree = "<group>"; };
 		0A4D771E20245BA10089F8D6 /* TestDockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDockController.h; sourceTree = "<group>"; };
@@ -127,8 +125,6 @@
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -325,14 +321,12 @@
 				0A4D771E20245BA10089F8D6 /* TestDockController.h */,
 				0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */,
 				0A6879C21FF7ED25004DCED6 /* TestStageController.h */,
-				0A41B34C1FE7EEEB003945EB /* TestLabelBinderController.cpp */,
-				0A41B34D1FE7EEEB003945EB /* TestLabelBinderController.h */,
+				0A41B34C1FE7EEEB003945EB /* TestLabelBindingController.cpp */,
+				0A41B34D1FE7EEEB003945EB /* TestLabelBindingController.h */,
 				0A1556C81FD69CA200CF7420 /* TestHomeController.cpp */,
 				0A1556C91FD69CA200CF7420 /* TestHomeController.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -515,7 +509,6 @@
 			files = (
 				0A4D772220289FA80089F8D6 /* TestProgressController.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				0A4D771F20245BA10089F8D6 /* TestDockController.cpp in Sources */,
 				0A3C4FDC203291D0007DA271 /* TestLoadingController.cpp in Sources */,
 				0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */,
@@ -524,7 +517,7 @@
 				0A3C4FDF2035F68C007DA271 /* TestPageViewController.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
-				0A41B34E1FE7EEEB003945EB /* TestLabelBinderController.cpp in Sources */,
+				0A41B34E1FE7EEEB003945EB /* TestLabelBindingController.cpp in Sources */,
 				0A4D77252028B0F10089F8D6 /* TestCaseController.cpp in Sources */,
 				0A1556CA1FD69CA200CF7420 /* TestHomeController.cpp in Sources */,
 				0A3C4FEE203732C5007DA271 /* TestAlertBoxController.cpp in Sources */,
@@ -537,7 +530,6 @@
 			files = (
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

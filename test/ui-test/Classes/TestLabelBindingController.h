@@ -17,30 +17,28 @@
  
  ****************************************************************************/
 
-#ifndef __TESTALERTBOX_SCENE_H__
-#define __TESTALERTBOX_SCENE_H__
+#ifndef __TESTLABELBINDER_SCENE_H__
+#define __TESTLABELBINDER_SCENE_H__
+
 #include "cocos2d.h"
 #include "SpeedCC.h"
-#include "TestCaseController.h"
 
 using namespace SpeedCC;
 
-///--------- TestAlertBoxController
-class TestAlertBoxController : public TestCaseController
+class TestLabelBindingController : public SpeedCC::SCSceneController
 {
 public:
-    virtual void onCreate(SpeedCC::SCDictionary parameters) override;
-    void setupUI();
     
-    void showSystemAlertBox();
-    void showCustomizeAlertBox();
-};
-
-///---------- TestCustomizeABController
-class TestCustomizeABController : public SCSceneController
-{
-public:
     virtual void onCreate(SpeedCC::SCDictionary parameters) override;
+    
+    void onButtonAdd();
+    void onButtonSub();
+    void onButtonRandomText();
+    void onButtonBack();
+    
+private:
+    SCWatchInt::Ptr         _ptrWatchInt;
+    SCWatchString::Ptr      _ptrWatchStr;
 };
 
-#endif // __TESTALERTBOX_SCENE_H__
+#endif // __TESTLABELBINDER_SCENE_H__
