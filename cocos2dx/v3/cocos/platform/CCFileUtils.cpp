@@ -796,8 +796,8 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
     
     // searchPath + file_path + resourceDirectory
     std::string path = searchPath;
-    path += file_path;
     path += resolutionDirectory;
+    path += file_path;
     
     path = getFullPathForDirectoryAndFilename(path, file);
     
