@@ -1,6 +1,6 @@
 /****************************************************************************
  
- Copyright (c) 2017-2018 Kevin Wu (Feng Wu) All rights reserved.
+ Copyright (c) 2017-2018 Kevin Wu (Feng Wu)
  
  Licensed under the MIT License (the "License"); you may not use this file except
  in compliance with the License. You may obtain a copy of the License at
@@ -49,15 +49,15 @@ namespace SpeedCC
         friend class SCSceneNavigator;
         template<typename> friend class SCSceneNavigationCreator;
         
-        typedef std::function<void(SCMessage::Ptr ptrMsg)>  MsgFunc_t;
-        typedef std::function<void(void*)>                    FinishFunc_t;
+        typedef std::function<void(SCMessage::Ptr ptrMsg)>      MsgFunc_t;
+        typedef std::function<void(void*)>                      FinishFunc_t;
         
         virtual ~SCSceneController();
         
         inline bool getAllTouchEnabled() const  {return (_pDisableTouchLayer==nullptr);}
         inline bool isBlackMaskForModal() const  {return _bBlackMaskForModal;}
-        inline cocos2d::Node* getBedNode()  {return _pBedNode;}
-        inline SCScene* getScene()  {return _pScene;}
+        inline cocos2d::Node* getBedNode() const {return _pBedNode;}
+        inline SCScene* getScene() const  {return _pScene;}
         
         void setAllTouchEnabled(const bool bEnabled);
         void showBlackMask(const bool bShow);

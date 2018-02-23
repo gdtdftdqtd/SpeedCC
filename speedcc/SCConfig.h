@@ -1,6 +1,6 @@
 /****************************************************************************
 
- Copyright (c) 2017-2018 Kevin Wu (Feng Wu) All rights reserved.
+ Copyright (c) 2017-2018 Kevin Wu (Feng Wu)
  
  Licensed under the MIT License (the "License"); you may not use this file except
  in compliance with the License. You may obtain a copy of the License at
