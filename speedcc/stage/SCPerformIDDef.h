@@ -23,17 +23,15 @@
 namespace SpeedCC
 {
     // for SCMessage parameters in it's Dictionary
-#define SC_KEY_CONTROLLER     "sc-controller"     // SCController*
-#define SC_KEY_NUMBER         "sc-number"         // int
-#define SC_KEY_NAME           "sc-name"           // SCString
-#define SC_KEY_COMMAND        "sc-command"        // SCString
-#define SC_KEY_STATE          "sc-state"          // ESCState
-#define SC_KEY_CCREF          "sc-cc-ref"        // SCRef2Ptr::Ptr
-#define SC_KEY_TOUCH          "sc-touch"           // cocos2d::Touch*
-#define SC_KEY_TOUCHES        "sc-touches"        // std::vector<cocos2d::Touch*>
-#define SC_KEY_DELTA          "sc-delta"         // float
-#define SC_KEY_RESULT         "sc-result"        // for sendMessage() result, relying on specific message definition
-#define SC_KEY_ID             "sc-id"     // int
+#define SC_KEY_CONTROLLER       "sc-controller"     // SCController*
+#define SC_KEY_NUMBER           "sc-number"         // int
+#define SC_KEY_NAME             "sc-name"           // SCString
+#define SC_KEY_COMMAND          "sc-command"        // SCString
+#define SC_KEY_STATE            "sc-state"          // ESCState
+#define SC_KEY_CCREF            "sc-cc-ref"        // SCRef2Ptr::Ptr
+#define SC_KEY_DELTA            "sc-delta"         // float
+#define SC_KEY_RESULT           "sc-result"        // for sendMessage() result, relying on specific message definition
+#define SC_KEY_ID               "sc-id"     // int
 #define SC_KEY_FINISHFUNC       "sc-finish-func"    // SCSceneController::FinishFunc_t
     
     // for SCBehavior parameters in it's Dictionary
@@ -53,6 +51,20 @@ namespace SpeedCC
 #define SC_KEY_IAP              "sc-iap"           // SCString
 #define SC_KEY_PRICE            "sc-price" // SCString
 #define SC_KEY_CURRENCY         "sc-currency" // SCString
+    
+    // touch
+#define SC_KEY_TOUCH            "sc-touch"           // cocos2d::Touch*
+#define SC_KEY_TOUCHES          "sc-touches"        // std::vector<cocos2d::Touch*>
+#define SC_KEY_CCEVENT          "sc-cc-event"       // cocos2d::Event*
+    
+    // acceleration
+#define SC_KEY_X                "sc-x" // double or float
+#define SC_KEY_Y                "sc-y" // double or float
+#define SC_KEY_Z                "sc-z" // double or float
+#define SC_KEY_TIMESTAMP        "sc-timestamp" // double
+    
+    // keyboard
+#define SC_KEY_KEYBOARDCODE     "sc-keyboard-code"  // cocos2d::EventKeyboard::KeyCode
     
     struct SCID
     {
@@ -100,26 +112,45 @@ namespace SpeedCC
             // lisenter: owner scene controller
             kSCMsgSceneExitTransitionDidStart,
             
-            // key: SC_KEY_TOUCH       (if single touch)
-            // key: "result" => bool  (result from receiver, by defualt is true)
-            // key: SC_KEY_TOUCHES     (if multiple touch)
+            // key: SC_KEY_TOUCH       (for single touch)
+            // key: SC_RESULT  (result from receiver, by defualt is true)
+            // key: SC_KEY_TOUCHES     (for multiple touch)
+            // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
             kSCMsgTouchBegan,
             
-            // key: SC_KEY_TOUCH       (if single touch)
-            // key: SC_KEY_TOUCHES     (if multiple touch)
+            // key: SC_KEY_TOUCH       (for single touch)
+            // key: SC_KEY_TOUCHES     (for multiple touch)
+            // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
             kSCMsgTouchMoved,
             
-            // key: SC_KEY_TOUCH       (if single touch)
-            // key: SC_KEY_TOUCHES     (if multiple touch)
+            // key: SC_KEY_TOUCH       (for single touch)
+            // key: SC_KEY_TOUCHES     (for multiple touch)
+            // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
             kSCMsgTouchEnded,
             
-            // key: SC_KEY_TOUCH       (if single touch)
-            // key: SC_KEY_TOUCHES     (if multiple touches)
+            // key: SC_KEY_TOUCH       (for single touch)
+            // key: SC_KEY_TOUCHES     (for multiple touches)
+            // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
             kSCMsgTouchCancelled,
+            
+            // key: SC_KEY_X
+            // key: SC_KEY_Y
+            // key: SC_KEY_Z
+            // key: SC_KEY_TIMESTAMP
+            // key: SC_KEY_CCEVENT
+            kSCMsgAcceleration,
+            
+            // key: SC_KEY_KEYBOARDCODE
+            // key: SC_KEY_CCEVENT
+            kSCMsgKeyboardKeyDown,
+            
+            // key: SC_KEY_KEYBOARDCODE
+            // key: SC_KEY_CCEVENT
+            kSCMsgKeyboardKeyUp,
             
             // key: SC_KEY_CCREF
             kSCMsgNodeClicked,

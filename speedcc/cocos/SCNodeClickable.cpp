@@ -80,8 +80,7 @@ namespace SpeedCC
         
         if(pNode!=nullptr)
         {
-            _ptrEventEmitter = SCEventEmitter::create(pNode,this);
-            _ptrEventEmitter->setTouchMode(SCEventEmitter::ETouchMode::kSingle);
+            _ptrEventEmitter = SCEventEmitter::create(SCEventEmitter::EEventType::kSingleTouch, pNode,this);
             _ptrEventEmitter->setActive(_bActive);
             _pMenuItem = dynamic_cast<MenuItem*>(_pNode);
         }

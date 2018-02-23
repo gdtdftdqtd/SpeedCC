@@ -106,7 +106,7 @@ namespace SpeedCC
         SCValue(SCDateTime& dateTime);
         SCValue(const SCDataBlock& dataBlock);
         SCValue(const std::vector<SCValue>& valueVtr);
-        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value,ObjectT>::type>
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value || std::is_enum<ObjectT>::value,ObjectT>::type>
         SCValue(const ObjectT& obj)
         {
             auto result = SCValue::create(obj);
@@ -166,7 +166,7 @@ namespace SpeedCC
         SCValue& operator=(const SCDateTime& dateTime);
         SCValue& operator=(const std::vector<SCValue>& valueVcr);
         
-        template<typename ObjectT>
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value || std::is_enum<ObjectT>::value,ObjectT>::type>
         bool isValidObject() const
         {
             if(this->getCookieDesc()->cookie!=OBJECT_TYPE)
@@ -178,9 +178,14 @@ namespace SpeedCC
             return (stub.pfunDestroyFunctor_t==SCDataTypeLifeCycleT<ObjectT>::destroy);
         }
         
-        template<typename ObjectT>
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value || std::is_enum<ObjectT>::value,ObjectT>::type>
         ObjectT getObject(bool* pResult=nullptr) const
         {
+            static_assert(std::is_same<ObjectT,SCString>::value==0, "Using getString() instead for SCString");
+            static_assert(std::is_same<ObjectT,SCDataBlock>::value==0, "Using getDataBlock() instead for SCDataBlock");
+            static_assert(std::is_same<ObjectT,SCDateTime>::value==0, "Using getDateTime() instead for SCDateTime");
+            static_assert(std::is_same<ObjectT,std::vector<SCValue>>::value==0, "Using getArray() instead for std::vector<SCValue>");
+            
             if(pResult!=nullptr)
             {
                 *pResult = false;
@@ -205,9 +210,14 @@ namespace SpeedCC
             return *((ObjectT*)(stub.data.pObject));
         }
         
-        template<typename ObjectT>
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value || std::is_enum<ObjectT>::value,ObjectT>::type>
         ObjectT* getRefObject(bool* pResult=nullptr)
         {
+            static_assert(std::is_same<ObjectT,SCString>::value==0, "Using getString() instead for SCString");
+            static_assert(std::is_same<ObjectT,SCDataBlock>::value==0, "Using getDataBlock() instead for SCDataBlock");
+            static_assert(std::is_same<ObjectT,SCDateTime>::value==0, "Using getDateTime() instead for SCDateTime");
+             static_assert(std::is_same<ObjectT,std::vector<SCValue>>::value==0, "Using getArray() instead for std::vector<SCValue>");
+            
             if(pResult!=nullptr)
             {
                 *pResult = false;
@@ -232,9 +242,14 @@ namespace SpeedCC
             return (ObjectT*)(stub.data.pObject);
         }
         
-        template<typename ObjectT>
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value || std::is_enum<ObjectT>::value,ObjectT>::type>
         void setObject(const ObjectT& value)
         {
+            static_assert(std::is_same<ObjectT,SCString>::value==0, "Using setString() instead for SCString");
+            static_assert(std::is_same<ObjectT,SCDataBlock>::value==0, "Using setDataBlock() instead for SCDataBlock");
+            static_assert(std::is_same<ObjectT,SCDateTime>::value==0, "Using setDateTime() instead for SCDateTime");
+            static_assert(std::is_same<ObjectT,std::vector<SCValue>>::value==0, "Using setArray() instead for std::vector<SCValue>");
+            
             *this = SCValue::create(value);
         }
         
@@ -254,7 +269,7 @@ namespace SpeedCC
             return SCValue(value);
         }
         
-        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value,ObjectT>::type>
+        template<typename ObjectT,typename = typename std::enable_if<std::is_class<ObjectT>::value || std::is_enum<ObjectT>::value,ObjectT>::type>
         static SCValue create(const ObjectT& value)
         {
             SCValue ret;
@@ -268,7 +283,6 @@ namespace SpeedCC
             
             void* pBuf = SCMemAllocator::allocate(sizeof(ObjectT));
             ObjectT* pMyClass = new(pBuf)ObjectT(value);
-//            *pMyClass = value;
             stub.data.pObject = pMyClass;
             stub.pfunDestroyFunctor_t = SCDataTypeLifeCycleT<ObjectT>::destroy;
             

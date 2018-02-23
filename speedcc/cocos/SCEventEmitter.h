@@ -31,11 +31,12 @@ namespace SpeedCC
     class SCEventEmitter : public SCObject
     {
     public:
-        enum class ETouchMode
+        enum class EEventType
         {
-            kNone,
-            kSingle,
-            kMultiple,
+            kSingleTouch,
+            kMultipleTouch,
+            kAcceleration,
+            kKeyboard,
         };
         
     public:
@@ -43,20 +44,18 @@ namespace SpeedCC
         SC_DEFINE_CLASS_PTR(SCEventEmitter)
         
         virtual ~SCEventEmitter();
-        SC_DEFINE_CREATE_FUNC_2(SCEventEmitter,cocos2d::Node*,SCMessageListener*)
+        
+        SC_DEFINE_CREATE_FUNC_3(SCEventEmitter,EEventType,cocos2d::Node*,SCMessageListener*)
         
         inline void setActive(const bool bActive) {_bActive = bActive;}
         inline bool getActive() const {return _bActive;}
         
-        cocos2d::EventListener* getEventListener(cocos2d::EventListener::Type type) const;
-        void setTouchMode(const ETouchMode touch);
-        inline ETouchMode getTouchMode() const { return _touchMode;}
-        
         inline cocos2d::EventListener* getEventListener() const { return _pTouchListener; }
+        void setEventType(EEventType type);
         
     protected:
         SCEventEmitter();
-        SCEventEmitter(cocos2d::Node* pNode,SCMessageListener* pMsgListener);
+        SCEventEmitter(EEventType type,cocos2d::Node* pNode,SCMessageListener* pMsgListener);
         
     private:
         bool onSingleTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
@@ -70,33 +69,29 @@ namespace SpeedCC
         void onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent);
         
         void onAcceleration(cocos2d::Acceleration* pAcc, cocos2d::Event* pEvent);
+        void onKeyboardPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* pEvent);
 
         template<typename T>
-        void sendTouchMessage(const int nMsg, T touch)
+        void sendTouchMessage(const int nMsg, T touch,cocos2d::Event* pEvent)
         {
-            SCDictionary::SPair pair = {std::is_same<T,cocos2d::Touch*>::value ? SC_KEY_TOUCH : SC_KEY_TOUCHES,touch};
-            
-            SCDictionary dic(pair);
-            
-            SCMessage::Ptr ptrMsg = SCMessage::create();
-            ptrMsg->nMsgID = nMsg;
-            ptrMsg->parameters = dic;
-            
-            if(_pMsgListener==nullptr)
+            SCDictionary::SPair pairArray[] =
             {
-                SCMsgDisp()->sendMessage(ptrMsg);
-            }
-            else
-            {
-                _pMsgListener->onSCMessageProcess(ptrMsg);
-            }
+                {std::is_same<T,cocos2d::Touch*>::value ? SC_KEY_TOUCH : SC_KEY_TOUCHES,touch},
+                {SC_KEY_CCEVENT,pEvent}
+            };
+            
+            SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
+
+            this->sendEventMessage(nMsg,dic);
         }
+        
+        void sendEventMessage(const int nMsg,SCDictionary dic);
         
     private:
         bool                                    _bActive;
         SCMessageListener*                      _pMsgListener;
         cocos2d::Node*                          _pReceiveNode;
-        ETouchMode                              _touchMode;
+        EEventType                              _eventType;
         cocos2d::EventListener*                 _pTouchListener; // no need to remove from event dispatch
     };
 }

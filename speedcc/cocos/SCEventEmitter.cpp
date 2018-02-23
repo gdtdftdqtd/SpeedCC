@@ -27,12 +27,14 @@ namespace SpeedCC
     _bActive(true)
     {}
     
-    SCEventEmitter::SCEventEmitter(cocos2d::Node* pNode,SCMessageListener* pMsgListener):
+    SCEventEmitter::SCEventEmitter(EEventType type,cocos2d::Node* pNode,SCMessageListener* pMsgListener):
     _pMsgListener(pMsgListener),
     _pReceiveNode(pNode),
-    _touchMode(ETouchMode::kNone),
+    _eventType(type),
     _bActive(true)
-    {}
+    {
+        
+    }
     
     SCEventEmitter::~SCEventEmitter()
     {
@@ -43,33 +45,17 @@ namespace SpeedCC
         }
     }
     
-    cocos2d::EventListener* SCEventEmitter::getEventListener(cocos2d::EventListener::Type type) const
+    void SCEventEmitter::setEventType(EEventType type)
     {
-        SC_RETURN_IF((type!=cocos2d::EventListener::Type::TOUCH_ONE_BY_ONE && type!=cocos2d::EventListener::Type::TOUCH_ALL_AT_ONCE),nullptr);
-        
-        if(type==cocos2d::EventListener::Type::TOUCH_ONE_BY_ONE)
-        {
-            return dynamic_cast<cocos2d::EventListenerTouchOneByOne*>(_pTouchListener);
-        }
-        else
-        {
-            return dynamic_cast<cocos2d::EventListenerTouchAllAtOnce*>(_pTouchListener);
-        }
-    }
-    
-    void SCEventEmitter::setTouchMode(const ETouchMode touch)
-    {
-        SC_RETURN_V_IF(touch==_touchMode);
-        
         if(_pTouchListener!=nullptr)
         {
             SCCCDirector()->getEventDispatcher()->removeEventListener(_pTouchListener);
             _pTouchListener = nullptr;
         }
         
-        switch(touch)
+        switch(type)
         {
-            case ETouchMode::kSingle:
+            case EEventType::kSingleTouch:
             {
                 auto pListener = cocos2d::EventListenerTouchOneByOne::create();
                 pListener->setSwallowTouches(true);
@@ -79,11 +65,10 @@ namespace SpeedCC
                 pListener->onTouchCancelled = SC_MAKE_FUNC(onSingleTouchCancelled, this);
                 
                 _pTouchListener = pListener;
-                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pReceiveNode);
             }
                 break;
                 
-            case ETouchMode::kMultiple:
+            case EEventType::kMultipleTouch:
             {
                 auto pListener = cocos2d::EventListenerTouchAllAtOnce::create();
                 pListener->onTouchesBegan = SC_MAKE_FUNC(onMultipleTouchBegan, this);
@@ -92,11 +77,33 @@ namespace SpeedCC
                 pListener->onTouchesCancelled = SC_MAKE_FUNC(onMultipleTouchCancelled, this);
                 
                 _pTouchListener = pListener;
-                SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pReceiveNode);
             }
                 break;
                 
-            case ETouchMode::kNone: break;
+            case EEventType::kAcceleration:
+            {
+                auto pListener = cocos2d::EventListenerAcceleration::create(SC_MAKE_FUNC(onAcceleration, this));
+                _pTouchListener = pListener;
+            }
+                break;
+                
+            case EEventType::kKeyboard:
+            {
+                auto pListener = cocos2d::EventListenerKeyboard::create();
+                pListener->onKeyPressed = SC_MAKE_FUNC(onKeyboardPressed, this);
+                pListener->onKeyReleased = SC_MAKE_FUNC(onKeyboardPressed, this);
+                _pTouchListener = pListener;
+            }
+                break;
+                
+            default:
+                SCASSERT(false);
+                break;
+        }
+        
+        if(_pTouchListener!=nullptr)
+        {
+            SCCCDirector()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_pTouchListener, _pReceiveNode);
         }
     }
     
@@ -132,43 +139,90 @@ namespace SpeedCC
     void SCEventEmitter::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchMoved,pTouch);
+        this->sendTouchMessage(SCID::Msg::kSCMsgTouchMoved,pTouch,pEvent);
     }
     
     void SCEventEmitter::onSingleTouchEnded(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchEnded,pTouch);
+        this->sendTouchMessage(SCID::Msg::kSCMsgTouchEnded,pTouch,pEvent);
     }
     
     void SCEventEmitter::onSingleTouchCancelled(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchCancelled,pTouch);
+        this->sendTouchMessage(SCID::Msg::kSCMsgTouchCancelled,pTouch,pEvent);
     }
     
     void SCEventEmitter::onMultipleTouchBegan(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchBegan,touchVtr);
+        this->sendTouchMessage(SCID::Msg::kSCMsgTouchBegan,touchVtr,pEvent);
     }
     
     void SCEventEmitter::onMultipleTouchMoved(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchMoved,touchVtr);
+        this->sendTouchMessage(SCID::Msg::kSCMsgTouchMoved,touchVtr,pEvent);
     }
     
     void SCEventEmitter::onMultipleTouchEnded(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchEnded,touchVtr);
+        this->sendTouchMessage(SCID::Msg::kSCMsgTouchEnded,touchVtr,pEvent);
     }
     
-    void SCEventEmitter::onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
+    void SCEventEmitter::onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr,
+                                                  cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchCancelled,touchVtr);
+        this->sendTouchMessage(SCID::Msg::kSCMsgTouchCancelled,touchVtr,pEvent);
     }
     
+    void SCEventEmitter::onAcceleration(cocos2d::Acceleration* pAcc, cocos2d::Event* pEvent)
+    {
+        SC_RETURN_V_IF(!this->getActive());
+        SCDictionary::SPair pairArray[] =
+        {
+            {SC_KEY_X,pAcc->x},
+            {SC_KEY_Y,pAcc->y},
+            {SC_KEY_Z,pAcc->z},
+            {SC_KEY_TIMESTAMP,pAcc->timestamp},
+            {SC_KEY_CCEVENT,pEvent}
+        };
+        
+        SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
+        
+        this->sendEventMessage(SCID::Msg::kSCMsgAcceleration,dic);
+    }
+    
+    void SCEventEmitter::onKeyboardPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* pEvent)
+    {
+        SC_RETURN_V_IF(!this->getActive());
+        SCDictionary::SPair pairArray[] =
+        {
+            {SC_KEY_KEYBOARDCODE,code},
+            {SC_KEY_CCEVENT,pEvent}
+        };
+        
+        SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
+        
+        this->sendEventMessage(SCID::Msg::kSCMsgKeyboardKeyDown,dic);
+    }
+    
+    void SCEventEmitter::sendEventMessage(const int nMsg,SCDictionary dic)
+    {
+        SCMessage::Ptr ptrMsg = SCMessage::create();
+        ptrMsg->nMsgID = nMsg;
+        ptrMsg->parameters = dic;
+        
+        if(_pMsgListener==nullptr)
+        {
+            SCMsgDisp()->sendMessage(ptrMsg);
+        }
+        else
+        {
+            _pMsgListener->onSCMessageProcess(ptrMsg);
+        }
+    }
 }
