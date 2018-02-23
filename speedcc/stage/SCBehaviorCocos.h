@@ -56,11 +56,7 @@ namespace SpeedCC
         inline bool getDirect() const { return _bDirect; }
         
     protected:
-        SCBehaviorSceneGoto(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic):
-        _switch(swi),
-        _parameterDic(dic),
-        _bDirect(false)
-        {}
+        SCBehaviorSceneGoto(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic);
         
         void onBvrFunc();
     private:

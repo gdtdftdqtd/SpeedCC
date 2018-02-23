@@ -144,6 +144,18 @@ namespace SpeedCC
             bHasLoading(bLoading)
             {}
             
+            SSceneSwitchInfo(const SSceneSwitchInfo& info):
+            switchType(info.switchType),
+            pfunSelfTransCreator(info.pfunSelfTransCreator),
+            pfunOppositeTransCreator(info.pfunOppositeTransCreator),
+            pfunSceneCreator(info.pfunSceneCreator),
+            pfunLayerCreator(info.pfunLayerCreator),
+            pfunLoadingSceneCreator(info.pfunLoadingSceneCreator),
+            pfunLoadingLayerCreator(info.pfunLoadingLayerCreator),
+            bHasLoading(info.bHasLoading)
+            {
+            }
+            
             template<typename SceneT, typename TransT = SCClassNull, typename LoadingT=SCClassNull>
             void setUp(const ESceneSwitchType place = kSceneReplace)
             {

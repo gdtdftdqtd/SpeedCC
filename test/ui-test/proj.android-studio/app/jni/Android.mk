@@ -16,7 +16,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/AppDelegate.cpp \
                    ../../../Classes/TestHomeController.cpp \
                    ../../../Classes/TestStageController.cpp \
-                   ../../../Classes/TestLabelBinderController.cpp \
+                   ../../../Classes/TestLabelBindingController.cpp \
                    ../../../Classes/TestAlertBoxController.cpp \
                    ../../../Classes/TestCaseController.cpp \
                    ../../../Classes/TestDockController.cpp \

@@ -23,6 +23,14 @@
 namespace SpeedCC
 {
     ///--------------- SCBehaviorSceneGoto
+    SCBehaviorSceneGoto::SCBehaviorSceneGoto(const SCSceneNavigator::SSceneSwitchInfo& swi,const SCDictionary& dic):
+            _switch(swi),
+            _parameterDic(dic),
+            _bDirect(false)
+    {
+
+    }
+
     void SCBehaviorSceneGoto::execute(const SCDictionary& par)
     {
         if(_bDirect)
