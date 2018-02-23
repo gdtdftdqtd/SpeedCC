@@ -94,13 +94,13 @@ namespace SpeedCC
     private:
         void setBedNode(SCBedNode* pLayer);
         inline void setScene(SCScene* pScene)  {_pScene = pScene;}
-        inline void setModalParentController(SCSceneController::WeakPtr controllerPtr)
-        { _ptrParentModalController = controllerPtr; }
+        inline void setModalParentController(SCSceneController* pController)
+        { _pParentModalController = pController; }
         
     private:
         SCBedNode*			                        _pBedNode;
         SCScene*                                    _pScene;
-        SCSceneController::WeakPtr                  _ptrParentModalController;
+        SCSceneController*                          _pParentModalController; // weak pointer
         SCLayerDisableTouch*                        _pDisableTouchLayer;
         cocos2d::Layer*                             _pBlackMaskLayer;
         bool                                        _bBlackMaskForModal;

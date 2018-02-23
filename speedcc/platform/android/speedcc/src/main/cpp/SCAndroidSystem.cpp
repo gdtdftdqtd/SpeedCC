@@ -349,7 +349,7 @@ void scbStoreRetrieveItemInfoResult(const char* pszIAP, const char* pszCurrency,
 
 void Java_org_speedcc_lib_JNISystem_onAlertBoxSelected(JNIEnv *env, jobject thiz,jint nButtonIndex,jint nMsgBoxID)
 {
-    scbAlertBoxSelected((int)nButtonIndex,(int)nMsgBoxID);
+    scbAlertBoxSelected((int)nMsgBoxID,(int)nButtonIndex);
 }
 
 jint Java_org_speedcc_lib_GooglePlayIAP_onPurchaseResultEvent(JNIEnv *env,jobject thiz, jstring sku, jint result)

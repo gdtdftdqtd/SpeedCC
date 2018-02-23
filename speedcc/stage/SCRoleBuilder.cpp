@@ -42,7 +42,7 @@ namespace SpeedCC
     
     void SCRoleBuilder::end()
     {
-        _strategyStack.pop();
+        _strategyStack.pop_front();
         SCASSERT(_strategyStack.empty());
         _pStage->addRole(_ptrRole);
     }
@@ -54,7 +54,7 @@ namespace SpeedCC
         int nParentStrategyID = 0;
         if(!_strategyStack.empty())
         {
-            nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
+            nParentStrategyID = _strategyStack.front().nCurrentStrategyID;
         }
         auto ptrStrategy = this->createStrategy(nStrategyID);
         
@@ -63,12 +63,12 @@ namespace SpeedCC
         SStrategyStackInfo ssi;
         ssi.nCurrentStrategyID = nStrategyID;
         
-        _strategyStack.push(ssi);
+        _strategyStack.push_front(ssi);
     }
     
     void SCRoleBuilder::endStrategy()
     {
-        _strategyStack.pop();
+        _strategyStack.pop_front();
     }
     
     void SCRoleBuilder::insertBehaviorWithMsg(const SCRoleBuilder::MessagePurifier& msgPurifier,const BehaviorPurifier& bvrPurifier)
@@ -76,7 +76,7 @@ namespace SpeedCC
 //        SCASSERT(bvrPurifier.ptrBehavior !=nullptr);
         SCASSERT(!_strategyStack.empty());
         
-        int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
+        int nParentStrategyID = _strategyStack.front().nCurrentStrategyID;
         
         for(auto it : msgPurifier.msgList)
         {
@@ -90,7 +90,7 @@ namespace SpeedCC
         SCASSERT(bvrPurifier.ptrBehavior!=nullptr);
         SCASSERT(!_strategyStack.empty());
         
-        int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
+        int nParentStrategyID = _strategyStack.front().nCurrentStrategyID;
         _ptrRole->addBehavior2Strategy(nParentStrategyID, strCmd, bvrPurifier.ptrBehavior);
     }
     
@@ -99,7 +99,7 @@ namespace SpeedCC
         SCASSERT(bvrPurifier.ptrBehavior!=nullptr);
         SCASSERT(!_strategyStack.empty());
         
-        int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
+        int nParentStrategyID = _strategyStack.front().nCurrentStrategyID;
         _ptrRole->addEnterBehavior2Strategy(nParentStrategyID, bvrPurifier.ptrBehavior);
     }
     
@@ -108,7 +108,7 @@ namespace SpeedCC
         SCASSERT(bvrPurifier.ptrBehavior!=nullptr);
         SCASSERT(!_strategyStack.empty());
         
-        int nParentStrategyID = _strategyStack.top().nCurrentStrategyID;
+        int nParentStrategyID = _strategyStack.front().nCurrentStrategyID;
         _ptrRole->addExitBehavior2Strategy(nParentStrategyID, bvrPurifier.ptrBehavior);
     }
     

@@ -26,8 +26,8 @@
 namespace SpeedCC
 {
     class SCWatchString :
-    public SCString,
-    public SCObject
+    public SCObject,
+    public SCString
     {
     public:
         SC_DEFINE_CLASS_PTR(SCWatchString)

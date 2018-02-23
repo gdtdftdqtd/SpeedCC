@@ -69,8 +69,7 @@ namespace SpeedCC
     
     void SCSceneController::pushModalController(SCSceneController::Ptr ptrController)
     {
-        SCSceneController::WeakPtr controllerPtr2 = this->makeObjPtr<SCSceneController::WeakPtr>();
-        ptrController->setModalParentController(controllerPtr2);
+        ptrController->setModalParentController(this);
         ptrController->setScene(_pScene);
         
         if(_bBlackMaskForModal)
@@ -95,16 +94,16 @@ namespace SpeedCC
     
     SCSceneController::Ptr SCSceneController::popModalFromParent()
     {
-        SCASSERT(_ptrParentModalController!=nullptr);
-        auto ret = _ptrParentModalController->makeObjPtr<SCSceneController::Ptr>();
+        SCASSERT(_pParentModalController!=nullptr);
+        auto ret = _pParentModalController->makeObjPtr<SCSceneController::Ptr>();
         
-        _ptrParentModalController->setAllTouchEnabled(true);
-        if(_ptrParentModalController->isBlackMaskForModal())
+        _pParentModalController->setAllTouchEnabled(true);
+        if(_pParentModalController->isBlackMaskForModal())
         {
-            _ptrParentModalController->showBlackMask(false);
+            _pParentModalController->showBlackMask(false);
         }
         
-        _ptrParentModalController = nullptr;
+        _pParentModalController = nullptr;
         _pBedNode->removeFromParent();
         
         // generate modal mssage

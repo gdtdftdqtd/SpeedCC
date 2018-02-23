@@ -90,9 +90,9 @@ namespace SpeedCC
         };
         
     private:
-        SCStage*                    _pStage;
-        SCRole::Ptr                 _ptrRole;
-        std::stack<SStrategyStackInfo>  _strategyStack;
+        SCStage*                        _pStage;
+        SCRole::Ptr                     _ptrRole;
+        std::list<SStrategyStackInfo>   _strategyStack;
     };
 }
 
