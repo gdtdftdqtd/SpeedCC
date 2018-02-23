@@ -64,10 +64,10 @@ namespace SpeedCC
                                     const cocos2d::Size& size);
         
         ///-------------- user node
-        void insertUserNode(const SCUIArg::NodePurifier& userNode,
-                            const float fPosX,
-                            const float fPosY,
-                            const SCUIArg::StringPurifier& style);
+        cocos2d::Node* insertUserNode(const SCUIArg::NodePurifier& userNode,
+                                      const float fPosX,
+                                      const float fPosY,
+                                      const SCUIArg::StringPurifier& style);
         
         ///-------------- sprite
         cocos2d::Sprite* insertSprite(cocos2d::Sprite** ppSprite,

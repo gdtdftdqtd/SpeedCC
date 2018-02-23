@@ -89,10 +89,10 @@ namespace SpeedCC
     }
     
     ///------------ user node
-    void SCUIBuilder::insertUserNode(const SCUIArg::NodePurifier& userNode,
-                                     const float fPosX,
-                                     const float fPosY,
-                                     const SCUIArg::StringPurifier& style)
+    cocos2d::Node* SCUIBuilder::insertUserNode(const SCUIArg::NodePurifier& userNode,
+                                               const float fPosX,
+                                               const float fPosY,
+                                               const SCUIArg::StringPurifier& style)
     {
         Node* pNode = dynamic_cast<Node*>(userNode.ptrNodeHolder->getRef());
         SCASSERT(pNode!=nullptr);
@@ -112,6 +112,7 @@ namespace SpeedCC
             userNode.pfunSetStyle(pNode,style.strResult,nullptr);
         }
         
+        return pNode;
     }
     
     ///---------------- sprite
