@@ -80,7 +80,10 @@ namespace SpeedCC
     SCString operator+(const SCEncodingChar& encodingChar,const SCString& str2);
     SCString operator+(const SCString& str2,const SCEncodingChar& encodingChar);
     
-    class SCString : public SCObject
+    /*!
+        SCString is C string wrapper class, it provides convenient methods for handling string value.
+     */
+    class SCString
     {
     private:
         struct SStringDesc
@@ -103,7 +106,7 @@ namespace SpeedCC
         };
         
     public:
-        SC_DEFINE_CLASS_PTR(SCString)
+        
         SCString();
         SCString(const SCString& strSring);
         

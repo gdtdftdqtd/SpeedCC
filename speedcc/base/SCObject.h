@@ -24,6 +24,12 @@
 
 namespace SpeedCC
 {
+    /*!
+        This class is SpeedCC object base class.
+     
+     /note Class must derived from SCObject if want to be owned by SCObjPtrT as smart pointer.
+     
+     */
     class SCObject
     {
         template<typename,bool> friend class SCObjPtrT;
@@ -33,27 +39,55 @@ namespace SpeedCC
         SCObject();
         virtual ~SCObject();
         
+        /*!
+            Converts raw pointer to smart pointer
+         
+            /tparam T Type of smart pointer to target
+         */
         template<typename T>
         T makeObjPtr()
         {
             return _pObjPtrData==nullptr ? nullptr : SCObjPtrT<typename T::type>(_pObjPtrData);
         }
         
+        /*!
+         Converts raw pointer to smart pointer
+         Convenient method for conversion without caring about target type exactly.
+         
+         For example: auto ptr = this->makeObjPtr(this);
+         
+         /tparam T Type of smart pointer to target
+         /param t For traits target type only, no use in run time.
+         */
         template<typename T>
-        SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type> makeObjPtr(T)
+        SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type> makeObjPtr(T t)
         {
-            return _pObjPtrData==nullptr ? nullptr : SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
+            return _pObjPtrData==nullptr ? nullptr :
+            SCObjPtrT<typename std::decay<typename std::remove_pointer<T>::type>::type>(_pObjPtrData);
         }
         
+        /*!
+            Adds SCObject to current object.
+         
+            The purpose of this method is to have the same life cycle with current object.
+         
+            /ptrObj Target object
+         */
         void addObject(SCObject::Ptr ptrObj);
+        
+        /*!
+         Removes SCObject from current object.
+         
+         /ptrObj Target object
+         */
         void removeObject(SCObject::Ptr ptrObj);
         
     private:
         void setObjPtrData(void* pData);
         
     private:
-        void*                       _pObjPtrData;
-        std::list<SCObject::Ptr>    _objList;
+        void*                       _pObjPtrData;   //!< The buffer of SCObjRefT's buffer
+        std::list<SCObject::Ptr>    _objList;       //!< The list of owned objects
     };
 }
 
