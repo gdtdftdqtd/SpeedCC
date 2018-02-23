@@ -593,7 +593,7 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
         }
         else
         {
-            CCLOG("cocos2d: SpriteFrameCache: Frame '%s' isn't found", name.c_str());
+//            CCLOG("cocos2d: SpriteFrameCache: Frame '%s' isn't found", name.c_str());
         }
     }
     return frame;

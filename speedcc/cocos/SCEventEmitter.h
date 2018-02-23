@@ -45,7 +45,11 @@ namespace SpeedCC
         
         virtual ~SCEventEmitter();
         
+        typedef std::function<void(SCMessage::Ptr)>     ListenFunc_t;
+        
+        SC_DEFINE_CREATE_FUNC_2(SCEventEmitter,EEventType,cocos2d::Node*)
         SC_DEFINE_CREATE_FUNC_3(SCEventEmitter,EEventType,cocos2d::Node*,SCMessageListener*)
+        SC_DEFINE_CREATE_FUNC_3(SCEventEmitter,EEventType,cocos2d::Node*,const ListenFunc_t&)
         
         inline void setActive(const bool bActive) {_bActive = bActive;}
         inline bool getActive() const {return _bActive;}
@@ -53,9 +57,14 @@ namespace SpeedCC
         inline cocos2d::EventListener* getEventListener() const { return _pTouchListener; }
         void setEventType(EEventType type);
         
+        void setListenFunc(const ListenFunc_t& listenFunc);
+        void setMessageListener(SCMessageListener* pMsgListener);
+        
     protected:
         SCEventEmitter();
+        SCEventEmitter(EEventType type,cocos2d::Node* pNode);
         SCEventEmitter(EEventType type,cocos2d::Node* pNode,SCMessageListener* pMsgListener);
+        SCEventEmitter(EEventType type,cocos2d::Node* pNode,const ListenFunc_t& listenFunc);
         
     private:
         bool onSingleTouchBegan(cocos2d::Touch* pTouch, cocos2d::Event* pEvent);
@@ -85,11 +94,11 @@ namespace SpeedCC
             this->sendEventMessage(nMsg,dic);
         }
         
-        void sendEventMessage(const int nMsg,SCDictionary dic);
+        SCDictionary sendEventMessage(const int nMsg,SCDictionary dic);
         
     private:
         bool                                    _bActive;
-        SCMessageListener*                      _pMsgListener;
+        ListenFunc_t                            _listenFunc;
         cocos2d::Node*                          _pReceiveNode;
         EEventType                              _eventType;
         cocos2d::EventListener*                 _pTouchListener; // no need to remove from event dispatch

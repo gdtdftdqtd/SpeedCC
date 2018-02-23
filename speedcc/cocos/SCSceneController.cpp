@@ -21,8 +21,10 @@
 #include "cocos2d.h"
 
 #include "SCSceneController.h"
+#include "SCSceneNavigator.h"
 #include "../base/SCTemplateUtils.h"
 #include "../stage/SCStageMacroDef.h"
+#include "../stage/SCBehaviorCocos.h"
 
 namespace SpeedCC
 {
@@ -202,6 +204,30 @@ namespace SpeedCC
                            {
                                func(dic);
                            });
+    }
+    
+    void SCSceneController::setBackButtonSceneEnabled(const bool bEnabled)
+    {
+        if(bEnabled)
+        {
+            const auto call = [](SCMessage::Ptr ptrMsg)
+            {
+                SC_RETURN_V_IF(ptrMsg->nMsgID!=SCID::Msg::kSCMsgKeyboardKeyDown);
+                
+                auto value = ptrMsg->parameters.getValue(SC_KEY_KEYBOARDCODE);
+                auto code = value.getObject<cocos2d::EventKeyboard::KeyCode>();
+                SC_RETURN_V_IF(code!=cocos2d::EventKeyboard::KeyCode::KEY_BACK);
+                SCBehaviorSceneBack::create()->execute();
+            };
+            
+            _ptrKeyboardEventEmtr = SCEventEmitter::create(SCEventEmitter::EEventType::kKeyboard,
+                                                           _pBedNode,
+                                                           call);
+        }
+        else
+        {
+            _ptrKeyboardEventEmtr = nullptr;
+        }
     }
     
     void SCSceneController::listenMessage(const int nMsg,MsgFunc_t func)

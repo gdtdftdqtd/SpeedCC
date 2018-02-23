@@ -22,18 +22,45 @@
 namespace SpeedCC
 {
     SCEventEmitter::SCEventEmitter():
-    _pMsgListener(nullptr),
     _pReceiveNode(nullptr),
-    _bActive(true)
+    _bActive(true),
+    _pTouchListener(nullptr)
     {}
     
-    SCEventEmitter::SCEventEmitter(EEventType type,cocos2d::Node* pNode,SCMessageListener* pMsgListener):
-    _pMsgListener(pMsgListener),
+    SCEventEmitter::SCEventEmitter(EEventType type,cocos2d::Node* pNode):
     _pReceiveNode(pNode),
     _eventType(type),
-    _bActive(true)
+    _bActive(true),
+    _pTouchListener(nullptr)
     {
+        this->setEventType(type);
+    }
+    
+    SCEventEmitter::SCEventEmitter(EEventType type,cocos2d::Node* pNode,SCMessageListener* pMsgListener):
+    _pReceiveNode(pNode),
+    _eventType(type),
+    _bActive(true),
+    _pTouchListener(nullptr)
+    {
+        if(pMsgListener!=nullptr)
+        {
+            _listenFunc = [pMsgListener](SCMessage::Ptr ptrMsg)
+            {
+                pMsgListener->onSCMessageProcess(ptrMsg);
+            };
+        }
         
+        this->setEventType(type);
+    }
+    
+    SCEventEmitter::SCEventEmitter(EEventType type,cocos2d::Node* pNode,const ListenFunc_t& listenFunc):
+    _listenFunc(listenFunc),
+    _pReceiveNode(pNode),
+    _eventType(type),
+    _bActive(true),
+    _pTouchListener(nullptr)
+    {
+        this->setEventType(type);
     }
     
     SCEventEmitter::~SCEventEmitter()
@@ -42,6 +69,24 @@ namespace SpeedCC
         {
             SCCCDirector()->getEventDispatcher()->removeEventListener(_pTouchListener);
             _pTouchListener = nullptr;
+        }
+    }
+    
+    void SCEventEmitter::setListenFunc(const ListenFunc_t& listenFunc)
+    {
+        _listenFunc = listenFunc;
+    }
+    
+    void SCEventEmitter::setMessageListener(SCMessageListener* pMsgListener)
+    {
+        _listenFunc = nullptr;
+        
+        if(pMsgListener!=nullptr)
+        {
+            _listenFunc = [pMsgListener](SCMessage::Ptr ptrMsg)
+            {
+                pMsgListener->onSCMessageProcess(ptrMsg);
+            };
         }
     }
     
@@ -120,20 +165,8 @@ namespace SpeedCC
         
         SCDictionary dic(pair,SC_ARRAY_LENGTH(pair));
         
-        SCMessage::Ptr ptrMsg = SCMessage::create();
-        ptrMsg->nMsgID = SCID::Msg::kSCMsgTouchBegan;
-        ptrMsg->parameters = dic;
-        
-        if(_pMsgListener==nullptr)
-        {
-            SCMsgDisp()->sendMessage(ptrMsg);
-        }
-        else
-        {
-            _pMsgListener->onSCMessageProcess(ptrMsg);
-        }
-        
-        return ptrMsg->parameters.getValue(SC_KEY_RESULT).getBool();
+        auto result = this->sendEventMessage(SCID::Msg::kSCMsgTouchBegan,dic);
+        return result.getValue(SC_KEY_RESULT).getBool();
     }
     
     void SCEventEmitter::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
@@ -210,19 +243,21 @@ namespace SpeedCC
         this->sendEventMessage(SCID::Msg::kSCMsgKeyboardKeyDown,dic);
     }
     
-    void SCEventEmitter::sendEventMessage(const int nMsg,SCDictionary dic)
+    SCDictionary SCEventEmitter::sendEventMessage(const int nMsg,SCDictionary dic)
     {
         SCMessage::Ptr ptrMsg = SCMessage::create();
         ptrMsg->nMsgID = nMsg;
         ptrMsg->parameters = dic;
         
-        if(_pMsgListener==nullptr)
+        if(_listenFunc==nullptr)
         {
             SCMsgDisp()->sendMessage(ptrMsg);
         }
         else
         {
-            _pMsgListener->onSCMessageProcess(ptrMsg);
+            _listenFunc(ptrMsg);
         }
+        
+        return ptrMsg->parameters;
     }
 }

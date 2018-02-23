@@ -27,6 +27,7 @@
 #include "SCCocosDef.h"
 #include "SCBinderCocos.h"
 #include "SCUIBuilder.h"
+#include "SCEventEmitter.h"
 
 #include "../base/SCObjPtrT.h"
 #include "../base/SCObject.h"
@@ -82,6 +83,9 @@ namespace SpeedCC
         
         void finish(void* pResult=nullptr);
         
+        void setBackButtonSceneEnabled(const bool bEnabled);
+        inline bool getBackButtonSceneEnabled() const { return _ptrKeyboardEventEmtr!=nullptr; }
+        
     protected:
         SCSceneController();
         
@@ -103,6 +107,7 @@ namespace SpeedCC
         std::list<SCObject::Ptr>                    _ownLifecycleList;
         std::map<int,MsgFunc_t>                     _msg2FuncMap;
         FinishFunc_t                                _finishFunc;
+        SCEventEmitter::Ptr                         _ptrKeyboardEventEmtr;
     };
     
 
