@@ -22,12 +22,15 @@
 
 // root
 #define SC_BEGIN_CONTAINER_ROOT(_style_,_size_) \
-    SC_BEGIN_CONTAINER_ROOT_EX((_style_),(_size_),this->getBedNode(),this);
+{\
+    SCUIBuilder::Ptr ptrSCTemUIBuilder = SCUIBuilder::create();\
+    ptrSCTemUIBuilder->beginContainerRoot(0.5,0.5,(_style_),(_size_),this->getBedNode(),this);
+
 
 #define SC_BEGIN_CONTAINER_ROOT_EX(_style_,_size_,_parent_,_ref_) \
 {\
     SCUIBuilder::Ptr ptrSCTemUIBuilder = SCUIBuilder::create();\
-    ptrSCTemUIBuilder->beginContainerRoot(0,0,(_style_),(_size_),(_parent_),(_ref_));
+    ptrSCTemUIBuilder->beginContainerRoot(kSCPositionIgnore,kSCPositionIgnore,(_style_),(_size_),(_parent_),(_ref_));
 
 #define SC_END_CONTAINER \
     ptrSCTemUIBuilder->popContainerStack(); \
@@ -178,13 +181,13 @@ ptrSCTemUIBuilder->pushContainerStack(pSCContainerNode);
 #define SC_INSERT_OPTION_MUSIC(_node_,_style_,_true_item_,_false_item_) \
 do{\
     auto ptrMusic = SpeedCC::SCSetting::getInstance()->getMusicWatch();\
-    SC_INSERT_BUTTON_SWITCH((_node_),0,0,(_style_),(_true_item_),(_false_item_),ptrMusic,nullptr) \
+    SC_INSERT_BUTTON_SWITCH((_node_),(_style_),(_true_item_),(_false_item_),ptrMusic,nullptr) \
 }while(0);
 
 #define SC_INSERT_OPTION_SOUND(_node_,_style_,_true_item_,_false_item_) \
 do{\
     auto ptrSound = SpeedCC::SCSetting::getInstance()->getSoundWatch();\
-    SC_INSERT_BUTTON_SWITCH((_node_),0,0,(_style_),(_true_item_),(_false_item_),ptrSound,nullptr) \
+    SC_INSERT_BUTTON_SWITCH((_node_),(_style_),(_true_item_),(_false_item_),ptrSound,nullptr) \
 }while(0);
 
 #endif

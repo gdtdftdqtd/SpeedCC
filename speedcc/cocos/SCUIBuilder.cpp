@@ -49,8 +49,7 @@ namespace SpeedCC
         SCASSERT(_pCurrentBedNode!=nullptr);
         SCASSERT(_pCurrentRefCaller!=nullptr);
         
-        cocos2d::Size size = (sizePurifier.size.equals(Size::ZERO)) ?
-        pParentNode->getContentSize() : sizePurifier.size;
+        cocos2d::Size size = (sizePurifier.size.equals(Size::ZERO)) ? pParentNode->getContentSize() : sizePurifier.size;
         
         _pCurrentBedNode->setContentSize(size);
         
@@ -70,7 +69,9 @@ namespace SpeedCC
             _pCurrentBedNode->setPositionY(SpeedCC::SCNodeUtils::posP2A(cocos2d::Vec2(fPosX,fPosY),size).y);
         }
         
-        parentNode.pfunSetStyle(pParentNode,style.strResult,nullptr);
+        SCNodeStyle::SFilterConfig config;
+        config.setupPosition(true);
+        parentNode.pfunSetStyle(pParentNode,style.strResult,&config);
         
         this->pushContainerStack(pParentNode);
     }
