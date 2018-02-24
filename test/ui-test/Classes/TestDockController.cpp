@@ -38,7 +38,7 @@ void TestDockController::testCaseNoScale()
 {
     (*_ptrWatchDescription) = "(No Scale, Middle Anchor)";
     _pContainerLayer->removeAllChildren();
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         // center
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",Size(80,80),Color4B::RED)
@@ -93,7 +93,7 @@ void TestDockController::testCaseWithScale()
 {
     (*_ptrWatchDescription) = "(With Scale, Middle Anchor)";
     _pContainerLayer->removeAllChildren();
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         // center
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center; scale=0.5;",Size(80,80),Color4B::RED)
@@ -147,7 +147,7 @@ void TestDockController::testCaseWithScaleAnchor()
     (*_ptrWatchDescription) = "(With Scale, Different Anchor)";
     _pContainerLayer->removeAllChildren();
     
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         // center
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center; scale=0.5; anchor=(0,0);",Size(80,80),Color4B::RED)

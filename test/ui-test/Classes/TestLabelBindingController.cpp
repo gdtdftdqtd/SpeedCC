@@ -34,7 +34,7 @@ void TestLabelBindingController::onCreate(SCDictionary parameters)
     SCBinderUILabel::Ptr binderStrPtr = SCBinderUILabel::create();
     binderStrPtr->setWatch(_ptrWatchStr);
 
-    SC_BEGIN_CONTAINER_ROOT("dock=center;",SCWinSize)
+    SC_BEGIN_CONTAINER_ROOT(nullptr,SCWinSize)
 
         // title
         SC_INSERT_LABEL_BMFONT(nullptr,"x=0.5; y=0.95;","Label Binding","blue_font.fnt")

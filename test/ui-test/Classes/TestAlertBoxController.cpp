@@ -33,7 +33,7 @@ void TestAlertBoxController::onCreate(SCDictionary parameters)
     
 void TestAlertBoxController::setupUI()
 {
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
             SC_INSERT_BUTTON_LABEL(nullptr,"color-text=black;","Show System AlertBox","",23,
                                    SCBehaviorCallFunc::create(SC_MAKE_FUNC(showSystemAlertBox, this)))
@@ -76,7 +76,7 @@ void TestCustomizeABController::onCreate(SpeedCC::SCDictionary parameters)
     bResult = false;
     auto strButton2 = parameters.getValue(SC_KEY_STRING1).getString(&bResult);
     
-    SC_BEGIN_CONTAINER_ROOT("dock=center;",SCWinSize)
+    SC_BEGIN_CONTAINER_ROOT(nullptr,SCWinSize)
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",Size(280,140),Color4B::GRAY)
             SC_INSERT_LABEL(nullptr,  "y-by=-5; x-by=5; dock=top|left;", strTitle, "", 15)
             SC_INSERT_LABEL(nullptr,"dock=center; y-by=10;",strMessage,"",20)

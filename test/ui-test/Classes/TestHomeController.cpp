@@ -40,7 +40,7 @@ void TestHomeController::onCreate(SCDictionary parameters)
     
     auto ptrLoadingBvr = SCBehaviorSceneGoto::create<TestLoadingTraget0Controller,SCClassNull,TestLoadingController>();
     
-    SC_BEGIN_CONTAINER_ROOT("dock=center;",nullptr)
+    SC_BEGIN_CONTAINER_ROOT(nullptr,nullptr)
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",SCWinSize,Color4B::WHITE)
             SC_INSERT_LABEL_BMFONT(nullptr,"x=0.5; y=0.90;","Home Scene","blue_font.fnt")
     

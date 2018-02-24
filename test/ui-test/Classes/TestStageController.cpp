@@ -77,7 +77,7 @@ void TestStageController::setupUI()
     _ptrTrigger->addCondition(SCTriggerBool::EComparsion::kEqual, false, ptrBvrStop);
     
     
-    SC_BEGIN_CONTAINER_ROOT("dock=center;",SCWinSize)
+    SC_BEGIN_CONTAINER_ROOT(nullptr,SCWinSize)
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",SCWinSize,Color4B::GRAY)
 
             // title

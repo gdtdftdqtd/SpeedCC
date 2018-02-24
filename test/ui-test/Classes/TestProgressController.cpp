@@ -41,7 +41,7 @@ void TestProgressController::testCaseBarBasic()
     (*_ptrWatchDescription) = "(Bar Basic)";
     _pContainerLayer->removeAllChildren();
     
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
     
@@ -79,7 +79,7 @@ void TestProgressController::testCaseRadialBasic()
     (*_ptrWatchDescription) = "(Radial Basic)";
     _pContainerLayer->removeAllChildren();
     
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
     
@@ -135,7 +135,7 @@ void TestProgressController::testCaseBarBinding()
                            });
     
     
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
     
@@ -220,7 +220,7 @@ void TestProgressController::testCaseRadialBinding()
                                (*_ptrWatchStr2) = SCString(0,"(radial, ccw, %d%%)",kk);
                            });
     
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
     

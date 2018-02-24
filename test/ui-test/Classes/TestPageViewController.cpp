@@ -35,7 +35,7 @@ void TestPageViewController::onCreate(SCDictionary parameters)
     
 void TestPageViewController::setupUI()
 {
-    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
     
         SC_BEGIN_CONTAINER_PAGEVIEW(nullptr,"dock=center;",true,Size(SCWinSize.width*2/3,SCWinSize.height/2),0,nullptr)
             SC_BEGIN_CONTAINER_PAGE(nullptr, SCWinSize)
