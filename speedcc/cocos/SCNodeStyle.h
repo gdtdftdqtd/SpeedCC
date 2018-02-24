@@ -27,7 +27,6 @@ namespace SpeedCC
 {
 // for better search algorithm, must keep macro name match string value
 #define SC_NODE_STYLE_TAG                "tag"           // int
-#define SC_NODE_STYLE_XY                 "xy"            // Vec2
 #define SC_NODE_STYLE_X                  "x"             // float
 #define SC_NODE_STYLE_Y                  "y"             // float
 #define SC_NODE_STYLE_Z                  "z"             // int
@@ -101,7 +100,6 @@ namespace SpeedCC
                 bExclude = bExclude0;
                 keyVtr =
                 {
-                    SC_NODE_STYLE_XY,
                     SC_NODE_STYLE_X,
                     SC_NODE_STYLE_Y,
                     SC_NODE_STYLE_DOCK,

@@ -53,7 +53,6 @@ namespace SpeedCC
         {SC_NODE_STYLE_VISIBLE       ,BOOL_TYPE},
         {SC_NODE_STYLE_X             ,FLOAT_TYPE},
         {SC_NODE_STYLE_X_BY          ,FLOAT_TYPE},
-        {SC_NODE_STYLE_XY            ,VEC2_TYPE},
         {SC_NODE_STYLE_Y             ,FLOAT_TYPE},
         {SC_NODE_STYLE_Y_BY          ,FLOAT_TYPE},
         {SC_NODE_STYLE_Z             ,INT_TYPE},
@@ -81,21 +80,15 @@ namespace SpeedCC
             pNode->setColor(crValue);
         }
         
-        if(SCNodeStyle::getVec2(dic,SC_NODE_STYLE_XY,vec2))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_X,fValue) && pNode->getParent())
         {
-            auto pos = SCNodeUtils::posP2A(vec2,pNode->getContentSize());
-            pNode->setPosition(pos);
-        }
-        
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_X,fValue))
-        {
-            auto pos = SCNodeUtils::posP2A(Vec2(fValue,0),pNode->getContentSize());
+            auto pos = SCNodeUtils::posP2A(Vec2(fValue,0),pNode->getParent()->getContentSize());
             pNode->setPositionX(pos.x);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_Y,fValue) && pNode->getParent())
         {
-            auto pos = SCNodeUtils::posP2A(Vec2(0,fValue),pNode->getContentSize());
+            auto pos = SCNodeUtils::posP2A(Vec2(0,fValue),pNode->getParent()->getContentSize());
             pNode->setPositionY(pos.y);
         }
         

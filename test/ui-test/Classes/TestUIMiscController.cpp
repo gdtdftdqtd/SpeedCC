@@ -33,8 +33,8 @@ void TestUIMiscController::onCreate(SCDictionary parameters)
     
 void TestUIMiscController::setupUI()
 {
-    SC_BEGIN_CONTAINER_ROOT_EX(0.5, 0.5, nullptr, SCWinSize, _pContainerLayer, this)
-        SC_INSERT_EDITBOX(nullptr,0.5,0.5,nullptr,Size(100,26),"progressbar_bk.png",this)
+    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+        SC_INSERT_EDITBOX(nullptr,"dock=center;",Size(100,26),"progressbar_bk.png",this)
     SC_END_CONTAINER
 }
 

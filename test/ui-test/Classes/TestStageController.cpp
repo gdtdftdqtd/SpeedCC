@@ -77,19 +77,19 @@ void TestStageController::setupUI()
     _ptrTrigger->addCondition(SCTriggerBool::EComparsion::kEqual, false, ptrBvrStop);
     
     
-    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,nullptr,SCWinSize)
-        SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,0.5,0.5,nullptr,SCWinSize,Color4B::GRAY)
+    SC_BEGIN_CONTAINER_ROOT("dock=center;",SCWinSize)
+        SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",SCWinSize,Color4B::GRAY)
 
             // title
-            SC_INSERT_LABEL_BMFONT(nullptr,0,0,"dock=top|mid-x; y-by=-100;","Test Stage","blue_font.fnt")
+            SC_INSERT_LABEL_BMFONT(nullptr,"dock=top|mid-x; y-by=-100;","Test Stage","blue_font.fnt")
 
-            SC_INSERT_BUTTON_SWITCH(nullptr, 0.5, 0.6, "", SCUIArg::MenuItemPurifier("Stop",22), SCUIArg::MenuItemPurifier("Start",22), ptrWatchBool, nullptr)
+            SC_INSERT_BUTTON_SWITCH(nullptr, "x=0.5; y=0.6;", SCUIArg::MenuItemPurifier("Stop",22), SCUIArg::MenuItemPurifier("Start",22), ptrWatchBool, nullptr)
     
-            SC_INSERT_BUTTON_LABEL(nullptr, 0.5, 0.4, nullptr, "Message Log", "", 20, ptrBvrMsgLog)
-            SC_INSERT_BUTTON_LABEL(nullptr, 0.5, 0.3, nullptr, "Command Log", "", 20, ptrBvrCmdLog)
+            SC_INSERT_BUTTON_LABEL(nullptr, "x=0.5; y=0.4;", "Message Log", "", 20, ptrBvrMsgLog)
+            SC_INSERT_BUTTON_LABEL(nullptr, "x=0.5; y=0.3;", "Command Log", "", 20, ptrBvrCmdLog)
 
             // back button
-            SC_INSERT_BUTTON_LABEL(nullptr, 0, 0, "color-text=black; dock=left|top; x-by=3; y-by=-3;", "Back", "", 22, SCBehaviorSceneBack::create())
+            SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black; dock=left|top; x-by=3; y-by=-3;", "Back", "", 22, SCBehaviorSceneBack::create())
         SC_END_CONTAINER
     SC_END_CONTAINER
 }

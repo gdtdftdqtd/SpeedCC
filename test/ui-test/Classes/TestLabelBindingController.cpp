@@ -34,22 +34,22 @@ void TestLabelBindingController::onCreate(SCDictionary parameters)
     SCBinderUILabel::Ptr binderStrPtr = SCBinderUILabel::create();
     binderStrPtr->setWatch(_ptrWatchStr);
 
-    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,nullptr,SCWinSize)
+    SC_BEGIN_CONTAINER_ROOT("dock=center;",SCWinSize)
 
         // title
-        SC_INSERT_LABEL_BMFONT(nullptr,0.5,0.95,"","Label Binding","blue_font.fnt")
+        SC_INSERT_LABEL_BMFONT(nullptr,"x=0.5; y=0.95;","Label Binding","blue_font.fnt")
     
         // number binding
-        SC_INSERT_LABEL(nullptr,0.4,0.75,"",_ptrWatchInt,"",30)
-        SC_INSERT_BUTTON_LABEL(nullptr,0.6,0.75,"color-text=red;","+","",33,SCF(onButtonAdd))
-        SC_INSERT_BUTTON_LABEL(nullptr,0.7,0.75,"color-text=red;","-","",33,SCF(onButtonSub))
+        SC_INSERT_LABEL(nullptr,"x=0.4; y=0.75;",_ptrWatchInt,"",30)
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.6; y=0.75; color-text=red;","+","",40,SCF(onButtonAdd))
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.7; y=0.75; color-text=red;","-","",40,SCF(onButtonSub))
     
         // string binding
-        SC_INSERT_LABEL(nullptr,0.4,0.5,"color-text=yellow;",binderStrPtr,"",30)
-        SC_INSERT_BUTTON_LABEL(nullptr,0.65,0.5,"color-text=red;","click","",25,SCF(onButtonRandomText))
+        SC_INSERT_LABEL(nullptr,"x=0.4; y=0.5; color-text=yellow;",binderStrPtr,"",30)
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.65; y=0.5; color-text=red;","click","",25,SCF(onButtonRandomText))
     
         // back
-        SC_INSERT_BUTTON_LABEL(nullptr,0.15,0.95,"color-text=red;","back","",25,SCF(onButtonBack))
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.15; y=0.95; color-text=red;","back","",25,SCF(onButtonBack))
     SC_END_CONTAINER
     
 }

@@ -36,12 +36,12 @@ void TestLoadingController::setupUI()
     _ptrWatchStr = SCWatchString::create();
     _nCounter = 4;
     
-    SC_BEGIN_CONTAINER_ROOT(0.5,0.5,nullptr,SCWinSize)
-        SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,0.5,0.5,nullptr,SCWinSize,Color4B::WHITE)
+    SC_BEGIN_CONTAINER_ROOT("dock=center;",SCWinSize)
+        SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",SCWinSize,Color4B::WHITE)
             // title
-            SC_INSERT_LABEL_BMFONT(nullptr,0,0,"dock=top|mid-x; y-by=-100;","Test Loading","blue_font.fnt")
+            SC_INSERT_LABEL_BMFONT(nullptr,"dock=top|mid-x; y-by=-100;","Test Loading","blue_font.fnt")
     
-            SC_INSERT_LABEL(nullptr, 0, 0, "dock=center; color-text=black;", _ptrWatchStr, "", 20)
+            SC_INSERT_LABEL(nullptr, "dock=center; color-text=black;", _ptrWatchStr, "", 20)
         SC_END_CONTAINER
     SC_END_CONTAINER
     
@@ -77,8 +77,8 @@ void TestLoadingTraget0Controller::onCreate(SpeedCC::SCDictionary parameters)
 
 void TestLoadingTraget0Controller::setupUI()
 {
-    SC_BEGIN_CONTAINER_ROOT_EX(0.5, 0.5, nullptr, SCWinSize, _pContainerLayer, this)
-        SC_INSERT_BUTTON_LABEL(nullptr, 0, 0, "dock=center; color-text=black;", "Test Back", "", 20, SCBehaviorSceneGoto::create<TestLoadingTraget1Controller>())
+    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
+        SC_INSERT_BUTTON_LABEL(nullptr, "dock=center; color-text=black;", "Test Back", "", 20, SCBehaviorSceneGoto::create<TestLoadingTraget1Controller>())
     SC_END_CONTAINER
 }
 

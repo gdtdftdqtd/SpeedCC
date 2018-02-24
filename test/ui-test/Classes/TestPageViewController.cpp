@@ -35,15 +35,15 @@ void TestPageViewController::onCreate(SCDictionary parameters)
     
 void TestPageViewController::setupUI()
 {
-    SC_BEGIN_CONTAINER_ROOT_EX(0.5, 0.5, nullptr, SCWinSize, _pContainerLayer, this)
+    SC_BEGIN_CONTAINER_ROOT_EX("dock=center;", SCWinSize, _pContainerLayer, this)
     
-        SC_BEGIN_CONTAINER_PAGEVIEW(nullptr,0.5,0.5,nullptr,true,Size(SCWinSize.width*2/3,SCWinSize.height/2),0,nullptr)
+        SC_BEGIN_CONTAINER_PAGEVIEW(nullptr,"dock=center;",true,Size(SCWinSize.width*2/3,SCWinSize.height/2),0,nullptr)
             SC_BEGIN_CONTAINER_PAGE(nullptr, SCWinSize)
-                SC_INSERT_SPRITE(nullptr, 0.5, 0.5, nullptr, "HelloWorld.png")
+                SC_INSERT_SPRITE(nullptr, "dock=center;", "HelloWorld.png")
             SC_END_CONTAINER
 
             SC_BEGIN_CONTAINER_PAGE(nullptr, SCWinSize)
-                SC_INSERT_SPRITE(nullptr, 0.5, 0.5, nullptr, "HelloWorld.png")
+                SC_INSERT_SPRITE(nullptr, "dock=center;", "HelloWorld.png")
             SC_END_CONTAINER
 
         SC_END_CONTAINER
