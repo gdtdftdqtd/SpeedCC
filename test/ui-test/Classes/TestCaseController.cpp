@@ -71,10 +71,10 @@ void TestCaseController::onCreate(SCDictionary parameters)
             {
                 // title
                 SC_INSERT_LABEL_BMFONT(nullptr,"dock=top|mid-x; y-by=-100;",strTitle,"blue_font.fnt")
-                SC_INSERT_LABEL(nullptr, "dock=top|mid-x; y-by=-150; color-text=black;", _ptrWatchDescription, "", 18)
+                SC_INSERT_LABEL(nullptr, "dock=top|mid-x; y-by=-150; text-color=black;", _ptrWatchDescription, "", 18)
                 
                 // back button
-                SC_INSERT_BUTTON_LABEL(nullptr,  "color-text=black; dock=left|top; x-by=3; y-by=-100;", "Back", "", 22, SCBehaviorSceneBack::create())
+                SC_INSERT_BUTTON_LABEL(nullptr,  "text-color=black; dock=left|top; x-by=3; y-by=-100;", "Back", "", 22, SCBehaviorSceneBack::create())
                 
                 SC_INSERT_BUTTON(&_pNextMenuItem,  "dock=bottom|mid-x; y-by=100; x-by=60;", "btn_arrow.png", "btn_arrow.png", "btn_arrow.png", ptrNextBvr)
                 
@@ -84,10 +84,10 @@ void TestCaseController::onCreate(SCDictionary parameters)
             {
                 // title
                 SC_INSERT_LABEL_BMFONT(nullptr,"dock=top|mid-x; y-by=-50;",strTitle,"blue_font.fnt")
-                SC_INSERT_LABEL(nullptr,"dock=top|mid-x; y-by=-100; color-text=black;", _ptrWatchDescription, "", 18)
+                SC_INSERT_LABEL(nullptr,"dock=top|mid-x; y-by=-100; text-color=black;", _ptrWatchDescription, "", 18)
                 
                 // back button
-                SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black; dock=left|top; x-by=3; y-by=-3;", "Back", "", 22, SCBehaviorSceneBack::create())
+                SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black; dock=left|top; x-by=3; y-by=-3;", "Back", "", 22, SCBehaviorSceneBack::create())
                 
                 SC_INSERT_BUTTON(&_pNextMenuItem,"dock=bottom|mid-x; y-by=50; x-by=60;", "btn_arrow.png", "btn_arrow.png", "btn_arrow.png", ptrNextBvr)
                 

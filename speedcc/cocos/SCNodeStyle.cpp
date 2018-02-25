@@ -29,33 +29,33 @@ namespace SpeedCC
     // go to http://textmechanic.com/Sort-Text-Lines.html for sorting
     SCNodeStyle::SStylePair SCNodeStyle::s_StylePairArray[] =
     {
-        {SC_NODE_STYLE_ANCHOR        ,VEC2_TYPE},
-        {SC_NODE_STYLE_ANCHOR_ON     ,BOOL_TYPE},
-        {SC_NODE_STYLE_COLOR         ,COLOR3_TYPE},
-        {SC_NODE_STYLE_COLOR_TEXT    ,COLOR4_TYPE},
-        {SC_NODE_STYLE_DOCK          ,DOCK_TYPE},
-        {SC_NODE_STYLE_FLIP_X        ,BOOL_TYPE},
-        {SC_NODE_STYLE_FLIP_Y        ,BOOL_TYPE},
-        {SC_NODE_STYLE_FONT_NAME     ,STRING_TYPE},
-        {SC_NODE_STYLE_FONT_SIZE     ,FLOAT_TYPE},
-        {SC_NODE_STYLE_IMAGE         ,STRING_TYPE},
-        {SC_NODE_STYLE_LABEL         ,STRING_TYPE},
-        {SC_NODE_STYLE_OPACITY       ,FLOAT_TYPE},
-        {SC_NODE_STYLE_ROTATION      ,FLOAT_TYPE},
-        {SC_NODE_STYLE_ROTATION_X    ,FLOAT_TYPE},
-        {SC_NODE_STYLE_ROTATION_Y    ,FLOAT_TYPE},
-        {SC_NODE_STYLE_SCALE         ,FLOAT_TYPE},
-        {SC_NODE_STYLE_SCALE_X       ,FLOAT_TYPE},
-        {SC_NODE_STYLE_SCALE_Y       ,FLOAT_TYPE},
-        {SC_NODE_STYLE_SKEW_X        ,FLOAT_TYPE},
-        {SC_NODE_STYLE_SKEW_Y        ,FLOAT_TYPE},
-        {SC_NODE_STYLE_TAG           ,INT_TYPE},
-        {SC_NODE_STYLE_VISIBLE       ,BOOL_TYPE},
-        {SC_NODE_STYLE_X             ,FLOAT_TYPE},
-        {SC_NODE_STYLE_X_BY          ,FLOAT_TYPE},
-        {SC_NODE_STYLE_Y             ,FLOAT_TYPE},
-        {SC_NODE_STYLE_Y_BY          ,FLOAT_TYPE},
-        {SC_NODE_STYLE_Z             ,INT_TYPE},
+        {SC_STYLE_ANCHOR        ,VEC2_TYPE},
+        {SC_STYLE_ANCHOR_ON     ,BOOL_TYPE},
+        {SC_STYLE_COLOR         ,COLOR3_TYPE},
+        {SC_STYLE_DOCK          ,DOCK_TYPE},
+        {SC_STYLE_FLIP_X        ,BOOL_TYPE},
+        {SC_STYLE_FLIP_Y        ,BOOL_TYPE},
+        {SC_STYLE_FONT_NAME     ,STRING_TYPE},
+        {SC_STYLE_FONT_SIZE     ,FLOAT_TYPE},
+        {SC_STYLE_IMAGE         ,STRING_TYPE},
+        {SC_STYLE_OPACITY       ,FLOAT_TYPE},
+        {SC_STYLE_ROTATION      ,FLOAT_TYPE},
+        {SC_STYLE_ROTATION_X    ,FLOAT_TYPE},
+        {SC_STYLE_ROTATION_Y    ,FLOAT_TYPE},
+        {SC_STYLE_SCALE         ,FLOAT_TYPE},
+        {SC_STYLE_SCALE_X       ,FLOAT_TYPE},
+        {SC_STYLE_SCALE_Y       ,FLOAT_TYPE},
+        {SC_STYLE_SKEW_X        ,FLOAT_TYPE},
+        {SC_STYLE_SKEW_Y        ,FLOAT_TYPE},
+        {SC_STYLE_TAG           ,INT_TYPE},
+        {SC_STYLE_TEXT          ,STRING_TYPE},
+        {SC_STYLE_TEXT_COLOR    ,COLOR4_TYPE},
+        {SC_STYLE_VISIBLE       ,BOOL_TYPE},
+        {SC_STYLE_X             ,FLOAT_TYPE},
+        {SC_STYLE_X_BY          ,FLOAT_TYPE},
+        {SC_STYLE_Y             ,FLOAT_TYPE},
+        {SC_STYLE_Y_BY          ,FLOAT_TYPE},
+        {SC_STYLE_Z             ,INT_TYPE},
     };
     
     
@@ -70,104 +70,104 @@ namespace SpeedCC
         Color3B crValue;
         Vec2 vec2;
         
-        if(SCNodeStyle::getInt(dic,SC_NODE_STYLE_TAG,nValue))
+        if(SCNodeStyle::getInt(dic,SC_STYLE_TAG,nValue))
         {
             pNode->setTag(nValue);
         }
         
-        if(SCNodeStyle::getColor3(dic,SC_NODE_STYLE_COLOR, crValue))
+        if(SCNodeStyle::getColor3(dic,SC_STYLE_COLOR, crValue))
         {
             pNode->setColor(crValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_X,fValue) && pNode->getParent())
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_X,fValue) && pNode->getParent())
         {
             auto pos = SCNodeUtils::posP2A(Vec2(fValue,0),pNode->getParent()->getContentSize());
             pNode->setPositionX(pos.x);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_Y,fValue) && pNode->getParent())
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_Y,fValue) && pNode->getParent())
         {
             auto pos = SCNodeUtils::posP2A(Vec2(0,fValue),pNode->getParent()->getContentSize());
             pNode->setPositionY(pos.y);
         }
         
-        if(SCNodeStyle::getInt(dic,SC_NODE_STYLE_Z,nValue))
+        if(SCNodeStyle::getInt(dic,SC_STYLE_Z,nValue))
         {
             pNode->setLocalZOrder(nValue);
         }
         
-        if(SCNodeStyle::getVec2(dic,SC_NODE_STYLE_ANCHOR,vec2))
+        if(SCNodeStyle::getVec2(dic,SC_STYLE_ANCHOR,vec2))
         {
             pNode->setAnchorPoint(vec2);
         }
         
-        if(SCNodeStyle::getBool(dic,SC_NODE_STYLE_ANCHOR_ON,bValue))
+        if(SCNodeStyle::getBool(dic,SC_STYLE_ANCHOR_ON,bValue))
         {
             pNode->setIgnoreAnchorPointForPosition(bValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SCALE,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_SCALE,fValue))
         {
             pNode->setScale(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SCALE_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_SCALE_X,fValue))
         {
             pNode->setScaleX(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SCALE_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_SCALE_Y,fValue))
         {
             pNode->setScaleY(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_OPACITY,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_OPACITY,fValue))
         {
             pNode->setOpacity(fValue);
         }
         
-        if(SCNodeStyle::getBool(dic,SC_NODE_STYLE_VISIBLE,bValue))
+        if(SCNodeStyle::getBool(dic,SC_STYLE_VISIBLE,bValue))
         {
             pNode->setVisible(bValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_ROTATION,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_ROTATION,fValue))
         {
             pNode->setRotation(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_ROTATION_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_ROTATION_X,fValue))
         {
             pNode->setRotationSkewX(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_ROTATION_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_ROTATION_Y,fValue))
         {
             pNode->setRotationSkewY(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SKEW_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_SKEW_X,fValue))
         {
             pNode->setSkewX(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_SKEW_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_SKEW_Y,fValue))
         {
             pNode->setSkewY(fValue);
         }
         
-        if(SCNodeStyle::getInt(dic, SC_NODE_STYLE_DOCK, nValue))
+        if(SCNodeStyle::getInt(dic, SC_STYLE_DOCK, nValue))
         {
             SCNodeUtils::setDock(pNode, nValue);
         }
         
-        if(SCNodeStyle::getFloat(dic, SC_NODE_STYLE_X_BY, fValue))
+        if(SCNodeStyle::getFloat(dic, SC_STYLE_X_BY, fValue))
         {
             SCNodeUtils::setPositionBy(pNode, fValue, 0);
         }
         
-        if(SCNodeStyle::getFloat(dic, SC_NODE_STYLE_Y_BY, fValue))
+        if(SCNodeStyle::getFloat(dic, SC_STYLE_Y_BY, fValue))
         {
             SCNodeUtils::setPositionBy(pNode, 0, fValue);
         }
@@ -186,17 +186,17 @@ namespace SpeedCC
         float fValue;
         SCString strValue;
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_FLIP_X,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_FLIP_X,fValue))
         {
             pNode->setFlippedX(fValue);
         }
         
-        if(SCNodeStyle::getFloat(dic,SC_NODE_STYLE_FLIP_Y,fValue))
+        if(SCNodeStyle::getFloat(dic,SC_STYLE_FLIP_Y,fValue))
         {
             pNode->setFlippedY(fValue);
         }
         
-        if(SCNodeStyle::getString(dic, SC_NODE_STYLE_IMAGE, strValue))
+        if(SCNodeStyle::getString(dic, SC_STYLE_IMAGE, strValue))
         {
             auto pSprite = Sprite::create(strValue.c_str());
             pNode->setSpriteFrame(pSprite->getSpriteFrame());
@@ -226,22 +226,22 @@ namespace SpeedCC
         Color4B crValue;
         float fValue;
         
-        if(SCNodeStyle::getString(dic, SC_NODE_STYLE_LABEL, strValue))
+        if(SCNodeStyle::getString(dic, SC_STYLE_TEXT, strValue))
         {
             pNode->setString(strValue.c_str());
         }
         
-        if(SCNodeStyle::getColor4(dic,SC_NODE_STYLE_COLOR_TEXT, crValue))
+        if(SCNodeStyle::getColor4(dic,SC_STYLE_TEXT_COLOR, crValue))
         {
             pNode->setTextColor(crValue);
         }
         
-        if(SCNodeStyle::getString(dic, SC_NODE_STYLE_FONT_NAME, strValue))
+        if(SCNodeStyle::getString(dic, SC_STYLE_FONT_NAME, strValue))
         {
             pNode->setSystemFontName(strValue.c_str());
         }
         
-        if(SCNodeStyle::getFloat(dic, SC_NODE_STYLE_FONT_SIZE, fValue))
+        if(SCNodeStyle::getFloat(dic, SC_STYLE_FONT_SIZE, fValue))
         {
             pNode->setSystemFontSize(fValue);
         }
@@ -804,7 +804,7 @@ namespace SpeedCC
         SC_RETURN_IF(SCNodeStyle::getColorByName(strValue,val), true);
         
         if(strValue.getLength()>1 && strValue.getLength()<=9 && strValue[0]=='#')
-        {// #??????
+        {// #AARRGGBB
             strValue.format("0x%s",strValue.c_str()+1);
             
             char* p = nullptr;
@@ -818,7 +818,7 @@ namespace SpeedCC
             bRet = true;
         }
         else if(strValue.getLength()>2 && strValue.getLength()<=10 && strValue[0]=='0' && strValue[1]=='x')
-        {// 0x????????
+        {// 0xAARRGGBB
             char* p = nullptr;
             uint32_t uv=0;
             uv=(uint32_t)std::strtoul(strValue.c_str(), &p, 16);
@@ -830,7 +830,7 @@ namespace SpeedCC
             bRet = true;
         }else if(strValue.getLength()>6 &&
                  ((strValue[0]=='(' && strValue[strValue.getLength()-1]==')') || (strValue[0]=='{' && strValue[strValue.getLength()-1]=='}')))
-        {// {?,?,?,?} or (?,?,?,?)
+        {// {r,g,b,a} or (r,g,b,a)
             strValue.trimLeft('(');
             strValue.trimLeft('{');
             strValue.trimRight(')');

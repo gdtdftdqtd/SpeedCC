@@ -35,9 +35,9 @@ void TestAlertBoxController::setupUI()
 {
     SC_BEGIN_CONTAINER_ROOT_EX(nullptr, SCWinSize, _pContainerLayer, this)
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
-            SC_INSERT_BUTTON_LABEL(nullptr,"color-text=black;","Show System AlertBox","",23,
+            SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","Show System AlertBox","",23,
                                    SCBehaviorCallFunc::create(SC_MAKE_FUNC(showSystemAlertBox, this)))
-            SC_INSERT_BUTTON_LABEL(nullptr,"color-text=black;","Show Customize AlertBox","",23,
+            SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","Show Customize AlertBox","",23,
                                    SCBehaviorCallFunc::create(SC_MAKE_FUNC(showCustomizeAlertBox, this)))
         SC_END_CONTAINER
     SC_END_CONTAINER

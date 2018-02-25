@@ -70,53 +70,53 @@ TEST(TestSCNodeStyle, StringValue)
     SCDictionary dic;
     SCString strTest;
     
-    strTest = "label='abc'; ";
+    strTest = "text='abc'; ";
     dic.removeAllKeys();
     EXPECT_EQ(SCNodeStyle::convertString2Dic(strTest,dic),true);
     EXPECT_EQ(dic.getCount(),1);
-    EXPECT_EQ(dic.hasKey("label"),true);
-    EXPECT_EQ(dic.getValue("label").getType(),SCValue::STRING_TYPE);
-    EXPECT_STREQ(dic.getValue("label").getString().c_str(), "abc");
+    EXPECT_EQ(dic.hasKey("text"),true);
+    EXPECT_EQ(dic.getValue("text").getType(),SCValue::STRING_TYPE);
+    EXPECT_STREQ(dic.getValue("text").getString().c_str(), "abc");
     
-    strTest = " label = 'abc' ; ";
+    strTest = " text = 'abc' ; ";
     dic.removeAllKeys();
     EXPECT_EQ(SCNodeStyle::convertString2Dic(strTest,dic),true);
     EXPECT_EQ(dic.getCount(),1);
-    EXPECT_EQ(dic.hasKey("label"),true);
-    EXPECT_EQ(dic.getValue("label").getType(),SCValue::STRING_TYPE);
-    EXPECT_STREQ(dic.getValue("label").getString().c_str(), "abc");
+    EXPECT_EQ(dic.hasKey("text"),true);
+    EXPECT_EQ(dic.getValue("text").getType(),SCValue::STRING_TYPE);
+    EXPECT_STREQ(dic.getValue("text").getString().c_str(), "abc");
     
-    strTest = " label = ' abc ' ; ";
+    strTest = " text = ' abc ' ; ";
     dic.removeAllKeys();
     EXPECT_EQ(SCNodeStyle::convertString2Dic(strTest,dic),true);
     EXPECT_EQ(dic.getCount(),1);
-    EXPECT_EQ(dic.hasKey("label"),true);
-    EXPECT_EQ(dic.getValue("label").getType(),SCValue::STRING_TYPE);
-    EXPECT_STREQ(dic.getValue("label").getString().c_str(), " abc ");
+    EXPECT_EQ(dic.hasKey("text"),true);
+    EXPECT_EQ(dic.getValue("text").getType(),SCValue::STRING_TYPE);
+    EXPECT_STREQ(dic.getValue("text").getString().c_str(), " abc ");
     
-    strTest = " label = ' ' ;";
+    strTest = " text = ' ' ;";
     dic.removeAllKeys();
     EXPECT_EQ(SCNodeStyle::convertString2Dic(strTest,dic),true);
     EXPECT_EQ(dic.getCount(),1);
-    EXPECT_EQ(dic.hasKey("label"),true);
-    EXPECT_EQ(dic.getValue("label").getType(),SCValue::STRING_TYPE);
-    EXPECT_STREQ(dic.getValue("label").getString().c_str(), " ");
+    EXPECT_EQ(dic.hasKey("text"),true);
+    EXPECT_EQ(dic.getValue("text").getType(),SCValue::STRING_TYPE);
+    EXPECT_STREQ(dic.getValue("text").getString().c_str(), " ");
     
-    strTest = " label = '' ;";
+    strTest = " text = '' ;";
     dic.removeAllKeys();
     EXPECT_EQ(SCNodeStyle::convertString2Dic(strTest,dic),true);
     EXPECT_EQ(dic.getCount(),1);
-    EXPECT_EQ(dic.hasKey("label"),true);
-    EXPECT_EQ(dic.getValue("label").getType(),SCValue::STRING_TYPE);
-    EXPECT_STREQ(dic.getValue("label").getString().c_str(), "");
+    EXPECT_EQ(dic.hasKey("text"),true);
+    EXPECT_EQ(dic.getValue("text").getType(),SCValue::STRING_TYPE);
+    EXPECT_STREQ(dic.getValue("text").getString().c_str(), "");
     
-    strTest = " label = '''' ;";
+    strTest = " text = '''' ;";
     dic.removeAllKeys();
     EXPECT_EQ(SCNodeStyle::convertString2Dic(strTest,dic),true);
     EXPECT_EQ(dic.getCount(),1);
-    EXPECT_EQ(dic.hasKey("label"),true);
-    EXPECT_EQ(dic.getValue("label").getType(),SCValue::STRING_TYPE);
-    EXPECT_STREQ(dic.getValue("label").getString().c_str(), "'");
+    EXPECT_EQ(dic.hasKey("text"),true);
+    EXPECT_EQ(dic.getValue("text").getType(),SCValue::STRING_TYPE);
+    EXPECT_STREQ(dic.getValue("text").getString().c_str(), "'");
 }
 
 TEST(TestSCNodeStyle, Color3BValue)

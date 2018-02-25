@@ -418,24 +418,24 @@ namespace SpeedCC
         pNode->setIgnoreAnchorPointForPosition(false);
         pNode->setAnchorPoint(Vec2(0.5,0.5));
         
-        SCString strDockStyle = SCNodeStyle::extractKey(SC_NODE_STYLE_DOCK, style.strResult);
-        SCString strXByStyle = SCNodeStyle::extractKey(SC_NODE_STYLE_X_BY, style.strResult);
-        SCString strYByStyle = SCNodeStyle::extractKey(SC_NODE_STYLE_Y_BY, style.strResult);
+        SCString strDockStyle = SCNodeStyle::extractKey(SC_STYLE_DOCK, style.strResult);
+        SCString strXByStyle = SCNodeStyle::extractKey(SC_STYLE_X_BY, style.strResult);
+        SCString strYByStyle = SCNodeStyle::extractKey(SC_STYLE_Y_BY, style.strResult);
         
         SCString strNewStyle = style.strResult;
         if(!strDockStyle.isEmpty())
         {
-            strNewStyle = SCNodeStyle::removeKey(SC_NODE_STYLE_DOCK,strNewStyle);
+            strNewStyle = SCNodeStyle::removeKey(SC_STYLE_DOCK,strNewStyle);
         }
         
         if(!strXByStyle.isEmpty())
         {
-            strNewStyle = SCNodeStyle::removeKey(SC_NODE_STYLE_X_BY,strNewStyle);
+            strNewStyle = SCNodeStyle::removeKey(SC_STYLE_X_BY,strNewStyle);
         }
         
         if(!strYByStyle.isEmpty())
         {
-            strNewStyle = SCNodeStyle::removeKey(SC_NODE_STYLE_Y_BY,strNewStyle);
+            strNewStyle = SCNodeStyle::removeKey(SC_STYLE_Y_BY,strNewStyle);
         }
         
         SCString strDelayStyle = strDockStyle + strXByStyle + strYByStyle;
@@ -650,10 +650,10 @@ namespace SpeedCC
         
         SpeedCC::SCNodeStyle::SFilterConfig scTemFilterConfig;
         scTemFilterConfig.bExclude = false;
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_COLOR_TEXT);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_FONT_SIZE);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_FONT_NAME);
-        scTemFilterConfig.keyVtr.push_back(SC_NODE_STYLE_LABEL);
+        scTemFilterConfig.keyVtr.push_back(SC_STYLE_TEXT_COLOR);
+        scTemFilterConfig.keyVtr.push_back(SC_STYLE_FONT_SIZE);
+        scTemFilterConfig.keyVtr.push_back(SC_STYLE_FONT_NAME);
+        scTemFilterConfig.keyVtr.push_back(SC_STYLE_TEXT);
         
         SCNodeStyle::setStyle<Label>(pLabel, style.strResult,&scTemFilterConfig);
         

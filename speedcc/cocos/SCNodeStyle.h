@@ -26,35 +26,35 @@
 namespace SpeedCC
 {
 // for better search algorithm, must keep macro name match string value
-#define SC_NODE_STYLE_TAG                "tag"           // int
-#define SC_NODE_STYLE_X                  "x"             // float
-#define SC_NODE_STYLE_Y                  "y"             // float
-#define SC_NODE_STYLE_Z                  "z"             // int
-#define SC_NODE_STYLE_ANCHOR             "anchor"        // Vec2
-#define SC_NODE_STYLE_ANCHOR_ON          "anchor-on"     // bool
-#define SC_NODE_STYLE_SCALE              "scale"         // float
-#define SC_NODE_STYLE_SCALE_X            "scale-x"       // float
-#define SC_NODE_STYLE_SCALE_Y            "scale-y"       // float
-#define SC_NODE_STYLE_OPACITY            "opacity"       // float
-#define SC_NODE_STYLE_VISIBLE            "visible"       // bool
-#define SC_NODE_STYLE_ROTATION           "rotation"      // float
-#define SC_NODE_STYLE_ROTATION_X         "rotation-x"    // float
-#define SC_NODE_STYLE_ROTATION_Y         "rotation-y"    // float
-#define SC_NODE_STYLE_SKEW_X             "skew-x"        // float
-#define SC_NODE_STYLE_SKEW_Y             "skew-y"        // float
-#define SC_NODE_STYLE_COLOR              "color"         // Color3B
+#define SC_STYLE_TAG                "tag"           // int
+#define SC_STYLE_X                  "x"             // float
+#define SC_STYLE_Y                  "y"             // float
+#define SC_STYLE_Z                  "z"             // int
+#define SC_STYLE_ANCHOR             "anchor"        // Vec2
+#define SC_STYLE_ANCHOR_ON          "anchor-on"     // bool
+#define SC_STYLE_SCALE              "scale"         // float
+#define SC_STYLE_SCALE_X            "scale-x"       // float
+#define SC_STYLE_SCALE_Y            "scale-y"       // float
+#define SC_STYLE_OPACITY            "opacity"       // float
+#define SC_STYLE_VISIBLE            "visible"       // bool
+#define SC_STYLE_ROTATION           "rotation"      // float
+#define SC_STYLE_ROTATION_X         "rotation-x"    // float
+#define SC_STYLE_ROTATION_Y         "rotation-y"    // float
+#define SC_STYLE_SKEW_X             "skew-x"        // float
+#define SC_STYLE_SKEW_Y             "skew-y"        // float
+#define SC_STYLE_COLOR              "color"         // Color3B
 
-#define SC_NODE_STYLE_FLIP_X             "flip-x"        // bool
-#define SC_NODE_STYLE_FLIP_Y             "flip-y"        // bool
-#define SC_NODE_STYLE_LABEL              "label"         // string
-#define SC_NODE_STYLE_FONT_SIZE          "font-size"     // float
-#define SC_NODE_STYLE_FONT_NAME          "font-name"     // string
-#define SC_NODE_STYLE_COLOR_TEXT         "color-text"    // Color4B
-#define SC_NODE_STYLE_IMAGE              "image"         // string
+#define SC_STYLE_FLIP_X             "flip-x"        // bool
+#define SC_STYLE_FLIP_Y             "flip-y"        // bool
+#define SC_STYLE_TEXT               "text"         // string
+#define SC_STYLE_FONT_SIZE          "font-size"     // float
+#define SC_STYLE_FONT_NAME          "font-name"     // string
+#define SC_STYLE_TEXT_COLOR         "text-color"    // Color4B
+#define SC_STYLE_IMAGE              "image"         // string
     
-#define SC_NODE_STYLE_DOCK               "dock"          // SCNodeUtils::EDockType. e.g. left|top
-#define SC_NODE_STYLE_X_BY               "x-by"          // float
-#define SC_NODE_STYLE_Y_BY               "y-by"          // float
+#define SC_STYLE_DOCK               "dock"          // SCNodeUtils::EDockType. e.g. left|top
+#define SC_STYLE_X_BY               "x-by"          // float
+#define SC_STYLE_Y_BY               "y-by"          // float
     
     class SCNodeStyle
     {
@@ -100,11 +100,11 @@ namespace SpeedCC
                 bExclude = bExclude0;
                 keyVtr =
                 {
-                    SC_NODE_STYLE_X,
-                    SC_NODE_STYLE_Y,
-                    SC_NODE_STYLE_DOCK,
-                    SC_NODE_STYLE_X_BY,
-                    SC_NODE_STYLE_Y_BY
+                    SC_STYLE_X,
+                    SC_STYLE_Y,
+                    SC_STYLE_DOCK,
+                    SC_STYLE_X_BY,
+                    SC_STYLE_Y_BY
                 };
             }
         };

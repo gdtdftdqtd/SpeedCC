@@ -41,15 +41,15 @@ void TestLabelBindingController::onCreate(SCDictionary parameters)
     
         // number binding
         SC_INSERT_LABEL(nullptr,"x=0.4; y=0.75;",_ptrWatchInt,"",30)
-        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.6; y=0.75; color-text=red;","+","",40,SCF(onButtonAdd))
-        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.7; y=0.75; color-text=red;","-","",40,SCF(onButtonSub))
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.6; y=0.75; text-color=red;","+","",40,SCF(onButtonAdd))
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.7; y=0.75; text-color=red;","-","",40,SCF(onButtonSub))
     
         // string binding
-        SC_INSERT_LABEL(nullptr,"x=0.4; y=0.5; color-text=yellow;",binderStrPtr,"",30)
-        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.65; y=0.5; color-text=red;","click","",25,SCF(onButtonRandomText))
+        SC_INSERT_LABEL(nullptr,"x=0.4; y=0.5; text-color=yellow;",binderStrPtr,"",30)
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.65; y=0.5; text-color=red;","click","",25,SCF(onButtonRandomText))
     
         // back
-        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.15; y=0.95; color-text=red;","back","",25,SCF(onButtonBack))
+        SC_INSERT_BUTTON_LABEL(nullptr,"x=0.15; y=0.95; text-color=red;","back","",25,SCF(onButtonBack))
     SC_END_CONTAINER
     
 }

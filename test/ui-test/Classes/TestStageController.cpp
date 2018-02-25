@@ -89,7 +89,7 @@ void TestStageController::setupUI()
             SC_INSERT_BUTTON_LABEL(nullptr, "x=0.5; y=0.3;", "Command Log", "", 20, ptrBvrCmdLog)
 
             // back button
-            SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black; dock=left|top; x-by=3; y-by=-3;", "Back", "", 22, SCBehaviorSceneBack::create())
+            SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black; dock=left|top; x-by=3; y-by=-3;", "Back", "", 22, SCBehaviorSceneBack::create())
         SC_END_CONTAINER
     SC_END_CONTAINER
 }

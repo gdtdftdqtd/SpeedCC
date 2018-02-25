@@ -42,47 +42,47 @@ void TestDockController::testCaseNoScale()
     
         // center
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "center", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "center", "", 18)
         SC_END_CONTAINER
     
         // top-left
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|top;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n left", "", 18)
         SC_END_CONTAINER
     
         // top-middle
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=top|mid-x;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n mid-x", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n mid-x", "", 18)
         SC_END_CONTAINER
     
         // top-right
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|top;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n right", "", 18)
         SC_END_CONTAINER
     
         // bottom-left
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|bottom;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n left", "", 18)
         SC_END_CONTAINER
     
         // bottom-middle
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=bottom|mid-x;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n mid-x", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n mid-x", "", 18)
         SC_END_CONTAINER
     
         // bottom-right
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|bottom;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n right", "", 18)
         SC_END_CONTAINER
     
         // left mid-y
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|mid-y;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "mid-y \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "mid-y \n left", "", 18)
         SC_END_CONTAINER
     
         // right mid-y
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|mid-y;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "mid-y \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "mid-y \n right", "", 18)
         SC_END_CONTAINER
     SC_END_CONTAINER
 }
@@ -97,47 +97,47 @@ void TestDockController::testCaseWithScale()
     
         // center
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr,"dock=center; color-text=blue;", "center", "", 18)
+            SC_INSERT_LABEL(nullptr,"dock=center; text-color=blue;", "center", "", 18)
         SC_END_CONTAINER
     
         // top-left
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|top; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n left", "", 18)
         SC_END_CONTAINER
     
         // top-middle
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=top|mid-x; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n mid-x", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n mid-x", "", 18)
         SC_END_CONTAINER
     
         // top-right
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|top; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n right", "", 18)
         SC_END_CONTAINER
     
         // bottom-left
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|bottom; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n left", "", 18)
         SC_END_CONTAINER
     
         // bottom-middle
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=bottom|mid-x; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n mid-x", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n mid-x", "", 18)
         SC_END_CONTAINER
     
         // bottom-right
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|bottom; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n right", "", 18)
         SC_END_CONTAINER
     
         // left mid-y
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|mid-y; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "mid-y \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "mid-y \n left", "", 18)
         SC_END_CONTAINER
     
         // right mid-y
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|mid-y; scale=0.5;",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "mid-y \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "mid-y \n right", "", 18)
         SC_END_CONTAINER
     SC_END_CONTAINER
 }
@@ -151,47 +151,47 @@ void TestDockController::testCaseWithScaleAnchor()
     
         // center
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center; scale=0.5; anchor=(0,0);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "center", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "center", "", 18)
         SC_END_CONTAINER
     
         // top-left
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|top; scale=0.5; anchor=(0.5,1);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n left", "", 18)
         SC_END_CONTAINER
     
         // top-middle
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=top|mid-x; scale=0.5; anchor=(0,0);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n mid-x", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n mid-x", "", 18)
         SC_END_CONTAINER
     
         // top-right
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|top; scale=0.5; anchor=(0,0);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "top \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "top \n right", "", 18)
         SC_END_CONTAINER
     
         // bottom-left
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|bottom; scale=0.5; anchor=(0.1,0.2);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n left", "", 18)
         SC_END_CONTAINER
     
         // bottom-middle
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=bottom|mid-x; scale=0.5; anchor=(0,0);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n mid-x", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n mid-x", "", 18)
         SC_END_CONTAINER
     
         // bottom-right
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|bottom; scale=0.5; anchor=(0,1);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "bottom \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "bottom \n right", "", 18)
         SC_END_CONTAINER
     
         // left mid-y
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=left|mid-y; scale=0.5; anchor=(1,1);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "mid-y \n left", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "mid-y \n left", "", 18)
         SC_END_CONTAINER
     
         // right mid-y
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=right|mid-y; scale=0.5; anchor=(1,0);",Size(80,80),Color4B::RED)
-            SC_INSERT_LABEL(nullptr, "dock=center; color-text=blue;", "mid-y \n right", "", 18)
+            SC_INSERT_LABEL(nullptr, "dock=center; text-color=blue;", "mid-y \n right", "", 18)
         SC_END_CONTAINER
     SC_END_CONTAINER
 }

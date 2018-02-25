@@ -46,24 +46,24 @@ void TestProgressController::testCaseBarBasic()
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
     
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr, "color-text=black;", "(bar, left to right, horizontal, 60%)", "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=black;", "(bar, left to right, horizontal, 60%)", "", 15)
                 SC_INSERT_PROGRESS_BAR(nullptr, "", "progressbar_bk.png", "progressbar_ft.png", 60, true, true)
             SC_END_CONTAINER
     
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr, "color-text=black;", "(bar, right to left, horizontal, 30%)", "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=black;", "(bar, right to left, horizontal, 30%)", "", 15)
                 SC_INSERT_PROGRESS_BAR(nullptr, "", "progressbar_bk.png", "progressbar_ft.png", 30, true, false)
             SC_END_CONTAINER
     
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",true,20,SCNodeUtils::kDockCenter)
     
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_LABEL(nullptr, "color-text=black;", "(bar, down to up, vertical, 30%)", "", 15)
+                    SC_INSERT_LABEL(nullptr, "text-color=black;", "(bar, down to up, vertical, 30%)", "", 15)
                     SC_INSERT_PROGRESS_BAR(nullptr,"", "progressbar_v_bk.png", "progressbar_v_ft.png", 30, false,  true)
                 SC_END_CONTAINER
 
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_LABEL(nullptr, "color-text=black;", "(bar, up to down, vertical, 30%)", "", 15)
+                    SC_INSERT_LABEL(nullptr, "text-color=black;", "(bar, up to down, vertical, 30%)", "", 15)
                     SC_INSERT_PROGRESS_BAR(nullptr,"", "progressbar_v_bk.png", "progressbar_v_ft.png", 30, false, false)
                 SC_END_CONTAINER
     
@@ -84,12 +84,12 @@ void TestProgressController::testCaseRadialBasic()
         SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,20,SCNodeUtils::kDockCenter)
     
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr,  "color-text=black;", "(radial, cw, 60%)", "", 15)
+                SC_INSERT_LABEL(nullptr,  "text-color=black;", "(radial, cw, 60%)", "", 15)
                 SC_INSERT_PROGRESS_RADIAL(nullptr,  "", "HelloWorld.png", "mask.png", 60,false)
             SC_END_CONTAINER
     
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr, "color-text=black;", "(radial, ccw, 60%)", "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=black;", "(radial, ccw, 60%)", "", 15)
                 SC_INSERT_PROGRESS_RADIAL(nullptr, "", "HelloWorld.png", "mask.png", 60,true)
             SC_END_CONTAINER
     
@@ -141,12 +141,12 @@ void TestProgressController::testCaseBarBinding()
     
             // bar 1
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,10,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr, "color-text=black;", _ptrWatchStr1, "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=black;", _ptrWatchStr1, "", 15)
     
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",true,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "-", "", 20,SCBehaviorAddInt::create(ptrInt1,-10))
+                    SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "-", "", 20,SCBehaviorAddInt::create(ptrInt1,-10))
                     SC_INSERT_PROGRESS_BAR(nullptr, "", "progressbar_bk.png", "progressbar_ft.png", ptrInt1, true, true)
-                    SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "+", "", 20,
+                    SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "+", "", 20,
                                            SCBehaviorAddInt::create(ptrInt1,10))
                 SC_END_CONTAINER
     
@@ -154,12 +154,12 @@ void TestProgressController::testCaseBarBinding()
     
             // bar 2
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,10,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr,"color-text=black;", _ptrWatchStr2, "", 15)
+                SC_INSERT_LABEL(nullptr,"text-color=black;", _ptrWatchStr2, "", 15)
     
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",true,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt2,10))
+                    SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt2,10))
                     SC_INSERT_PROGRESS_BAR(nullptr, "", "progressbar_bk.png", "progressbar_ft.png", ptrInt2, true, false)
-                    SC_INSERT_BUTTON_LABEL(nullptr,"color-text=black;", "-", "", 20,
+                    SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;", "-", "", 20,
                                        SCBehaviorAddInt::create(ptrInt2,-10))
                 SC_END_CONTAINER
     
@@ -169,24 +169,24 @@ void TestProgressController::testCaseBarBinding()
     
                 // bar 3
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_LABEL(nullptr, "color-text=black;", _ptrWatchStr3, "", 15)
+                    SC_INSERT_LABEL(nullptr, "text-color=black;", _ptrWatchStr3, "", 15)
     
                     SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",true,5,SCNodeUtils::kDockCenter)
-                        SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt3,10))
+                        SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt3,10))
                         SC_INSERT_PROGRESS_BAR(nullptr, "", "progressbar_v_bk.png", "progressbar_v_ft.png", ptrInt3, false, true)
-                        SC_INSERT_BUTTON_LABEL(nullptr,"color-text=black;", "-", "", 20,
+                        SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;", "-", "", 20,
                                            SCBehaviorAddInt::create(ptrInt3,-10))
                     SC_END_CONTAINER
                 SC_END_CONTAINER
 
                 // bar 4
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_LABEL(nullptr, "color-text=black;", _ptrWatchStr4, "", 15)
+                    SC_INSERT_LABEL(nullptr, "text-color=black;", _ptrWatchStr4, "", 15)
     
                     SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",true,5,SCNodeUtils::kDockCenter)
-                        SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt4,10))
+                        SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt4,10))
                         SC_INSERT_PROGRESS_BAR(nullptr, "", "progressbar_v_bk.png", "progressbar_v_ft.png", ptrInt4, false, false)
-                        SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "-", "", 20,
+                        SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "-", "", 20,
                                            SCBehaviorAddInt::create(ptrInt4,-10))
                     SC_END_CONTAINER
                 SC_END_CONTAINER
@@ -226,23 +226,23 @@ void TestProgressController::testCaseRadialBinding()
     
             // radial 1
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr, "color-text=black;", _ptrWatchStr1, "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=black;", _ptrWatchStr1, "", 15)
     
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",true,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "-", "", 20,SCBehaviorAddInt::create(ptrInt1,-10))
+                    SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "-", "", 20,SCBehaviorAddInt::create(ptrInt1,-10))
                     SC_INSERT_PROGRESS_RADIAL(nullptr, "", "HelloWorld.png", "mask.png", ptrInt1,false)
-                    SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt1,10))
+                    SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt1,10))
                 SC_END_CONTAINER
             SC_END_CONTAINER
     
             // radial 2
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",false,5,SCNodeUtils::kDockCenter)
-                SC_INSERT_LABEL(nullptr, "color-text=black;", _ptrWatchStr2, "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=black;", _ptrWatchStr2, "", 15)
     
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=center;",true,5,SCNodeUtils::kDockCenter)
-                    SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "-", "", 20,SCBehaviorAddInt::create(ptrInt2,-10))
+                    SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "-", "", 20,SCBehaviorAddInt::create(ptrInt2,-10))
                     SC_INSERT_PROGRESS_RADIAL(nullptr, "", "HelloWorld.png", "mask.png", ptrInt2,true)
-                    SC_INSERT_BUTTON_LABEL(nullptr, "color-text=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt2,10))
+                    SC_INSERT_BUTTON_LABEL(nullptr, "text-color=black;", "+", "", 20,SCBehaviorAddInt::create(ptrInt2,10))
                 SC_END_CONTAINER
             SC_END_CONTAINER
     
