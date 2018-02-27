@@ -76,7 +76,7 @@ namespace SpeedCC
     
     SCMessageMatcher::SCMessageMatcher(const SCString& strCommand,const MatchFunc_t& func):
     _strCommand(strCommand),
-    _nMsgID(SCID::Msg::kSCMsgCommand),
+    _nMsgID(SCID::Msg::kMsgCommand),
     _func(func)
     {
         SCASSERT(!_strCommand.isEmpty());
@@ -90,7 +90,7 @@ namespace SpeedCC
     }
     
     SCMessageMatcher::SCMessageMatcher(const SCString& strCommand,const SCDictionary& dic):
-    _nMsgID(SCID::Msg::kSCMsgCommand),
+    _nMsgID(SCID::Msg::kMsgCommand),
     _strCommand(strCommand),
     _paraDic(dic),
     _func(nullptr)
@@ -103,7 +103,7 @@ namespace SpeedCC
         SCASSERT(ptrMsg!=nullptr);
         SC_RETURN_IF((_func==nullptr || ptrMsg==nullptr || _nMsgID!=ptrMsg->nMsgID), false);
         
-        if(_nMsgID==SCID::Msg::kSCMsgCommand)
+        if(_nMsgID==SCID::Msg::kMsgCommand)
         {
             SC_RETURN_IF(_strCommand.isEmpty(),false);
             

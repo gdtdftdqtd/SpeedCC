@@ -83,11 +83,11 @@ namespace SpeedCC
         // generate modal mssage
         SCMessage::Ptr ptrMsg = SCMessage::create();
         
-        ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneLostFocus;
+        ptrMsg->nMsgID = SCID::Msg::kMsgModalSceneLostFocus;
         ptrMsg->parameters.setValue(SC_KEY_CONTROLLER,this);
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
         
-        ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
+        ptrMsg->nMsgID = SCID::Msg::kMsgModalSceneGotFocus;
         ptrMsg->parameters.setValue(SC_KEY_CONTROLLER,ptrController.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
     }
@@ -108,7 +108,7 @@ namespace SpeedCC
         
         // generate modal mssage
         SCMessage::Ptr ptrMsg = SCMessage::create();
-        ptrMsg->nMsgID = SCID::Msg::kSCMsgModalSceneGotFocus;
+        ptrMsg->nMsgID = SCID::Msg::kMsgModalSceneGotFocus;
         ptrMsg->parameters.setValue(SC_KEY_CONTROLLER,ret.getRawPointer());
         SCMessageDispatch::getInstance()->postMessage(ptrMsg);
         
@@ -211,7 +211,7 @@ namespace SpeedCC
         {
             const auto call = [](SCMessage::Ptr ptrMsg)
             {
-                SC_RETURN_V_IF(ptrMsg->nMsgID!=SCID::Msg::kSCMsgKeyboardKeyDown);
+                SC_RETURN_V_IF(ptrMsg->nMsgID!=SCID::Msg::kMsgKeyboardKeyDown);
                 
                 auto value = ptrMsg->parameters.getValue(SC_KEY_KEYBOARDCODE);
                 auto code = value.getObject<cocos2d::EventKeyboard::KeyCode>();

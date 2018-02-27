@@ -157,159 +157,159 @@ namespace SpeedCC
         return bRet;
     }
     
-    SCSystem::ESizeType SCSystem::getScreenSizeType()
+    SCSystem::EResolutionType SCSystem::getScreenSizeType()
     {
-        static ESizeType      _screenSizeType = kSizeUnkown;
+        static EResolutionType      _screenSizeType = kResolutionUnkown;
         
-        SC_RETURN_IF(_screenSizeType!=kSizeUnkown,_screenSizeType);
+        SC_RETURN_IF(_screenSizeType!=kResolutionUnkown,_screenSizeType);
         
         const cocos2d::Size& screenSize = SCScreenSize;
         
         const int nScreenSquare = screenSize.width * screenSize.height*CC_CONTENT_SCALE_FACTOR()*CC_CONTENT_SCALE_FACTOR();
         
-        const int nDiffOfXLarge = abs(nScreenSquare - kSCWidthOfAssetDesignXLarge*kSCHeightOfAssetDesignXLarge);
-        const int nDiffOfLarge = abs(nScreenSquare - kSCWidthOfAssetDesignLarge*kSCHeightOfAssetDesignLarge);
-        const int nDiffOfMedium = abs(nScreenSquare - kSCWidthOfAssetDesignMedium*kSCHeightOfAssetDesignMedium);
-        const int nDiffOfSmall = abs(nScreenSquare - kSCWidthOfAssetDesignSmall*kSCHeightOfAssetDesignSmall);
+        const int nDiffOfXLarge = abs(nScreenSquare - kSCWidthOfResolutionXLarge*kSCHeightOfResolutionXLarge);
+        const int nDiffOfLarge = abs(nScreenSquare - kSCWidthOfResolutionLarge*kSCHeightOfResolutionLarge);
+        const int nDiffOfMedium = abs(nScreenSquare - kSCWidthOfResolutionMedium*kSCHeightOfResolutionMedium);
+        const int nDiffOfSmall = abs(nScreenSquare - kSCWidthOfResolutionSmall*kSCHeightOfResolutionSmall);
         
         int nMinimum = std::min(nDiffOfXLarge,std::min(nDiffOfLarge,std::min(nDiffOfMedium,nDiffOfSmall)));
         
         SCString strScreenSize(0,"%d x %d",(int)screenSize.width,(int)screenSize.height);
         if(nMinimum==nDiffOfXLarge)
         {
-            SCLog("Detected Screen Size is 'XLarge'. %s",strScreenSize.c_str());
-            _screenSizeType = kSizeXLarge;
+            SCLog("Detected Screen Resolution is 'XLarge'. %s",strScreenSize.c_str());
+            _screenSizeType = kResolutionXLarge;
         }
         else if(nMinimum==nDiffOfLarge)
         {
-            SCLog("Detected Screen Size is 'Large'. %s",strScreenSize.c_str());
-            _screenSizeType = kSizeLarge;
+            SCLog("Detected Screen Resolution is 'Large'. %s",strScreenSize.c_str());
+            _screenSizeType = kResolutionLarge;
         }
         else if(nMinimum==nDiffOfMedium)
         {
-            SCLog("Detected Screen Size is 'Medium'. %s",strScreenSize.c_str());
-            _screenSizeType = kSizeMedium;
+            SCLog("Detected Screen Resolution is 'Medium'. %s",strScreenSize.c_str());
+            _screenSizeType = kResolutionMedium;
         }
         else
         {
             SCASSERT(nMinimum==nDiffOfSmall);
-            SCLog("Detected Screen Size is 'Small'. %s",strScreenSize.c_str());
-            _screenSizeType = kSizeSmall;
+            SCLog("Detected Screen Resolution is 'Small'. %s",strScreenSize.c_str());
+            _screenSizeType = kResolutionSmall;
         }
         
         return _screenSizeType;
     }
     
-    SCSystem::ESizeType SCSystem::getAssetSizeType(const bool bCache)
+    SCSystem::EResolutionType SCSystem::getAssetSizeType(const bool bCache)
     {
-        static ESizeType      _resourceSizeType = kSizeUnkown;
+        static EResolutionType      _resourceSizeType = kResolutionUnkown;
         
-        SC_RETURN_IF(_resourceSizeType!=kSizeUnkown && bCache,_resourceSizeType);
+        SC_RETURN_IF(_resourceSizeType!=kResolutionUnkown && bCache,_resourceSizeType);
         
-        const ESizeType screenSize = SCSystem::getScreenSizeType();
+        const EResolutionType screenSize = SCSystem::getScreenSizeType();
         
         switch(screenSize)
         {
-            case kSizeXLarge:
+            case kResolutionXLarge:
             {
-                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskXLarge))
                 {
                     SCLog("Using 'XLarge' Resolution Assets");
-                    _resourceSizeType = kSizeXLarge;
+                    _resourceSizeType = kResolutionXLarge;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskLarge))
                 {
                     SCLog("Using 'Large' Resolution Assets");
-                    _resourceSizeType = kSizeLarge;
+                    _resourceSizeType = kResolutionLarge;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskMedium))
                 {
                     SCLog("Using 'Medium' Resolution Assets");
-                    _resourceSizeType = kSizeMedium;
+                    _resourceSizeType = kResolutionMedium;
                 }
                 else
                 {
-                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskSmall));
                     SCLog("Using 'Small' Resolution Assets");
-                    _resourceSizeType = kSizeSmall;
+                    _resourceSizeType = kResolutionSmall;
                 }
             }
                 break;
                 
-            case kSizeLarge:
+            case kResolutionLarge:
             {
-                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskLarge))
                 {
                     SCLog("Using 'Large' Resolution Assets");
-                    _resourceSizeType = kSizeLarge;
+                    _resourceSizeType = kResolutionLarge;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskMedium))
                 {
                     SCLog("Using 'Medium' Resolution Assets");
-                    _resourceSizeType = kSizeMedium;
+                    _resourceSizeType = kResolutionMedium;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskXLarge))
                 {
                     SCLog("Using 'XLarge' Resolution Assets");
-                    _resourceSizeType = kSizeXLarge;
+                    _resourceSizeType = kResolutionXLarge;
                 }
                 else
                 {
-                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall));
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskSmall));
                     SCLog("Using 'Small' Resolution Assets");
-                    _resourceSizeType = kSizeSmall;
+                    _resourceSizeType = kResolutionSmall;
                 }
             }
                 break;
                 
-            case kSizeMedium:
+            case kResolutionMedium:
             {
-                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskMedium))
                 {
                     SCLog("Using 'Medium' Resolution Assets");
-                    _resourceSizeType = kSizeMedium;
+                    _resourceSizeType = kResolutionMedium;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskSmall))
                 {
                     SCLog("Using 'Small' Resolution Assets");
-                    _resourceSizeType = kSizeSmall;
+                    _resourceSizeType = kResolutionSmall;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskLarge))
                 {
                     SCLog("Using 'Large' Resolution Assets");
-                    _resourceSizeType = kSizeLarge;
+                    _resourceSizeType = kResolutionLarge;
                 }
                 else
                 {
-                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskXLarge));
                     SCLog("Using 'XLarge' Resolution Assets");
-                    _resourceSizeType = kSizeXLarge;
+                    _resourceSizeType = kResolutionXLarge;
                 }
             }
                 break;
                 
-            case kSizeSmall:
+            case kResolutionSmall:
             {
-                if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskSmall))
+                if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskSmall))
                 {
                     SCLog("Using 'Small' Resolution Assets");
-                    _resourceSizeType = kSizeSmall;
+                    _resourceSizeType = kResolutionSmall;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskMedium))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskMedium))
                 {
                     SCLog("Using 'Medium' Resolution Assets");
-                    _resourceSizeType = kSizeMedium;
+                    _resourceSizeType = kResolutionMedium;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskLarge))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskLarge))
                 {
                     SCLog("Using 'Large' Resolution Assets");
-                    _resourceSizeType = kSizeLarge;
+                    _resourceSizeType = kResolutionLarge;
                 }
-                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge))
+                else if(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskXLarge))
                 {
-                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kAssetBitMaskXLarge));
+                    SCASSERT(SC_BIT_HAS_OR(s_nSupportAssetType,kResolutionBitMaskXLarge));
                     SCLog("Using 'XLarge' Resolution Assets");
-                    _resourceSizeType = kSizeXLarge;
+                    _resourceSizeType = kResolutionXLarge;
                 }
             }
                 break;
@@ -328,7 +328,7 @@ namespace SpeedCC
         s_nSupportAssetType = nSupportAssetType;
         ::scInitSpeedCC(nullptr);
         SCSystem::adapterScreenResolution();
-        SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppLaunch);
+        SCMsgDisp()->sendMessage(SCID::Msg::kMsgAppLaunch);
     }
     
     void SCSystem::adapterScreenResolution(const bool bCache)
@@ -350,23 +350,25 @@ namespace SpeedCC
         
         switch(assetSizeType)
         {
-            case kSizeXLarge:
+            case kResolutionXLarge:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetXLarge "/");
                 break;
                 
-            case kSizeLarge:
+            case kResolutionLarge:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetLarge "/");
                 break;
                 
-            case kSizeMedium:
+            case kResolutionMedium:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetMedium "/");
                 break;
                 
-            case kSizeSmall:
+            case kResolutionSmall:
                 newSearchVector.insert(newSearchVector.begin(), kSCFolderOfAssetSmall "/");
                 break;
                 
-            default: SCASSERT(false); break;
+            default:
+                SCASSERT(false);
+                break;
         }
         
         SCCCFileUtils()->setSearchResolutionsOrder(newSearchVector);
@@ -380,30 +382,38 @@ namespace SpeedCC
         {
             switch(assetSizeType)
             {
-                case kSizeXLarge:fContentScale = (kSCWidthOfAssetDesignXLarge/kSCWidthOfAssetDesignBaseline); break;
-                case kSizeLarge: fContentScale = (kSCWidthOfAssetDesignLarge/kSCWidthOfAssetDesignBaseline);break;
-                case kSizeMedium: fContentScale = (kSCWidthOfAssetDesignMedium/kSCWidthOfAssetDesignBaseline);break;
-                case kSizeSmall: fContentScale = (kSCWidthOfAssetDesignSmall/kSCWidthOfAssetDesignBaseline);break;
+                case kResolutionXLarge:fContentScale = (kSCWidthOfResolutionXLarge/kSCWidthOfResolutionBaseline); break;
+                case kResolutionLarge: fContentScale = (kSCWidthOfResolutionLarge/kSCWidthOfResolutionBaseline);break;
+                case kResolutionMedium: fContentScale = (kSCWidthOfResolutionMedium/kSCWidthOfResolutionBaseline);break;
+                case kResolutionSmall: fContentScale = (kSCWidthOfResolutionSmall/kSCWidthOfResolutionBaseline);break;
                 default: SCASSERT(false); break;
             }
             
-            SCCCDirector()->getOpenGLView()->setDesignResolutionSize(kSCWidthOfAssetDesignBaseline,
-                                                                     kSCHeightOfAssetDesignBaseline,
+            SCCCDirector()->getOpenGLView()->setDesignResolutionSize(kSCWidthOfResolutionBaseline,
+                                                                     kSCHeightOfResolutionBaseline,
                                                                      ResolutionPolicy::FIXED_WIDTH);
         }
         else
         {
             switch(assetSizeType)
             {
-                case kSizeXLarge: fContentScale = (kSCHeightOfAssetDesignXLarge/kSCHeightOfAssetDesignBaseline); break;
-                case kSizeLarge: fContentScale = (kSCHeightOfAssetDesignLarge/kSCHeightOfAssetDesignBaseline); break;
-                case kSizeMedium: fContentScale = (kSCHeightOfAssetDesignMedium/kSCHeightOfAssetDesignBaseline); break;
-                case kSizeSmall: fContentScale = (kSCHeightOfAssetDesignSmall/kSCHeightOfAssetDesignBaseline); break;
+                case kResolutionXLarge:
+                    fContentScale = (kSCHeightOfResolutionXLarge/kSCHeightOfResolutionBaseline);
+                    break;
+                case kResolutionLarge:
+                    fContentScale = (kSCHeightOfResolutionLarge/kSCHeightOfResolutionBaseline);
+                    break;
+                case kResolutionMedium:
+                    fContentScale = (kSCHeightOfResolutionMedium/kSCHeightOfResolutionBaseline);
+                    break;
+                case kResolutionSmall:
+                    fContentScale = (kSCHeightOfResolutionSmall/kSCHeightOfResolutionBaseline);
+                    break;
                 default: SCASSERT(false); break;
             }
             
-            SCCCDirector()->getOpenGLView()->setDesignResolutionSize(kSCHeightOfAssetDesignBaseline,
-                                                                     kSCWidthOfAssetDesignBaseline,
+            SCCCDirector()->getOpenGLView()->setDesignResolutionSize(kSCHeightOfResolutionBaseline,
+                                                                     kSCWidthOfResolutionBaseline,
                                                                      ResolutionPolicy::FIXED_HEIGHT);
         }
         

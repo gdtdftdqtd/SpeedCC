@@ -115,7 +115,7 @@ namespace SpeedCC
     SCStrategy::Ptr SCRoleBuilder::createStrategy(const int nStrategyID)
     {
         SCStrategy::Ptr ret ;
-        if(nStrategyID==SCID::Stg::kSCStgEmpty)
+        if(nStrategyID==SCID::Stg::kStgEmpty)
         {
             ret = SCStrategyEmpty::create();
         }

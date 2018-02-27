@@ -45,7 +45,7 @@ void TestAlertBoxController::setupUI()
 
 void TestAlertBoxController::showSystemAlertBox()
 {
-    SCSystem::showAlertBox("Test Title","System AlertBox","OK","Cancel",[](int nSelectedIndex)
+    SCSystem::showAlertBox("Test Title","OS built-in AlertBox","OK","Cancel",[](int nSelectedIndex)
                            {
                                SCLog("AlertBox Selected Button, Selected Index: %d", nSelectedIndex);
                            });

@@ -217,7 +217,7 @@ namespace SpeedCC
     
     void SCRole::markCmdUnfilter(const SCString& strCmd)
     {
-        this->markMsgUnfilter(SCID::Msg::kSCMsgCommand);
+        this->markMsgUnfilter(SCID::Msg::kMsgCommand);
         
         auto it = _cmd2FilterCounterMap.find(strCmd);
         if(it!=_cmd2FilterCounterMap.end())
@@ -244,7 +244,7 @@ namespace SpeedCC
     
     void SCRole::unmarkCmdUnfilter(const SCString& strCmd)
     {
-        this->unmarkMsgUnfilter(SCID::Msg::kSCMsgCommand);
+        this->unmarkMsgUnfilter(SCID::Msg::kMsgCommand);
         
         auto it = _cmd2FilterCounterMap.find(strCmd);
         if(it!=_cmd2FilterCounterMap.end())
@@ -261,7 +261,7 @@ namespace SpeedCC
         SC_RETURN_IF(!_bFilterMsg, true);
         SC_RETURN_IF(_msgID2FilterCounterMap.empty(), false);
         
-        if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
+        if(ptrMsg->nMsgID==SCID::Msg::kMsgCommand)
         {
             SC_RETURN_IF(_cmd2FilterCounterMap.empty(), false);
             bool bResult = false;
@@ -348,7 +348,7 @@ namespace SpeedCC
         SCASSERT(nStrategyID>0);
         
         bool bRet = false;
-        if(ptrMatcher->getMessageID()==SCID::Msg::kSCMsgCommand)
+        if(ptrMatcher->getMessageID()==SCID::Msg::kMsgCommand)
         {
             SC_RETURN_IF(ptrMatcher->getCommand()<=0,false);
             bRet = this->addBehavior2Strategy(nStrategyID,ptrMatcher->getCommand(),bvrPtr,ptrMatcher);

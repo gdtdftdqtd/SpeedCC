@@ -34,7 +34,7 @@ namespace SpeedCC
         void scbStorePurchaseItemResult(const char* pszIAP,int nResult)
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
-            ptrMsg->nMsgID = (nResult==0) ? SCID::Msg::kSCMsgStorePurchaseSuccess : SCID::Msg::kSCMsgStorePurchaseFailed;
+            ptrMsg->nMsgID = (nResult==0) ? SCID::Msg::kMsgStorePurchaseSuccess : SCID::Msg::kMsgStorePurchaseFailed;
             ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
             SCMsgDisp()->postMessage(ptrMsg);
         }
@@ -43,7 +43,7 @@ namespace SpeedCC
         void scbStoreRestoreItemResult(const char* pszIAP,int nResult)
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
-            ptrMsg->nMsgID = ((nResult==0) ? SCID::Msg::kSCMsgStoreRestoreSuccess : SCID::Msg::kSCMsgStoreRestoreFailed);
+            ptrMsg->nMsgID = ((nResult==0) ? SCID::Msg::kMsgStoreRestoreSuccess : SCID::Msg::kMsgStoreRestoreFailed);
             
             if(pszIAP!=NULL)
             {
@@ -54,7 +54,7 @@ namespace SpeedCC
         
         void scbStoreUserCancelled()
         {
-            SCMsgDisp()->postMessage(SCID::Msg::kSCMsgStoreUserCancelled);
+            SCMsgDisp()->postMessage(SCID::Msg::kMsgStoreUserCancelled);
         }
         
         // nResult, 0: success; non-zero: failed
@@ -63,7 +63,7 @@ namespace SpeedCC
             if(nResult==0 && pszIAP!=NULL)
             {// all are fine
                 SCMessage::Ptr ptrMsg = SCMessage::create();
-                ptrMsg->nMsgID = SCID::Msg::kSCMsgStoreIAPInfoSuccess;
+                ptrMsg->nMsgID = SCID::Msg::kMsgStoreIAPInfoSuccess;
                 ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
                 ptrMsg->parameters.setValue(SC_KEY_CURRENCY, SCString(pszCurrency));
                 ptrMsg->parameters.setValue(SC_KEY_PRICE, fPrice);
@@ -76,7 +76,7 @@ namespace SpeedCC
             }
             else if(nResult!=0 && pszIAP==NULL)
             {// the retrieve all failed
-                SCMsgDisp()->postMessage(SCID::Msg::kSCMsgStoreIAPInfoFailed);
+                SCMsgDisp()->postMessage(SCID::Msg::kMsgStoreIAPInfoFailed);
             }
         }
         
@@ -84,7 +84,7 @@ namespace SpeedCC
         void scbAlertBoxSelected(const int nAlertBoxID,const int nButton)
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
-            ptrMsg->nMsgID = SCID::Msg::kSCMsgAlertBoxSelected;
+            ptrMsg->nMsgID = SCID::Msg::kMsgAlertBoxSelected;
             ptrMsg->parameters.setValue(SC_KEY_ID, nAlertBoxID);
             ptrMsg->parameters.setValue(SC_KEY_RESULT, nButton);
             SCMsgDisp()->postMessage(ptrMsg);
@@ -94,18 +94,18 @@ namespace SpeedCC
         /*
         void scbAppEnterBackground()
         {
-            SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppEnterBackground);
+            SCMsgDisp()->sendMessage(SCID::Msg::kMsgAppEnterBackground);
         }
         
         void scbAppEnterForeground()
         {
-            SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppEnterForeground);
+            SCMsgDisp()->sendMessage(SCID::Msg::kMsgAppEnterForeground);
         }
 
         
         void scbAppLaunched()
         {
-            SCMsgDisp()->sendMessage(SCID::Msg::kSCMsgAppLaunch);
+            SCMsgDisp()->sendMessage(SCID::Msg::kMsgAppLaunch);
         }
         */
         ///------------- network

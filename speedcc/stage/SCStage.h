@@ -47,7 +47,7 @@ namespace SpeedCC
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
         template<typename T1,typename T2,typename ...Ts>
-        void createActor2Role(const int nRoleID,const int nActorID=SCID::Act::kSCActDefault)
+        void createActor2Role(const int nRoleID,const int nActorID=SCID::Act::kActDefault)
         {
             auto actor = SCActor::create(nActorID);
             actor->addProperty<T1,T2,Ts...>();
@@ -56,7 +56,7 @@ namespace SpeedCC
         }
         
         template<typename T>
-        void createActor2Role(const int nRoleID,const int nActorID=SCID::Act::kSCActDefault)
+        void createActor2Role(const int nRoleID,const int nActorID=SCID::Act::kActDefault)
         {
             auto actor = SCActor::create(nActorID);
             actor->addProperty<T>();

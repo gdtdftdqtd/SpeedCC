@@ -76,7 +76,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 // This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground() {
-    SCMsgDisp()->sendMessage(SpeedCC::SCID::Msg::kSCMsgAppEnterBackground);
+    SCMsgDisp()->sendMessage(SpeedCC::SCID::Msg::kMsgAppEnterBackground);
     Director::getInstance()->stopAnimation();
 
 #if USE_AUDIO_ENGINE
@@ -89,7 +89,7 @@ void AppDelegate::applicationDidEnterBackground() {
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
-    SCMsgDisp()->sendMessage(SpeedCC::SCID::Msg::kSCMsgAppEnterForeground);
+    SCMsgDisp()->sendMessage(SpeedCC::SCID::Msg::kMsgAppEnterForeground);
     Director::getInstance()->startAnimation();
 
 #if USE_AUDIO_ENGINE

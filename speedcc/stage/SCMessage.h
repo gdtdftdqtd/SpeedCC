@@ -31,7 +31,7 @@ namespace SpeedCC
     {
     protected:
         SCMessage():
-        nMsgID(SCID::Msg::kSCMsgNULL),
+        nMsgID(SCID::Msg::kMsgNULL),
         bContinue(true)
         {}
         
@@ -47,14 +47,14 @@ namespace SpeedCC
         {}
         
         SCMessage(const SCString& strCmd):
-        nMsgID(SCID::Msg::kSCMsgCommand),
+        nMsgID(SCID::Msg::kMsgCommand),
         bContinue(true)
         {
             parameters.setValue(SC_KEY_COMMAND,strCmd);
         }
         
         SCMessage(const SCString& strCmd,const SCDictionary& par):
-        nMsgID(SCID::Msg::kSCMsgCommand),
+        nMsgID(SCID::Msg::kMsgCommand),
         parameters(par),
         bContinue(true)
         {
@@ -134,7 +134,7 @@ namespace SpeedCC
         inline int getMessageID() const { return _nMsgID; }
         inline SCDictionary getParameter() const { return _paraDic; }
         inline MatchFunc_t getFunc() const { return _func; }
-        inline bool isCommand() const { return (_nMsgID==SCID::Msg::kSCMsgCommand);}
+        inline bool isCommand() const { return (_nMsgID==SCID::Msg::kMsgCommand);}
         
     protected:
         SCMessageMatcher(const int nMsgID,const MatchFunc_t& func);

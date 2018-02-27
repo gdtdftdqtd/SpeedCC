@@ -72,7 +72,7 @@ namespace SpeedCC
         
     protected:
         SCStrategyEmpty():
-        SCStrategy(SCID::Stg::kSCStgEmpty)
+        SCStrategy(SCID::Stg::kStgEmpty)
         {
         }
     };

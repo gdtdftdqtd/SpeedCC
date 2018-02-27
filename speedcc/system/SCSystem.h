@@ -30,13 +30,13 @@ namespace SpeedCC
     class SCSystem final
     {
     public:
-        enum ESizeType
+        enum EResolutionType
         {
-            kSizeUnkown               = 0,
-            kSizeSmall                = 1,
-            kSizeMedium               = 2,
-            kSizeLarge                = 3,
-            kSizeXLarge               = 4,
+            kResolutionUnkown               = 0,
+            kResolutionSmall                = 1,
+            kResolutionMedium               = 2,
+            kResolutionLarge                = 3,
+            kResolutionXLarge               = 4,
         };
         
         enum EOSType
@@ -46,12 +46,12 @@ namespace SpeedCC
             kOSAndroid      = 2,
         };
         
-        enum EAssetSizeBitMaskType
+        enum EResolutionSizeBitMaskType
         {
-            kAssetBitMaskSmall       = (1<<kSizeSmall),
-            kAssetBitMaskMedium      = (1<<kSizeMedium),
-            kAssetBitMaskLarge       = (1<<kSizeLarge),
-            kAssetBitMaskXLarge      = (1<<kSizeXLarge),
+            kResolutionBitMaskSmall       = (1<<kResolutionSmall),
+            kResolutionBitMaskMedium      = (1<<kResolutionMedium),
+            kResolutionBitMaskLarge       = (1<<kResolutionLarge),
+            kResolutionBitMaskXLarge      = (1<<kResolutionXLarge),
         };
         
         enum EDeviceType
@@ -163,9 +163,9 @@ namespace SpeedCC
         static bool getDeviceInfo(SDeviceInfo& di);
         static SCString getProductName();
         static SCString getBundleID();
-        static ESizeType getScreenSizeType();
+        static EResolutionType getScreenSizeType();
         static void initSpeedCC(const int nSupportAssetType=kSCDefaultResolutionAsset);
-        static ESizeType getAssetSizeType(const bool bCache=true);
+        static EResolutionType getAssetSizeType(const bool bCache=true);
         static void adapterScreenResolution(const bool bCache=true);
         static void log(const char* pszFormat,...);
         

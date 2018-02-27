@@ -45,7 +45,7 @@ void TestLoadingController::setupUI()
         SC_END_CONTAINER
     SC_END_CONTAINER
     
-    this->listenMessage(SCID::Msg::kSCMsgSceneEnter, [this](SCMessage::Ptr ptrMsg)
+    this->listenMessage(SCID::Msg::kMsgSceneEnter, [this](SCMessage::Ptr ptrMsg)
                         {
                             this->schedule(SCF(onTimer), 1);
                         });

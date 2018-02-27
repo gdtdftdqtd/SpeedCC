@@ -25,7 +25,7 @@ using namespace SpeedCC;
 
 enum ETestStageID
 {
-    kTestUserID = SCID::kSCUserID,
+    kTestUserID = SCID::kUserID,
     
     kTestRoleID1,
     
@@ -174,7 +174,7 @@ void TestStageController::onBvrLog(const SCDictionary& par)
     {
         strName = "Message";
     }
-    else if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
+    else if(ptrMsg->nMsgID==SCID::Msg::kMsgCommand)
     {
         strName = "Command";
     }

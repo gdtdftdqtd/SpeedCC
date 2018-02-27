@@ -85,7 +85,7 @@ namespace SpeedCC
     public:
         CREATE_FUNC(SCLayerDisableTouch);
         
-        enum _tagNodeTag {kTAG = 1200};
+        enum {kTAG = 1200};
         
         virtual void onEnter() override;
         virtual void onExit() override;

@@ -41,21 +41,21 @@ namespace SpeedCC
         
         switch(ptrMsg->nMsgID)
         {
-            case SCID::Msg::kSCMsgAppEnterBackground:
+            case SCID::Msg::kMsgAppEnterBackground:
             {
                 SCSetting::getInstance()->flush();
             }
                 break;
                 
                 // store relative
-            case SCID::Msg::kSCMsgStoreUserCancelled:
+            case SCID::Msg::kMsgStoreUserCancelled:
             {
                 SCLog("IAP operation cancelled by user.");
                 SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 
-            case SCID::Msg::kSCMsgStorePurchaseSuccess:
+            case SCID::Msg::kMsgStorePurchaseSuccess:
             {
                 SCLog("IAP Purchase success.");
                 bool bResult = false;
@@ -71,14 +71,14 @@ namespace SpeedCC
             }
                 break;
                 
-            case SCID::Msg::kSCMsgStorePurchaseFailed:
+            case SCID::Msg::kMsgStorePurchaseFailed:
             {
                 SCLog("IAP Purchase failed.");
                 SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 
-            case SCID::Msg::kSCMsgStoreRestoreSuccess:
+            case SCID::Msg::kMsgStoreRestoreSuccess:
             {
                 SCLog("Restored IAP success.");
                 bool bResult = false;
@@ -94,14 +94,14 @@ namespace SpeedCC
             }
                 break;
                 
-            case SCID::Msg::kSCMsgStoreRestoreFailed:
+            case SCID::Msg::kMsgStoreRestoreFailed:
             {
                 SCLog("Restored IAP failed.");
                 SCSystem::setGlobalDisableTouch(false);
             }
                 break;
                 
-            case SCID::Msg::kSCMsgStoreIAPInfoSuccess:
+            case SCID::Msg::kMsgStoreIAPInfoSuccess:
             {
                 SCLog("Request IAP info success.");
                 bool bResult = false;
@@ -118,13 +118,13 @@ namespace SpeedCC
             }
                 break;
                 
-            case SCID::Msg::kSCMsgStoreIAPInfoFailed:
+            case SCID::Msg::kMsgStoreIAPInfoFailed:
             {
                 SCLog("Request IAP info failed.");
             }
                 break;
                 
-            case SCID::Msg::kSCMsgAlertBoxSelected:
+            case SCID::Msg::kMsgAlertBoxSelected:
             {
                 auto nAlertBoxID = ptrMsg->parameters.getValue(SC_KEY_ID).getInt();
                 auto it = _alertBoxID2CBMap.find(nAlertBoxID);
@@ -137,7 +137,7 @@ namespace SpeedCC
             }
                 break;
                 
-            case SCID::Msg::kSCMsgQuit:
+            case SCID::Msg::kMsgQuit:
                 exit(0);
                 break;
         }

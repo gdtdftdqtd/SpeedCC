@@ -54,8 +54,8 @@ namespace SpeedCC
     
     void SCBehaviorSceneGoto::onBvrFunc()
     {
-        SCSceneNavigator::getInstance()->setSceneParameter(_parameterDic);
-        SCSceneNavigator::getInstance()->gotoScene(_switch);
+        SCSceneNav()->setSceneParameter(_parameterDic);
+        SCSceneNav()->gotoScene(_switch);
         _ptrDelayBvr = nullptr;
     }
     

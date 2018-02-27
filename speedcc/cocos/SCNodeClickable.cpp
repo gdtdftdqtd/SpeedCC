@@ -90,7 +90,7 @@ namespace SpeedCC
     {
         switch(ptrMsg->nMsgID)
         {
-            case SCID::Msg::kSCMsgTouchBegan:
+            case SCID::Msg::kMsgTouchBegan:
             {
                 ptrMsg->parameters.setValue(SC_KEY_RESULT,false);
                 
@@ -121,7 +121,7 @@ namespace SpeedCC
             }
                 break;
                 
-            case SCID::Msg::kSCMsgTouchMoved:
+            case SCID::Msg::kMsgTouchMoved:
             {
                 SC_RETURN_V_IF(_pMenuItem==nullptr || !_bTrack);
                 auto pEvent = (cocos2d::Touch*)ptrMsg->parameters.getValue(SC_KEY_TOUCH).getPointer();
@@ -140,11 +140,11 @@ namespace SpeedCC
             }
                 break;
                 
-            case SCID::Msg::kSCMsgTouchEnded:
+            case SCID::Msg::kMsgTouchEnded:
             {
                 SC_RETURN_V_IF(!_bTrack);
                 SCDictionary dic = {SC_KEY_CCREF, SCRef2Ptr::create(_pNode)};
-                SCMsgDisp()->postMessage(SCID::Msg::kSCMsgNodeClicked, dic);
+                SCMsgDisp()->postMessage(SCID::Msg::kMsgNodeClicked, dic);
                 if(_ptrBvr!=nullptr)
                 {
                     _ptrBvr->execute(dic);
@@ -160,7 +160,7 @@ namespace SpeedCC
             }
                 break;
                 
-            case SCID::Msg::kSCMsgTouchCancelled:
+            case SCID::Msg::kMsgTouchCancelled:
             {
                 SC_RETURN_V_IF(!_bTrack);
                 _pNode->retain();

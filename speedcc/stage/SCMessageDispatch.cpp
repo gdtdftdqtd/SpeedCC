@@ -207,7 +207,7 @@ namespace SpeedCC
         if(_bFrameMessageEnabled)
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
-            ptrMsg->nMsgID = SCID::Msg::kSCMsgFrame;
+            ptrMsg->nMsgID = SCID::Msg::kMsgFrame;
             ptrMsg->parameters.setValue(SC_KEY_DELTA, SCValue(fDelta));
             SCMsgDisp()->sendMessage(ptrMsg);
             

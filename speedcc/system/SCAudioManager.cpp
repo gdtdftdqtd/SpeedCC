@@ -158,7 +158,7 @@ namespace SpeedCC
     {
         for(auto it : ptrMsg)
         {
-            if(it->nMsgID==SCID::Msg::kSCMsgCommand)
+            if(it->nMsgID==SCID::Msg::kMsgCommand)
             {
                 auto cmd = it->parameters.getValue(SC_KEY_COMMAND).getString();
                 if(!cmd.isEmpty())
@@ -284,14 +284,14 @@ namespace SpeedCC
         
         switch(ptrMsg->nMsgID)
         {
-            case SCID::Msg::kSCMsgSettingSoundChanged:
+            case SCID::Msg::kMsgSettingSoundChanged:
                 if(!(*_ptrWatchSound))
                 {
                     this->stopAllSound();
                 }
                 break;
                 
-            case SCID::Msg::kSCMsgSettingMusicChanged:
+            case SCID::Msg::kMsgSettingMusicChanged:
                 if((*_ptrWatchMusic))
                 {
                     this->stopMusic();
@@ -301,7 +301,7 @@ namespace SpeedCC
             default: break;
         }
         
-        if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
+        if(ptrMsg->nMsgID==SCID::Msg::kMsgCommand)
         {
             if(!_cmd2AudioIndexMap.empty())
             {

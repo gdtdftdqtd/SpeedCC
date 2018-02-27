@@ -165,51 +165,51 @@ namespace SpeedCC
         
         SCDictionary dic(pair,SC_ARRAY_LENGTH(pair));
         
-        auto result = this->sendEventMessage(SCID::Msg::kSCMsgTouchBegan,dic);
+        auto result = this->sendEventMessage(SCID::Msg::kMsgTouchBegan,dic);
         return result.getValue(SC_KEY_RESULT).getBool();
     }
     
     void SCEventEmitter::onSingleTouchMoved(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchMoved,pTouch,pEvent);
+        this->sendTouchMessage(SCID::Msg::kMsgTouchMoved,pTouch,pEvent);
     }
     
     void SCEventEmitter::onSingleTouchEnded(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchEnded,pTouch,pEvent);
+        this->sendTouchMessage(SCID::Msg::kMsgTouchEnded,pTouch,pEvent);
     }
     
     void SCEventEmitter::onSingleTouchCancelled(cocos2d::Touch* pTouch, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchCancelled,pTouch,pEvent);
+        this->sendTouchMessage(SCID::Msg::kMsgTouchCancelled,pTouch,pEvent);
     }
     
     void SCEventEmitter::onMultipleTouchBegan(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchBegan,touchVtr,pEvent);
+        this->sendTouchMessage(SCID::Msg::kMsgTouchBegan,touchVtr,pEvent);
     }
     
     void SCEventEmitter::onMultipleTouchMoved(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchMoved,touchVtr,pEvent);
+        this->sendTouchMessage(SCID::Msg::kMsgTouchMoved,touchVtr,pEvent);
     }
     
     void SCEventEmitter::onMultipleTouchEnded(const std::vector<cocos2d::Touch*>& touchVtr, cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchEnded,touchVtr,pEvent);
+        this->sendTouchMessage(SCID::Msg::kMsgTouchEnded,touchVtr,pEvent);
     }
     
     void SCEventEmitter::onMultipleTouchCancelled(const std::vector<cocos2d::Touch*>& touchVtr,
                                                   cocos2d::Event* pEvent)
     {
         SC_RETURN_V_IF(!this->getActive());
-        this->sendTouchMessage(SCID::Msg::kSCMsgTouchCancelled,touchVtr,pEvent);
+        this->sendTouchMessage(SCID::Msg::kMsgTouchCancelled,touchVtr,pEvent);
     }
     
     void SCEventEmitter::onAcceleration(cocos2d::Acceleration* pAcc, cocos2d::Event* pEvent)
@@ -226,7 +226,7 @@ namespace SpeedCC
         
         SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
         
-        this->sendEventMessage(SCID::Msg::kSCMsgAcceleration,dic);
+        this->sendEventMessage(SCID::Msg::kMsgAcceleration,dic);
     }
     
     void SCEventEmitter::onKeyboardPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* pEvent)
@@ -240,7 +240,7 @@ namespace SpeedCC
         
         SCDictionary dic(pairArray,SC_ARRAY_LENGTH(pairArray));
         
-        this->sendEventMessage(SCID::Msg::kSCMsgKeyboardKeyDown,dic);
+        this->sendEventMessage(SCID::Msg::kMsgKeyboardKeyDown,dic);
     }
     
     SCDictionary SCEventEmitter::sendEventMessage(const int nMsg,SCDictionary dic)

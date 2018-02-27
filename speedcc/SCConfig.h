@@ -69,47 +69,47 @@
 #endif
 
 #ifndef kSCDefaultResolutionAsset
-#define kSCDefaultResolutionAsset                                   SpeedCC::SCSystem::kAssetBitMaskMedium
+#define kSCDefaultResolutionAsset                                   SpeedCC::SCSystem::kResolutionBitMaskMedium
 #endif
 
-#ifndef kSCWidthOfAssetDesignBaseline
-#define kSCWidthOfAssetDesignBaseline                             (320)
+#ifndef kSCWidthOfResolutionBaseline
+#define kSCWidthOfResolutionBaseline                             (320)
 #endif
 
-#ifndef kSCHeightOfAssetDesignBaseline
-#define kSCHeightOfAssetDesignBaseline                            (480)
+#ifndef kSCHeightOfResolutionBaseline
+#define kSCHeightOfResolutionBaseline                            (480)
 #endif
 
-#ifndef kSCWidthOfAssetDesignSmall
-#define kSCWidthOfAssetDesignSmall                                 kSCWidthOfAssetDesignBaseline
+#ifndef kSCWidthOfResolutionSmall
+#define kSCWidthOfResolutionSmall                                 kSCWidthOfResolutionBaseline
 #endif
 
-#ifndef kSCHeightOfAssetDesignSmall
-#define kSCHeightOfAssetDesignSmall                                kSCHeightOfAssetDesignBaseline
+#ifndef kSCHeightOfResolutionSmall
+#define kSCHeightOfResolutionSmall                                kSCHeightOfResolutionBaseline
 #endif
 
-#ifndef kSCWidthOfAssetDesignMedium
-#define kSCWidthOfAssetDesignMedium                                (kSCWidthOfAssetDesignSmall*2)
+#ifndef kSCWidthOfResolutionMedium
+#define kSCWidthOfResolutionMedium                                (kSCWidthOfResolutionSmall*2)
 #endif
 
-#ifndef kSCHeightOfAssetDesignMedium
-#define kSCHeightOfAssetDesignMedium                               (kSCHeightOfAssetDesignSmall*2)
+#ifndef kSCHeightOfResolutionMedium
+#define kSCHeightOfResolutionMedium                               (kSCHeightOfResolutionSmall*2)
 #endif
 
-#ifndef kSCWidthOfAssetDesignLarge
-#define kSCWidthOfAssetDesignLarge                                 (kSCWidthOfAssetDesignSmall*4)
+#ifndef kSCWidthOfResolutionLarge
+#define kSCWidthOfResolutionLarge                                 (kSCWidthOfResolutionSmall*4)
 #endif
 
-#ifndef kSCHeightOfAssetDesignLarge
-#define kSCHeightOfAssetDesignLarge                                (kSCHeightOfAssetDesignSmall*4)
+#ifndef kSCHeightOfResolutionLarge
+#define kSCHeightOfResolutionLarge                                (kSCHeightOfResolutionSmall*4)
 #endif
 
-#ifndef kSCWidthOfAssetDesignXLarge
-#define kSCWidthOfAssetDesignXLarge                                (kSCWidthOfAssetDesignSmall*8)
+#ifndef kSCWidthOfResolutionXLarge
+#define kSCWidthOfResolutionXLarge                                (kSCWidthOfResolutionSmall*8)
 #endif
 
-#ifndef kSCHeightOfAssetDesignXLarge
-#define kSCHeightOfAssetDesignXLarge                               (kSCHeightOfAssetDesignSmall*8)
+#ifndef kSCHeightOfResolutionXLarge
+#define kSCHeightOfResolutionXLarge                               (kSCHeightOfResolutionSmall*8)
 #endif
 
 #endif // __SPEEDCC__SCCONFIG_H__

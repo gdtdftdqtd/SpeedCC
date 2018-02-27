@@ -74,7 +74,7 @@ namespace SpeedCC
         
         SCStrategyInfo::SBehaviorInfo* pBehaviorInfo = nullptr;
         
-        if(ptrMsg->nMsgID==SCID::Msg::kSCMsgCommand)
+        if(ptrMsg->nMsgID==SCID::Msg::kMsgCommand)
         {
             SC_RETURN_V_IF(ptrSI->command2BehaviorMap.empty());
             

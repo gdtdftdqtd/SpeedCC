@@ -91,11 +91,11 @@ namespace SpeedCC
                               SCCCUserDefault()->setBoolForKey(strKey, bNew);
                               if(strKey==kSCSettingKeySound)
                               {
-                                  SCMsgDisp()->postMessage(SCID::Msg::kSCMsgSettingSoundChanged);
+                                  SCMsgDisp()->postMessage(SCID::Msg::kMsgSettingSoundChanged);
                               }
                               else if(strKey==kSCSettingKeyMusic)
                               {
-                                  SCMsgDisp()->postMessage(SCID::Msg::kSCMsgSettingMusicChanged);
+                                  SCMsgDisp()->postMessage(SCID::Msg::kMsgSettingMusicChanged);
                               }
                           });
         

@@ -71,92 +71,92 @@ namespace SpeedCC
         enum Msg
         {
             // no parameter
-            kSCMsgNULL  =  0,
+            kMsgNULL  =  0,
             
             // no parameter
-            kSCMsgQuit,
+            kMsgQuit,
             
             // “code”: EErrorCode
             // "message": SCString
-            kSCMsgError,
+            kMsgError,
             
             // app launch
             // no parameter
-            kSCMsgAppLaunch,
+            kMsgAppLaunch,
             
             // game enter foreground
             // no parameter
-            kSCMsgAppEnterForeground,
+            kMsgAppEnterForeground,
             
             // game enter background
             // no parameter
-            kSCMsgAppEnterBackground,
+            kMsgAppEnterBackground,
             
             // internet reachable changed
             // key: SC_KEY_STATE
-            kSCMsgInternetReachableChanged,
+            kMsgInternetReachableChanged,
             
             // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
-            kSCMsgSceneEnter,
+            kMsgSceneEnter,
             
             // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
-            kSCMsgSceneEnterTransitionDidFinish,
+            kMsgSceneEnterTransitionDidFinish,
             
             // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
-            kSCMsgSceneExit,
+            kMsgSceneExit,
             
             // key: SC_KEY_CONTROLLER
             // lisenter: owner scene controller
-            kSCMsgSceneExitTransitionDidStart,
+            kMsgSceneExitTransitionDidStart,
             
             // key: SC_KEY_TOUCH       (for single touch)
             // key: SC_RESULT  (result from receiver, by defualt is true)
             // key: SC_KEY_TOUCHES     (for multiple touch)
             // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
-            kSCMsgTouchBegan,
+            kMsgTouchBegan,
             
             // key: SC_KEY_TOUCH       (for single touch)
             // key: SC_KEY_TOUCHES     (for multiple touch)
             // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
-            kSCMsgTouchMoved,
+            kMsgTouchMoved,
             
             // key: SC_KEY_TOUCH       (for single touch)
             // key: SC_KEY_TOUCHES     (for multiple touch)
             // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
-            kSCMsgTouchEnded,
+            kMsgTouchEnded,
             
             // key: SC_KEY_TOUCH       (for single touch)
             // key: SC_KEY_TOUCHES     (for multiple touches)
             // key: SC_KEY_CCEVENT
             // lisenter: owner scene controller
-            kSCMsgTouchCancelled,
+            kMsgTouchCancelled,
             
             // key: SC_KEY_X
             // key: SC_KEY_Y
             // key: SC_KEY_Z
             // key: SC_KEY_TIMESTAMP
             // key: SC_KEY_CCEVENT
-            kSCMsgAcceleration,
+            kMsgAcceleration,
             
             // key: SC_KEY_KEYBOARDCODE
             // key: SC_KEY_CCEVENT
-            kSCMsgKeyboardKeyDown,
+            kMsgKeyboardKeyDown,
             
             // key: SC_KEY_KEYBOARDCODE
             // key: SC_KEY_CCEVENT
-            kSCMsgKeyboardKeyUp,
+            kMsgKeyboardKeyUp,
             
             // key: SC_KEY_CCREF
-            kSCMsgNodeClicked,
+            kMsgNodeClicked,
             
-            kSCMsgSettingMusicChanged,
-            kSCMsgSettingSoundChanged,
+            kMsgSettingMusicChanged,
+            kMsgSettingSoundChanged,
             // show alert box,
             // must block it if want to show customize alert box
             // otherwise will show with system alert box
@@ -166,78 +166,78 @@ namespace SpeedCC
             // SC_KEY_STRING0 => SCString
             // SC_KEY_STRING1 => SCString (optional)
             // SC_KEY_STRING2 => SCString (optional)
-//            kSCMsgShowAlertBox,
+//            kMsgShowAlertBox,
             
             // SC_KEY_ID => int
             // SC_KEY_RESULT => int
-            kSCMsgAlertBoxSelected,
+            kMsgAlertBoxSelected,
             //        // "number" => int; number of scenes to back
-            //        kSCMsgSceneBack,
+            //        kMsgSceneBack,
             
             // store prcoess cancelled by user
             // no parameter
-            kSCMsgStoreUserCancelled,
+            kMsgStoreUserCancelled,
             
             // IAP purchased is success
             // SC_KEY_IAP => SCString
-            kSCMsgStorePurchaseSuccess,
+            kMsgStorePurchaseSuccess,
             
             // IAP purchased is failed
             // SC_KEY_IAP => SCString
-            kSCMsgStorePurchaseFailed,
+            kMsgStorePurchaseFailed,
             
             // IAP restored is success
             // delivery: post
-            kSCMsgStoreRestoreSuccess,
+            kMsgStoreRestoreSuccess,
             
             // IAP restored is failed
             // delivery: post
-            kSCMsgStoreRestoreFailed,
+            kMsgStoreRestoreFailed,
             
             // retrieve IAP success
             // SC_KEY_IAP => SCString
             // SC_KEY_CURRENCY => SCString
             // SC_KEY_PRICE => float
-            kSCMsgStoreIAPInfoSuccess,
+            kMsgStoreIAPInfoSuccess,
             
             // retrieve IAP failed
-            kSCMsgStoreIAPInfoFailed,
+            kMsgStoreIAPInfoFailed,
             
             // "layer" => cocos2d::Ref*; touch belong to layer
-            //        kSCMsgTouch,
+            //        kMsgTouch,
             
             // send this message every frame
             // delivery: send
             // key: SC_KEY_DELTA
-            kSCMsgFrame,
+            kMsgFrame,
             
             // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
-            kSCMsgModalSceneGotFocus,
+            kMsgModalSceneGotFocus,
             
             // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
-            kSCMsgModalSceneLostFocus,
+            kMsgModalSceneLostFocus,
             
             //        // MSG_ARG_KEY_CONTROLLER/"controller" => SCSceneController*
-            //        kSCMsgPushModalScene,
+            //        kMsgPushModalScene,
             
             // SC_KEY_COMMAND => SCString
-            kSCMsgCommand,
+            kMsgCommand,
         };
         
         enum Stg
         {
-            kSCStgNull  = 0,
+            kStgNull  = 0,
             
-            kSCStgEmpty,
+            kStgEmpty,
         };
         
         enum Act
         {
-            kSCActNull = 0,
-            kSCActDefault,
+            kActNull = 0,
+            kActDefault,
         };
         
-        enum {kSCUserID = 65535};
+        enum {kUserID = 65535};
         
     };
 }
