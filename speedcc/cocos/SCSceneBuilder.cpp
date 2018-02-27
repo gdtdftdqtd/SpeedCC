@@ -17,7 +17,7 @@
  
  ****************************************************************************/
 
-#include "SCUIBuilder.h"
+#include "SCSceneBuilder.h"
 #include "SCSceneController.h"
 #include "SCNodeUtils.h"
 
@@ -35,7 +35,7 @@ namespace SpeedCC
     
     ///------------ root container
 
-    void SCUIBuilder::beginContainerRoot(const float fPosX,
+    void SCSceneBuilder::beginContainerRoot(const float fPosX,
                                  const float fPosY,
                                  const SCUIArg::StringPurifier& style,
                                  const SCUIArg::SizePurifier& sizePurifier,
@@ -76,7 +76,7 @@ namespace SpeedCC
         this->pushContainerStack(pParentNode);
     }
     
-    void SCUIBuilder::popContainerStack()
+    void SCSceneBuilder::popContainerStack()
     {
         SCASSERT(!_contextStack.empty());
         auto& front = _contextStack.front();
@@ -90,7 +90,7 @@ namespace SpeedCC
     }
     
     ///------------ user node
-    cocos2d::Node* SCUIBuilder::insertUserNode(const SCUIArg::NodePurifier& userNode,
+    cocos2d::Node* SCSceneBuilder::insertUserNode(const SCUIArg::NodePurifier& userNode,
                                                const float fPosX,
                                                const float fPosY,
                                                const SCUIArg::StringPurifier& style)
@@ -117,7 +117,7 @@ namespace SpeedCC
     }
     
     ///---------------- sprite
-    cocos2d::Sprite* SCUIBuilder::insertSprite(cocos2d::Sprite** ppSprite,
+    cocos2d::Sprite* SCSceneBuilder::insertSprite(cocos2d::Sprite** ppSprite,
                                   const float fPosX,
                                   const float fPosY,
                                   const SCUIArg::StringPurifier& style,
@@ -131,7 +131,7 @@ namespace SpeedCC
     
     ///------------ label
     
-    Label* SCUIBuilder::insertLabel(cocos2d::Label** ppLabel,
+    Label* SCSceneBuilder::insertLabel(cocos2d::Label** ppLabel,
                                 const float fPosX,
                                 const float fPosY,
                                 const SCUIArg::StringPurifier& style,
@@ -147,7 +147,7 @@ namespace SpeedCC
         return pLabel;
     }
     
-    Label* SCUIBuilder::insertLabelTTF(cocos2d::Label** ppLabel,
+    Label* SCSceneBuilder::insertLabelTTF(cocos2d::Label** ppLabel,
                                    const float fPosX,
                                    const float fPosY,
                                    const SCUIArg::StringPurifier& style,
@@ -163,7 +163,7 @@ namespace SpeedCC
         return pLabel;
     }
     
-    cocos2d::Label* SCUIBuilder::insertLabelBMFont(cocos2d::Label** ppLabel,
+    cocos2d::Label* SCSceneBuilder::insertLabelBMFont(cocos2d::Label** ppLabel,
                                       const float fPosX,
                                       const float fPosY,
                                       const SCUIArg::StringPurifier& style,
@@ -178,7 +178,7 @@ namespace SpeedCC
         return pLabel;
     }
     
-    void SCUIBuilder::addLabel(const SCUIArg::NodePurifier& labelNode,
+    void SCSceneBuilder::addLabel(const SCUIArg::NodePurifier& labelNode,
                                const float fPosX,
                               const float fPosY,
                               const SCUIArg::StringPurifier& style,
@@ -188,7 +188,7 @@ namespace SpeedCC
         this->insertUserNode(labelNode, fPosX, fPosY, style);
     }
     
-    void SCUIBuilder::bindLabel(const SCUIArg::NodePurifier& labelNode,
+    void SCSceneBuilder::bindLabel(const SCUIArg::NodePurifier& labelNode,
                    const SCUIArg::LabelStringPurifier& labelString)
     {
         auto ptrBinder = labelString.ptrLabelBinder;
@@ -202,7 +202,7 @@ namespace SpeedCC
         }
     }
     ///---------------- button
-    cocos2d::MenuItemSprite* SCUIBuilder::insertButton(cocos2d::MenuItemSprite** ppMenuItemSprite,
+    cocos2d::MenuItemSprite* SCSceneBuilder::insertButton(cocos2d::MenuItemSprite** ppMenuItemSprite,
                                                       const float fPosX,
                                                       const float fPosY,
                                                       const SCUIArg::StringPurifier& style,
@@ -226,7 +226,7 @@ namespace SpeedCC
         return pItemImage;
     }
     
-    MenuItemLabel* SCUIBuilder::insertButtonLabel(MenuItemLabel** ppMenuItemLabel,
+    MenuItemLabel* SCSceneBuilder::insertButtonLabel(MenuItemLabel** ppMenuItemLabel,
                                       const float fPosX,
                                       const float fPosY,
                                       const SCUIArg::StringPurifier& style,
@@ -244,7 +244,7 @@ namespace SpeedCC
         return ret;
     }
     
-    MenuItemLabel* SCUIBuilder::insertButtonLabelTTF(MenuItemLabel** ppMenuItemLabel,
+    MenuItemLabel* SCSceneBuilder::insertButtonLabelTTF(MenuItemLabel** ppMenuItemLabel,
                                                  const float fPosX,
                                                  const float fPosY,
                                                  const SCUIArg::StringPurifier& style,
@@ -260,7 +260,7 @@ namespace SpeedCC
         return ret;
     }
     
-    MenuItemLabel* SCUIBuilder::insertButtonLabelBMFont(cocos2d::MenuItemLabel** ppMenuItemLabel,
+    MenuItemLabel* SCSceneBuilder::insertButtonLabelBMFont(cocos2d::MenuItemLabel** ppMenuItemLabel,
                                                     const float fPosX,
                                                     const float fPosY,
                                                     const SCUIArg::StringPurifier& style,
@@ -275,7 +275,7 @@ namespace SpeedCC
         return ret;
     }
     
-    MenuItemToggle* SCUIBuilder::insertButtonSwitch(MenuItemToggle** ppMenuItemToggle,
+    MenuItemToggle* SCSceneBuilder::insertButtonSwitch(MenuItemToggle** ppMenuItemToggle,
                                                 const float fPosX,
                                                 const float fPosY,
                                                 const SCUIArg::StringPurifier& style,
@@ -312,7 +312,7 @@ namespace SpeedCC
         return pToggleItem;
     }
 
-    cocos2d::ProgressTimer* SCUIBuilder::insertProgressBar(cocos2d::ProgressTimer** ppProgress,
+    cocos2d::ProgressTimer* SCSceneBuilder::insertProgressBar(cocos2d::ProgressTimer** ppProgress,
                                               const float fPosX,
                                               const float fPosY,
                                               const SCUIArg::StringPurifier& style,
@@ -365,7 +365,7 @@ namespace SpeedCC
         return pProgressBar;
     }
     
-    ProgressTimer* SCUIBuilder::insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
+    ProgressTimer* SCSceneBuilder::insertProgressRadial(cocos2d::ProgressTimer** ppProgress,
                                                      const float fPosX,
                                                      const float fPosY,
                                                      const SCUIArg::StringPurifier& style,
@@ -406,7 +406,7 @@ namespace SpeedCC
         return pProgressBar;
     }
     
-    void SCUIBuilder::containerAlignment(Node** ppNode,
+    void SCSceneBuilder::containerAlignment(Node** ppNode,
                                               const float fPosX,
                                               const float fPosY,
                                               const SCUIArg::StringPurifier& style,
@@ -534,7 +534,7 @@ namespace SpeedCC
     }
     
     ///------------- cocos2d-x extension UI
-    void SCUIBuilder::containerScrollView(cocos2d::ui::ScrollView** ppScrollView,
+    void SCSceneBuilder::containerScrollView(cocos2d::ui::ScrollView** ppScrollView,
                              const float fPosX,
                              const float fPosY,
                              const SCUIArg::StringPurifier& style,
@@ -564,7 +564,7 @@ namespace SpeedCC
         SC_ASSIGN_NODE(ppScrollView,pScrollView);
     }
     
-    void SCUIBuilder::containerPageView(cocos2d::ui::PageView** ppPageView,
+    void SCSceneBuilder::containerPageView(cocos2d::ui::PageView** ppPageView,
                                         const float fPosX,
                                         const float fPosY,
                                         const SCUIArg::StringPurifier& style,
@@ -601,7 +601,7 @@ namespace SpeedCC
         SC_ASSIGN_NODE(ppPageView,pPageView);
     }
     
-    void SCUIBuilder::containerPage(cocos2d::ui::Widget** ppWidget,
+    void SCSceneBuilder::containerPage(cocos2d::ui::Widget** ppWidget,
                        const cocos2d::Size& size)
     {
         auto& top = _contextStack.front();
@@ -620,7 +620,7 @@ namespace SpeedCC
         SC_ASSIGN_NODE(ppWidget,pWidget);
     }
     
-    cocos2d::ui::EditBox* SCUIBuilder::insertEditBox(cocos2d::ui::EditBox** ppEditBox,
+    cocos2d::ui::EditBox* SCSceneBuilder::insertEditBox(cocos2d::ui::EditBox** ppEditBox,
                                         const float fPosX,
                                         const float fPosY,
                                         const SCUIArg::StringPurifier& style,
@@ -638,7 +638,7 @@ namespace SpeedCC
     }
     
     ///-------------- internal methods
-    MenuItemLabel* SCUIBuilder::addButtonLabel(Label* pLabel,
+    MenuItemLabel* SCSceneBuilder::addButtonLabel(Label* pLabel,
                                             const float fPosX,
                                                const float fPosY,
                                                const SCUIArg::StringPurifier& style,
@@ -661,7 +661,7 @@ namespace SpeedCC
         return pItemLabel;
     }
     
-    void SCUIBuilder::addButton(const SCUIArg::NodePurifier& itemNode,
+    void SCSceneBuilder::addButton(const SCUIArg::NodePurifier& itemNode,
                    const float fPosX,
                    const float fPosY,
                    const SCUIArg::StringPurifier& style,
@@ -677,7 +677,7 @@ namespace SpeedCC
     
     ///------------ layer
     
-    LayerColor* SCUIBuilder::insertLayerColor(LayerColor** ppLayer,
+    LayerColor* SCSceneBuilder::insertLayerColor(LayerColor** ppLayer,
                                               const float fPosX,
                                               const float fPosY,
                                               const SCUIArg::StringPurifier& style,
@@ -692,7 +692,7 @@ namespace SpeedCC
         return pLayer;
     }
     
-    cocos2d::Layer* SCUIBuilder::insertLayer(cocos2d::Layer** ppLayer,
+    cocos2d::Layer* SCSceneBuilder::insertLayer(cocos2d::Layer** ppLayer,
                                 const float fPosX,
                                 const float fPosY,
                                 const SCUIArg::StringPurifier& style,
@@ -705,7 +705,7 @@ namespace SpeedCC
         return pLayer;
     }
     
-    void SCUIBuilder::addLayer(const SCUIArg::NodePurifier& layerNode,
+    void SCSceneBuilder::addLayer(const SCUIArg::NodePurifier& layerNode,
                                const float fPosX,
                               const float fPosY,
                               const SCUIArg::StringPurifier& style,
@@ -721,7 +721,7 @@ namespace SpeedCC
         this->insertUserNode(layerNode, fPosX, fPosY, style);
     }
     
-    void SCUIBuilder::pushContainerStack(cocos2d::Node* pNode)
+    void SCSceneBuilder::pushContainerStack(cocos2d::Node* pNode)
     {
         SCUITypeDef::SUIContext context;
         context.pContainerNode = pNode;

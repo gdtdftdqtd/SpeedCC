@@ -27,15 +27,15 @@ namespace SpeedCC
 {
     class SCSceneController;
     
-    class SCUIBuilder : public SCObject
+    class SCSceneBuilder : public SCObject
     {
     public:
-        SC_AVOID_CLASS_COPY(SCUIBuilder)
-        SC_DEFINE_CLASS_PTR(SCUIBuilder)
+        SC_AVOID_CLASS_COPY(SCSceneBuilder)
+        SC_DEFINE_CLASS_PTR(SCSceneBuilder)
         
-        SC_DEFINE_CREATE_FUNC_0(SCUIBuilder)
-        SC_DEFINE_CREATE_FUNC_1(SCUIBuilder,cocos2d::Node*)
-        SC_DEFINE_CREATE_FUNC_2(SCUIBuilder,cocos2d::Node*,cocos2d::Ref*)
+        SC_DEFINE_CREATE_FUNC_0(SCSceneBuilder)
+        SC_DEFINE_CREATE_FUNC_1(SCSceneBuilder,cocos2d::Node*)
+        SC_DEFINE_CREATE_FUNC_2(SCSceneBuilder,cocos2d::Node*,cocos2d::Ref*)
         
         ///------------- root container
         void beginContainerRoot(const float fPosX,
@@ -208,7 +208,7 @@ namespace SpeedCC
                                             cocos2d::ui::EditBoxDelegate* pCallback);
         
     protected:
-        SCUIBuilder():
+        SCSceneBuilder():
         _pCurrentBedNode(nullptr),
         _pCurrentRefCaller(nullptr),
         _pDefaultBedNode(nullptr),
@@ -216,7 +216,7 @@ namespace SpeedCC
         {
         }
         
-        SCUIBuilder(cocos2d::Node* pBedNode,cocos2d::Ref* pRef):
+        SCSceneBuilder(cocos2d::Node* pBedNode,cocos2d::Ref* pRef):
         _pCurrentBedNode(nullptr),
         _pCurrentRefCaller(nullptr),
         _pDefaultBedNode(pBedNode),
@@ -224,7 +224,7 @@ namespace SpeedCC
         {
         }
         
-        SCUIBuilder(cocos2d::Node* pBedNode):
+        SCSceneBuilder(cocos2d::Node* pBedNode):
         _pCurrentBedNode(nullptr),
         _pCurrentRefCaller(nullptr),
         _pDefaultBedNode(pBedNode),

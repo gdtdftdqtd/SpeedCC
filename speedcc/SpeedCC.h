@@ -46,7 +46,7 @@
 #include "cocos/SCNodeStyle.h"
 #include "cocos/SCBinderCocos.h"
 #include "cocos/SCNodeUtils.h"
-#include "cocos/SCUIMacro.h"
+#include "cocos/SCSceneMacro.h"
 #include "cocos/SCEventEmitter.h"
 #include "cocos/SCNodeClickable.h"
 

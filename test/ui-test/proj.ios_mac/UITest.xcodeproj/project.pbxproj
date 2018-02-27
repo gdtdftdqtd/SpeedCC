@@ -19,6 +19,7 @@
 		0A4D77252028B0F10089F8D6 /* TestCaseController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D77232028B0F10089F8D6 /* TestCaseController.cpp */; };
 		0A67CADD1F813A4F00FED9A5 /* libspeedcc-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A67CAB71F80E75100FED9A5 /* libspeedcc-iOS.a */; };
 		0A6879C31FF7ED25004DCED6 /* TestStageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */; };
+		0AA54AF5204405B900101970 /* TestAlignmentController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AA54AF3204405B800101970 /* TestAlignmentController.cpp */; };
 		0AEA3C521FE101BB004C1F13 /* assets-medium in Resources */ = {isa = PBXBuildFile; fileRef = 0AEA3C4E1FE101BB004C1F13 /* assets-medium */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -115,6 +116,8 @@
 		0A67CAB11F80E75100FED9A5 /* speedcc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = speedcc.xcodeproj; path = ../../../speedcc/platform/ios/speedcc.xcodeproj; sourceTree = "<group>"; };
 		0A6879C11FF7ED24004DCED6 /* TestStageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestStageController.cpp; sourceTree = "<group>"; };
 		0A6879C21FF7ED25004DCED6 /* TestStageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStageController.h; sourceTree = "<group>"; };
+		0AA54AF3204405B800101970 /* TestAlignmentController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestAlignmentController.cpp; sourceTree = "<group>"; };
+		0AA54AF4204405B800101970 /* TestAlignmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAlignmentController.h; sourceTree = "<group>"; };
 		0AEA3C4E1FE101BB004C1F13 /* assets-medium */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "assets-medium"; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -305,6 +308,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0AA54AF3204405B800101970 /* TestAlignmentController.cpp */,
+				0AA54AF4204405B800101970 /* TestAlignmentController.h */,
 				0A3C4FED203732C5007DA271 /* TestAlertBoxController.cpp */,
 				0A3C4FEC203732C4007DA271 /* TestAlertBoxController.h */,
 				0A3C4FE72036960D007DA271 /* TestUIMiscController.cpp */,
@@ -518,6 +523,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				0A41B34E1FE7EEEB003945EB /* TestLabelBindingController.cpp in Sources */,
+				0AA54AF5204405B900101970 /* TestAlignmentController.cpp in Sources */,
 				0A4D77252028B0F10089F8D6 /* TestCaseController.cpp in Sources */,
 				0A1556CA1FD69CA200CF7420 /* TestHomeController.cpp in Sources */,
 				0A3C4FEE203732C5007DA271 /* TestAlertBoxController.cpp in Sources */,

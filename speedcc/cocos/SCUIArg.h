@@ -36,7 +36,7 @@
 namespace SpeedCC
 {
     class SCSceneController;
-    class SCUIBuilder;
+    class SCSceneBuilder;
     
     typedef void (*FUN_SCSetStyle_t)(cocos2d::Node* pNode,const SCString& strStyle,SCNodeStyle::SFilterConfig* pFilterConfig);
     
@@ -259,7 +259,7 @@ namespace SpeedCC
     
     class SCUITypeDef
     {
-        friend class SCUIBuilder;
+        friend class SCSceneBuilder;
         
         typedef void (*FUN_SCSetStyle_t)(cocos2d::Node* pNode,const SCString& strStyle);
         

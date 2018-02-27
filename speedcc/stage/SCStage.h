@@ -43,19 +43,6 @@ namespace SpeedCC
         void removeRole(const int nID);
         SCRole::Ptr getRole(const int nID);
         
-        /*
-        void beginRole(const int nRoleID,const int nInitStrategyID);
-        void endRole();
-        
-        void beginStragtegy(const int nStrategyID);
-        void endStrategy();
-        
-        void insertBehavior(const int nMsg,SCBehavior::Ptr ptrBvr);
-        void insertBehavior(const SCString& strCmd,SCBehavior::Ptr ptrBvr);
-        void insertEnterBehavior(SCBehavior::Ptr ptrBvr);
-        void insertExitBehavior(SCBehavior::Ptr ptrBvr);
-        */
-//        virtual void setUp(){}
         virtual SCStrategy::Ptr onCreateStrategy(const int nID) {SCASSERT(false); return nullptr;}
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         

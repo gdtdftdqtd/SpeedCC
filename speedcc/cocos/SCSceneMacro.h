@@ -17,19 +17,19 @@
  
  ****************************************************************************/
 
-#ifndef __SPEEDCC__SCUIMACRO_H__
-#define __SPEEDCC__SCUIMACRO_H__
+#ifndef __SPEEDCC__SCSCENEMACRO_H__
+#define __SPEEDCC__SCSCENEMACRO_H__
 
 // root
 #define SC_BEGIN_CONTAINER_ROOT(_style_,_size_) \
 {\
-    SCUIBuilder::Ptr ptrSCTemUIBuilder = SCUIBuilder::create();\
+    SCSceneBuilder::Ptr ptrSCTemUIBuilder = SCSceneBuilder::create();\
     ptrSCTemUIBuilder->beginContainerRoot(0.5,0.5,(_style_),(_size_),this->getBedNode(),this);
 
 
 #define SC_BEGIN_CONTAINER_ROOT_EX(_style_,_size_,_parent_,_ref_) \
 {\
-    SCUIBuilder::Ptr ptrSCTemUIBuilder = SCUIBuilder::create();\
+    SCSceneBuilder::Ptr ptrSCTemUIBuilder = SCSceneBuilder::create();\
     ptrSCTemUIBuilder->beginContainerRoot(kSCPositionIgnore,kSCPositionIgnore,(_style_),(_size_),(_parent_),(_ref_));
 
 #define SC_END_CONTAINER \

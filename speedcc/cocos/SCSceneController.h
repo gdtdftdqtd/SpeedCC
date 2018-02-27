@@ -26,7 +26,7 @@
 #include "SCRefHolder.h"
 #include "SCCocosDef.h"
 #include "SCBinderCocos.h"
-#include "SCUIBuilder.h"
+#include "SCSceneBuilder.h"
 #include "SCEventEmitter.h"
 
 #include "../base/SCObjPtrT.h"

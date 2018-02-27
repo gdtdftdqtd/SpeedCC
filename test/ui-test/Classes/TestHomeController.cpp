@@ -26,6 +26,7 @@
 #include "TestPageViewController.h"
 #include "TestUIMiscController.h"
 #include "TestAlertBoxController.h"
+#include "TestAlignmentController.h"
 
 USING_NS_CC;
 
@@ -47,6 +48,8 @@ void TestHomeController::onCreate(SCDictionary parameters)
             SC_BEGIN_CONTAINER_SCROLLVIEW(nullptr,"dock=center;",false,viewSize,containerSize,nullptr)
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr,"dock=top|mid-x;",false,20,SCNodeUtils::kDockCenter)
     
+                    SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","Alignment","",23,SCBehaviorSceneGoto::create<TestAlignmentController>())
+    
                     SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","Label Binding","",23,SCBehaviorSceneGoto::create<TestLabelBindingController>())
     
                     SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","Stage","",23,SCBehaviorSceneGoto::create<TestStageController>())
@@ -58,8 +61,6 @@ void TestHomeController::onCreate(SCDictionary parameters)
                     SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","Loading","",23,ptrLoadingBvr)
     
                     SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","PageView","",23,SCBehaviorSceneGoto::create<TestPageViewController>())
-    
-//                    SC_INSERT_BUTTON_LABEL(nullptr,0,0,"text-color=black;","PageView","",23,SCBehaviorSceneGoto::create<TestPageViewController>())
     
                     SC_INSERT_BUTTON_LABEL(nullptr,"text-color=black;","UI Misc","",23,SCBehaviorSceneGoto::create<TestUIMiscController>())
     
