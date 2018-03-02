@@ -19,7 +19,7 @@
 
 #include "SCDataBlock.h"
 #include "SCMemAllocator.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 
 namespace SpeedCC
 {

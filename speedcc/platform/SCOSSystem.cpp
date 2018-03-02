@@ -19,7 +19,7 @@
 
 #include "../stage/SCMessageDispatch.h"
 #include "../stage/SCStageMacroDef.h"
-#include "../base/SCMacroDef.h"
+#include "../base/SCBaseMacros.h"
 #include "../cocos/SCCocosDef.h"
 
 namespace SpeedCC

@@ -23,7 +23,7 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include "SCObjPtrT.h"
 #include "SCObject.h"
 

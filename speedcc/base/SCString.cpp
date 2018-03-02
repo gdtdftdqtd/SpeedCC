@@ -19,7 +19,7 @@
 
 
 #include "SCString.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include "SCMemAllocator.h"
 
 #include <sstream>

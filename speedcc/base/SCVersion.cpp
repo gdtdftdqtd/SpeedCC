@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 #include "SCVersion.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 
 namespace SpeedCC
 {

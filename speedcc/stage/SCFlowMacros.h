@@ -17,8 +17,8 @@
  
  ****************************************************************************/
 
-#ifndef __SPEEDCC__SCFLOWMACRO_H__
-#define __SPEEDCC__SCFLOWMACRO_H__
+#ifndef __SPEEDCC__SCFLOWMACROS_H__
+#define __SPEEDCC__SCFLOWMACROS_H__
 
 #define SC_BEGIN_ROLE(_role_id_,_strategy_id_,_stage_) \
 do{\
@@ -83,4 +83,4 @@ do{\
     ON_MSG_BEHAVIOR(_msg_,bvrPtr)\
 }while(0);
 
-#endif // __SPEEDCC__SCFLOWMACRO_H__
+#endif // __SPEEDCC__SCFLOWMACROS_H__

@@ -52,22 +52,24 @@ namespace SpeedCC
         // 1) nFeatureID: yes; strIAP: yes; nPointID: yes;  Consumable IAP
         // 2) nFeatureID: yes; strIAP: yes; nPointID: no;   Non-Consumable IAP
         // 3) nFeatureID: yes; strIAP: no; nPointID: yes;   consume point
-        bool setUpFeatureID(const int nFeatureID,const SCString& strIAP,const int nPointID=0,const int nPointInc=0);
+        bool setUpFeature(const int nFeatureID,const SCString& strIAP,const int nPointID=0,const int nPointInc=0);
         bool setPointIncByFeature(const int nFeatureID,const int nPointInc);
         bool purchaseFeature(const int nFeatureID);
-        bool isFeatureEnable(const int nFeatureID) const;
-        bool setFeatureEnable(const int nFeatureID,const bool bEnable);
+        bool isFeatureEnabled(const int nFeatureID) const;
+        bool setFeatureEnabled(const int nFeatureID,const bool bEnable);
         
         bool getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info);
         SCString getIAPByFeature(const int nFeatureID);
         
         int getPointIDByFeature(const int nFeatureID);
-        bool addPoint(const int nPointID,const int nPointInc);
+        SCWatchInt::Ptr getPointByID(const int nPointID) const;
         bool restorePurchased();
         bool requestIAPPriceInfo();
         
-        bool bindPoint2Setting(const int nPointID,const SCString& strSettingKey);
-        bool bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey);
+        bool bindPoint2Setting(const int nPointID,const SCString& strSettingKey,const bool bUseSetting);
+        bool unbindPoint2Setting(const int nPointID);
+        bool bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey,const bool bUseSetting);
+        bool unbindFeature(const int nFeatureID);
     private:
         enum EBuyType
         {
@@ -92,14 +94,14 @@ namespace SpeedCC
             int             nPointID;
             SCString        strIAP;
             int             nPointInc;
-            SCWatchBool::Ptr bFeatureLockedPtr;
+            SCWatchBool::Ptr ptrFeatureLocked;
             
             SFeaturePointInfo():
             nFeatureID(0),
             nPointID(0),
             nPointInc(0)
             {
-                bFeatureLockedPtr = SCWatchBool::create(true);
+                ptrFeatureLocked = SCWatchBool::create(true);
             }
         };
         

@@ -39,7 +39,7 @@ namespace SpeedCC
         return s_pInstance;
     }
     
-    bool SCStore::setUpFeatureID(const int nFeatureID,const SCString& strIAP,const int nPointID,const int nPointInc)
+    bool SCStore::setUpFeature(const int nFeatureID,const SCString& strIAP,const int nPointID,const int nPointInc)
     {
         SCASSERT(nFeatureID>0);
         SFeaturePointInfo info;
@@ -90,25 +90,25 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCStore::isFeatureEnable(const int nFeatureID) const
+    bool SCStore::isFeatureEnabled(const int nFeatureID) const
     {
         SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,false);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
         
-        auto ptr = (*it).second.bFeatureLockedPtr;
+        auto ptr = (*it).second.ptrFeatureLocked;
         return !(*ptr);
     }
     
-    bool SCStore::setFeatureEnable(const int nFeatureID,const bool bEnable)
+    bool SCStore::setFeatureEnabled(const int nFeatureID,const bool bEnable)
     {
         SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,false);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
         
-        *((*it).second.bFeatureLockedPtr) = !bEnable;
+        *((*it).second.ptrFeatureLocked) = !bEnable;
         return true;
     }
     
@@ -192,15 +192,18 @@ namespace SpeedCC
         return (*it).second.nPointID;
     }
     
-    bool SCStore::addPoint(const int nPointID,const int nPointInc)
+    SCWatchInt::Ptr SCStore::getPointByID(const int nPointID) const
     {
-        SCASSERT(nPointID>0);
+        auto ret = SCWatchInt::create();
         auto it = _pointID2WatchIntMap.find(nPointID);
-        SC_RETURN_IF(it==_pointID2WatchIntMap.end(), false);
-        (*(*it).second) += nPointInc;
-        return true;
+        
+        if(it!=_pointID2WatchIntMap.end())
+        {
+            ret = (*it).second;
+        }
+        
+        return ret;
     }
-    
     
     bool SCStore::isFeatureExist(const int nFeatureID) const
     {
@@ -255,24 +258,39 @@ namespace SpeedCC
         }
     }
     
-    bool SCStore::bindPoint2Setting(const int nPointID,const SCString& strSettingKey)
+    bool SCStore::bindPoint2Setting(const int nPointID,const SCString& strSettingKey,const bool bUseSetting)
     {
         SCASSERT(nPointID>0);
         SC_RETURN_IF(nPointID<=0, false);
         SC_RETURN_IF(strSettingKey.isEmpty(), false);
         
         auto it = _pointID2WatchIntMap.find(nPointID);
-        
         SC_RETURN_IF(_pointID2WatchIntMap.end()==it, false);
         
         auto ptr = SCSetting::getInstance()->getWatchInt(strSettingKey);
-        *ptr = *(*it).second;
+        if(!bUseSetting)
+        {
+            *ptr = *(*it).second;
+        }
         (*it).second = ptr;
         
         return true;
     }
     
-    bool SCStore::bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey)
+    bool SCStore::unbindPoint2Setting(const int nPointID)
+    {
+        SCASSERT(nPointID>0);
+        SC_RETURN_IF(nPointID<=0, false);
+        
+        auto it = _pointID2WatchIntMap.find(nPointID);
+        SC_RETURN_IF(_pointID2WatchIntMap.end()==it, false);
+        
+        int n = (*(*it).second);
+        (*it).second = SCWatchInt::create(n);
+        return true;
+    }
+    
+    bool SCStore::bindFeature2Setting(const int nFeatureID,const SCString& strSettingKey,const bool bUseSetting)
     {
         SC_RETURN_IF(nFeatureID<=0 || strSettingKey.isEmpty(), false);
         
@@ -280,8 +298,25 @@ namespace SpeedCC
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
         
         auto ptr = SCSetting::getInstance()->getWatchBool(strSettingKey);
-        *ptr = *(*it).second.bFeatureLockedPtr;
-        (*it).second.bFeatureLockedPtr = ptr;
+        if(bUseSetting)
+        {
+            *ptr = *(*it).second.ptrFeatureLocked;
+        }
+        (*it).second.ptrFeatureLocked = ptr;
+        
+        return true;
+    }
+    
+    bool SCStore::unbindFeature(const int nFeatureID)
+    {
+        SC_RETURN_IF(nFeatureID<=0, false);
+        
+        auto it = _feature2InfoMap.find(nFeatureID);
+        SC_RETURN_IF(it==_feature2InfoMap.end(), false);
+        
+        bool b = *((*it).second.ptrFeatureLocked);
+        
+        (*it).second.ptrFeatureLocked = SCWatchBool::create(b);
         
         return true;
     }
@@ -294,7 +329,7 @@ namespace SpeedCC
         {
             if(it.second.strIAP==strIAP)
             {
-                *(it.second.bFeatureLockedPtr) = true;
+                *(it.second.ptrFeatureLocked) = true;
                 break;
             }
         }

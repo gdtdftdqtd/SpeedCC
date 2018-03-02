@@ -23,7 +23,7 @@
 
 #include <functional>
 #include "SCTemplateDef.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include "SCMemAllocator.h"
 
 namespace SpeedCC

@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 #include "SCSystem.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 
 #include "../stage/SCMessageDispatch.h"
 #include "../stage/SCStageMacroDef.h"

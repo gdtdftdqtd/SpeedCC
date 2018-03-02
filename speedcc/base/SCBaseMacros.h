@@ -18,8 +18,8 @@
  ****************************************************************************/
 
 
-#ifndef __SPEEDCC__SCMACRODEF_H__
-#define __SPEEDCC__SCMACRODEF_H__
+#ifndef __SPEEDCC__SCBASEMACROS_H__
+#define __SPEEDCC__SCBASEMACROS_H__
 
 #include <assert.h>
 
@@ -192,4 +192,4 @@ SpeedCC::SCBindFuncUtilsT<SpeedCC::SCTraitMemberFuncT<decltype((&std::remove_poi
 #define INT64       long long
 #endif
 
-#endif //__SPEEDCC__SCMACRODEF_H__
+#endif //__SPEEDCC__SCBASEMACROS_H__

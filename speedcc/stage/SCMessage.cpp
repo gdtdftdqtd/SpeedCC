@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 #include "SCMessage.h"
-#include "../base/SCMacroDef.h"
+#include "../base/SCBaseMacros.h"
 
 namespace SpeedCC
 {

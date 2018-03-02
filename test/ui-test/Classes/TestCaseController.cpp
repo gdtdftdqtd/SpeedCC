@@ -66,7 +66,7 @@ void TestCaseController::onCreate(SCDictionary parameters)
     
     SC_BEGIN_CONTAINER_ROOT(nullptr,SCWinSize)
         SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",SCWinSize,Color4B::WHITE)
-    /*
+    
             if(bDock)
             {
                 // title
@@ -93,7 +93,7 @@ void TestCaseController::onCreate(SCDictionary parameters)
                 
                 SC_INSERT_BUTTON(&_pPreMenuItem,"dock=bottom|mid-x; y-by=50; x-by=-60; rotation=180; visible=false;", "btn_arrow.png", "btn_arrow.png", "btn_arrow.png", ptrPreBvr)
             }
-    */
+    
             SC_INSERT_LAYER(&_pContainerLayer, "dock=center;", SCWinSize)
 
         SC_END_CONTAINER

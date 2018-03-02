@@ -20,7 +20,7 @@
 #include "SCValue.h"
 #include "SCDataBlock.h"
 #include "SCDateTime.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 
 namespace SpeedCC
 {

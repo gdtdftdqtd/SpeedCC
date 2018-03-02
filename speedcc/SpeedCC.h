@@ -22,7 +22,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "base/SCMacroDef.h"
+#include "base/SCBaseMacros.h"
 #include "base/SCObject.h"
 #include "base/SCString.h"
 #include "base/SCBufferRefT.h"
@@ -46,11 +46,11 @@
 #include "cocos/SCNodeStyle.h"
 #include "cocos/SCBinderCocos.h"
 #include "cocos/SCNodeUtils.h"
-#include "cocos/SCSceneMacro.h"
+#include "cocos/SCSceneMacros.h"
 #include "cocos/SCEventEmitter.h"
 #include "cocos/SCNodeClickable.h"
 
-#include "stage/SCFlowMacroDef.h"
+#include "stage/SCFlowMacros.h"
 #include "stage/SCStageMacroDef.h"
 #include "stage/SCMessageDispatch.h"
 #include "stage/SCBehaviorStage.h"

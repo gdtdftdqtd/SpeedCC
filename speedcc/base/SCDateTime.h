@@ -22,7 +22,7 @@
 
 #include <time.h>
 #include <limits>
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include "SCObjPtrT.h"
 #include "SCObject.h"
 

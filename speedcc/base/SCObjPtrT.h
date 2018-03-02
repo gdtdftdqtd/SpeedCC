@@ -22,7 +22,7 @@
 #define __SPEEDCC__SCOBJPTRT_H__
 
 #include "SCObjRefT.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 
 namespace SpeedCC
 {

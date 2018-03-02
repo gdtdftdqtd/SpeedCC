@@ -66,8 +66,8 @@ namespace SpeedCC
         void createInstance();
         void createInstanceWithCon(const std::function<void(void*)>& func);
         
-//        template<class ..._Args>
-//        void createInstance(_Args&& ...__args);
+        int increaseRef() const;
+        int decreaseRef();
         
     protected:
         inline CookieT* getCookie() {return SCIsEmptyClassT<CookieT>::value ? nullptr : (_pObjData==nullptr ? nullptr : &this->getCookieDesc()->cookie);}
@@ -77,8 +77,6 @@ namespace SpeedCC
         inline StubT* getStub() const {return (StubT*)_pObjData;}
         
         void clone4Write();
-        int increaseRef() const;
-        int decreaseRef();
         void allocBuf(int nSize=sizeof(StubT));
         virtual void onInstanceCreated(void* pData) {}
         

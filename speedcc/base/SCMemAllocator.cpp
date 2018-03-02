@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 #include "SCMemAllocator.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include <memory>
 #include <mutex>
 

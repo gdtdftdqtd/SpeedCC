@@ -116,7 +116,7 @@
 		0A0C34D1202BFDC2003A7A31 /* SCStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCStrategy.h; sourceTree = "<group>"; };
 		0A0C34D3202BFDC2003A7A31 /* SCMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCMessage.cpp; sourceTree = "<group>"; };
 		0A0C34D4202BFDC2003A7A31 /* SCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMessage.h; sourceTree = "<group>"; };
-		0A0C34D5202BFDC2003A7A31 /* SCFlowMacroDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFlowMacroDef.h; sourceTree = "<group>"; };
+		0A0C34D5202BFDC2003A7A31 /* SCFlowMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFlowMacros.h; sourceTree = "<group>"; };
 		0A0C34D6202BFDC2003A7A31 /* SCMessageDefaultProc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMessageDefaultProc.h; sourceTree = "<group>"; };
 		0A0C34D7202BFDC2003A7A31 /* SCPerformObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCPerformObject.cpp; sourceTree = "<group>"; };
 		0A0C34D8202BFDC2003A7A31 /* SCBehaviorStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBehaviorStage.h; sourceTree = "<group>"; };
@@ -165,7 +165,7 @@
 		0A67CABB1F80E7C500FED9A5 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2dx/v3/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCMemAllocator.cpp; sourceTree = "<group>"; };
 		0A67CAE21F813C8800FED9A5 /* SCMemAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMemAllocator.h; sourceTree = "<group>"; };
-		0A67CAE51F813C8900FED9A5 /* SCMacroDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCMacroDef.h; sourceTree = "<group>"; };
+		0A67CAE51F813C8900FED9A5 /* SCBaseMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBaseMacros.h; sourceTree = "<group>"; };
 		0A67CB031F81DF7000FED9A5 /* SCValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SCValue.cpp; sourceTree = "<group>"; };
 		0A67CB061F81DF7000FED9A5 /* SCObjRefT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCObjRefT.h; sourceTree = "<group>"; };
 		0A67CB071F81DF7100FED9A5 /* SCValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCValue.h; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 		0A8868131FDA536E00866266 /* SCScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCScene.cpp; sourceTree = "<group>"; };
 		0A8868151FDA536E00866266 /* SCNodeUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeUtils.cpp; sourceTree = "<group>"; };
 		0A8868161FDA536E00866266 /* SCSceneNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneNavigator.h; sourceTree = "<group>"; };
-		0A8868171FDA536E00866266 /* SCSceneMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneMacro.h; sourceTree = "<group>"; };
+		0A8868171FDA536E00866266 /* SCSceneMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSceneMacros.h; sourceTree = "<group>"; };
 		0AF3CB9C202C429000EFACB4 /* SCNodeClickable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNodeClickable.h; sourceTree = "<group>"; };
 		0AF3CB9D202C429000EFACB4 /* SCNodeClickable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCNodeClickable.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -236,7 +236,7 @@
 				0A0C34CE202BFDC2003A7A31 /* SCBehaviorCommon.cpp */,
 				0A0C34CF202BFDC2003A7A31 /* SCRoleBuilder.h */,
 				0A0C34C9202BFDC2003A7A31 /* SCRoleBuilder.cpp */,
-				0A0C34D5202BFDC2003A7A31 /* SCFlowMacroDef.h */,
+				0A0C34D5202BFDC2003A7A31 /* SCFlowMacros.h */,
 				0A0C34C1202BFDC2003A7A31 /* SCBehaviorCocos.h */,
 				0A0C34DB202BFDC2003A7A31 /* SCBehaviorCocos.cpp */,
 				0A0C34C8202BFDC2003A7A31 /* SCStageMacroDef.h */,
@@ -347,7 +347,7 @@
 				0A67CB061F81DF7000FED9A5 /* SCObjRefT.h */,
 				0A67CB031F81DF7000FED9A5 /* SCValue.cpp */,
 				0A67CB071F81DF7100FED9A5 /* SCValue.h */,
-				0A67CAE51F813C8900FED9A5 /* SCMacroDef.h */,
+				0A67CAE51F813C8900FED9A5 /* SCBaseMacros.h */,
 				0A67CAE11F813C8700FED9A5 /* SCMemAllocator.cpp */,
 				0A67CAE21F813C8800FED9A5 /* SCMemAllocator.h */,
 				0A2803581FAB073A00E0174C /* SCDictionary.cpp */,
@@ -388,7 +388,7 @@
 				0A8868151FDA536E00866266 /* SCNodeUtils.cpp */,
 				0A8868161FDA536E00866266 /* SCSceneNavigator.h */,
 				0A8868111FDA536E00866266 /* SCSceneNavigator.cpp */,
-				0A8868171FDA536E00866266 /* SCSceneMacro.h */,
+				0A8868171FDA536E00866266 /* SCSceneMacros.h */,
 				0A41B3341FE679E3003945EB /* SCBinderCocos.cpp */,
 				0A41B3351FE679E3003945EB /* SCBinderCocos.h */,
 				0A41B3421FE7C5F0003945EB /* SCRefHolder.cpp */,

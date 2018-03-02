@@ -20,7 +20,7 @@
 #ifndef __SPEEDCC__SCWATCHNUMBERT_H__
 #define __SPEEDCC__SCWATCHNUMBERT_H__
 
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include "SCObject.h"
 #include "SCString.h"
 

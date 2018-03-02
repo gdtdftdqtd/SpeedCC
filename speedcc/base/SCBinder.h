@@ -21,7 +21,7 @@
 #define __SPEEDCC__SCBINDER_H__
 
 #include "SCObject.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include "SCWatchNumberT.h"
 
 namespace SpeedCC

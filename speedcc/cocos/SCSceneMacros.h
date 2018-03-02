@@ -17,8 +17,8 @@
  
  ****************************************************************************/
 
-#ifndef __SPEEDCC__SCSCENEMACRO_H__
-#define __SPEEDCC__SCSCENEMACRO_H__
+#ifndef __SPEEDCC__SCSCENEMACROS_H__
+#define __SPEEDCC__SCSCENEMACROS_H__
 
 // root
 #define SC_BEGIN_CONTAINER_ROOT(_style_,_size_) \
@@ -190,4 +190,4 @@ do{\
     SC_INSERT_BUTTON_SWITCH((_node_),(_style_),(_true_item_),(_false_item_),ptrSound,nullptr) \
 }while(0);
 
-#endif
+#endif  // __SPEEDCC__SCSCENEMACROS_H__

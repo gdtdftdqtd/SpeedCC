@@ -19,7 +19,7 @@
 
 
 #include "SCNodeUtils.h"
-#include "SCMacroDef.h"
+#include "SCBaseMacros.h"
 #include "SCCocosDef.h"
 #include "SCNodeClickable.h"
 #include "SCRefHolder.h"
