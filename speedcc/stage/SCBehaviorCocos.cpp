@@ -113,4 +113,13 @@ namespace SpeedCC
             _pController->finish(SC_NUM_2_PVOID(_nSelected));
         }
     }
+    
+    ///--------- SCBehaviorPurchase
+    void SCBehaviorPurchase::execute(const SCDictionary& par)
+    {
+        auto ptrCtrl = SCSceneNav()->getCurrentController();
+        ptrCtrl->showBlackMask(true);
+        ptrCtrl->setAllTouchEnabled(false);
+        SCStore::getInstance()->purchaseFeature(_nFeatureID,_resultFunc);
+    }
 }

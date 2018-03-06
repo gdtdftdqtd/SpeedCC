@@ -391,7 +391,11 @@ namespace SpeedCC
                 _postUpdateFunMap.erase(nID);
             }
         }
-
+        
+        SCString getString() const
+        {
+            return _number ? "true" : "false";
+        }
         
         inline bool getValue() const {return _number;}
         

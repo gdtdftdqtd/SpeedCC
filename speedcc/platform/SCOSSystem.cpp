@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 #include "../stage/SCMessageDispatch.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 #include "../base/SCBaseMacros.h"
 #include "../cocos/SCCocosDef.h"
 
@@ -35,7 +35,7 @@ namespace SpeedCC
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = (nResult==0) ? SCID::Msg::kMsgStorePurchaseSuccess : SCID::Msg::kMsgStorePurchaseFailed;
-            ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
+            ptrMsg->parameters.setValue(SC_KEY_IAP_PRODUCT, SCString(pszIAP));
             SCMsgDisp()->postMessage(ptrMsg);
         }
         
@@ -47,7 +47,7 @@ namespace SpeedCC
             
             if(pszIAP!=NULL)
             {
-                ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
+                ptrMsg->parameters.setValue(SC_KEY_IAP_PRODUCT, SCString(pszIAP));
             }
             SCMsgDisp()->postMessage(ptrMsg);
         }
@@ -60,11 +60,12 @@ namespace SpeedCC
         // nResult, 0: success; non-zero: failed
         void scbStoreRetrieveItemInfoResult(const char* pszIAP, const char* pszCurrency, float fPrice,int nResult)
         {
+            SCMessage::Ptr ptrMsg = SCMessage::create();
+            ptrMsg->parameters.setValue(SC_KEY_IAP_PRODUCT, SCString(pszIAP));
+            
             if(nResult==0 && pszIAP!=NULL)
             {// all are fine
-                SCMessage::Ptr ptrMsg = SCMessage::create();
                 ptrMsg->nMsgID = SCID::Msg::kMsgStoreIAPInfoSuccess;
-                ptrMsg->parameters.setValue(SC_KEY_IAP, SCString(pszIAP));
                 ptrMsg->parameters.setValue(SC_KEY_CURRENCY, SCString(pszCurrency));
                 ptrMsg->parameters.setValue(SC_KEY_PRICE, fPrice);
                 
@@ -76,7 +77,8 @@ namespace SpeedCC
             }
             else if(nResult!=0 && pszIAP==NULL)
             {// the retrieve all failed
-                SCMsgDisp()->postMessage(SCID::Msg::kMsgStoreIAPInfoFailed);
+                ptrMsg->nMsgID = SCID::Msg::kMsgStoreIAPInfoFailed;
+                SCMsgDisp()->postMessage(ptrMsg);
             }
         }
         

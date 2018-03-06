@@ -22,7 +22,7 @@
 #include "SCNodeUtils.h"
 
 #include "../stage/SCMessageDispatch.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 
 #include "../system/SCSystem.h"
 
@@ -412,7 +412,7 @@ namespace SpeedCC
                                               const SCUIArg::StringPurifier& style,
                                               const bool bHorizontal,
                                               const float fPadding,
-                                              const int nDock)
+                                              const SCUIArg::DockPurifier& dockPurifier)
     {
         Node* pNode = Node::create();
         pNode->setIgnoreAnchorPointForPosition(false);
@@ -443,6 +443,12 @@ namespace SpeedCC
         SCUITypeDef::SUIContext context;
         context.pContainerNode = pNode;
         context.containerType = SCUITypeDef::EContainerType::kLayoutPadding;
+        
+        int nDock = dockPurifier.nDock;
+        if(nDock==0)
+        {
+            nDock = SCNodeUtils::EDockType::kDockCenter;
+        }
         
         context.endFunc = [bHorizontal,
                            fPadding,

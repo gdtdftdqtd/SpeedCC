@@ -23,7 +23,7 @@
 #include "cocos2d.h"
 #include "../base/SCObject.h"
 #include "../stage/SCMessageDispatch.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 #include "SCCocosDef.h"
 
 namespace SpeedCC

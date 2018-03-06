@@ -20,6 +20,7 @@
 #include "SCStore.h"
 #include "SCSetting.h"
 #include "../platform/SCOSSystem.h"
+#include "../system/SCSystem.h"
 
 namespace SpeedCC
 {
@@ -27,6 +28,12 @@ namespace SpeedCC
     
     SCStore::SCStore()
     {
+        SCMsgDisp()->addListener(this);
+    }
+    
+    SCStore::~SCStore()
+    {
+        SCMsgDisp()->removeListener(this);
     }
     
     SCStore* SCStore::getInstance()
@@ -39,12 +46,12 @@ namespace SpeedCC
         return s_pInstance;
     }
     
-    bool SCStore::setUpFeature(const int nFeatureID,const SCString& strIAP,const int nPointID,const int nPointInc)
+    bool SCStore::setUpFeature(const int nFeatureID,const SCString& strProductID,const int nPointID,const int nPointInc)
     {
         SCASSERT(nFeatureID>0);
         SFeaturePointInfo info;
         info.nFeatureID = nFeatureID;
-        info.strIAP = strIAP;
+        info.strProductID = strProductID;
         info.nPointID = nPointID;
         info.nPointInc = nPointInc;
         
@@ -52,7 +59,7 @@ namespace SpeedCC
         
         SC_RETURN_IF(type==kBUY_UNKNOWN,false);
         SC_RETURN_IF(this->isFeatureExist(nFeatureID),false);
-        SC_RETURN_IF(!strIAP.isEmpty() && this->isIAPExist(strIAP),false);
+        SC_RETURN_IF(!strProductID.isEmpty() && this->isProductExit(strProductID),false);
         SC_RETURN_IF(nPointID>0 && this->isPointExist(nPointID),false);
         
         SCMapInsert(_feature2InfoMap, nFeatureID, info);
@@ -61,6 +68,16 @@ namespace SpeedCC
         {
             SCWatchInt::Ptr ptr = SCWatchInt::create();
             SCMapInsert(_pointID2WatchIntMap,nPointID,ptr);
+        }
+        
+        if(!strProductID.isEmpty() && nPointID>0)
+        {// consumable
+            this->bindFeature2Setting(nFeatureID,SCString(0,kSCSettingKeyStoreFeaturePrefix "_%d__",nFeatureID),true);
+            this->bindFeature2Setting(nFeatureID,SCString(0,kSCSettingKeyStorePointPrefix "_%d__",nPointID),true);
+        }
+        else if(!strProductID.isEmpty() && nPointID==0)
+        {// non-consumable
+            this->bindFeature2Setting(nFeatureID,SCString(0,kSCSettingKeyStoreFeaturePrefix "_%d__",nFeatureID),true);
         }
         
         return true;
@@ -77,7 +94,7 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCStore::purchaseFeature(const int nFeatureID)
+    bool SCStore::purchaseFeature(const int nFeatureID,const ResultFunc_t& resultFunc)
     {
         SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,false);
@@ -86,7 +103,9 @@ namespace SpeedCC
         
         auto type = this->getBuyTypeByInfo((*it).second);
         SC_RETURN_IF(type!=kBUY_CONSUMABLE && type!=kBUY_NONCONSUMABLE, false);
-        ::scStorePurchaseItem((*it).second.strIAP,type==kBUY_CONSUMABLE);
+        _purchaseResultFunc = resultFunc;
+        _strCurrentProductID = (*it).second.strProductID;
+        ::scStorePurchaseItem((*it).second.strProductID,type==kBUY_CONSUMABLE);
         return true;
     }
     
@@ -112,19 +131,19 @@ namespace SpeedCC
         return true;
     }
     
-    bool SCStore::getIAPPriceInfo(const SCString& strIAP,SIAPInfo& info)
+    bool SCStore::getPriceInfoByProduct(const SCString& strProductID,SIAPInfo& info)
     {
-        SCASSERT(!strIAP.isEmpty());
-        SC_RETURN_IF(strIAP.isEmpty(), false);
-        SC_RETURN_IF(!this->isIAPExist(strIAP), false);
+        SCASSERT(!strProductID.isEmpty());
+        SC_RETURN_IF(strProductID.isEmpty(), false);
+        SC_RETURN_IF(!this->isProductExit(strProductID), false);
         
         bool bRet = false;
-        const auto& it = _iap2PriceInfoMap.find(strIAP);
+        const auto& it = _iap2PriceInfoMap.find(strProductID);
         if(it==_iap2PriceInfoMap.end())
         {
 //            if(bRquest)
 //            {
-//                this->requestPriceInfo(strIAP);
+//                this->requestPriceInfo(strProductID);
 //            }
         }
         else
@@ -136,12 +155,21 @@ namespace SpeedCC
         return bRet;
     }
     
-    bool SCStore::restorePurchased()
+    bool SCStore::getPriceInfoByFeature(const int nFeatureID,SIAPInfo& info)
     {
+        SC_RETURN_IF(nFeatureID<=0, false);
+        auto strProductID = this->getProductIDByFeature(nFeatureID);
+        SC_RETURN_IF(strProductID.isEmpty(), false);
+        return this->getPriceInfoByProduct(strProductID,info);
+    }
+    
+    bool SCStore::restorePurchased(const ResultFunc_t& resultFunc)
+    {
+        _restoreResultFunc = resultFunc;
         return ::scStoreRestorePurchased();
     }
     
-    bool SCStore::requestIAPPriceInfo()
+    bool SCStore::requestIAPPriceInfo(const ResultFunc_t& resultFunc)
     {
         bool bRet = false;
         int nCount = 0;
@@ -150,22 +178,27 @@ namespace SpeedCC
         
         for(const auto& it : _feature2InfoMap)
         {
-            if(!it.second.strIAP.isEmpty())
+            if(!it.second.strProductID.isEmpty())
             {
-                char* pszIAP = (char*)::malloc(it.second.strIAP.getLength()+2);
-                ::strcpy(pszIAP,it.second.strIAP);
+                char* pszIAP = (char*)::malloc(it.second.strProductID.getLength()+2);
+                ::strcpy(pszIAP,it.second.strProductID);
                 pIAPArray[nCount] = pszIAP;
                 ++nCount;
             }
         }
         if(nCount>0)
         {
+            _requestIAPInfoResultFunc = resultFunc;
             bRet = ::scStoreRequestItemInfo(pIAPArray,nCount);
             for(int i=0; i<nCount; ++i)
             {
                 ::free(pIAPArray[i]);
                 pIAPArray[i] = nullptr;
             }
+        }
+        else
+        {
+            resultFunc("",EResultType::kFailed,nullptr);
         }
         
         delete [] pIAPArray;
@@ -174,13 +207,13 @@ namespace SpeedCC
         return bRet;
     }
     
-    SCString SCStore::getIAPByFeature(const int nFeatureID)
+    SCString SCStore::getProductIDByFeature(const int nFeatureID)
     {
         SCASSERT(nFeatureID>0);
         SC_RETURN_IF(nFeatureID<=0,0);
         const auto& it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(_feature2InfoMap.end()==it, 0);
-        return (*it).second.strIAP;
+        return (*it).second.strProductID;
     }
     
     int SCStore::getPointIDByFeature(const int nFeatureID)
@@ -221,14 +254,14 @@ namespace SpeedCC
         return (_pointID2WatchIntMap.find(nPointID)!=_pointID2WatchIntMap.end());
     }
     
-    bool SCStore::isIAPExist(const SCString& strIAP) const
+    bool SCStore::isProductExit(const SCString& strProductID) const
     {
-        SCASSERT(!strIAP.isEmpty());
-        SC_RETURN_IF(_feature2InfoMap.empty() || strIAP.isEmpty(), false);
+        SCASSERT(!strProductID.isEmpty());
+        SC_RETURN_IF(_feature2InfoMap.empty() || strProductID.isEmpty(), false);
         
         for(const auto& it : _feature2InfoMap)
         {
-            SC_RETURN_IF(it.second.strIAP==strIAP,true);
+            SC_RETURN_IF(it.second.strProductID==strProductID,true);
         }
         
         return false;
@@ -248,7 +281,7 @@ namespace SpeedCC
     {
         SC_RETURN_IF(info.nFeatureID<=0, kBUY_UNKNOWN);
         
-        if(info.strIAP.isEmpty())
+        if(info.strProductID.isEmpty())
         {
             return (info.nPointID>0) ? kBUY_CONSUME_POINT : kBUY_UNKNOWN;
         }
@@ -267,7 +300,7 @@ namespace SpeedCC
         auto it = _pointID2WatchIntMap.find(nPointID);
         SC_RETURN_IF(_pointID2WatchIntMap.end()==it, false);
         
-        auto ptr = SCSetting::getInstance()->getWatchInt(strSettingKey);
+        auto ptr = SCSetting::getInstance()->getWatchInt(strSettingKey,0);
         if(!bUseSetting)
         {
             *ptr = *(*it).second;
@@ -297,7 +330,7 @@ namespace SpeedCC
         auto it = _feature2InfoMap.find(nFeatureID);
         SC_RETURN_IF(it==_feature2InfoMap.end(), false);
         
-        auto ptr = SCSetting::getInstance()->getWatchBool(strSettingKey);
+        auto ptr = SCSetting::getInstance()->getWatchBool(strSettingKey,false);
         if(bUseSetting)
         {
             *ptr = *(*it).second.ptrFeatureLocked;
@@ -321,13 +354,13 @@ namespace SpeedCC
         return true;
     }
     
-    void SCStore::setIAPPurchsed(const SCString& strIAP)
+    void SCStore::setIAPPurchsed(const SCString& strProductID)
     {
-        SC_RETURN_V_IF(strIAP.isEmpty());
+        SC_RETURN_V_IF(strProductID.isEmpty());
         
         for(auto& it : _feature2InfoMap)
         {
-            if(it.second.strIAP==strIAP)
+            if(it.second.strProductID==strProductID)
             {
                 *(it.second.ptrFeatureLocked) = true;
                 break;
@@ -335,16 +368,141 @@ namespace SpeedCC
         }
     }
     
-    void SCStore::setIAPInfo(const SCString& strIAP,const float fPrice,const SCString& strCurrency)
+    void SCStore::setIAPInfo(const SCString& strProductID,const float fPrice,const SCString& strCurrency)
     {
-        SC_RETURN_V_IF(strIAP.isEmpty());
+        SC_RETURN_V_IF(strProductID.isEmpty());
         
-        if(this->isIAPExist(strIAP))
+        if(this->isProductExit(strProductID))
         {
             SIAPInfo info;
-            *(info.fPricePtr) = fPrice;
+            *(info.ptrPrice) = fPrice;
             info.strCurrency = strCurrency;
-            _iap2PriceInfoMap[strIAP] = info;
+            _iap2PriceInfoMap[strProductID] = info;
+        }
+    }
+    
+    void SCStore::onSCMessageProcess(SCMessage::Ptr ptrMsg)
+    {
+        switch(ptrMsg->nMsgID)
+        {
+            // store relative
+        case SCID::Msg::kMsgStoreUserCancelled:
+            {
+                SCLog("IAP operation cancelled by user.");
+                if(_purchaseResultFunc!=nullptr)
+                {
+                    _purchaseResultFunc(_strCurrentProductID,EResultType::kUserCancelled,nullptr);
+                }
+                _purchaseResultFunc = nullptr;
+                SCSystem::setGlobalDisableTouch(false);
+                _strCurrentProductID = "";
+            }
+            break;
+            
+        case SCID::Msg::kMsgStorePurchaseSuccess:
+            {
+                SCLog("IAP Purchase success.");
+                bool bResult = false;
+                auto strProductID = ptrMsg->parameters.getValue(SC_KEY_IAP_PRODUCT).getString(&bResult);
+                SCASSERT(bResult);
+                SCASSERT(_strCurrentProductID==strProductID);
+                
+                if(bResult)
+                {
+                    this->setIAPPurchsed(strProductID);
+                }
+                
+                if(_purchaseResultFunc!=nullptr)
+                {
+                    _purchaseResultFunc(_strCurrentProductID,EResultType::kSuccess,nullptr);
+                }
+                _purchaseResultFunc = nullptr;
+                SCSystem::setGlobalDisableTouch(false);
+                _strCurrentProductID = "";
+            }
+            break;
+            
+        case SCID::Msg::kMsgStorePurchaseFailed:
+            {
+                SCLog("IAP Purchase failed.");
+                if(_purchaseResultFunc!=nullptr)
+                {
+                    _purchaseResultFunc(_strCurrentProductID,EResultType::kFailed,nullptr);
+                }
+                _purchaseResultFunc = nullptr;
+                SCSystem::setGlobalDisableTouch(false);
+                _strCurrentProductID = "";
+            }
+            break;
+            
+        case SCID::Msg::kMsgStoreRestoreSuccess:
+            {
+                SCLog("Restored IAP success.");
+                bool bResult = false;
+                auto strProductID = ptrMsg->parameters.getValue(SC_KEY_IAP_PRODUCT).getString(&bResult);
+                SCASSERT(bResult);
+                
+                if(bResult)
+                {
+                    this->setIAPPurchsed(strProductID);
+                }
+                
+                if(_restoreResultFunc!=nullptr)
+                {
+                    _restoreResultFunc(strProductID,EResultType::kSuccess,nullptr);
+                }
+                _restoreResultFunc = nullptr;
+                
+                SCSystem::setGlobalDisableTouch(false);
+            }
+            break;
+            
+        case SCID::Msg::kMsgStoreRestoreFailed:
+            {
+                SCLog("Restored IAP failed.");
+                if(_restoreResultFunc!=nullptr)
+                {
+                    _restoreResultFunc("",EResultType::kFailed,nullptr);
+                }
+                _restoreResultFunc = nullptr;
+                SCSystem::setGlobalDisableTouch(false);
+            }
+            break;
+            
+        case SCID::Msg::kMsgStoreIAPInfoSuccess:
+            {
+                SCLog("Request IAP info success.");
+                bool bResult = false;
+                auto strProductID = ptrMsg->parameters.getValue(SC_KEY_IAP_PRODUCT).getString(&bResult);
+                SCASSERT(bResult);
+                bResult = false;
+                auto strCurrency = ptrMsg->parameters.getValue(SC_KEY_CURRENCY).getString(&bResult);
+                SCASSERT(bResult);
+                float fPrice = ptrMsg->parameters.getValue(SC_KEY_PRICE).getFloat();
+                if(bResult)
+                {
+                    this->setIAPInfo(strProductID, fPrice, strCurrency);
+                }
+                
+                if(_requestIAPInfoResultFunc!=nullptr)
+                {
+                    auto info = _iap2PriceInfoMap[strProductID];
+                    _requestIAPInfoResultFunc(strProductID,EResultType::kSuccess,&info);
+                }
+                _requestIAPInfoResultFunc = nullptr;
+            }
+            break;
+            
+        case SCID::Msg::kMsgStoreIAPInfoFailed:
+            {
+                SCLog("Request IAP info failed.");
+                if(_requestIAPInfoResultFunc!=nullptr)
+                {
+                    _requestIAPInfoResultFunc("",EResultType::kFailed,nullptr);
+                }
+                _requestIAPInfoResultFunc = nullptr;
+            }
+            break;
         }
     }
 }

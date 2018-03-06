@@ -96,6 +96,8 @@ namespace SpeedCC
         void removeUpdateFunc(const int nID);
         inline SCString getValue() const {return *this;}
         
+        inline SCString getString() const { return *this; }
+        
     protected:
         SCWatchString();
         SCWatchString(const SCString& str);

@@ -39,6 +39,7 @@
 #include "system/SCSystem.h"
 #include "system/SCSetting.h"
 #include "system/SCAudioManager.h"
+#include "system/SCStore.h"
 
 #include "cocos/SCRefHolder.h"
 #include "cocos/SCSceneNavigator.h"
@@ -51,7 +52,7 @@
 #include "cocos/SCNodeClickable.h"
 
 #include "stage/SCFlowMacros.h"
-#include "stage/SCStageMacroDef.h"
+#include "stage/SCStageMacros.h"
 #include "stage/SCMessageDispatch.h"
 #include "stage/SCBehaviorStage.h"
 #include "stage/SCBehaviorCocos.h"

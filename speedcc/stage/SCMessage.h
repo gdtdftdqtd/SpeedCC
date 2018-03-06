@@ -22,7 +22,7 @@
 
 #include "../base/SCDictionary.h"
 #include "../base/SCObject.h"
-#include "SCPerformIDDef.h"
+#include "SCID.h"
 
 namespace SpeedCC
 {

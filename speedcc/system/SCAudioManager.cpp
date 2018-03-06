@@ -19,7 +19,7 @@
 
 #include "SCAudioManager.h"
 #include "../cocos/SCCocosDef.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 #include "SimpleAudioEngine.h"
 #include "SCSetting.h"
 

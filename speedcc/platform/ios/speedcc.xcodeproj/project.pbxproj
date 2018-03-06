@@ -103,8 +103,8 @@
 		0A0C34C3202BFDC2003A7A31 /* SCStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCStage.h; sourceTree = "<group>"; };
 		0A0C34C5202BFDC2003A7A31 /* SCBehaviorStage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCBehaviorStage.cpp; sourceTree = "<group>"; };
 		0A0C34C6202BFDC2003A7A31 /* SCPerformObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPerformObject.h; sourceTree = "<group>"; };
-		0A0C34C7202BFDC2003A7A31 /* SCPerformIDDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPerformIDDef.h; sourceTree = "<group>"; };
-		0A0C34C8202BFDC2003A7A31 /* SCStageMacroDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCStageMacroDef.h; sourceTree = "<group>"; };
+		0A0C34C7202BFDC2003A7A31 /* SCID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCID.h; sourceTree = "<group>"; };
+		0A0C34C8202BFDC2003A7A31 /* SCStageMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCStageMacros.h; sourceTree = "<group>"; };
 		0A0C34C9202BFDC2003A7A31 /* SCRoleBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCRoleBuilder.cpp; sourceTree = "<group>"; };
 		0A0C34CA202BFDC2003A7A31 /* SCMessageDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMessageDispatch.h; sourceTree = "<group>"; };
 		0A0C34CB202BFDC2003A7A31 /* SCRole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRole.h; sourceTree = "<group>"; };
@@ -239,8 +239,8 @@
 				0A0C34D5202BFDC2003A7A31 /* SCFlowMacros.h */,
 				0A0C34C1202BFDC2003A7A31 /* SCBehaviorCocos.h */,
 				0A0C34DB202BFDC2003A7A31 /* SCBehaviorCocos.cpp */,
-				0A0C34C8202BFDC2003A7A31 /* SCStageMacroDef.h */,
-				0A0C34C7202BFDC2003A7A31 /* SCPerformIDDef.h */,
+				0A0C34C8202BFDC2003A7A31 /* SCStageMacros.h */,
+				0A0C34C7202BFDC2003A7A31 /* SCID.h */,
 				0A0C34EB202C0394003A7A31 /* SCTriggerT.h */,
 			);
 			name = stage;

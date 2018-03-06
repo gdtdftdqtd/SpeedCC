@@ -21,7 +21,7 @@
 #include "SCBaseMacros.h"
 
 #include "../stage/SCMessageDispatch.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 #include "../platform/SCOSSystem.h"
 #include "../cocos/SCCocosDef.h"
 #include "../cocos/SCScene.h"

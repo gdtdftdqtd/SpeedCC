@@ -68,6 +68,14 @@
 #define kSCSettingKeyMusic                                          "__speedcc_music__"
 #endif
 
+#ifndef kSCSettingKeyStoreFeaturePrefix
+#define kSCSettingKeyStoreFeaturePrefix                             "__speedcc_store_feature_"
+#endif
+
+#ifndef kSCSettingKeyStorePointPrefix
+#define kSCSettingKeyStorePointPrefix                               "__speedcc_store_point_"
+#endif
+
 #ifndef kSCDefaultResolutionAsset
 #define kSCDefaultResolutionAsset                                   SpeedCC::SCSystem::kResolutionBitMaskMedium
 #endif

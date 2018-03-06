@@ -169,12 +169,12 @@ namespace SpeedCC
                                                      const bool bCCW);
         
         void containerAlignment(cocos2d::Node** ppNode,
-                                              const float fPosX,
-                                              const float fPosY,
-                                              const SCUIArg::StringPurifier& style,
-                                              const bool bHorizontal,
-                                              const float fPadding,
-                                              const int nDock);
+                                const float fPosX,
+                                const float fPosY,
+                                const SCUIArg::StringPurifier& style,
+                                const bool bHorizontal,
+                                const float fPadding,
+                                const SCUIArg::DockPurifier& dockPurifier);
         
         
         ///---------------- cocos2d-x extension UI

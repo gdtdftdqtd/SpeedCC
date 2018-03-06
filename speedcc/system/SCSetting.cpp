@@ -22,7 +22,7 @@
 
 #include "SCConfig.h"
 #include "../cocos/SCCocosDef.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 #include "../stage/SCMessageDispatch.h"
 
 

@@ -23,7 +23,7 @@
 #include "SCSceneController.h"
 #include "SCSceneNavigator.h"
 #include "../base/SCTemplateUtils.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 #include "../stage/SCBehaviorCocos.h"
 
 namespace SpeedCC

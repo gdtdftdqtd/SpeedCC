@@ -254,6 +254,21 @@ namespace SpeedCC
             
             cocos2d::ui::ScrollView::Direction direction;
         };
+        
+        struct DockPurifier
+        {
+            DockPurifier(std::nullptr_t):
+            nDock(0)
+            {
+            }
+            
+            DockPurifier(const int n):
+            nDock(n)
+            {
+            }
+            
+            int     nDock;
+        };
  
     };
     

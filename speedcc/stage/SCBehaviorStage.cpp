@@ -19,7 +19,7 @@
 
 #include "SCBehaviorStage.h"
 #include "SCStage.h"
-#include "SCStageMacroDef.h"
+#include "SCStageMacros.h"
 
 namespace SpeedCC
 {

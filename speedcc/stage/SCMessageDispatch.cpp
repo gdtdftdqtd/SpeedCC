@@ -20,7 +20,7 @@
 #include "SCMessageDispatch.h"
 #include "../base/SCTemplateDef.h"
 #include "../cocos/SCCocosDef.h"
-#include "../stage/SCStageMacroDef.h"
+#include "../stage/SCStageMacros.h"
 
 using namespace std;
 

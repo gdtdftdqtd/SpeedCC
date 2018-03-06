@@ -23,6 +23,7 @@
 #include "SCObject.h"
 #include "SCBaseMacros.h"
 #include "SCWatchNumberT.h"
+#include "SCWatchString.h"
 
 namespace SpeedCC
 {
@@ -98,8 +99,8 @@ namespace SpeedCC
         /tparam T2 Target /a Watch /a Value type.
      */
     template<typename T1, typename T2,
-    typename = typename std::enable_if<SCIsWatchNumberIntegerT<T1>::value==1 &&
-    SCIsWatchNumberIntegerT<T2>::value==1,T1>::type>
+    typename = typename std::enable_if<SCIsWatchNumberIntegerT<typename T1::type>::value==1 &&
+    SCIsWatchNumberIntegerT<typename T2::type>::value==1,T1>::type>
     class SCBinderWatchNumberT : public SCBinder
     {
     public:
@@ -109,36 +110,36 @@ namespace SpeedCC
         /*!
             Create SCBinderWatchNumberT instance in smart pointer.
          */
-        SC_DEFINE_CREATE_FUNC_0(SCBinderWatchNumberT)
+        SC_DEFINE_CREATE_FUNC_2(SCBinderWatchNumberT,T1,T2)
         
         /*!
             Set source /a Watch /a Value.
          
             /param ptrWatch Source /a Watch /a Value.
          */
-        void setWatch(typename T1::Ptr ptrWatch)
+        void setWatch(T1 ptrWatch)
         {
             this->removeUpdateFunc();
-            const int nID = ptrWatch->addUpdateFunc([this](typename T1::Ptr ptrNum,
+            const int nID = ptrWatch->addUpdateFunc([this](T1 ptrNum,
                                                            typename T1::type newNum,
                                                            typename T1::type oldNum)
                                                {
                                                    if(this->getActive() && _ptrTarget!=nullptr)
                                                    {
-                                                       (*_ptrTarget) = (typename T2::type)newNum;
+                                                       (*_ptrTarget) = (typename T2::type::type)newNum;
                                                    }
                                                });
             
             if(_ptrTarget!=nullptr && this->getActive())
             {
-                (*_ptrTarget) = (typename T2::type)(*ptrWatch);
+                (*_ptrTarget) = (typename T2::type::type)(*ptrWatch);
             }
             
             _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
             {
                 SC_RETURN_V_IF(ptr==nullptr || nID<=0);
                 
-                auto p = ptr.cast<typename T1::Ptr>();
+                auto p = ptr.cast<T1>();
                 p->removeUpdateFunc(nID);
             };
             
@@ -151,9 +152,9 @@ namespace SpeedCC
          
             /return Samrt pointer to source /a Watch /a Value
          */
-        inline typename T1::Ptr getSourceWatch() const
+        inline T1 getSourceWatch() const
         {
-            return _ptrWatch==nullptr ? nullptr : _ptrWatch.cast<typename T1::Ptr>();
+            return _ptrWatch==nullptr ? nullptr : _ptrWatch.cast<T1>();
         }
         
         /*!
@@ -161,7 +162,7 @@ namespace SpeedCC
          
          /return Target /a Watch /a Value
          */
-        inline typename T2::Ptr getTargetWatch() const
+        inline T2 getTargetWatch() const
         {
             return _ptrTarget;
         }
@@ -177,7 +178,7 @@ namespace SpeedCC
             
             if(_ptrTarget!=nullptr && _ptrWatch!=nullptr)
             {
-                (*_ptrTarget) = (typename T2::type)(*(_ptrWatch.cast<typename T1::Ptr>()));
+                (*_ptrTarget) = (typename T2::type::type)(*(_ptrWatch.cast<T1>()));
             }
         }
         
@@ -193,16 +194,120 @@ namespace SpeedCC
         }
         
     protected:
-        SCBinderWatchNumberT(typename T1::Ptr ptrSrc, typename T2::Ptr ptrTarget)
+        SCBinderWatchNumberT(T1 ptrSrc, T2 ptrTarget)
         {
             _ptrTarget = ptrTarget;
             this->setWatch(ptrSrc);
         }
         
     private:
-        typename T2::Ptr    _ptrTarget; //!< Target Watch Value to be updated
+        T2    _ptrTarget; //!< Target Watch Value to be updated
     };
     
+    
+    template<typename T1>
+    class SCBinderWatchNumberT<T1,SCWatchString::Ptr> : public SCBinder
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBinderWatchNumberT)
+        SC_DEFINE_CLASS_PTR(SCBinderWatchNumberT)
+        
+        /*!
+         Create SCBinderWatchNumberT instance in smart pointer.
+         */
+        SC_DEFINE_CREATE_FUNC_2(SCBinderWatchNumberT,T1,SCWatchString::Ptr)
+        
+        /*!
+         Set source /a Watch /a Value.
+         
+         /param ptrWatch Source /a Watch /a Value.
+         */
+        void setWatch(T1 ptrWatch)
+        {
+            this->removeUpdateFunc();
+            const int nID = ptrWatch->addUpdateFunc([this](T1 ptrNum,
+                                                           typename T1::type::type newNum,
+                                                           typename T1::type::type oldNum)
+                                                    {
+                                                        if(this->getActive() && _ptrTarget!=nullptr)
+                                                        {
+                                                            (*_ptrTarget) = ptrNum->getString();
+                                                        }
+                                                    });
+            
+            if(_ptrTarget!=nullptr && this->getActive())
+            {
+                (*_ptrTarget) = ptrWatch->getString();
+            }
+            
+            _removeUpdateFunc = [](SCObject::Ptr ptr,const int nID)
+            {
+                SC_RETURN_V_IF(ptr==nullptr || nID<=0);
+                
+                auto p = ptr.cast<T1>();
+                p->removeUpdateFunc(nID);
+            };
+            
+            _ptrWatch = ptrWatch;
+            _nFuncID = nID;
+        }
+        
+        /*!
+         Get source /a Watch /a Value
+         
+         /return Samrt pointer to source /a Watch /a Value
+         */
+        inline T1 getSourceWatch() const
+        {
+            return _ptrWatch==nullptr ? nullptr : _ptrWatch.cast<T1>();
+        }
+        
+        /*!
+         Get target /a Watch /a Value
+         
+         /return Target /a Watch /a Value
+         */
+        inline SCWatchString::Ptr getTargetWatch() const
+        {
+            return _ptrTarget;
+        }
+        
+        /*!
+         Set target /a Watch /a Value.
+         
+         /param ptrWatch Target /a Watch /a Value.
+         */
+        void setTargetWatch(SCWatchString::Ptr ptrWatch)
+        {
+            _ptrTarget = ptrWatch;
+            
+            if(_ptrTarget!=nullptr && _ptrWatch!=nullptr)
+            {
+                (*_ptrTarget) = _ptrWatch.cast<T1>()->getString();
+            }
+        }
+        
+        /*!
+         Reset Binder to initial state.
+         Active state to true, /a Watch /a Value to empty, removes /a Watch /a Value listen function.
+         
+         */
+        virtual void reset() override
+        {
+            SCBinder::reset();
+            _ptrTarget = nullptr;
+        }
+        
+    protected:
+        SCBinderWatchNumberT(T1 ptrSrc, SCWatchString::Ptr ptrTarget)
+        {
+            _ptrTarget = ptrTarget;
+            this->setWatch(ptrSrc);
+        }
+        
+    private:
+        SCWatchString::Ptr      _ptrTarget;
+    };
 }
 
 #endif //__SPEEDCC__SCBINDER_H__

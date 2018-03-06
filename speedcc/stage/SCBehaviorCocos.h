@@ -23,6 +23,7 @@
 #include "SCPerformObject.h"
 #include "../cocos/SCSceneNavigator.h"
 #include "SCBehaviorCommon.h"
+#include "../system/SCStore.h"
 
 namespace SpeedCC
 {
@@ -125,6 +126,33 @@ namespace SpeedCC
     private:
         SCSceneController*      _pController;
         int                     _nSelected;
+    };
+    
+    ///--------- SCBehaviorPurchase
+    class SCBehaviorPurchase : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorPurchase)
+        SC_DEFINE_CLASS_PTR(SCBehaviorPurchase)
+        
+        SC_DEFINE_CREATE_FUNC_2(SCBehaviorPurchase,const int,SCStore::ResultFunc_t)
+        
+        inline int getFeatureID() const { return _nFeatureID; }
+        inline void setFeatureID(const int nFeatureID) { _nFeatureID = nFeatureID; }
+        
+        inline void setResultFunc(const SCStore::ResultFunc_t& func) { _resultFunc = func; }
+        
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
+        
+    protected:
+        SCBehaviorPurchase(const int nFeatureID,SCStore::ResultFunc_t resultFunc):
+        _nFeatureID(nFeatureID),
+        _resultFunc(resultFunc)
+        {}
+        
+    private:
+        int                     _nFeatureID;
+        SCStore::ResultFunc_t   _resultFunc;
     };
 }
 
