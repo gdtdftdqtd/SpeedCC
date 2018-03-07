@@ -504,6 +504,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.speedcc.test;
 				PRODUCT_NAME = "UITest-mobile";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
@@ -539,6 +540,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.speedcc.test;
 				PRODUCT_NAME = "UITest-mobile";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;

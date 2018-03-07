@@ -42,24 +42,22 @@ void TestHomeController::onCreate(SCDictionary parameters)
             SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", false, 40, nullptr)
     
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
-                    SC_INSERT_LABEL(nullptr, "", "Consumable Price:  ", "", 30)
-                    SC_INSERT_LABEL(nullptr, "", _ptrConsumableCurrency, "", 30)
-                    SC_INSERT_LABEL(nullptr, "", _ptrConsumablePrice, "", 30)
+                    SC_INSERT_LABEL(nullptr, "", "Consumable Price:  ", "", 20)
+                    SC_INSERT_LABEL(nullptr, "", _ptrConsumableCurrency, "", 20)
+                    SC_INSERT_LABEL(nullptr, "", _ptrConsumablePrice, "", 20)
                 SC_END_CONTAINER
     
-                SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Consumable", "", 30, ptrBvrConsumable)
+                SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Consumable", "", 15, ptrBvrConsumable)
     
-            SC_END_CONTAINER
-    
-            SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", false, 40, nullptr)
+                SC_INSERT_LAYER(nullptr, "", Size(10,30))
     
                 SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
-                    SC_INSERT_LABEL(nullptr, "", "Consumable Price:  ", "", 30)
-                    SC_INSERT_LABEL(nullptr, "", _ptrNonConsumableCurrency, "", 30)
-                    SC_INSERT_LABEL(nullptr, "", _ptrNonConsumablePrice, "", 30)
+                    SC_INSERT_LABEL(nullptr, "", "Consumable Price:  ", "", 20)
+                    SC_INSERT_LABEL(nullptr, "", _ptrNonConsumableCurrency, "", 20)
+                    SC_INSERT_LABEL(nullptr, "", _ptrNonConsumablePrice, "", 20)
                 SC_END_CONTAINER
     
-                SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Non-Consumable", "", 30, ptrBvrNonConsumable)
+                SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Non-Consumable", "", 15, ptrBvrNonConsumable)
             SC_END_CONTAINER
 //        SC_END_CONTAINER
     SC_END_CONTAINER
