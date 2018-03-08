@@ -41,7 +41,7 @@ extern "C" {
             return false;
         }
         
-        return [[SCiOSStore sharedStore] purchase:[NSString stringWithFormat:@"%s",pszIAP]] ? true : false;
+        return [[SCiOSStore sharedStore] purchase:[NSString stringWithUTF8String:pszIAP]] ? true : false;
     }
     
     // callback: scbPurchaseItemInfoResult()
@@ -102,6 +102,7 @@ static SCiOSStore* s_shareStore = nil;
     if(self=[super init])
     {
         _productID2ProductDic = [[NSMutableDictionary alloc]init];
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     }
     
     return self;
@@ -116,13 +117,14 @@ static SCiOSStore* s_shareStore = nil;
         if(_productID2ProductDic.count==0)
         {
             NSLog(@"SpeedCC Error: There is no IAP Product cached, did requestIAPInfo() be called successfully?");
+            ::scbStorePurchaseItemResult(NULL,1);
         }
         else
         {
             SKProduct* product = [_productID2ProductDic objectForKey:iap];
             if(product!=nil)
             {
-                SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
+                SKMutablePayment* payment = [SKMutablePayment paymentWithProduct:product];
                 [[SKPaymentQueue defaultQueue] addPayment:payment];
                 ret = YES;
             }
@@ -130,6 +132,7 @@ static SCiOSStore* s_shareStore = nil;
             {
                 NSLog(@"SpeedCC Error: There is no match IAP in cache.");
             }
+            
         }
     }
     else
@@ -159,7 +162,8 @@ static SCiOSStore* s_shareStore = nil;
     if([SKPaymentQueue canMakePayments])
     {
         [_productID2ProductDic removeAllObjects];
-        SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:iapArray]];
+        SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:
+                                      [NSSet setWithArray:iapArray]];
         request.delegate = self;
         
         [request start];
@@ -209,14 +213,17 @@ static SCiOSStore* s_shareStore = nil;
         switch (transaction.transactionState)
         {
             case SKPaymentTransactionStatePurchasing:
+            {
+                NSLog(@"added payment to SKPaymentQueue, purchasing ... ");
+            }
                 break;
                 
             case SKPaymentTransactionStatePurchased:
             {
-                NSLog(@"SpeedCC Log: Deliver content for %@",transaction.payment.productIdentifier);
+                NSLog(@"SpeedCC Log: Deliver content for '%@'",transaction.payment.productIdentifier);
                 
-                NSAssert(!transaction.downloads,@"IAP transaction should not be download");
-                if(!transaction.downloads)
+//                NSAssert(!transaction.downloads,@"IAP transaction should not be download");
+//                if(!transaction.downloads)
                 {
                     [self completeTransaction:transaction forStatus:IAPPurchaseSucceeded];
                 }
@@ -227,8 +234,8 @@ static SCiOSStore* s_shareStore = nil;
             {
                 NSLog(@"SpeedCC Log: Restore content for %@",transaction.payment.productIdentifier);
                 
-                NSAssert(!transaction.downloads,@"IAP transaction should not be download");
-                if(!transaction.downloads)
+//                NSAssert(!transaction.downloads,@"IAP transaction should not be download");
+//                if(!transaction.downloads)
                 {
                     [self completeTransaction:transaction forStatus:IAPRestoredSucceeded];
                 }
@@ -237,7 +244,7 @@ static SCiOSStore* s_shareStore = nil;
                 
             case SKPaymentTransactionStateFailed:
             {
-                NSLog(@"SpeedCC Error: Purchase of %@ failed.",transaction.payment.productIdentifier);
+                NSLog(@"SpeedCC Error: Purchase of '%@' failed. Reason: %@",transaction.payment.productIdentifier,transaction.error);
                 [self completeTransaction:transaction forStatus:IAPPurchaseFailed];
             }
                 break;

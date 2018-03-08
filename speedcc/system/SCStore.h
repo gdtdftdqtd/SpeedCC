@@ -36,8 +36,6 @@ namespace SpeedCC
         {
             SCWatchFloat::Ptr   ptrPrice;
             SCString            strCurrency;
-//            SCString            strTitle;
-//            SCString            strDescription;
             
             SIAPInfo()
             {
@@ -52,7 +50,7 @@ namespace SpeedCC
             kUserCancelled,
         };
         
-        typedef std::function<void(SCString strProductID,EResultType result,void* pInfo)>   ResultFunc_t;
+        typedef std::function<void(int nFeatureID,EResultType result,void* pInfo)>   ResultFunc_t;
         
     public:
         SC_AVOID_CLASS_COPY(SCStore)
@@ -69,24 +67,31 @@ namespace SpeedCC
         bool setPointIncByFeature(const int nFeatureID,const int nPointInc);
         bool purchaseFeature(const int nFeatureID,const ResultFunc_t& resultFunc = nullptr);
         bool isFeatureEnabled(const int nFeatureID) const;
+        SCWatchBool::Ptr getFeatureEnabled(const int nFeatureID) const;
         bool setFeatureEnabled(const int nFeatureID,const bool bEnable);
         
-        bool getPriceInfoByProduct(const SCString& strProductID,SIAPInfo& info);
+        bool getProductInfo(const SCString& strProductID,SIAPInfo& info);
         bool getPriceInfoByFeature(const int nFeatureID,SIAPInfo& info);
         SCString getProductIDByFeature(const int nFeatureID);
         
         int getPointIDByFeature(const int nFeatureID);
         SCWatchInt::Ptr getPointByID(const int nPointID) const;
         bool restorePurchased(const ResultFunc_t& resultFunc = nullptr);
-        bool requestIAPPriceInfo(const ResultFunc_t& resultFunc = nullptr);
+        bool requestProductInfo(const ResultFunc_t& resultFunc = nullptr);
+        
+        void setPurchaseResultFunc(const ResultFunc_t& resultFunc);
+        void setRestoreResultFunc(const ResultFunc_t& resultFunc);
+        void setRequestProductResultFunc(const ResultFunc_t& resultFunc);
+        
+        int getFeatureIDByProduct(const SCString& strProductID) const;
         
     private:
         enum EBuyType
         {
-            kBUY_UNKNOWN,
-            kBUY_CONSUMABLE,
-            kBUY_NONCONSUMABLE,
-            kBUY_CONSUME_POINT
+            kBuyUnknown,
+            kBuyConsumable,
+            kBuyNonConsumable,
+            kBuyConsumePoint
         };
         
         struct SFeaturePointInfo
@@ -128,9 +133,8 @@ namespace SpeedCC
         EBuyType getBuyTypeByFeature(const int nFeatureID);
         EBuyType getBuyTypeByInfo(const SFeaturePointInfo& info);
         
-        // called by message default processor
-        void setIAPPurchsed(const SCString& strProductID);
-        void setIAPInfo(const SCString& strProductID,const float fPrice,const SCString& strCurrency);
+        bool setFeaturePurchased(const int nFeatureID);
+        void setProductInfo(const SCString& strProductID,const float fPrice,const SCString& strCurrency);
         
         virtual void onSCMessageProcess(SCMessage::Ptr ptrMsg) override;
         
@@ -138,10 +142,10 @@ namespace SpeedCC
         std::map<int,SCWatchInt::Ptr>           _pointID2WatchIntMap;
         std::map<int,SFeaturePointInfo>         _feature2InfoMap;
         std::map<SCString,SIAPInfo>             _iap2PriceInfoMap;
-        SCString                                _strCurrentProductID;
+        int                                     _nCurrentFeatureID;
         ResultFunc_t                            _purchaseResultFunc;
         ResultFunc_t                            _restoreResultFunc;
-        ResultFunc_t                            _requestIAPInfoResultFunc;
+        ResultFunc_t                            _requestProductResultFunc;
         static SCStore*                         s_pInstance;
     };
 }

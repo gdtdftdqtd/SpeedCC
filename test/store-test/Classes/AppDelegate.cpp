@@ -80,9 +80,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // consume point
     ptrStore->setUpFeature(kFeatureIDOfConsumePoint,"",kPointIDOfConsumable,kPointStepOfConsume);
     
-    // request iap price
-    ptrStore->requestIAPPriceInfo();
-    
     SCSceneNav()->gotoScene<TestHomeController>();
 
     return true;

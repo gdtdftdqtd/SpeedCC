@@ -135,24 +135,70 @@ namespace SpeedCC
         SC_AVOID_CLASS_COPY(SCBehaviorPurchase)
         SC_DEFINE_CLASS_PTR(SCBehaviorPurchase)
         
+        virtual ~SCBehaviorPurchase();
+        
         SC_DEFINE_CREATE_FUNC_2(SCBehaviorPurchase,const int,SCStore::ResultFunc_t)
         
         inline int getFeatureID() const { return _nFeatureID; }
         inline void setFeatureID(const int nFeatureID) { _nFeatureID = nFeatureID; }
         
-        inline void setResultFunc(const SCStore::ResultFunc_t& func) { _resultFunc = func; }
+        void setResultFunc(const SCStore::ResultFunc_t& func);
         
         virtual void execute(const SCDictionary& par = SCDictionary()) override;
         
     protected:
-        SCBehaviorPurchase(const int nFeatureID,SCStore::ResultFunc_t resultFunc):
-        _nFeatureID(nFeatureID),
-        _resultFunc(resultFunc)
-        {}
+        SCBehaviorPurchase(const int nFeatureID,SCStore::ResultFunc_t resultFunc);
         
     private:
         int                     _nFeatureID;
         SCStore::ResultFunc_t   _resultFunc;
+    };
+    
+    
+    ///---------- SCBehaviorRequestProduct
+    class SCBehaviorRequestProduct : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorRequestProduct)
+        SC_DEFINE_CLASS_PTR(SCBehaviorRequestProduct)
+        
+        virtual ~SCBehaviorRequestProduct();
+        
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorRequestProduct,SCStore::ResultFunc_t)
+        
+        inline void setResultFunc(const SCStore::ResultFunc_t& func) { _resultFunc = func; }
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
+        
+    protected:
+        SCBehaviorRequestProduct(SCStore::ResultFunc_t resultFunc):
+        _resultFunc(resultFunc)
+        {}
+        
+    private:
+        SCStore::ResultFunc_t   _resultFunc;
+    };
+    
+    ///----------- SCBehaviorRestorePurchased
+    class SCBehaviorRestorePurchased : public SCBehavior
+    {
+    public:
+        SC_AVOID_CLASS_COPY(SCBehaviorRestorePurchased)
+        SC_DEFINE_CLASS_PTR(SCBehaviorRestorePurchased)
+        
+        virtual ~SCBehaviorRestorePurchased();
+        
+        SC_DEFINE_CREATE_FUNC_1(SCBehaviorRestorePurchased,SCStore::ResultFunc_t)
+        
+        inline void setResultFunc(const SCStore::ResultFunc_t& func) { _resultFunc = func; }
+        virtual void execute(const SCDictionary& par = SCDictionary()) override;
+        
+    protected:
+        SCBehaviorRestorePurchased(SCStore::ResultFunc_t resultFunc)
+        {}
+        
+    private:
+        SCStore::ResultFunc_t   _resultFunc;
+        
     };
 }
 

@@ -23,15 +23,17 @@
 #include "cocos2d.h"
 #include "SpeedCC.h"
 
+// non-consumable IDs
+#define kFeatureIDOfNonConsumable       1   // unique id for feature
+#define kProductIDOfNonConsumable       "nonconsumable" // setup in IAP from App Store
 
-#define kFeatureIDOfNonConsumable       1
-#define kProductIDOfNonConsumable       "non-consumable" // setup in IAP from App Store
-
-#define kFeatureIDOfConsumable          2
+// consumable IDs
+#define kFeatureIDOfConsumable          2 // unique id for feature
 #define kProductIDOfConsumable          "consumable" // setup in IAP from App Store
 #define kPointIDOfConsumable            1
 #define kPointDiffOfConsumable          10
 
+// consume point IDs
 #define kFeatureIDOfConsumePoint        3
 #define kPointStepOfConsume             5
 
@@ -42,8 +44,9 @@ class TestHomeController : public SpeedCC::SCSceneController
 public:
     virtual void onCreate(SCDictionary parameters) override;
     
-    void onPurchaseResult(SCString strProductID,SCStore::EResultType result,void* pInfo);
-    void onRequestIAPInfoResult(SCString strProductID,SCStore::EResultType result,void* pInfo);
+    void onPurchaseResult(int nFeatureID,SCStore::EResultType result,void* pInfo);
+    void onRequestProductResult(int nFeatureID,SCStore::EResultType result,void* pInfo);
+    void onRestorePurchased(int nFeatureID,SCStore::EResultType result,void* pInfo);
     
 private:
     SCWatchString::Ptr      _ptrConsumableCurrency;
@@ -51,6 +54,8 @@ private:
     
     SCWatchString::Ptr      _ptrNonConsumableCurrency;
     SCWatchFloat::Ptr       _ptrNonConsumablePrice;
+    
+    SCWatchString::Ptr      _ptrFeatureEnabledString;
 };
 
 #endif // __TESTHOME_SCENE_H__

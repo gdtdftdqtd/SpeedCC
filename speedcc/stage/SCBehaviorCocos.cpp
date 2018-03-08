@@ -115,11 +115,60 @@ namespace SpeedCC
     }
     
     ///--------- SCBehaviorPurchase
+    SCBehaviorPurchase::SCBehaviorPurchase(const int nFeatureID,SCStore::ResultFunc_t resultFunc):
+    _nFeatureID(nFeatureID)
+    {
+        this->setResultFunc(resultFunc);
+    }
+    
+    SCBehaviorPurchase::~SCBehaviorPurchase()
+    {
+        SCStore::getInstance()->setPurchaseResultFunc(nullptr);
+    }
+    
+    void SCBehaviorPurchase::setResultFunc(const SCStore::ResultFunc_t& func)
+    {
+        _resultFunc = [func](int nFeatureID,SCStore::EResultType result,void* pInfo)
+        {
+            auto ptrCtrl = SCSceneNav()->getCurrentController();
+            ptrCtrl->showBlackMask(false);
+            ptrCtrl->setAllTouchEnabled(true);
+            
+            if(func!=nullptr)
+            {
+                func(nFeatureID,result,pInfo);
+            }
+        };
+    }
+    
     void SCBehaviorPurchase::execute(const SCDictionary& par)
     {
         auto ptrCtrl = SCSceneNav()->getCurrentController();
         ptrCtrl->showBlackMask(true);
         ptrCtrl->setAllTouchEnabled(false);
         SCStore::getInstance()->purchaseFeature(_nFeatureID,_resultFunc);
+    }
+    
+    ///---------- SCBehaviorRequestProduct
+    SCBehaviorRequestProduct::~SCBehaviorRequestProduct()
+    {
+        SCStore::getInstance()->setRequestProductResultFunc(nullptr);
+    }
+    
+    void SCBehaviorRequestProduct::execute(const SCDictionary& par)
+    {
+        SCStore::getInstance()->requestProductInfo(_resultFunc);
+    }
+    
+    
+    ///----------- SCBehaviorRestorePurchased
+    SCBehaviorRestorePurchased::~SCBehaviorRestorePurchased()
+    {
+        SCStore::getInstance()->setRestoreResultFunc(nullptr);
+    }
+    
+    void SCBehaviorRestorePurchased::execute(const SCDictionary& par)
+    {
+        SCStore::getInstance()->restorePurchased(_resultFunc);
     }
 }

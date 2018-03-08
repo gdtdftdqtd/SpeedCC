@@ -57,14 +57,14 @@ namespace SpeedCC
             return (*it).second.cast<SCWatchInt::Ptr>();
         }
         
-        SCWatchInt::Ptr ret = SCWatchInt::create();
+        auto nValue = SCCCUserDefault()->getIntegerForKey(strKey,nDefault);
+        SCWatchInt::Ptr ret = SCWatchInt::create(nValue);
         
         ret->addUpdateFunc([strKey](SCWatchInt::Ptr ptrWatch,const int nNew,const int nOld)
                                {
                                    SCCCUserDefault()->setIntegerForKey(strKey, nNew);
                                });
         
-        (*ret) = SCCCUserDefault()->getIntegerForKey(strKey,nDefault);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -117,14 +117,15 @@ namespace SpeedCC
             return (*it).second.cast<SCWatchFloat::Ptr>();
         }
         
-        auto ret = SCWatchFloat::create();
+        auto fValue = SCCCUserDefault()->getFloatForKey(strKey,fDefault);
+        auto ret = SCWatchFloat::create(fValue);
         
         ret->addUpdateFunc([strKey](SCWatchFloat::Ptr ptrWatch,const float fNew,const float fOld)
                           {
                               SCCCUserDefault()->setFloatForKey(strKey, fNew);
                           });
         
-        (*ret) = SCCCUserDefault()->getFloatForKey(strKey,fDefault);
+        
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -142,14 +143,14 @@ namespace SpeedCC
             return (*it).second.cast<SCWatchDouble::Ptr>();
         }
         
-        auto ret = SCWatchDouble::create();
+        auto duValue = SCCCUserDefault()->getDoubleForKey(strKey,dDefault);
+        auto ret = SCWatchDouble::create(duValue);
         
         ret->addUpdateFunc([strKey](SCWatchDouble::Ptr ptrWatch,const double dNew,const double dOld)
                           {
                               SCCCUserDefault()->setDoubleForKey(strKey, dNew);
                           });
         
-        (*ret) = SCCCUserDefault()->getDoubleForKey(strKey,dDefault);
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }
@@ -167,14 +168,15 @@ namespace SpeedCC
             return (*it).second.cast<SCWatchString::Ptr>();
         }
         
-        auto ret = SCWatchString::create();
+        auto strValue = SCCCUserDefault()->getStringForKey(strKey);
+        auto ret = SCWatchString::create(strValue);
         
         ret->addUpdateFunc([strKey](SCWatchString::Ptr ptrWatch,const SCString& strNew,const SCString& strOld)
                           {
                               SCCCUserDefault()->setStringForKey(strKey, strNew.c_str());
                           });
         
-        (*ret) = SCCCUserDefault()->getStringForKey(strKey);
+        
         SCMapInsert(_key2WatchNumMap, strKey, ret);
         return ret;
     }

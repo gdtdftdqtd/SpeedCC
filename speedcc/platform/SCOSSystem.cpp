@@ -21,6 +21,7 @@
 #include "../stage/SCStageMacros.h"
 #include "../base/SCBaseMacros.h"
 #include "../cocos/SCCocosDef.h"
+#include "../system/SCStore.h"
 
 namespace SpeedCC
 {
@@ -35,7 +36,16 @@ namespace SpeedCC
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = (nResult==0) ? SCID::Msg::kMsgStorePurchaseSuccess : SCID::Msg::kMsgStorePurchaseFailed;
-            ptrMsg->parameters.setValue(SC_KEY_IAP_PRODUCT, SCString(pszIAP));
+            if(pszIAP!=NULL)
+            {
+                int nFeatureID = SCStore::getInstance()->getFeatureIDByProduct(pszIAP);
+                ptrMsg->parameters.setValue(SC_KEY_FEATUREID, nFeatureID);
+            }
+            else
+            {
+                ptrMsg->parameters.setValue(SC_KEY_FEATUREID, (int)0);
+            }
+            
             SCMsgDisp()->postMessage(ptrMsg);
         }
         
@@ -44,10 +54,15 @@ namespace SpeedCC
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
             ptrMsg->nMsgID = ((nResult==0) ? SCID::Msg::kMsgStoreRestoreSuccess : SCID::Msg::kMsgStoreRestoreFailed);
-            
+
             if(pszIAP!=NULL)
             {
-                ptrMsg->parameters.setValue(SC_KEY_IAP_PRODUCT, SCString(pszIAP));
+                int nFeatureID = SCStore::getInstance()->getFeatureIDByProduct(pszIAP);
+                ptrMsg->parameters.setValue(SC_KEY_FEATUREID, nFeatureID);
+            }
+            else
+            {
+                ptrMsg->parameters.setValue(SC_KEY_FEATUREID, (int)0);
             }
             SCMsgDisp()->postMessage(ptrMsg);
         }
@@ -61,7 +76,15 @@ namespace SpeedCC
         void scbStoreRetrieveItemInfoResult(const char* pszIAP, const char* pszCurrency, float fPrice,int nResult)
         {
             SCMessage::Ptr ptrMsg = SCMessage::create();
-            ptrMsg->parameters.setValue(SC_KEY_IAP_PRODUCT, SCString(pszIAP));
+            if(pszIAP!=NULL)
+            {
+                int nFeatureID = SCStore::getInstance()->getFeatureIDByProduct(pszIAP);
+                ptrMsg->parameters.setValue(SC_KEY_FEATUREID, nFeatureID);
+            }
+            else
+            {
+                ptrMsg->parameters.setValue(SC_KEY_FEATUREID, (int)0);
+            }
             
             if(nResult==0 && pszIAP!=NULL)
             {// all are fine

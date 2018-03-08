@@ -108,12 +108,11 @@ namespace SpeedCC
     SCWatchNumberT& operator _opr1_ (const T2 num) {\
         const T oldNum = _number;\
         const T2 ret = _number _opr2_ num;\
-        const bool bSame = (_number == ret);\
-        if(bSame){\
+        if((_number == ret)){\
             return *this;\
         }\
-        *this = ret;\
-        this->firePostUpdateFun(num,oldNum);\
+        _number = ret;\
+        this->firePostUpdateFun(_number,oldNum);\
         return *this;\
     }
     
@@ -278,6 +277,7 @@ namespace SpeedCC
             return result;
         }
         
+
         int addUpdateFunc(const std::function<void(Ptr pNum,const T newNumber,const T oldNumber)>& fun)
         {
             ++_nIDCounter;
@@ -319,6 +319,11 @@ namespace SpeedCC
         
         void firePostUpdateFun(const T newNumber,const T oldNumber)
         {
+            if(newNumber==oldNumber)
+            {
+                return;
+            }
+            
             for(const auto& it : _postUpdateFunMap)
             {
                 it.second(this->makeObjPtr<SCWatchNumberT::Ptr>(),newNumber,oldNumber);

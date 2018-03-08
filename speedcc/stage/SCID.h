@@ -48,7 +48,7 @@ namespace SpeedCC
 #define SC_KEY_STRING2          "sc-button2"    // SCString
     
     // IAP
-#define SC_KEY_IAP_PRODUCT              "sc-iap"           // SCString
+#define SC_KEY_FEATUREID        "sc-feature-id"    // int
 #define SC_KEY_PRICE            "sc-price" // SCString
 #define SC_KEY_CURRENCY         "sc-currency" // SCString
     
@@ -78,7 +78,7 @@ namespace SpeedCC
             
             // “code”: EErrorCode
             // "message": SCString
-            kMsgError,
+//            kMsgError,
             
             // app launch
             // no parameter
@@ -179,11 +179,11 @@ namespace SpeedCC
             kMsgStoreUserCancelled,
             
             // IAP purchased is success
-            // SC_KEY_IAP_PRODUCT => SCString
+            // SC_KEY_FEATUREID => int
             kMsgStorePurchaseSuccess,
             
             // IAP purchased is failed
-            // SC_KEY_IAP_PRODUCT => SCString
+            // SC_KEY_FEATUREID => int
             kMsgStorePurchaseFailed,
             
             // IAP restored is success
@@ -195,7 +195,7 @@ namespace SpeedCC
             kMsgStoreRestoreFailed,
             
             // retrieve IAP success
-            // SC_KEY_IAP_PRODUCT => SCString
+            // SC_KEY_FEATUREID => int
             // SC_KEY_CURRENCY => SCString
             // SC_KEY_PRICE => float
             kMsgStoreIAPInfoSuccess,

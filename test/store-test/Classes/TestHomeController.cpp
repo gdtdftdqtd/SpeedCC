@@ -25,66 +25,108 @@ void TestHomeController::onCreate(SCDictionary parameters)
 {
     SCSceneController::onCreate(parameters);
     
+    // consumable feature
+    auto bFeatureEnabled = SCStore::getInstance()->isFeatureEnabled(kFeatureIDOfNonConsumable);
+    _ptrFeatureEnabledString = SCWatchString::create(bFeatureEnabled ? "true" : "false");
+    
     _ptrConsumablePrice = SCWatchFloat::create();
     _ptrConsumableCurrency = SCWatchString::create();
-    
-    _ptrNonConsumablePrice = SCWatchFloat::create();
-    _ptrNonConsumableCurrency = SCWatchString::create();
     
     auto ptrBvrConsumable = SCBehaviorPurchase::create(kFeatureIDOfConsumable,
                                                        SC_MAKE_FUNC(onPurchaseResult, this));
     
+    // non-consumable feature
+    _ptrNonConsumablePrice = SCWatchFloat::create();
+    _ptrNonConsumableCurrency = SCWatchString::create();
+    
     auto ptrBvrNonConsumable = SCBehaviorPurchase::create(kFeatureIDOfNonConsumable,
                                                           SC_MAKE_FUNC(onPurchaseResult, this));
     
+    auto ptrPoint = SCStore::getInstance()->getPointByID(kPointIDOfConsumable);
+    
+    // consume point feature
+    auto ptrConsumPoint = SCBehaviorPurchase::create(kFeatureIDOfConsumePoint, nullptr);
+    
+    // request IAP info
+    auto ptrBvrRequestProduct = SCBehaviorRequestProduct::create(SC_MAKE_FUNC(onRequestProductResult, this));
+    
+    // restore purchase
+    auto ptrBvrRestore = SCBehaviorRestorePurchased::create(SC_MAKE_FUNC(onRestorePurchased, this));
+    
+    // NOTE: Performing "Rquest Product Price" first before purchasing 'consumable' and 'non-consumable' feature.
+    
     SC_BEGIN_CONTAINER_ROOT(nullptr,nullptr)
-//        SC_BEGIN_CONTAINER_LAYER_COLOR(nullptr,"dock=center;",SCWinSize,Color4B::WHITE)
-            SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", false, 40, nullptr)
-    
-                SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
-                    SC_INSERT_LABEL(nullptr, "", "Consumable Price:  ", "", 20)
-                    SC_INSERT_LABEL(nullptr, "", _ptrConsumableCurrency, "", 20)
-                    SC_INSERT_LABEL(nullptr, "", _ptrConsumablePrice, "", 20)
-                SC_END_CONTAINER
-    
-                SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Consumable", "", 15, ptrBvrConsumable)
-    
-                SC_INSERT_LAYER(nullptr, "", Size(10,30))
-    
-                SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
-                    SC_INSERT_LABEL(nullptr, "", "Consumable Price:  ", "", 20)
-                    SC_INSERT_LABEL(nullptr, "", _ptrNonConsumableCurrency, "", 20)
-                    SC_INSERT_LABEL(nullptr, "", _ptrNonConsumablePrice, "", 20)
-                SC_END_CONTAINER
-    
-                SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Non-Consumable", "", 15, ptrBvrNonConsumable)
+        SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", false, 20, nullptr)
+
+            // consumable features
+            SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
+                SC_INSERT_LABEL(nullptr, "", "Consumable Price:   ", "", 20)
+                SC_INSERT_LABEL(nullptr, "text-color=red;", _ptrConsumableCurrency, "", 15)
+                SC_INSERT_LABEL(nullptr, "", "  ", "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=red;", _ptrConsumablePrice, "", 15)
             SC_END_CONTAINER
-//        SC_END_CONTAINER
+
+            SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
+                SC_INSERT_LABEL(nullptr, "", "Consumable Points:   ", "", 20)
+                SC_INSERT_LABEL(nullptr, "", "  ", "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=red;", ptrPoint, "", 15)
+            SC_END_CONTAINER
+
+            SC_INSERT_LAYER(nullptr, "", Size(10,5))
+
+            // non-consumable features
+            SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
+                SC_INSERT_LABEL(nullptr, "", "Non-Consumable Price:   ", "", 20)
+                SC_INSERT_LABEL(nullptr, "text-color=red;", _ptrNonConsumableCurrency, "", 15)
+                SC_INSERT_LABEL(nullptr, "", "  ", "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=red;", _ptrNonConsumablePrice, "", 15)
+            SC_END_CONTAINER
+    
+            SC_BEGIN_CONTAINER_ALIGNMENT(nullptr, "dock=center;", true, 5, nullptr)
+                SC_INSERT_LABEL(nullptr,"","Feature Enabled:  ","",20)
+                SC_INSERT_LABEL(nullptr, "", "  ", "", 15)
+                SC_INSERT_LABEL(nullptr, "text-color=red;", _ptrFeatureEnabledString, "", 20)
+            SC_END_CONTAINER
+
+            SC_INSERT_LAYER(nullptr, "", Size(10,40))
+
+            // buttons
+            SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Consumable Feature", "", 15, ptrBvrConsumable)
+            SC_INSERT_BUTTON_LABEL(nullptr, "", "Purchase Non-Consumable Feature", "", 15, ptrBvrNonConsumable)
+            SC_INSERT_BUTTON_LABEL(nullptr, "", "Consume Points", "", 15, ptrConsumPoint)
+            SC_INSERT_BUTTON_LABEL(nullptr, "", "Rquest Product Price", "", 15, ptrBvrRequestProduct)
+            SC_INSERT_BUTTON_LABEL(nullptr, "", "Restore Purchased Products", "", 15, ptrBvrRestore)
+    
+        SC_END_CONTAINER
     SC_END_CONTAINER
 }
 
-void TestHomeController::onPurchaseResult(SCString strProductID,SCStore::EResultType result,void* pInfo)
+void TestHomeController::onPurchaseResult(int nFeatureID,SCStore::EResultType result,void* pInfo)
 {
     switch(result)
     {
         case SCStore::EResultType::kSuccess:
         {
-            if(strProductID==kProductIDOfNonConsumable)
+            if(nFeatureID==kFeatureIDOfNonConsumable)
             {// non-consumable
-                
+                (*_ptrFeatureEnabledString) = "true";
             }
-            else if(strProductID==kProductIDOfConsumable)
+            else if(nFeatureID==kFeatureIDOfConsumable)
             {// consumable
+
+            }
+            else
+            {// consume point
                 
             }
             
-            SCLog("Purchase '%s' success.",strProductID.c_str());
+            SCLog("Purchase success.");
         }
             break;
             
         case SCStore::EResultType::kFailed:
         {
-            SCLog("Purchase '%s' failed.",strProductID.c_str());
+            SCLog("Purchase failed.");
         }
             break;
             
@@ -96,20 +138,21 @@ void TestHomeController::onPurchaseResult(SCString strProductID,SCStore::EResult
     }
 }
 
-void TestHomeController::onRequestIAPInfoResult(SCString strProductID,SCStore::EResultType result,void* pInfo)
+void TestHomeController::onRequestProductResult(int nFeatureID,SCStore::EResultType result,void* pInfo)
 {
     if(result==SCStore::EResultType::kSuccess)
     {
         SCLog("Store IAP info request success.");
         SCASSERT(pInfo!=nullptr);
+        
         SCStore::SIAPInfo* pInfo2 = (SCStore::SIAPInfo*)pInfo;
         
-        if(strProductID==kProductIDOfNonConsumable)
+        if(nFeatureID==kFeatureIDOfNonConsumable)
         {// non-consumable
             (*_ptrNonConsumablePrice) = *(pInfo2->ptrPrice);
             (*_ptrNonConsumableCurrency) = pInfo2->strCurrency;
         }
-        else if(strProductID==kProductIDOfConsumable)
+        else if(nFeatureID==kFeatureIDOfConsumable)
         {// consumable
             (*_ptrConsumablePrice) = *(pInfo2->ptrPrice);
             (*_ptrConsumableCurrency) = pInfo2->strCurrency;
@@ -124,4 +167,17 @@ void TestHomeController::onRequestIAPInfoResult(SCString strProductID,SCStore::E
         SCLog("Store IAP info request failed.");
     }
 }
+
+void TestHomeController::onRestorePurchased(int nFeatureID,SCStore::EResultType result,void* pInfo)
+{
+    if(result==SCStore::EResultType::kSuccess)
+    {
+        SCLog("Restore success.");
+    }
+    else
+    {
+        SCLog("Restore failed.");
+    }
+}
+
 
