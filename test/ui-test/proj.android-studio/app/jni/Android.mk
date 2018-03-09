@@ -24,6 +24,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/TestPageViewController.cpp \
                    ../../../Classes/TestProgressController.cpp \
                    ../../../Classes/TestUIMiscController.cpp \
+                   ../../../Classes/TestAlignmentController.cpp \
 
 
 

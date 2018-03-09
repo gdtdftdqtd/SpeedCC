@@ -76,9 +76,6 @@
 #define kSCSettingKeyStorePointPrefix                               "__speedcc_store_point_"
 #endif
 
-#ifndef kSCDefaultResolutionAsset
-#define kSCDefaultResolutionAsset                                   SpeedCC::SCSystem::kResolutionBitMaskMedium
-#endif
 
 #ifndef kSCWidthOfResolutionBaseline
 #define kSCWidthOfResolutionBaseline                             (320)

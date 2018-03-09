@@ -21,7 +21,6 @@
 #define __SPEEDCC__SCSYSTEM_H__
 
 #include "cocos2d.h"
-#include "../SCConfig.h"
 #include "../base/SCVersion.h"
 #include "../stage/SCBehaviorCocos.h"
 
@@ -164,7 +163,7 @@ namespace SpeedCC
         static SCString getProductName();
         static SCString getBundleID();
         static EResolutionType getScreenSizeType();
-        static void initSpeedCC(const int nSupportAssetType=kSCDefaultResolutionAsset);
+        static void initSpeedCC(const int nSupportAssetType);
         static EResolutionType getAssetSizeType(const bool bCache=true);
         static void adapterScreenResolution(const bool bCache=true);
         static void log(const char* pszFormat,...);

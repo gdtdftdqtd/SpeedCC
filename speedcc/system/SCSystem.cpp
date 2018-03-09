@@ -25,6 +25,7 @@
 #include "../platform/SCOSSystem.h"
 #include "../cocos/SCCocosDef.h"
 #include "../cocos/SCScene.h"
+#include "../SCConfig.h"
 
 #include <iostream>
 
@@ -32,7 +33,7 @@ using namespace cocos2d;
 
 namespace SpeedCC
 {
-    int SCSystem::s_nSupportAssetType = kSCDefaultResolutionAsset;
+    int SCSystem::s_nSupportAssetType = 0;
     
     void SCSystem::setMultipleTouch(const bool bEnable)
     {

@@ -21,6 +21,7 @@
 #include "SCSetting.h"
 #include "../platform/SCOSSystem.h"
 #include "../system/SCSystem.h"
+#include "../SCConfig.h"
 
 namespace SpeedCC
 {

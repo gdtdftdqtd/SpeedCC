@@ -32,7 +32,7 @@ LOCAL_SRC_FILES := ../../../base/SCMemAllocator.cpp \
 					../../../cocos/SCSceneController.cpp \
 					../../../cocos/SCSceneNavigator.cpp \
 					../../../cocos/SCUIArg.cpp \
-					../../../cocos/SCUIBuilder.cpp \
+					../../../cocos/SCSceneBuilder.cpp \
 					../../../stage/SCActor.cpp \
 					../../../stage/SCBehaviorCocos.cpp \
 					../../../stage/SCBehaviorCommon.cpp \
